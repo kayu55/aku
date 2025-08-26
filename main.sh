@@ -94,6 +94,9 @@ apt-get purge apparmor apparmor-utils -y >/dev/null 2>&1
 clear
 # --- Instalasi Tools Awal ---
 echo -e "${GREEN}Instalasi Tools Awal...${NC}"
+#wget https://raw.githubusercontent.com/kipas77pro/aku/refs/heads/main/tools2.sh -O tools2.sh
+#chmod +x tools2.sh
+#bash tools2.sh
 start=$(date +%s)
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
@@ -169,13 +172,12 @@ echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn4.sh && chmod +x ssh-vpn4.sh && ./ssh-vpn4.sh
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/wc/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh && chmod +x install-ws.sh && ./install-ws.sh
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
@@ -203,20 +205,19 @@ wget -q -O /usr/bin/cek-bandwidth "https://raw.githubusercontent.com/kayu55/aku/
 wget -q -O /usr/bin/menu-vless "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-vless.sh"
 wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-vmess.sh"
 wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-trojan.sh"
-wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/tools/menu-ssh.sh"
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-ssh.sh"
 wget -q -O /usr/bin/menu-backup "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-backup.sh"
-wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/m2/menu.sh"
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/menu.sh"
 wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
-wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/m2/addhost.sh"
+wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
 wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
 wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
-wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/babi.sh"
+wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
 wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
 wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
 wget -q -O /usr/bin/px "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/px.sh"
-wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
 wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
 
 chmod +x /usr/bin/jam
@@ -250,7 +251,6 @@ chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/info
 chmod +x /usr/bin/set-bw
 chmod +x /usr/bin/px
-chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/cekudp
 
 cat > /etc/cron.d/cl_otm <<-END
@@ -389,13 +389,12 @@ echo -e "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/tools2.sh
-rm -fr /root/dirmeluna.sh
+rm -fr /root/install-ws.sh
 rm -fr /root/ssh-vpn4.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/main3.sh
+rm -fr /root/main.sh
 rm -fr /root/set-br.sh
 rm -fr /root/domain
-rm -fr /root/install-dropbear.sh
 history -c
 echo -ne "[ ${GREEN}INFO${NC} ] Apakah Anda Ingin Reboot Sekarang ? (y/n)? "
 read answer
