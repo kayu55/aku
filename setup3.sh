@@ -418,11 +418,6 @@ mkswap /swapfile
 # Tambahkan swap ke fstab agar aktif saat boot
 sed -i '$ i\/swapfile swap swap defaults 0 0' /etc/fstab
 
-# Sinkronisasi waktu dengan server Indonesia
-chronyd -q 'server 0.id.pool.ntp.org iburst'
-chronyc sourcestats -v
-chronyc tracking -v
-    
 clear
 echo  ""
 echo  "Sukses Sayank..!!"
