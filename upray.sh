@@ -338,9 +338,11 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-             }
-          ]
-       },
+### janaka 2025-08-29
+},{"id": "a0ec1e8e-0d13-4873-8ca5-ab3fb3336c4e","alterId": 0,"email": "janaka"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -399,9 +401,11 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
+### janaka 2025-08-29
+},{"id": "a0ec1e8e-0d13-4873-8ca5-ab3fb3336c4e","alterId": 0,"email": "janaka"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
