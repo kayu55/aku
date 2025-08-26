@@ -85,33 +85,24 @@ fi
 clear
 fi
 echo -e "${GREEN}Starting Installation............${NC}"
-# --- Disable AppArmor (Ubuntu 24.04) ---
-systemctl disable --now apparmor >/dev/null 2>&1
-systemctl stop apparmor >/dev/null 2>&1
-update-rc.d -f apparmor remove >/dev/null 2>&1 # Ini mungkin tidak ada di semua sistem, tapi aman.
-apt-get purge apparmor apparmor-utils -y >/dev/null 2>&1
-
-clear
-# --- Instalasi Tools Awal ---
-echo -e "${GREEN}Instalasi Tools Awal...${NC}"
-#wget https://raw.githubusercontent.com/kipas77pro/aku/refs/heads/main/tools2.sh -O tools2.sh
-#chmod +x tools2.sh
-#bash tools2.sh
-start=$(date +%s)
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-
-# --- Update dan Instal Dependensi Umum untuk Ubuntu 24.04 ---
-echo -e "${GREEN}Memperbarui sistem dan menginstal dependensi...${NC}"
-apt update -y && apt upgrade -y
-apt install git curl python3 apt  figlet python3-pip apt-transport-https ca-certificates software-properties-common ntpdate wget netcat-openbsd ncurses-bin chrony jq -y
-wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.1/grpcurl_1.9.1_linux_x86_64.tar.gz -O /tmp/grpcurl.tar.gz && tar -xzf /tmp/grpcurl.tar.gz -C /tmp/ && sudo mv /tmp/grpcurl /usr/local/bin/ && sudo chmod +x /usr/local/bin/grpcurl
-wget https://raw.githubusercontent.com/XTLS/Xray-core/main/app/stats/command/command.proto -O stats.proto
-# buat ubuntu 22 dan 25 
-apt install netcat-traditional -y
-apt install netcat-openbsd -y
-apt install nodejs -y
-apt install npm && npm install -g pm2
-
+cd /root/
+apt-get remove --purge nginx* -y
+apt-get remove --purge nginx-common* -y
+apt-get remove --purge nginx-full* -y
+apt-get remove --purge dropbear* -y
+apt-get remove --purge stunnel4* -y
+apt-get remove --purge apache2* -y
+apt-get remove --purge ufw* -y
+apt-get remove --purge firewalld* -y
+apt-get remove --purge exim4* -y
+apt autoremove -y
+apt update -y
+apt-get --reinstall --fix-missing install -y sudo dpkg psmisc socat jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget vim net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential gcc g++ automake make autoconf perl m4 dos2unix dropbear libreadline-dev zlib1g-dev libssl-dev dirmngr libxml-parser-perl neofetch git lsof iptables iptables-persistent
+apt-get --reinstall --fix-missing install -y libreadline-dev zlib1g-dev libssl-dev python2 screen curl jq bzip2 gzip coreutils rsyslog iftop htop zip unzip net-tools sed gnupg gnupg1 bc sudo apt-transport-https build-essential dirmngr libxml-parser-perl neofetch screenfetch git lsof openssl easy-rsa fail2ban tmux vnstat dropbear libsqlite3-dev socat cron bash-completion ntpdate xz-utils sudo apt-transport-https gnupg2 gnupg1 dnsutils lsb-release chrony
+gem install lolcat
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
 clear
 clear && clear && clear
 clear;clear;clear
@@ -124,6 +115,80 @@ echo -e "${YELLOW}-----------------------------------------------------${NC}"
 echo ""
 read -p "$( echo -e "${GREEN}Input Your Choose ? ${NC}(${YELLOW}1/2${NC})${NC} " )" choose_domain
 if [[ $choose_domain == "2" ]]; then # // Using Automatic Domain
+mkdir -p /usr/bin
+rm -fr /usr/local/bin/xray
+rm -fr /usr/local/bin/stunnel
+rm -fr /usr/local/bin/stunnel5
+rm -fr /etc/nginx
+rm -fr /var/lib/scrz-prem/
+rm -fr /usr/bin/xray
+rm -fr /etc/xray
+rm -fr /usr/local/etc/xray
+mkdir -p /etc/nginx
+mkdir -p /var/lib/scrz-prem/
+mkdir -p /usr/bin/xray
+mkdir -p /etc/xray
+mkdir -p /usr/local/etc/xray
+apt install jq curl -y
+rm -rf /root/xray/scdomain
+mkdir -p /root/xray
+clear
+echo ""
+read -rp "Input Domain Name. Example ( babi ): " -e sub
+DOMAIN=blitar-nbc-group.biz.id
+SUB_DOMAIN=${sub}.blitar-nbc-group.biz.id
+CF_ID=Afitamebel@gmail.com
+CF_KEY=c7892fc1afa8bb535a286b67deba8be60ecd8
+set -euo pipefail
+IP=$(curl -sS ifconfig.me);
+echo "Updating DNS for ${SUB_DOMAIN}..."
+ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
+-H "X-Auth-Email: ${CF_ID}" \
+-H "X-Auth-Key: ${CF_KEY}" \
+-H "Content-Type: application/json" | jq -r .result[0].id)
+RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${SUB_DOMAIN}" \
+-H "X-Auth-Email: ${CF_ID}" \
+-H "X-Auth-Key: ${CF_KEY}" \
+-H "Content-Type: application/json" | jq -r .result[0].id)
+if [[ "${#RECORD}" -le 10 ]]; then
+RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
+-H "X-Auth-Email: ${CF_ID}" \
+-H "X-Auth-Key: ${CF_KEY}" \
+-H "Content-Type: application/json" \
+--data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
+fi
+RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
+-H "X-Auth-Email: ${CF_ID}" \
+-H "X-Auth-Key: ${CF_KEY}" \
+-H "Content-Type: application/json" \
+--data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
+
+echo "$SUB_DOMAIN" > /root/domain
+echo "$SUB_DOMAIN" > /root/scdomain
+echo "$SUB_DOMAIN" > /etc/xray/domain
+echo "$SUB_DOMAIN" > /etc/v2ray/domain
+echo "$SUB_DOMAIN" > /etc/xray/scdomain
+echo "IP=$SUB_DOMAIN" > /var/scrz-prem/ipvps.conf
+
+sleep 1
+yellow "Domain added.."
+sleep 3
+domain=$(cat /root/domain)
+cp -r /root/domain /etc/xray/domain
+clear
+echo -e "[ ${GREEN}INFO${NC} ] Starting renew cert... "
+sleep 2
+echo -e "${OKEY} Starting Generating Certificate"
+rm -fr /root/.acme.sh
+mkdir -p /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+echo -e "${OKEY} Your Domain : $domain"
 sleep 2
 elif [[ $choose_domain == "1" ]]; then
 clear
@@ -145,9 +210,9 @@ exit 1
 fi
 mkdir -p /usr/bin
 rm -fr /usr/local/bin/xray
-rm -fr /etc/nginx
 rm -fr /usr/local/bin/stunnel
-rm -fr /usr/local/bin/stunnel4
+rm -fr /usr/local/bin/stunnel5
+rm -fr /etc/nginx
 rm -fr /var/lib/scrz-prem/
 rm -fr /usr/bin/xray
 rm -fr /etc/xray
@@ -163,21 +228,34 @@ echo "$domain" > /root/domain
 domain=$(cat /root/domain)
 cp -r /root/domain /etc/xray/domain
 clear
+echo -e "[ ${GREEN}INFO${NC} ] Starting renew cert... "
+sleep 2
+echo -e "${OKEY} Starting Generating Certificate"
+rm -fr /root/.acme.sh
+mkdir -p /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+echo -e "${OKEY} Your Domain : $domain"
+sleep 2
 else
 echo -e "${EROR} Please Choose 1 & 2 Only !"
 exit 1
 fi
 echo -e "┌─────────────────────────────────────────┐"
-echo -e " \E[42;1;37m          >>> Install Tools <<<        \E[0m$NC"
+echo -e " \E[42;1;37m           >>> Install Tools <<<          \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools2.sh && chmod +x tools2.sh && ./tools2.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/vnstat.sh && chmod +x vnstat.sh && ./vnstat.sh
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn4.sh && chmod +x ssh-vpn4.sh && ./ssh-vpn4.sh
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/m2/install-ws.sh && chmod +x install-ws.sh && ./install-ws.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
@@ -201,20 +279,20 @@ wget -q -O /usr/bin/trialvless "https://raw.githubusercontent.com/kayu55/aku/mai
 wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/kayu55/aku/main/add-tr.sh"
 wget -q -O /usr/bin/trialtrojan "https://raw.githubusercontent.com/kayu55/aku/main/trialtrojan.sh"
 wget -q -O /usr/bin/autoreboot "https://raw.githubusercontent.com/kayu55/aku/main/options/autoreboot.sh"
-wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/restart.sh"
+wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kayu55/aku/main/options/restart.sh"
 wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/kayu55/aku/main/options/tendang.sh"
 wget -q -O /usr/bin/clearlog "https://raw.githubusercontent.com/kayu55/aku/main/options/clearlog.sh"
-wget -q -O /usr/bin/running "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/running.sh"
+wget -q -O /usr/bin/running "https://raw.githubusercontent.com/kayu55/aku/main/options/running.sh"
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/kayu55/aku/main/tools/speedtest_cli.py"
 wget -q -O /usr/bin/cek-bandwidth "https://raw.githubusercontent.com/kayu55/aku/main/options/cek-bandwidth.sh"
 wget -q -O /usr/bin/menu-vless "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-vless.sh"
 wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-vmess.sh"
 wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-trojan.sh"
-wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/tools/menu-ssh.sh"
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-ssh.sh"
 wget -q -O /usr/bin/menu-backup "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-backup.sh"
-wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/m2/menu.sh"
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu.sh"
 wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
-wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/m2/addhost.sh"
+wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
 wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
@@ -222,9 +300,6 @@ wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools
 wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
 wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
 wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
-wget -q -O /usr/bin/px "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/px.sh"
-wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
-wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
 
 chmod +x /usr/bin/jam
 chmod +x /usr/bin/update-xray
@@ -256,9 +331,6 @@ chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/info
 chmod +x /usr/bin/set-bw
-chmod +x /usr/bin/px
-chmod +x /usr/bin/cekssh
-chmod +x /usr/bin/cekudp
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -269,11 +341,6 @@ cat > /etc/cron.d/ba_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 1 * * * root /bin/backup
-END
-cat > /etc/cron.d/px_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 5 * * * root /usr/bin/px
 END
 cat > /etc/cron.d/re_otm <<-END
 SHELL=/bin/sh
@@ -289,11 +356,6 @@ cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 3 * * * root /usr/bin/clearlog
-END
-cat > /etc/cron.d/px_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 6 * * * root /usr/bin/px
 END
 cat > /home/re_otm <<-END
 7
@@ -329,8 +391,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
     curl -sL "$gotop_link" -o /tmp/gotop.deb
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
-
-
+    
 clear
 print_install "Memasang Swap 2 GB"
 
@@ -395,11 +456,10 @@ echo  "------------------------------------------------------------"
 echo -e "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
-rm -fr /root/tools2.sh
-rm -fr /root/install-ws.sh
-rm -fr /root/ssh-vpn4.sh
+rm -fr /root/vnstat.sh
+rm -fr /root/ssh-vpn.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/main2.sh
+rm -fr /root/setup.sh
 rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
