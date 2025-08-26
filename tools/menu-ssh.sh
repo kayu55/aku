@@ -329,6 +329,7 @@ echo -e "     ${GREEN}[8]${NC}  Auto Kill User Ssh "
 echo -e "     ${GREEN}[9]${NC}  Cek All Member Ssh "
 echo -e "     ${GREEN}[10]${NC} Tendang User Multi"
 echo -e "     ${GREEN}[11]${NC} Cek User Udp"
+echo -e "     ${GREEN}[12]${NC} Cek Ssh Wsoket"
 echo -e " "
 echo -e "     ${GREEN}[0]${NC} Back To Menu      "
 echo -e "${PURPLE}└───────────────────────────────────────────────┘${NC}"
@@ -347,6 +348,7 @@ case $opt in
 9) clear ; member ;;
 10) clear ; tendang ;;
 11) clear ; cekudp ;;
+12) clear ; cek ;;
 0) clear ; menu ;;
 *) echo -e "" ; echo "Press any key to back on menu" ; sleep 1 ; menu ;;
 esac
