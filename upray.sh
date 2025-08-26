@@ -338,11 +338,31 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### janaka 2025-08-29
-},{"id": "a0ec1e8e-0d13-4873-8ca5-ab3fb3336c4e","alterId": 0,"email": "janaka"
-          }
-        ]
-      },
+### l4mp 2025-09-21
+},{"id": "d2d02621-5a6f-4acf-bcdb-e5503fe50d33","alterId": 0,"email": "l4mp"
+### roni12 2025-09-20
+},{"id": "c36ee02b-d8e1-41eb-a239-2f54b09e772e","alterId": 0,"email": "roni12"
+### cin3 2025-09-17
+},{"id": "22c923ae-1250-483a-80bd-8a4f86726bfc","alterId": 0,"email": "cin3"
+### dandy 2025-09-16
+},{"id": "11be4c69-d364-497e-9cd1-270168cb5966","alterId": 0,"email": "dandy"
+### ditunggu 2025-09-14
+},{"id": "f13126f9-1430-4e13-b717-71d9e7d7e271","alterId": 0,"email": "ditunggu"
+### roni9 2025-09-14
+},{"id": "cae5edcd-e5a7-4127-89de-332b3a7cdc80","alterId": 0,"email": "roni9"
+### gss30 2025-09-13
+},{"id": "12229bd5-7932-4ec2-a915-fd552d061710","alterId": 0,"email": "gss30"
+### sold1er 2025-09-09
+},{"id": "5084cd20-4d82-4c54-b766-60007e280758","alterId": 0,"email": "sold1er"
+### niz30 2025-09-08
+},{"id": "865bbf9a-f731-4d19-8b3b-06d635fecbb9","alterId": 0,"email": "niz30"
+### pore 2025-09-05
+},{"id": "30dc9a3e-1b4a-49d7-b000-f74d9e2b2665","alterId": 0,"email": "pore"
+### jost 2025-09-05
+},{"id": "7e9d80ff-87c4-4d09-a789-d8c668f394df","alterId": 0,"email": "jost"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -401,11 +421,31 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### janaka 2025-08-29
-},{"id": "a0ec1e8e-0d13-4873-8ca5-ab3fb3336c4e","alterId": 0,"email": "janaka"
-          }
-        ]
-      },
+### l4mp 2025-09-21
+},{"id": "d2d02621-5a6f-4acf-bcdb-e5503fe50d33","alterId": 0,"email": "l4mp"
+### roni12 2025-09-20
+},{"id": "c36ee02b-d8e1-41eb-a239-2f54b09e772e","alterId": 0,"email": "roni12"
+### cin3 2025-09-17
+},{"id": "22c923ae-1250-483a-80bd-8a4f86726bfc","alterId": 0,"email": "cin3"
+### dandy 2025-09-16
+},{"id": "11be4c69-d364-497e-9cd1-270168cb5966","alterId": 0,"email": "dandy"
+### ditunggu 2025-09-14
+},{"id": "f13126f9-1430-4e13-b717-71d9e7d7e271","alterId": 0,"email": "ditunggu"
+### roni9 2025-09-14
+},{"id": "cae5edcd-e5a7-4127-89de-332b3a7cdc80","alterId": 0,"email": "roni9"
+### gss30 2025-09-13
+},{"id": "12229bd5-7932-4ec2-a915-fd552d061710","alterId": 0,"email": "gss30"
+### sold1er 2025-09-09
+},{"id": "5084cd20-4d82-4c54-b766-60007e280758","alterId": 0,"email": "sold1er"
+### niz30 2025-09-08
+},{"id": "865bbf9a-f731-4d19-8b3b-06d635fecbb9","alterId": 0,"email": "niz30"
+### pore 2025-09-05
+},{"id": "30dc9a3e-1b4a-49d7-b000-f74d9e2b2665","alterId": 0,"email": "pore"
+### jost 2025-09-05
+},{"id": "7e9d80ff-87c4-4d09-a789-d8c668f394df","alterId": 0,"email": "jost"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -507,7 +547,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 24.10.31
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
