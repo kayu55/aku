@@ -1,0 +1,121 @@
+#!/bin/bash
+clear
+IPVPS=$(curl -s ipv4.icanhazip.com)
+
+hijau="\033[0;32m"
+merah="\033[0;31m"
+reset="\e[0m"
+
+# Cek status layanan
+status_service() {
+    systemctl is-active "$1" >/dev/null 2>&1 && echo -e "${hijau}ON${reset}" || echo -e "${merah}OF${reset}"
+}
+# Status layanan
+stat_nginx=$(status_service nginx)
+stat_ssh=$(status_service ssh)
+stat_dropbear=$(status_service dropbear)
+stat_xray=$(status_service xray)
+stat_haproxy=$(status_service haproxy)
+stat_ws=$(status_service ws)
+stat_cron=$(status_service cron)
+stat_ws_epro=$(status_service ws_epro)
+
+# WARNA AKURAT
+BIRU="\033[0;34m"
+HIJAU="\033[0;32m"
+PUTIH="\033[0;37m"
+WHITE="\033[1;37m"
+CYAN="\033[0;36m"
+BLACK="\033[38;2;0;0;0m"
+RESET="\033[0m"
+BgB="\033[0;46m"
+# Hitung jumlah akun
+# // Log account
+vlx=$(grep -c -E "^#& " "/etc/xray/config.json")
+let vla=$vlx/2
+vmc=$(grep -c -E "^### " "/etc/xray/config.json")
+let vma=$vmc/2
+ssh1="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
+trx=$(grep -c -E "^#! " "/etc/xray/config.json")
+let trb=$trx/2
+
+gradasi_line() {
+  local padding="          " # geser
+  printf "%s" "$padding"
+
+  for i in {232..255}; do printf "\033[38;5;%sm─" "$i"; done
+  for i in {254..232}; do printf "\033[38;5;%sm─" "$i"; done
+
+  printf "\033[0m\n"
+}
+
+clear
+
+# HEADER
+printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│\033[0;37m                       • JATIM TUNNELING •                     ${RESET}${BIRU}│${RESET}\n"
+printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
+
+# INFO
+printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│ ${PUTIH}User Roles     :${HIJAU} %s${RESET}\n" "SCRIPT CAP JANGKRIK"
+printf "${BIRU}│ ${PUTIH}System Uptime  :${RESET} %s\n" "$(uptime -p | cut -d ' ' -f2-)"
+printf "${BIRU}│ ${PUTIH}Current Domain :${RESET} $(cat /etc/xray/domain)\n"
+printf "${BIRU}│ ${PUTIH}IP-VPS         :${RESET} $(curl -s ipv4.icanhazip.com)\n"
+printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
+
+# STATUS
+printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│${PUTIH} [ ${BIRU}SSH WS : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service ws_epro)"
+printf "${PUTIH}[${BIRU}XRAY : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service xray)"
+printf "${PUTIH}[ ${BIRU}NGINX : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service nginx)"
+printf "${PUTIH}[ ${BIRU}HAPROXY : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service haproxy)"
+printf "${PUTIH} [ ${BIRU}SSHTUN : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service ssh)"
+printf "${PUTIH}[${BIRU}CRON : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service cron)"
+printf "${PUTIH}[${BIRU} DROPB : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service dropbear)"
+printf "${PUTIH}[${BIRU} GOOD ${HIJAU}%s${RESET}${PUTIH}] ${BIRU} %s${RESET}\n" "" "     │"
+printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
+
+# LIST ACCOUNT
+printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│${PUTIH} [ ${BIRU}SSH WS : ${HIJAU}%2s${RESET} ${PUTIH}] " "$ssh1"
+printf "[ ${BIRU}VMESS : ${HIJAU}%2s${RESET} ${PUTIH}] " "$vma"
+printf "[ ${BIRU}VLESS : ${HIJAU}%2s${RESET} ${PUTIH}] " "$vla"
+printf "[ ${BIRU}TROJAN : ${HIJAU}%2s${RESET} ${PUTIH}]${BIRU}%4s${RESET}\n" "$trb" "│"
+printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
+
+# MENU
+printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│ [01]${RESET} SSH / OPENVPN    ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[06]${RESET} BACKUP / RESTORE   ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
+printf "${BIRU}│ [02]${RESET} VMESS / XRAY     ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[07]${RESET} BOT TELE & WA      ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
+printf "${BIRU}│ [03]${RESET} VLESS / XRAY     ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[08]${RESET} UPDATE SCRIPT      ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
+printf "${BIRU}│ [04]${RESET} TROJAN / XRAY    ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[09]${RESET} FEATURES           ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
+printf "${BIRU}│ [05]${RESET} VPS BENCH        ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[x] ${RESET} EXIT               ${WHITE}[${BIRU}Exit${WHITE}]${BIRU} │ ${RESET}\n"
+printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
+
+# VERSI
+gradasi_line
+printf "${PUTIH}                Version     : LIFE-TIME    ${RESET}\n"
+gradasi_line
+
+
+# KREDIT
+printf "${BIRU}┌──────────────────────── BY ─────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│${WHITE}                          BOKEP.COM                            ${BIRU}│${RESET}\n"
+printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
+
+# INPUT
+read -p "Select menu : " wZtXtQXTZoo
+case $wZtXtQXTZoo in
+  1) clear ; m-ssh ;;
+  2) clear ; m-vme ;;
+  3) clear ; m-vle ;;
+  4) clear ; m-tro ;;
+  5) clear ; gotop ;;
+  6) clear ; m-bkp ;;
+  7) clear ; m-bot ;;
+  8) clear ; upsc ;;
+  9) clear ; m-ftr ;;
+  x|X) clear ; welcome ;;
+  *) clear ; welcome ;;
+esac
