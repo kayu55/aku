@@ -58,7 +58,7 @@ printf "${BIRU}└────────────────────�
 
 # INFO
 printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
-printf "${BIRU}│ ${PUTIH}User Roles     :${HIJAU} %s${RESET}\n" "SCRIPT CAP JANGKRIK"
+printf "${BIRU}│ ${PUTIH}User Roles     :${HIJAU} %s${RESET}\n" "SCRIPT ST PUSAT BLITAR"
 printf "${BIRU}│ ${PUTIH}System Uptime  :${RESET} %s\n" "$(uptime -p | cut -d ' ' -f2-)"
 printf "${BIRU}│ ${PUTIH}Current Domain :${RESET} $(cat /etc/xray/domain)\n"
 printf "${BIRU}│ ${PUTIH}IP-VPS         :${RESET} $(curl -s ipv4.icanhazip.com)\n"
