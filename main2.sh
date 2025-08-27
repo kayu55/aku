@@ -298,6 +298,11 @@ END
 cat > /home/re_otm <<-END
 7
 END
+# === Cron: Bersihkan Access Log Nginx & Xray Tiap Menit ===
+echo "*/1 * * * * root echo -n > /var/log/nginx/access.log" > /etc/cron.d/log.nginx
+echo "*/1 * * * * root echo -n > /var/log/xray/access.log" >> /etc/cron.d/log.xray
+
+# === Restart Cron Service ===
 service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
 clear
