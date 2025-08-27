@@ -1,10 +1,21 @@
 #!/bin/bash
 clear
-IPVPS=$(curl -s ipv4.icanhazip.com)
 
 hijau="\033[0;32m"
 merah="\033[0;31m"
 reset="\e[0m"
+
+RAM_TOTAL=$(free -m | awk '/Mem:/{print $2}')
+RAM_USED=$(free -m | awk '/Mem:/{print $3}')
+CPU_LOAD=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+BW_TOTAL=$(vnstat --oneline | awk -F\; '{print $11}')
+BW_USED=$(vnstat --oneline | awk -F\; '{print $9}')
+# Deteksi OS Name (contoh: Debian 11, Ubuntu 22.04)
+OS_NAME=$(grep -oP '^PRETTY_NAME="\K[^"]+' /etc/os-release)
+# Deteksi jumlah CPU core (logical)
+CPU_CORE=$(nproc)
+# Deteksi Arsitektur sistem (x86_64, aarch64, dll)
+ARCH=$(uname -m)
 
 # Cek status layanan
 status_service() {
@@ -59,6 +70,12 @@ printf "${BIRU}└────────────────────�
 # INFO
 printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
 printf "${BIRU}│ ${PUTIH}User Roles     :${HIJAU} %s${RESET}\n" "SCRIPT ST PUSAT BLITAR"
+printf "${BIRU}│ ${PUTIH}OS VERSION   :${RESET} $(grep -oP '^PRETTY_NAME="\K[^"]+' /etc/os-release)"
+printf "${BIRU}│ ${PUTIH}VPS core     :${RESET} $(nproc) Core"
+printf "${BIRU}│ ${PUTIH}Arch         :${RESET} $(uname -m)"
+printf "${BIRU}│ ${PUTIH}CPU Usage    :${RESET} ${CPU_LOAD} %"
+printf "${BIRU}│ ${PUTIH}RAM Used     :${RESET} $(free -m | awk '/Mem:/{print $2}') MB / $(free -m | awk '/Mem:/{print $3}') MB"
+printf "${BIRU}│ ${PUTIH}BW Used      :${RESET}(vnstat --oneline | awk -F\; '{print $11}') / $(vnstat --oneline | awk -F\; '{print $9}')"
 printf "${BIRU}│ ${PUTIH}System Uptime  :${RESET} %s\n" "$(uptime -p | cut -d ' ' -f2-)"
 printf "${BIRU}│ ${PUTIH}Current Domain :${RESET} $(cat /etc/xray/domain)\n"
 printf "${BIRU}│ ${PUTIH}IP-VPS         :${RESET} $(curl -s ipv4.icanhazip.com)\n"
