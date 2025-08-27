@@ -78,10 +78,10 @@ printf "${BIRU}│${PUTIH}[ ${BIRU}SSH WS : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(s
 printf "${PUTIH}[${BIRU}XRAY : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service xray)"
 printf "${PUTIH}[ ${BIRU}NGINX   : ${HIJAU}%s${RESET} ${PUTIH}] " "$(status_service nginx)"
 printf "${PUTIH}[ ${BIRU}DROPB : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service dropbear)"
-printf "${PUTIH}  [ ${BIRU}SSHTUN : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service ssh)"
+printf "${PUTIH}   [ ${BIRU}SSHTUN : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service ssh)"
 printf "${PUTIH}[${BIRU}CRON : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service cron)"
 printf "${PUTIH}[${BIRU} HAPROXY : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service haproxy)"
-printf "${PUTIH}[${BIRU} GOOD ${HIJAU}%s${RESET}${PUTIH}] ${BIRU} %s${RESET}\n" "" "     │"
+printf "${PUTIH}[${BIRU} GOOD ${HIJAU}%s${RESET}${PUTIH}] ${BIRU} %s${RESET}\n" "" "    │"
 printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
 
 # LIST ACCOUNT
