@@ -18,7 +18,7 @@ stat_xray=$(status_service xray)
 stat_haproxy=$(status_service haproxy)
 stat_ws=$(status_service ws)
 stat_cron=$(status_service cron)
-stat_ssh_ws=$(status_service ws_epro)
+stat_ws=$(status_service ws)
 
 # WARNA AKURAT
 BIRU="\033[0;34m"
@@ -66,7 +66,7 @@ printf "${BIRU}└────────────────────�
 
 # STATUS
 printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
-printf "${BIRU}│${PUTIH}[ ${BIRU}SSH WS : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service ws_epro)"
+printf "${BIRU}│${PUTIH}[ ${BIRU}SSH WS : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service ws)"
 printf "${PUTIH}[${BIRU}XRAY : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service xray)"
 printf "${PUTIH}[ ${BIRU}NGINX : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service nginx)"
 printf "${PUTIH}[ ${BIRU}HAPROXY : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_service haproxy)"
