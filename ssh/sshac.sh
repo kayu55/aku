@@ -3,11 +3,7 @@
 clear
 
 # Baca nama pengguna dari config.json, pisahkan username dan tanggal expired, lalu hilangkan duplikat
-useradd -e `date -d "$masaaktif days" +"%Y-%m-%d"` -s /bin/false -M $Login
-hariini=`date -d "0 days" +"%Y-%m-%d"`
-exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
-echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
-PID=`ps -ef |grep -v grep | grep sshws |awk '{print $2}'`
+users=$(grep -E "^#ssh# " "ps -ef |grep -v grep | grep sshws |awk '{print $2}" | sed -E 's/^#ssh# ([^ ]+).*/\1/' | awk '!seen[$0]++')
 i=1
 for user in $users; do
     echo "$i) $user"
