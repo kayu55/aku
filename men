@@ -4,7 +4,7 @@ clear
 clear
 clear
 hijau="\033[0;32m"
-cyan="\033[1;36m"
+cyan="\033[0;36m"
 merah="\033[0;31m"
 reset="\e[0m"
 
