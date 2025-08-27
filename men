@@ -18,7 +18,7 @@ stat_xray=$(status_service xray)
 stat_haproxy=$(status_service haproxy)
 stat_ws=$(status_service ws)
 stat_cron=$(status_service cron)
-stat_ws_epro=$(status_service ws_epro)
+stat_ssh_ws=$(status_service ws_epro)
 
 # WARNA AKURAT
 BIRU="\033[0;34m"
