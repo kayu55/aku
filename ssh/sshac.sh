@@ -3,7 +3,7 @@
 clear
 
 # Baca nama pengguna dari config.json, pisahkan username dan tanggal expired, lalu hilangkan duplikat
-users=$(grep -E "^#ssh# " "ps -ef |grep -v grep | grep sshws |awk '{print $2}" | sed -E 's/^#ssh# ([^ ]+).*/\1/' | awk '!seen[$0]++')
+users=$(grep -E "^#ssh# " "/etc/ssh" | sed -E 's/^#ssh# ([^ ]+).*/\1/' | awk '!seen[$0]++')
 i=1
 for user in $users; do
     echo "$i) $user"
