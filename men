@@ -81,7 +81,7 @@ printf "${PUTIH}[ ${BIRU}DROPB : ${HIJAU}%s${RESET} ${PUTIH}]  " "$(status_servi
 printf "${PUTIH}   [ ${BIRU}SSHTUN : ${HIJAU}%s${RESET} ${PUTIH}] " "$(status_service ssh)"
 printf "${PUTIH} [${BIRU}CRON : ${HIJAU}%s${RESET} ${PUTIH}] " "$(status_service cron)"
 printf "${PUTIH} [${BIRU} HAPROXY : ${HIJAU}%s${RESET} ${PUTIH}] " "$(status_service haproxy)"
-printf "${PUTIH}[${BIRU}GOOD ${HIJAU}%s${RESET}${PUTIH}] ${BIRU} %s${RESET}\n" "" "      │"
+printf "${PUTIH}[${BIRU} GOOD ${HIJAU}%s${RESET}${PUTIH}] ${BIRU} %s${RESET}\n" "" "     │"
 printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
 
 # LIST ACCOUNT
