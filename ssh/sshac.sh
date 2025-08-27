@@ -24,7 +24,7 @@ echo -e "\e[97;1m       SHOW SSH USER ACCOUNT          \e[0m"
 echo -e "\e[97;1m ==================================== \e[0m"
 i=1
 for user in $users; do
-    echo "$i) $user"
+    echo "$i) $AKUN"
     ((i++))
 done
 
@@ -34,7 +34,7 @@ echo ""
 read -p " Just input Number: " number
 
 # Dapatkan username berdasarkan nomor yang dipilih
-selected_user=$(echo "$users" | sed -n "${number}p")
+selected_user=$(echo "$AKUN" | sed -n "${number}p")
 
 if [ -z "$selected_user" ]; then
     echo -e "\e[31;1m number is missing or incorrect\e[0m"
