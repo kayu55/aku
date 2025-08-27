@@ -127,6 +127,6 @@ case $wZtXtQXTZoo in
   7) clear ; m-bot ;;
   8) clear ; upsc ;;
   9) clear ; m-ftr ;;
-  x|X) clear ; welcome ;;
-  *) clear ; welcome ;;
+  x|X) clear ; menu ;;
+  *) clear ; menu ;;
 esac
