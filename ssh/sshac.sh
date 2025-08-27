@@ -3,7 +3,7 @@
 clear
 
 # Baca nama pengguna dari config.json, pisahkan username dan tanggal expired, lalu hilangkan duplikat
-users=$(grep -E "^#ssh# " "/etc/ssh" | sed -E 's/^#ssh# ([^ ]+).*/\1/' | awk '!seen[$0]++')
+JUMLAH="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
 i=1
 for user in $users; do
     echo "$i) $user"
@@ -16,7 +16,7 @@ echo ""
 read -p " Just input Number: " number
 
 # Dapatkan username berdasarkan nomor yang dipilih
-selected_user=$(echo "$users" | sed -n "${number}p")
+selected_user=$(echo "$JUMLAH" | sed -n "${number}p")
 
 if [ -z "$selected_user" ]; then
     echo -e "\e[31;1m number is missing or incorrect\e[0m"
