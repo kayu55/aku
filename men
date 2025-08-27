@@ -95,7 +95,7 @@ printf "${BIRU}└────────────────────�
 # MENU
 printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
 printf "${BIRU}│ [01]${RESET} SSH / OPENVPN    ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[06]${RESET} BACKUP / RESTORE   ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
-printf "${BIRU}│ [02]${RESET} VMESS / XRAY     ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[07]${RESET} BOT TELE & WA      ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
+printf "${BIRU}│ [02]${RESET} VMESS / XRAY     ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[07]${RESET} BOT TELE           ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
 printf "${BIRU}│ [03]${RESET} VLESS / XRAY     ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[08]${RESET} UPDATE SCRIPT      ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
 printf "${BIRU}│ [04]${RESET} TROJAN / XRAY    ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[09]${RESET} FEATURES           ${WHITE}[${BIRU}Menu${WHITE}]${BIRU} │ ${RESET}\n"
 printf "${BIRU}│ [05]${RESET} VPS BENCH        ${WHITE}[${BIRU}Menu${WHITE}]   ${BIRU}[x] ${RESET} EXIT               ${WHITE}[${BIRU}Exit${WHITE}]${BIRU} │ ${RESET}\n"
