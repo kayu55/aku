@@ -19,7 +19,7 @@ done < /etc/passwd
 JUMLAH="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
 i=1
 for user in $users; do
-    echo "$i) $user"
+    echo "$i) $AKUN"
     ((i++))
 done
 
