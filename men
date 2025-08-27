@@ -108,10 +108,10 @@ gradasi_line
 
 
 # KREDIT
-printf "${BIRU}┌──────────────────────── BY ─────────────────────────────────┐${RESET}\n"
-printf "${BIRU}│${WHITE}                          BOKEP.COM                            ${BIRU}│${RESET}\n"
+printf "${BIRU}┌───────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "${BIRU}│ ${WHITE}SCRIPT GRATIS BUAT SAMPEAN SEMUANYA                           ${BIRU}│${RESET}\n"
 printf "${BIRU}└───────────────────────────────────────────────────────────────┘${RESET}\n"
-
+printf " \n"
 # INPUT
 read -p "Select menu : " wZtXtQXTZoo
 case $wZtXtQXTZoo in
