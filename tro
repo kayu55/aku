@@ -28,7 +28,7 @@ fi
 
 # Tampilkan Detail Akun User
 clear
-cat /etc/aryapro/trojan/detail/$selected_user.txt
+cat /etc/kyt/trojan/detail/$selected_user.txt
 echo -e "\033[0;33m┌──────────────────────────────────────────┐\033[0m"
 echo -e " Autoscript By Arya Blitar 083851335795    "
 echo -e "\033[0;33m└──────────────────────────────────────────┘\033[0m"
