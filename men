@@ -1,6 +1,8 @@
 #!/bin/bash
 clear
-
+clear
+clear
+clear
 hijau="\033[0;32m"
 merah="\033[0;31m"
 reset="\e[0m"
