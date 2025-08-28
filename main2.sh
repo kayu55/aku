@@ -298,11 +298,7 @@ END
 cat > /home/re_otm <<-END
 7
 END
-# === Cron: Bersihkan Access Log Nginx & Xray Tiap Menit ===
-echo "*/1 * * * * root echo -n > /var/log/nginx/access.log" > /etc/cron.d/log.nginx
-echo "*/1 * * * * root echo -n > /var/log/xray/access.log" >> /etc/cron.d/log.xray
 
-# === Restart Cron Service ===
 service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
 clear
@@ -335,27 +331,14 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     curl -sL "$gotop_link" -o /tmp/gotop.deb
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
 
-
-clear
-print_install "Memasang Swap 2 GB"
-
-# Mengambil versi terbaru gotop
-gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v${gotop_latest}_linux_amd64.deb"
-
-# Download & install gotop
-curl -sL "$gotop_link" -o /tmp/gotop.deb
-dpkg -i /tmp/gotop.deb >/dev/null 2>&1
-
-# Membuat swap file 2GB
-dd if=/dev/zero of=/swapfile bs=1M count=2048
+# memory swap 1gb
+cd
+dd if=/dev/zero of=/swapfile bs=1024 count=1048576
 mkswap /swapfile
- chown root:root /swapfile
- chmod 0600 /swapfile
- swapon /swapfile >/dev/null 2>&1
-
-# Tambahkan swap ke fstab agar aktif saat boot
-sed -i '$ i\/swapfile swap swap defaults 0 0' /etc/fstab
+chown root:root /swapfile
+chmod 0600 /swapfile >/dev/null 2>&1
+swapon /swapfile >/dev/null 2>&1
+sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
 clear
 echo  ""
