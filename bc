@@ -1,0 +1,108 @@
+#!/bin/bash
+
+# KONFIGURASI WARNA
+green="\e[32m"
+NC="\e[0m"
+
+# KONFIGURASI BOT TELEGRAM
+TELEGRAM_TOKEN="7567594287:AAGVeDwRq9QrNg6jSce30eOm9WiVtAWKxjA" >/dev/null
+TELEGRAM_CHAT_ID="6430177985" >/dev/null
+
+if [[ "$TELEGRAM_TOKEN" = "" ]]; then
+read -rp "• BOT TOKEN: " -e token
+read -rp "• CHAT ID  : " -e chatId
+cat <<EOF>> /etc/aryapo/bot/backup/key
+$token
+EOF
+cat <<EOF>> /etc/aryapo/bot/backup/id
+$chatId
+EOF
+fi
+clear
+
+# KONFIGURASI INFO VPS
+IP=$(curl -sS ipv4.icanhazip.com)
+DOMAIN="$(cat /etc/xray/domain)"
+DATE=$(date +"%Y-%m-%d")
+USER=$(curl -sS $url_izin | grep $IP | awk '{print $2}')
+APIGIT=$(curl -sS https://pastebin.com/raw/3rYQ1Urq)
+EMAILGIT="iwanles109@gmail.com"
+USERGIT="kayu55"
+URL_GIT="https://github.com/kayu55/autobackup"
+git clone ${URL_GIT}.git &> /dev/null
+
+# PROSES BACKUP 
+BACKUP_ROOT="/root/backup"
+BACKUP_NAME="$USER-$DATE-$(date +%H:%M:%S).zip"
+
+rm -rf backup
+mkdir $BACKUP_ROOT
+
+# MENCADANGKAN BEBERAPA FILE BACKUP YANG DIBUTUHKAN
+echo -e "[ ${green}INFO${NC} ] • Memulai proses backup..."
+cp /etc/passwd "$BACKUP_ROOT" &> /dev/null
+cp /etc/group "$BACKUP_ROOT" &> /dev/null
+cp /etc/shadow "$BACKUP_ROOT" &> /dev/null
+cp /etc/gshadow "$BACKUP_ROOT" &> /dev/null
+cp -r /etc/aryapro "$BACKUP_ROOT/aryapro" &> /dev/null
+cp -r /var/lib/aris "$BACKUP_ROOT/aris" &> /dev/null
+cp -r /etc/xray "$BACKUP_ROOT/xray" &> /dev/null
+cp -r /var/www/html "$BACKUP_ROOT/html" &> /dev/null
+
+# MEMBUAT FOLDER ZIP 
+cd /root
+echo "Mengarsipkan folder backup"
+zip -r $BACKUP_NAME backup &> /dev/null
+mv $BACKUP_NAME autobackup &> /dev/null
+rm -rf backup
+cd autobackup
+
+git config --global --add safe.directory "$(pwd)" &> /dev/null
+git config --global user.email "${EMAILGIT}" &> /dev/null
+git config --global user.name "${USERGIT}" &> /dev/null
+rm -rf .git &> /dev/null
+git init &> /dev/null
+git add . &> /dev/null
+git commit -m "BACKUP" &> /dev/null
+git branch -M main &> /dev/null
+git remote add origin ${URL_GIT} &> /dev/null
+git push -f https://${APIGIT}@github.com/${USERGIT}/autobackup.git &> /dev/null
+
+cd
+
+URL_BACKUP="https://raw.githubusercontent.com/kayu55/autobackup/main/${BACKUP_NAME}"
+
+clear
+
+
+# Kirim notifikasi ke Telegram
+PESAN="
+╔═══━━━─── 
+║  𝙳𝙰𝚃𝙰 𝙱𝙰𝙲𝙺𝚄𝙿  
+║
+║ ◉ 𝙳𝙾𝙼𝙰𝙸𝙽
+║   $DOMAIN
+║ ◉ 𝚅𝙿𝚂 𝙸𝙿
+║   $IP
+║ ◉ 𝙳𝙰𝚃𝙴
+║   $DATE
+╚═══━━━─── 
+ 𝙻𝚒𝚗𝚔 𝙱𝚊𝚌𝚔𝚞𝚙:
+ $URL_BACKUP"
+
+curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
+  -d chat_id="$TELEGRAM_CHAT_ID" \
+  -d parse_mode="Markdown" \
+  -d text="$PESAN" >/dev/null
+
+echo -e "\e[97;1m     ==============[ BACKUP DATA ]=============\e[0m"
+echo -e ""
+echo -e "[${green}INFO${NC}] • \e[96mDomain Host:\e[0m $DOMAIN"
+echo -e "[${green}INFO${NC}] • \e[96mDate Backup:\e[0m $DATE"
+echo -e "[${green}INFO${NC}] • \e[96mLink Backup:\e[0m "
+echo -e "$URL_BACKUP"
+echo -e ""
+echo -e "\e[97;1m      ============[   BLITAR   ]===========\e[0m"
+echo -e ""
+
+rm -rf autobackup
