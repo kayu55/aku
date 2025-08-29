@@ -338,6 +338,24 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### pr4s 2025-09-28
+},{"id": "93fec21f-79ce-4ee8-b85a-8b4d1c1b9c81","alterId": 0,"email": "pr4s"
+### Trial-7605 2025-08-29
+},{"id": "9517bf39-0191-46c0-a09f-29afc99198cc","alterId": 0,"email": "Trial-7605"
+### maren3 2025-09-03
+},{"id": "8860c7a7-50b1-4571-b273-16de9ef18baa","alterId": 0,"email": "maren3"
+### nus4 2025-09-01
+},{"id": "0b6a49a5-3949-4a82-8591-841deed03671","alterId": 0,"email": "nus4"
+### k4sno 2025-09-27
+},{"id": "ba303444-9573-4fad-8021-5809ac36a0a4","alterId": 0,"email": "k4sno"
+### sayang 2025-09-27
+},{"id": "dc998cb4-57ac-4548-9bf9-1db3c08115bc","alterId": 0,"email": "sayang"
+### bangray9 2025-09-21
+},{"id": "b5de677c-bb26-4fb6-aa27-04f83d93146e","alterId": 0,"email": "bangray9"
+### jkt4 2025-09-08
+},{"id": "0d4663ea-ca62-46c3-8c85-c9dd7a6fd8cb","alterId": 0,"email": "jkt4"
+### id30 2025-09-01
+},{"id": "81504e37-91a4-4a9b-a2c3-df481e74cd66","alterId": 0,"email": "id30"
              }
           ]
        },
@@ -358,6 +376,8 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
+### trojan2 2025-09-16
+},{"password": "46daced1-1717-4bf8-972e-487a55399999","email": "trojan2"
               }
           ],
          "udp": true
@@ -399,6 +419,24 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### pr4s 2025-09-28
+},{"id": "93fec21f-79ce-4ee8-b85a-8b4d1c1b9c81","alterId": 0,"email": "pr4s"
+### Trial-7605 2025-08-29
+},{"id": "9517bf39-0191-46c0-a09f-29afc99198cc","alterId": 0,"email": "Trial-7605"
+### maren3 2025-09-03
+},{"id": "8860c7a7-50b1-4571-b273-16de9ef18baa","alterId": 0,"email": "maren3"
+### nus4 2025-09-01
+},{"id": "0b6a49a5-3949-4a82-8591-841deed03671","alterId": 0,"email": "nus4"
+### k4sno 2025-09-27
+},{"id": "ba303444-9573-4fad-8021-5809ac36a0a4","alterId": 0,"email": "k4sno"
+### sayang 2025-09-27
+},{"id": "dc998cb4-57ac-4548-9bf9-1db3c08115bc","alterId": 0,"email": "sayang"
+### bangray9 2025-09-21
+},{"id": "b5de677c-bb26-4fb6-aa27-04f83d93146e","alterId": 0,"email": "bangray9"
+### jkt4 2025-09-08
+},{"id": "0d4663ea-ca62-46c3-8c85-c9dd7a6fd8cb","alterId": 0,"email": "jkt4"
+### id30 2025-09-01
+},{"id": "81504e37-91a4-4a9b-a2c3-df481e74cd66","alterId": 0,"email": "id30"
              }
           ]
        },
@@ -419,6 +457,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
+### trojan2 2025-09-16
+},{"password": "46daced1-1717-4bf8-972e-487a55399999","email": "trojan2"
                }
            ]
         },
@@ -503,7 +543,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 24.10.31
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
