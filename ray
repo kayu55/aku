@@ -141,7 +141,7 @@ cat > /etc/xray/config.json << END
           {
             "id": "${uuid}",
             "alterId": 0
-#vmess
+            #vmess
 ### roni16 2025-09-25
 },{"id": "7e245a96-8181-40b0-b9b9-770c3dcedab4","alterId": 0,"email": "roni16"
 ### tasik 2025-09-24
@@ -228,7 +228,7 @@ cat > /etc/xray/config.json << END
           {
             "id": "${uuid}",
             "alterId": 0
-#vmessgrpc
+            #vmessgrpc
 ### roni16 2025-09-25
 },{"id": "7e245a96-8181-40b0-b9b9-770c3dcedab4","alterId": 0,"email": "roni16"
 ### tasik 2025-09-24
