@@ -338,28 +338,12 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### roni16 2025-09-25
-},{"id": "7e245a96-8181-40b0-b9b9-770c3dcedab4","alterId": 0,"email": "roni16"
-### tasik 2025-09-24
-},{"id": "28fd1315-570e-4b38-8730-0d0f3c0f8811","alterId": 0,"email": "tasik"
-### roni14 2025-09-23
-},{"id": "f2bbc34c-34d3-4d9b-8c2d-30eed2e3f60e","alterId": 0,"email": "roni14"
-### roni13 2025-09-22
-},{"id": "a48f73bc-980a-43b4-9732-4f7b5b2425ee","alterId": 0,"email": "roni13"
-### sub4li 2025-09-20
-},{"id": "8515ca7c-8936-443c-847d-5cdd7170d0e1","alterId": 0,"email": "sub4li"
-### roni11 2025-09-19
-},{"id": "b91a1b06-263e-4563-8a3d-e778e4b13241","alterId": 0,"email": "roni11"
-### ac3 2025-09-18
-},{"id": "b445d5b2-af06-46d7-8b06-61e218952231","alterId": 0,"email": "ac3"
-### asaloy 2025-09-17
-},{"id": "d24f8d83-7b10-4266-b5e0-76bae5c24fda","alterId": 0,"email": "asaloy"
-### mal4ng 2025-09-15
-},{"id": "36b12948-df6b-4d9b-9326-2841a2df1a08","alterId": 0,"email": "mal4ng"
-### kapad 2025-09-20
-},{"id": "1e6eb474-7021-433f-93f7-18e7fca62dbe","alterId": 0,"email": "kapad"
-### xlxl 2025-09-04
-},{"id": "b84b5ad4-c4de-473b-b884-1d922ffd1955","alterId": 0,"email": "xlxl"
+### waw4 2025-09-27
+},{"id": "297fcae4-f889-4569-9401-c847ffad7e25","alterId": 0,"email": "waw4"
+### in1 2025-09-21
+},{"id": "322a6bc5-f421-4984-9be7-1b2f8a376ec1","alterId": 0,"email": "in1"
+### l4gi 2025-09-10
+},{"id": "71e8eb6d-d44c-4dbe-b03b-4c0c684709a6","alterId": 0,"email": "l4gi"
              }
           ]
        },
@@ -421,28 +405,12 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### roni16 2025-09-25
-},{"id": "7e245a96-8181-40b0-b9b9-770c3dcedab4","alterId": 0,"email": "roni16"
-### tasik 2025-09-24
-},{"id": "28fd1315-570e-4b38-8730-0d0f3c0f8811","alterId": 0,"email": "tasik"
-### roni14 2025-09-23
-},{"id": "f2bbc34c-34d3-4d9b-8c2d-30eed2e3f60e","alterId": 0,"email": "roni14"
-### roni13 2025-09-22
-},{"id": "a48f73bc-980a-43b4-9732-4f7b5b2425ee","alterId": 0,"email": "roni13"
-### sub4li 2025-09-20
-},{"id": "8515ca7c-8936-443c-847d-5cdd7170d0e1","alterId": 0,"email": "sub4li"
-### roni11 2025-09-19
-},{"id": "b91a1b06-263e-4563-8a3d-e778e4b13241","alterId": 0,"email": "roni11"
-### ac3 2025-09-18
-},{"id": "b445d5b2-af06-46d7-8b06-61e218952231","alterId": 0,"email": "ac3"
-### asaloy 2025-09-17
-},{"id": "d24f8d83-7b10-4266-b5e0-76bae5c24fda","alterId": 0,"email": "asaloy"
-### mal4ng 2025-09-15
-},{"id": "36b12948-df6b-4d9b-9326-2841a2df1a08","alterId": 0,"email": "mal4ng"
-### kapad 2025-09-20
-},{"id": "1e6eb474-7021-433f-93f7-18e7fca62dbe","alterId": 0,"email": "kapad"
-### xlxl 2025-09-04
-},{"id": "b84b5ad4-c4de-473b-b884-1d922ffd1955","alterId": 0,"email": "xlxl"
+### waw4 2025-09-27
+},{"id": "297fcae4-f889-4569-9401-c847ffad7e25","alterId": 0,"email": "waw4"
+### in1 2025-09-21
+},{"id": "322a6bc5-f421-4984-9be7-1b2f8a376ec1","alterId": 0,"email": "in1"
+### l4gi 2025-09-10
+},{"id": "71e8eb6d-d44c-4dbe-b03b-4c0c684709a6","alterId": 0,"email": "l4gi"
              }
           ]
        },
