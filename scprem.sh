@@ -206,8 +206,8 @@ function first_setup(){
 # ubuntu
     # Instalasi tergantung distribusi OS
     if [[ "$OS_ID" == "ubuntu" ]]; then
-        print_info "Deteksi OS: $OS_NAME"
-        print_info "Menyiapkan dependensi untuk Ubuntu..."
+        print_info "Deteksi OS: $OS_NAME" >/dev/null 2>&1
+        print_info "Menyiapkan dependensi untuk Ubuntu..." >/dev/null 2>&1
 
         apt-get install haproxy -y
         apt-get install nginx -y
@@ -218,8 +218,8 @@ function first_setup(){
 
 ## debian
     elif [[ "$OS_ID" == "debian" ]]; then
-        print_info "Deteksi OS: $OS_NAME"
-        print_info "Menyiapkan dependensi untuk Debian..."
+        print_info "Deteksi OS: $OS_NAME" >/dev/null 2>&1
+        print_info "Menyiapkan dependensi untuk Debian..." >/dev/null 2>&1
 
         apt install haproxy -y
         apt install nginx -y        
@@ -716,7 +716,39 @@ wget -O /etc/issue.net "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat
 print_success "Dropbear"
 }
 
-clear
+function bad_vpn(){
+tesmatch=`screen -list | awk  '{print $1}' | grep -ow "badvpn" | sort | uniq`
+if [ "$tesmatch" = "badvpn" ]; then
+sleep 1
+echo -e "[ ${green}INFO$NC ] Screen badvpn detected"
+rm /root/screenlog > /dev/null 2>&1
+    runningscreen=( `screen -list | awk  '{print $1}' | grep -w "badvpn"` ) # sed 's/\.[^ ]*/ /g'
+    for actv in "${runningscreen[@]}"
+    do
+        cek=( `screen -list | awk  '{print $1}' | grep -w "badvpn"` )
+        if [ "$cek" = "$actv" ]; then
+        for sama in "${cek[@]}"; do
+            sleep 1
+            screen -XS $sama quit > /dev/null 2>&1
+            echo -e "[ ${red}CLOSE$NC ] Closing screen $sama"
+        done 
+        fi
+    done
+else
+echo -ne
+fi
+cd
+echo -e "[ ${green}INFO$NC ] Installing badvpn for game support..."
+wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/kayu55/aku/main/tools/newudpgw"
+chmod +x /usr/bin/badvpn-udpgw  >/dev/null 2>&1
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local >/dev/null 2>&1
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local >/dev/null 2>&1
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local >/dev/null 2>&1
+systemctl daemon-reload >/dev/null 2>&1
+systemctl start rc-local.service >/dev/null 2>&1
+systemctl restart rc-local.service >/dev/null 2>&1
+}
+
 function ins_vnstat(){
 clear
 print_install "Menginstall Vnstat"
@@ -993,6 +1025,7 @@ clear
     DROPBEAR_SETUP
     SET_DETEK_SSH
     ins_SSHD
+    bad_vpn
     ins_dropbear
     WEBSOCKET_SETUP
     ins_vnstat
@@ -1009,6 +1042,8 @@ echo ""
 history -c
 rm -rf /root/menu
 rm -rf /root/*.zip
+rm -rf /root/wspro
+rm -rf /root/drop
 rm -rf /root/*.sh
 rm -rf /root/LICENSE
 rm -rf /root/README.md
