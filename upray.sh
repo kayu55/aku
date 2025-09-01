@@ -338,12 +338,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### waw4 2025-09-27
-},{"id": "297fcae4-f889-4569-9401-c847ffad7e25","alterId": 0,"email": "waw4"
-### in1 2025-09-21
-},{"id": "322a6bc5-f421-4984-9be7-1b2f8a376ec1","alterId": 0,"email": "in1"
-### l4gi 2025-09-10
-},{"id": "71e8eb6d-d44c-4dbe-b03b-4c0c684709a6","alterId": 0,"email": "l4gi"
              }
           ]
        },
@@ -405,12 +399,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### waw4 2025-09-27
-},{"id": "297fcae4-f889-4569-9401-c847ffad7e25","alterId": 0,"email": "waw4"
-### in1 2025-09-21
-},{"id": "322a6bc5-f421-4984-9be7-1b2f8a376ec1","alterId": 0,"email": "in1"
-### l4gi 2025-09-10
-},{"id": "71e8eb6d-d44c-4dbe-b03b-4c0c684709a6","alterId": 0,"email": "l4gi"
              }
           ]
        },
@@ -515,8 +503,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 24.10.31
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
