@@ -338,6 +338,12 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### ley5 2025-10-02
+},{"id": "8e14362b-1a4e-4b21-8cc2-6bb2f16971d1","alterId": 0,"email": "ley5"
+### yud1 2025-10-01
+},{"id": "f3d8993c-b648-4c5b-9ba1-183d63f1672a","alterId": 0,"email": "yud1"
+### jun3d 2025-09-25
+},{"id": "dda427e2-878f-4982-b7e4-51ae43f8125f","alterId": 0,"email": "jun3d"
              }
           ]
        },
@@ -399,6 +405,12 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### ley5 2025-10-02
+},{"id": "8e14362b-1a4e-4b21-8cc2-6bb2f16971d1","alterId": 0,"email": "ley5"
+### yud1 2025-10-01
+},{"id": "f3d8993c-b648-4c5b-9ba1-183d63f1672a","alterId": 0,"email": "yud1"
+### jun3d 2025-09-25
+},{"id": "dda427e2-878f-4982-b7e4-51ae43f8125f","alterId": 0,"email": "jun3d"
              }
           ]
        },
