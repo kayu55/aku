@@ -44,7 +44,7 @@ ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | 
 if [[ $ssh_ws == "running" ]]; then
     status_ws_epro="${green}ON${NC}"
 else
-    status_ws_epro="${red} [OFF] ${NC} "
+    status_ws_epro="${red}OFF${NC} "
 fi
 ngx=$(service nginx status | grep active | cut -d ' ' $stat)
 if [ "$ngx" = "active" ]; then
@@ -79,7 +79,7 @@ MEMOFREE=$(printf '%-1s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')"
 LOADCPU=$(printf '%-0.00001s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
 MODEL=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')
 CORE=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
-DATEVPS=$(date +'%d/%m/%Y')
+#DATEVPS=$(date +'%d/%m/%Y')
 TIMEZONE=$(printf '%(%H:%M:%S)T')
 dtoday="$(vnstat | grep today | awk '{print $2" "substr ($3, 1, 3)}')"
 utoday="$(vnstat | grep today | awk '{print $5" "substr ($6, 1, 3)}')"
@@ -105,16 +105,16 @@ echo -e " ${BICyan}│  ${ICyan} Usage Memory :${NC} $MEMOFREE "
 echo -e " ${BICyan}│  ${ICyan} LoadCPU      : ${NC}$LOADCPU% "
 echo -e " ${BICyan}│  ${ICyan} Core System  : ${NC}$CORE "
 echo -e " ${BICyan}│  ${ICyan} System OS    : ${NC}$MODEL "
-echo -e " ${BICyan}│  ${ICyan} Date         : ${NC}$DATEVPS "
+#echo -e " ${BICyan}│  ${ICyan} Date         : ${NC}$DATEVPS "
 echo -e " ${BICyan}│  ${ICyan} Time         : ${NC}$TIMEZONE "
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo -e " ${BICyan}╭═════════════════════════════════════════════════════╮${NC}"
-echo -e "${BICyan} │                    ${NC}SSH     ${ICyan}: ${ORANGE}$ssh1      ${NC} "
-echo -e "${BICyan} │                    ${NC}ALLXRAY ${ICyan}: ${ORANGE}$vma     ${NC} "
+echo -e "${BICyan} │                 ${NC}ACCOUNT SSH  ${ICyan}: ${ORANGE}$ssh1      ${NC} "
+echo -e "${BICyan} │                 ${NC}ACCOUNT XRAY ${ICyan}: ${ORANGE}$vma     ${NC} "
 echo -e " ${BICyan}╰═════════════════════════════════════════════════════╯${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "           ${NC} SSH ${ORANGE}: ${RED}$ressh"" ${NC} XRAY ${ORANGE}: ${RED}$resv2r"" ${NC} TROJAN ${ORANGE}: ${RED}$resv2r"
-echo -e "        ${NC} NGINX ${ORANGE}: ${RED}$resngx "" ${NC}DROPBEAR ${ORANGE}: ${RED}$resdbr" "${NC} SSH-WS ${ORANGE}: ${RED}$status_ws_epro"
+echo -e "       ${NC} SSH   ${ORANGE}: ${RED}$ressh"" ${NC} XRAY     ${ORANGE}: ${RED}$resv2r"" ${NC} TROJAN ${ORANGE}: ${RED}$resv2r"
+echo -e "       ${NC} NGINX ${ORANGE}: ${RED}$resngx "" ${NC}DROPBEAR ${ORANGE}: ${RED}$resdbr" "${NC} SSH-WS ${ORANGE}: ${RED}$status_ws_epro"
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "      ${NC} Hari ini                    Bulan ini  ${NC}"
