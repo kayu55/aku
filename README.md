@@ -1,6 +1,11 @@
+### Ws engering
+````
+wget https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh &&  chmod +x install-ws.sh && ./install-ws.sh
+````
+
 ### Wspro
 ````
-wget https://raw.githubusercontent.com/kayu55/aku/main/wspro.sh &&  chmod +x wspro.sh && ./wspro.sh
+wget https://raw.githubusercontent.com/kayu55/aku/main/wspro/wspro.sh &&  chmod +x wspro.sh && ./wspro.sh
 ````
 
 ### Os 20.04
