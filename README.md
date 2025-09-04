@@ -108,10 +108,10 @@ apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.con
 wget -O buil "raw.githubusercontent.com/kayu55/aku/main/buil.sh" && chmod +x buil
 ````
 
-### NEW
+### wsdopbear 2019
 
 ````
-wget -O install-dropbear "raw.githubusercontent.com/kayu55/aku/main/install-dropbear.sh" && chmod +x install-dropbear
+wget https://raw.githubusercontent.com/kayu55/aku/main/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh
 ````
 
 ````
