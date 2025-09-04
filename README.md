@@ -12,29 +12,28 @@ wget https://raw.githubusercontent.com/kayu55/aku/main/wspro/wspro.sh &&  chmod 
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setup.sh && chmod +x setup.sh && ./setup.sh
 ````
-#### OS 22.04
 
+#### OS 22.04
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setup2.sh && chmod +x setup2.sh && ./setup2.sh
 ````
+
+#### SETUP 3
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setup3.sh && chmod +x setup3.sh && ./setup3.sh
+````
 
 ### Setup4 ocean
-
-
 ````
-apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setup3.sh && chmod +x setup3.sh && ./setup3.sh
+apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setup4.sh && chmod +x setup4.sh && ./setup4.sh
 ````
 
 ### menu
-
 ````
 wget -O menu "raw.githubusercontent.com/kayu55/aku/main/ssh/menu.sh" && chmod +x menu
 ````
 
 ### Update
-
 ````
 wget -O update "raw.githubusercontent.com/kayu55/aku/main/options/update.sh" && chmod +x update
 ````
@@ -55,17 +54,11 @@ wget -O up-ssh-vpn "raw.githubusercontent.com/kayu55/aku/main/up-ssh-vpn.sh" && 
 wget -O up-ins-xray-opok "raw.githubusercontent.com/kayu55/aku/main/up-ins-xray-opok.sh" && chmod +x up-ins-xray-opok
 ````
 
-### instal ws python3
+### instal ws python3-Wspro
 
 ````
 wget -O install-ws "raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh" && chmod +x install-ws
 ````
-
-````
-wget -O dirmeluna "raw.githubusercontent.com/kayu55/aku/main/wc/dirmeluna.sh" && chmod +x dirmeluna
-````
-
-
 
 ### Menu Singapore
 
@@ -101,7 +94,7 @@ wget -O trialvmess "raw.githubusercontent.com/kayu55/aku/main/opok/trialvmess.sh
 ````
 
 
-### os 24  / 25
+### OS 24  / 25
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/main2.sh && chmod +x main2.sh && ./main2.sh
 ````
