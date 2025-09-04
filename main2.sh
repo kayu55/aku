@@ -411,7 +411,7 @@ echo -e "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/tools2.sh
-rm -fr /root/install-ws.sh
+rm -fr /root/wspro.sh
 rm -fr /root/ssh-vpn4.sh
 rm -fr /root/ins-xray.sh
 rm -fr /root/main2.sh
