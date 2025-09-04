@@ -177,7 +177,7 @@ echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn4.sh && chmod +x ssh-vpn4.sh && ./ssh-vpn4.sh
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/m2/install-ws.sh && chmod +x install-ws.sh && ./install-ws.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/wspro/wspro.sh && chmod +x wspro.sh && ./wspro.sh
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
@@ -288,7 +288,7 @@ END
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 3 * * * root /usr/bin/clearlog
+0 7 * * * root /usr/bin/clearlog
 END
 cat > /etc/cron.d/px_otm <<-END
 SHELL=/bin/sh
