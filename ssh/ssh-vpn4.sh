@@ -172,49 +172,29 @@ systemctl restart ssh >/dev/null 2>&1
 echo "=== Install Dropbear ==="
 # install dropbear
 apt -y install dropbear
-sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=149/DROPBEAR_PORT=143/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
-echo "/bin/false" >> /etc/shells
-echo "/usr/sbin/nologin" >> /etc/shells
-/etc/init.d/ssh restart >/dev/null 2>&1
-/etc/init.d/dropbear restart >/dev/null 2>&1
-
-# // install squid for debian 9,10 & ubuntu 20.04
-
-# setting vnstat
-apt -y install vnstat
-/etc/init.d/vnstat restart
-apt -y install libsqlite3-dev
-wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
-tar zxvf vnstat-2.6.tar.gz
-cd vnstat-2.6
-./configure --prefix=/usr --sysconfdir=/etc && make && make install
-cd
-NET=$(ip -o -4 route show to default | awk '{print $5}') && \
-sudo apt install -y vnstat && \
-sudo vnstat --addinterface $NET && \
-sudo sed -i "s/eth0/$NET/g" /etc/vnstat.conf && \
-sudo systemctl enable --now vnstat
-
-echo -e "${GREEN}    Mengkonfigurasi Dropbear...${NC}"
-sudo sed -i '/^DROPBEAR_PORT=/d' /etc/default/dropbear
-sudo sed -i '/^DROPBEAR_EXTRA_ARGS=/d' /etc/default/dropbear
-echo 'DROPBEAR_PORT=149' | sudo tee -a /etc/default/dropbear
-echo 'DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69 -b /etc/issue.net"' | sudo tee -a /etc/default/dropbear
-
-sudo mkdir -p /etc/dropbear/
-sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
-sudo dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
-sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
-sudo chmod 600 /etc/dropbear/dropbear_rsa_host_key
-sudo chown root:root /etc/dropbear/dropbear_dss_host_key
-sudo chown root:root /etc/dropbear/dropbear_rsa_host_key
-sudo systemctl daemon-reload
-sudo systemctl restart dropbear
-sudo systemctl enable nginx
 clear
+# Install dropbear Versi 2019.78
+wget https://raw.githubusercontent.com/kayu55/aku/main/ssh/drop.sh && chmod +x drop.sh && ./drop.sh
 
+# Download konfigurasi dropbear
+wget -q -O /etc/default/dropbear "https://raw.githubusercontent.com/kayu55/aku/main/ssh/dropbear.conf"
+
+# Pastikan file bisa dieksekusi
+chmod +x /etc/default/dropbear
+chmod 600 /etc/default/dropbear
+    
+chmod 755 /usr/sbin/dropbear
+# Restart Dropbear dan tampilkan status
+/etc/init.d/dropbear restart
+
+clear
+echo -e "[ ${green}INFO$NC ] Installing  Banner ..."
+# // Installing Dropbear
+echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
+sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
+wget -O /etc/issue.net "https://raw.githubusercontent.com/kayu55/aku/main/ssh/issue.net"
+
+clear
 # remove unnecessary files
 apt autoclean -y >/dev/null 2>&1
 apt -y remove --purge unscd >/dev/null 2>&1
@@ -341,6 +321,7 @@ apt -y install fail2ban
 sudo systemctl enable --now fail2ban
 /etc/init.d/fail2ban restart
 /etc/init.d/fail2ban status
+
 # Instal DDOS Flate
 rm -fr /usr/local/ddos
 mkdir -p /usr/local/ddos >/dev/null 2>&1
@@ -363,15 +344,6 @@ echo -e "[ ${green}INFO$NC ] Install successfully..."
 sleep 1
 echo -e "[ ${green}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
 
-# Banner /etc/issue.net
-rm -fr /etc/issue.net
-rm -fr /etc/issue.net.save
-sleep 1
-echo -e "[ ${green}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "https://raw.githubusercontent.com/kayu55/aku/main/ssh/issue.net"
-chmod +x /etc/issue.net
-echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
-sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Blokir Torrent
 echo -e "[ ${green}INFO$NC ] Set iptables"
@@ -404,22 +376,16 @@ fi
 cd
 echo -e "[ ${green}ok${NC} ] Restarting Cron"
 /etc/init.d/cron restart >/dev/null 2>&1
-sleep 1
 echo -e "[ ${green}ok${NC} ] Restarting Ssh"
 /etc/init.d/ssh restart >/dev/null 2>&1
-sleep 1
 echo -e "[ ${green}ok${NC} ] Restarting Dropbear"
 /etc/init.d/dropbear restart >/dev/null 2>&1
-sleep 1
 echo -e "[ ${green}ok${NC} ] Restarting Fail2ban"
 /etc/init.d/fail2ban restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${green}ok${NC} ] Restarting Stunnel5"
+echo -e "[ ${green}ok${NC} ] Restarting Stunnel4"
 /etc/init.d/stunnel4 restart >/dev/null 2>&1
-sleep 1
 echo -e "[ ${green}ok${NC} ] Restarting Vnstat"
 /etc/init.d/vnstat restart >/dev/null 2>&1
-sleep 1
 echo -e "[ ${green}ok${NC} ] Restarting squid "
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
