@@ -38,6 +38,12 @@ export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
 clear
 clear
+# buat ubuntu 22 dan 25 
+apt install netcat-traditional -y
+apt install netcat-openbsd -y
+apt install nodejs -y
+apt install npm && npm install -g pm2
+
 if [ "${EUID}" -ne 0 ]; then
 echo "You need to run this script as root"
 exit 1
@@ -84,33 +90,50 @@ exit 1
 fi
 clear
 fi
-echo -e "${GREEN}Starting Installation............${NC}"
-# --- Disable AppArmor (Ubuntu 24.04) ---
-systemctl disable --now apparmor >/dev/null 2>&1
-systemctl stop apparmor >/dev/null 2>&1
-update-rc.d -f apparmor remove >/dev/null 2>&1 # Ini mungkin tidak ada di semua sistem, tapi aman.
-apt-get purge apparmor apparmor-utils -y >/dev/null 2>&1
 
 clear
-# --- Instalasi Tools Awal ---
-echo -e "${GREEN}Instalasi Tools Awal...${NC}"
-#wget https://raw.githubusercontent.com/kipas77pro/aku/refs/heads/main/tools2.sh -O tools2.sh
-#chmod +x tools2.sh
-#bash tools2.sh
+# --- Instalasi Tools  ---
+echo -e "${GREEN}Instalasi Paket Dasar...${NC}"
+
 start=$(date +%s)
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # --- Update dan Instal Dependensi Umum untuk Ubuntu 24.04 ---
-echo -e "${GREEN}Memperbarui sistem dan menginstal dependensi...${NC}"
-apt update -y && apt upgrade -y
-apt install git curl python3 apt  figlet python3-pip apt-transport-https ca-certificates software-properties-common ntpdate wget netcat-openbsd ncurses-bin chrony jq -y
-wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.1/grpcurl_1.9.1_linux_x86_64.tar.gz -O /tmp/grpcurl.tar.gz && tar -xzf /tmp/grpcurl.tar.gz -C /tmp/ && sudo mv /tmp/grpcurl /usr/local/bin/ && sudo chmod +x /usr/local/bin/grpcurl
-wget https://raw.githubusercontent.com/XTLS/Xray-core/main/app/stats/command/command.proto -O stats.proto
-# buat ubuntu 22 dan 25 
-apt install netcat-traditional -y
-apt install netcat-openbsd -y
-apt install nodejs -y
-apt install npm && npm install -g pm2
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+
+# Paket dasar
+apt install -y \
+zip pwgen openssl netcat socat cron bash-completion figlet sudo \
+zip unzip p7zip-full screen git cmake make build-essential \
+gnupg gnupg2 gnupg1 apt-transport-https lsb-release jq htop lsof tar \
+dnsutils python3-pip python ruby ca-certificates bsd-mailx msmtp-mta \
+ntpdate chrony chronyd ntpdate easy-rsa openvpn \
+net-tools rsyslog dos2unix sed xz-utils libc6 util-linux shc gcc g++ \
+libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev \
+libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison \
+libnss3-tools libevent-dev zlib1g-dev libssl-dev libsqlite3-dev \
+libxml-parser-perl dirmngr
+
+# Bersih-bersih dan setting iptables-persistent
+sudo apt-get clean all
+sudo apt-get autoremove -y
+sudo apt-get remove --purge -y exim4 ufw firewalld
+sudo apt-get install -y debconf-utils
+
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
+apt install -y iptables iptables-persistent netfilter-persistent
+    
+apt install rsyslog -y
+# Sinkronisasi waktu
+systemctl enable chronyd chrony
+systemctl restart chronyd chrony
+systemctl restart syslog
+ntpdate pool.ntp.org
+chronyc sourcestats -v
+chronyc tracking -v
 
 clear
 clear && clear && clear
