@@ -171,28 +171,54 @@ systemctl restart ssh >/dev/null 2>&1
 
 echo "=== Install Dropbear ==="
 # install dropbear
-apt -y install dropbear
+sleep 1
+echo -e "[ ${green}INFO$NC ] Settings Dropbear"
+sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
+systemctl daemon-reload >/dev/null 2>&1
+systemctl start dropbear >/dev/null 2>&1
+systemctl restart dropbear >/dev/null 2>&1
+cekker=$(cat /etc/shells | grep -w "/bin/false")
+if [[ "$cekker" = "/bin/false" ]];then
+echo -ne
+else
+echo "/bin/false" >> /etc/shells
+echo "/usr/sbin/nologin" >> /etc/shells
+
 clear
-# Install dropbear Versi 2019.78
-wget https://raw.githubusercontent.com/kayu55/aku/main/ssh/drop.sh && chmod +x drop.sh && ./drop.sh
+# setting vnstat
+apt -y install vnstat
+/etc/init.d/vnstat restart
+apt -y install libsqlite3-dev
+wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
+tar zxvf vnstat-2.6.tar.gz
+cd vnstat-2.6
+./configure --prefix=/usr --sysconfdir=/etc && make && make install
+cd
+NET=$(ip -o -4 route show to default | awk '{print $5}') && \
+sudo apt install -y vnstat && \
+sudo vnstat --addinterface $NET && \
+sudo sed -i "s/eth0/$NET/g" /etc/vnstat.conf && \
+sudo systemctl enable --now vnstat
 
-# Download konfigurasi dropbear
-wget -q -O /etc/default/dropbear "https://raw.githubusercontent.com/kayu55/aku/main/ssh/dropbear.conf"
+echo -e "${GREEN}    Mengkonfigurasi Dropbear...${NC}"
+sudo sed -i '/^DROPBEAR_PORT=/d' /etc/default/dropbear
+sudo sed -i '/^DROPBEAR_EXTRA_ARGS=/d' /etc/default/dropbear
+echo 'DROPBEAR_PORT=149' | sudo tee -a /etc/default/dropbear
+echo 'DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69 -b /etc/issue.net"' | sudo tee -a /etc/default/dropbear
 
-# Pastikan file bisa dieksekusi
-chmod +x /etc/default/dropbear
-chmod 600 /etc/default/dropbear
-    
-chmod 755 /usr/sbin/dropbear
-# Restart Dropbear dan tampilkan status
-/etc/init.d/dropbear restart
-
+sudo mkdir -p /etc/dropbear/
+sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
+sudo dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
+sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
+sudo chmod 600 /etc/dropbear/dropbear_rsa_host_key
+sudo chown root:root /etc/dropbear/dropbear_dss_host_key
+sudo chown root:root /etc/dropbear/dropbear_rsa_host_key
+sudo systemctl daemon-reload
+sudo systemctl restart dropbear
+sudo systemctl enable nginx
 clear
-echo -e "[ ${green}INFO$NC ] Installing  Banner ..."
-# // Installing Dropbear
-echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
-sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
-wget -O /etc/issue.net "https://raw.githubusercontent.com/kayu55/aku/main/ssh/issue.net"
 
 clear
 # remove unnecessary files
