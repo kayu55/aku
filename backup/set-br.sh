@@ -14,27 +14,24 @@ printf "q\n" | rclone config > /dev/null 2>&1
 sleep 1
 echo -e "[ ${green}INFO${NC} ] Downloading rclone config ... "
 wget -q -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/kayu55/aku/main/backup/rclone.conf"
-git clone https://github.com/LunaticTunnel/wondershaper.git &> /dev/null
+cd /bin
+git clone  https://github.com/magnific0/wondershaper.git
 cd wondershaper
-sleep 1
-echo -e "[ ${green}INFO${NC} ] Installing wondershaper... "
-make install > /dev/null 2>&1
-cd
-rm -rf wondershaper > /dev/null 2>&1
-echo > /home/limit
+sudo make install
+cd ~
+rm -rf wondershaper
+
+# Buat file dummy untuk backup (kalau belum ada)
+echo > /home/files
 
 pkgs='msmtp-mta ca-certificates bsd-mailx'
 if ! dpkg -s $pkgs > /dev/null 2>&1; then
-sleep 1
 echo -e "[ ${green}INFO${NC} ] Installing... "
 apt install -y $pkgs > /dev/null 2>&1
 else
-sleep 1
 echo -e "[ ${green}INFO${NC} ] Already Installed... "
 fi
-sleep 1
 echo -e "[ ${green}INFO${NC} ] Creating service... "
-sleep 1
 echo -e "[ ${green}INFO${NC} ] Downloading files... "
 wget -q -O /usr/bin/backup "https://raw.githubusercontent.com/kayu55/aku/main/backup/backup.sh" && chmod +x /usr/bin/backup
 wget -q -O /usr/bin/restore "https://raw.githubusercontent.com/kayu55/aku/main/backup/restore.sh" && chmod +x /usr/bin/restore
