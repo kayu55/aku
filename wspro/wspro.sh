@@ -9,7 +9,7 @@ wspro="/etc/aryapro"
 
 mkdir -p $wspro
 
-repo="https://raw.githubusercontent.com/kayu55/kayu55/main/"
+repo="https://raw.githubusercontent.com/kayu55/aku/main/"
 
 wget -q -O $wspro/ws.py "${repo}wspro/ws.py"
 chmod +x $wspro/ws.py
