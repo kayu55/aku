@@ -180,6 +180,13 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart >/dev/null 2>&1
 /etc/init.d/dropbear restart >/dev/null 2>&1
 
+
+echo -e "${GREEN}    Mengkonfigurasi Dropbear...${NC}"
+sudo sed -i '/^DROPBEAR_PORT=/d' /etc/default/dropbear
+sudo sed -i '/^DROPBEAR_EXTRA_ARGS=/d' /etc/default/dropbear
+echo 'DROPBEAR_PORT=149' | sudo tee -a /etc/default/dropbear
+echo 'DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69 -b /etc/issue.net"' | sudo tee -a /etc/default/dropbear
+
 sudo mkdir -p /etc/dropbear/
 sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
 sudo dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
