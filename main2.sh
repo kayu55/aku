@@ -92,48 +92,27 @@ clear
 fi
 
 clear
-# --- Instalasi Tools  ---
-echo -e "${GREEN}Instalasi Paket Dasar...${NC}"
+
+echo -e "${GREEN}Starting Installation............${NC}"
+# --- Disable AppArmor (Ubuntu 24.04) ---
+systemctl disable --now apparmor >/dev/null 2>&1
+systemctl stop apparmor >/dev/null 2>&1
+update-rc.d -f apparmor remove >/dev/null 2>&1 # Ini mungkin tidak ada di semua sistem, tapi aman.
+apt-get purge apparmor apparmor-utils -y >/dev/null 2>&1
+
+clear
+# --- Instalasi Tools Awal ---
+echo -e "${GREEN}Instalasi Tools Awal...${NC}"
 
 start=$(date +%s)
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # --- Update dan Instal Dependensi Umum untuk Ubuntu 24.04 ---
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
-
-# Paket dasar
-apt install -y \
-zip pwgen openssl netcat socat cron bash-completion figlet sudo \
-zip unzip p7zip-full screen git cmake make build-essential \
-gnupg gnupg2 gnupg1 apt-transport-https lsb-release jq htop lsof tar \
-dnsutils python3-pip python ruby ca-certificates bsd-mailx msmtp-mta \
-ntpdate chrony chronyd ntpdate easy-rsa openvpn \
-net-tools rsyslog dos2unix sed xz-utils libc6 util-linux shc gcc g++ \
-libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev \
-libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison \
-libnss3-tools libevent-dev zlib1g-dev libssl-dev libsqlite3-dev \
-libxml-parser-perl dirmngr
-
-# Bersih-bersih dan setting iptables-persistent
-sudo apt-get clean all
-sudo apt-get autoremove -y
-sudo apt-get remove --purge -y exim4 ufw firewalld
-sudo apt-get install -y debconf-utils
-
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
-apt install -y iptables iptables-persistent netfilter-persistent
-    
-apt install rsyslog -y
-# Sinkronisasi waktu
-systemctl enable chronyd chrony
-systemctl restart chronyd chrony
-systemctl restart syslog
-ntpdate pool.ntp.org
-chronyc sourcestats -v
-chronyc tracking -v
+echo -e "${GREEN}Memperbarui sistem dan menginstal dependensi...${NC}"
+apt update -y && apt upgrade -y
+apt install git curl python3 apt  figlet python3-pip apt-transport-https ca-certificates software-properties-common ntpdate wget netcat-openbsd ncurses-bin chrony jq -y
+wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.1/grpcurl_1.9.1_linux_x86_64.tar.gz -O /tmp/grpcurl.tar.gz && tar -xzf /tmp/grpcurl.tar.gz -C /tmp/ && sudo mv /tmp/grpcurl /usr/local/bin/ && sudo chmod +x /usr/local/bin/grpcurl
+wget https://raw.githubusercontent.com/XTLS/Xray-core/main/app/stats/command/command.proto -O stats.proto
 
 clear
 clear && clear && clear
@@ -199,7 +178,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn4.sh && chmod +x ssh-vpn4.sh && ./ssh-vpn4.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/install-dropbear && chmod +x install-dropbear && ./install-dropbear
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/wspro/wspro.sh && chmod +x wspro.sh && ./wspro.sh
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
