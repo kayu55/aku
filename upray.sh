@@ -338,13 +338,19 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### aku 2026-06-30
-},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
-### sal 2025-09-06
-},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
-          }
-        ]
-      },
+### tz30 2025-10-03
+},{"id": "2d8328d3-d27e-4d84-9d1a-2a51d79796e5","alterId": 0,"email": "tz30"
+### ao1 2025-09-30
+},{"id": "fe944152-6b2e-419e-98f5-79c77628d6c9","alterId": 0,"email": "ao1"
+### ind0 2025-09-28
+},{"id": "ee6a486c-f63c-4c3e-bff3-2e5bbe2509aa","alterId": 0,"email": "ind0"
+### ggwp 2025-09-22
+},{"id": "106c3806-3000-4b0b-9003-94bd6089d17b","alterId": 0,"email": "ggwp"
+### d4rt 2025-09-09
+},{"id": "3a3551c2-a7d2-4fe9-beeb-3e089655baf8","alterId": 0,"email": "d4rt"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -361,10 +367,7 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
               {
                  "password": "${uuid}"
-### akutro 2025-10-03
-},{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
-### ro 2025-09-06
-},{"password": "a6dfd7b7-16b7-4a8c-9a21-d361672e3e2a","email": "tro"
+#trojangrpc
           }
         ],
          "udp": true
@@ -386,13 +389,19 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vmessgrpc
-### aku 2026-06-30
-},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
-### sal 2025-09-06
-},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
-          }
-        ]
-      },
+### tz30 2025-10-03
+},{"id": "2d8328d3-d27e-4d84-9d1a-2a51d79796e5","alterId": 0,"email": "tz30"
+### ao1 2025-09-30
+},{"id": "fe944152-6b2e-419e-98f5-79c77628d6c9","alterId": 0,"email": "ao1"
+### ind0 2025-09-28
+},{"id": "ee6a486c-f63c-4c3e-bff3-2e5bbe2509aa","alterId": 0,"email": "ind0"
+### ggwp 2025-09-22
+},{"id": "106c3806-3000-4b0b-9003-94bd6089d17b","alterId": 0,"email": "ggwp"
+### d4rt 2025-09-09
+},{"id": "3a3551c2-a7d2-4fe9-beeb-3e089655baf8","alterId": 0,"email": "d4rt"
+             }
+          ]
+       },
           "streamSettings":{
              "network": "grpc",
              "grpcSettings": {
@@ -430,10 +439,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
-### akutro 2025-10-03
-},{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
-### tro 2025-09-06
-},{"password": "a6dfd7b7-16b7-4a8c-9a21-d361672e3e2a","email": "tro"
           }
         ]
       },
