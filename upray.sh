@@ -338,16 +338,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### tz30 2025-10-03
-},{"id": "2d8328d3-d27e-4d84-9d1a-2a51d79796e5","alterId": 0,"email": "tz30"
-### ao1 2025-09-30
-},{"id": "fe944152-6b2e-419e-98f5-79c77628d6c9","alterId": 0,"email": "ao1"
-### ind0 2025-09-28
-},{"id": "ee6a486c-f63c-4c3e-bff3-2e5bbe2509aa","alterId": 0,"email": "ind0"
-### ggwp 2025-09-22
-},{"id": "106c3806-3000-4b0b-9003-94bd6089d17b","alterId": 0,"email": "ggwp"
-### d4rt 2025-09-09
-},{"id": "3a3551c2-a7d2-4fe9-beeb-3e089655baf8","alterId": 0,"email": "d4rt"
              }
           ]
        },
@@ -389,16 +379,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vmessgrpc
-### tz30 2025-10-03
-},{"id": "2d8328d3-d27e-4d84-9d1a-2a51d79796e5","alterId": 0,"email": "tz30"
-### ao1 2025-09-30
-},{"id": "fe944152-6b2e-419e-98f5-79c77628d6c9","alterId": 0,"email": "ao1"
-### ind0 2025-09-28
-},{"id": "ee6a486c-f63c-4c3e-bff3-2e5bbe2509aa","alterId": 0,"email": "ind0"
-### ggwp 2025-09-22
-},{"id": "106c3806-3000-4b0b-9003-94bd6089d17b","alterId": 0,"email": "ggwp"
-### d4rt 2025-09-09
-},{"id": "3a3551c2-a7d2-4fe9-beeb-3e089655baf8","alterId": 0,"email": "d4rt"
              }
           ]
        },
