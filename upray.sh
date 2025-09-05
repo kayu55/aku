@@ -236,7 +236,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -338,17 +338,51 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### aku 2026-06-30
-},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
-### sal 2025-09-06
-},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
-          }
-        ]
-      },
+### jril 2025-10-04
+},{"id": "efb85d68-80c1-4928-9fb6-10a9d1185996","alterId": 0,"email": "jril"
+### mfj 2025-10-04
+},{"id": "1cf0c2d8-b802-41cc-a358-d1906c058480","alterId": 0,"email": "mfj"
+### roni18 2025-10-02
+},{"id": "ff6d6b85-b0a3-47a8-a89c-f64d8eadcd08","alterId": 0,"email": "roni18"
+### arg44 2025-10-02
+},{"id": "78375e55-1ada-42d0-87ff-2427361f0448","alterId": 0,"email": "arg44"
+### n430 2025-09-28
+},{"id": "21287132-9c91-4391-820f-ce950aefe574","alterId": 0,"email": "n430"
+### m4al 2025-09-28
+},{"id": "028305f2-9210-4a7d-a0f4-c0505e958d45","alterId": 0,"email": "m4al"
+### al1e 2025-09-28
+},{"id": "75abb30a-d61f-4ec7-a1ca-204dde91b6d6","alterId": 0,"email": "al1e"
+### roni17 2025-09-27
+},{"id": "b4289ab5-cb5e-4687-83aa-0fa3ac3d1b06","alterId": 0,"email": "roni17"
+### nadiasol 2025-09-26
+},{"id": "ebbd136e-9308-4419-a349-e3faa0fb70a3","alterId": 0,"email": "nadiasol"
+### ph4m 2025-09-25
+},{"id": "3371690c-f7fb-4308-bbbf-ef7884f347a8","alterId": 0,"email": "ph4m"
+### tmn3 2025-09-24
+},{"id": "34e9ceb7-af49-479c-96d3-db47bf311dea","alterId": 0,"email": "tmn3"
+### k1ng 2025-09-21
+},{"id": "33ca0b12-8ebc-45bb-9491-bf8e2dac07c7","alterId": 0,"email": "k1ng"
+### roni10 2025-09-17
+},{"id": "b1197358-55cc-48aa-b654-59bad96bb16b","alterId": 0,"email": "roni10"
+### itu3 2025-09-12
+},{"id": "d062f0ac-77a6-4522-a780-c8c39c5f9175","alterId": 0,"email": "itu3"
+### c4lda 2025-09-11
+},{"id": "b08fa548-efe7-4d14-a83b-42067f597ffd","alterId": 0,"email": "c4lda"
+### ahm4d 2025-09-10
+},{"id": "4a06167f-6290-4a6b-8fbf-dbbc23593df9","alterId": 0,"email": "ahm4d"
+### b0l3 2025-09-09
+},{"id": "7e017621-a26c-4e26-baa2-91aae9734897","alterId": 0,"email": "b0l3"
+### amin3 2025-09-07
+},{"id": "28c240f0-88a1-408f-b3e4-b410216c99fd","alterId": 0,"email": "amin3"
+### pribadi 2033-08-25
+},{"id": "7c4ee36f-b35a-4db2-a371-1ee5bddb932e","alterId": 0,"email": "pribadi"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vmess"
+                "path": "/servlets/mms"
           }
         }
      },
@@ -361,12 +395,13 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
               {
                  "password": "${uuid}"
-### akutro 2025-10-03
-},{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
-### ro 2025-09-06
-},{"password": "a6dfd7b7-16b7-4a8c-9a21-d361672e3e2a","email": "tro"
-          }
-        ],
+#trojanws
+### trojen 2025-09-29
+},{"password": "d9cc76b0-ef7b-4296-9c7a-ac294566daa8","email": "trojen"
+### tr0 2025-09-27
+},{"password": "c0f52fca-fad2-4878-a202-08148304b4bd","email": "tr0"
+              }
+          ],
          "udp": true
        },
        "streamSettings":{
@@ -386,13 +421,47 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vmessgrpc
-### aku 2026-06-30
-},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
-### sal 2025-09-06
-},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
-          }
-        ]
-      },
+### jril 2025-10-04
+},{"id": "efb85d68-80c1-4928-9fb6-10a9d1185996","alterId": 0,"email": "jril"
+### mfj 2025-10-04
+},{"id": "1cf0c2d8-b802-41cc-a358-d1906c058480","alterId": 0,"email": "mfj"
+### roni18 2025-10-02
+},{"id": "ff6d6b85-b0a3-47a8-a89c-f64d8eadcd08","alterId": 0,"email": "roni18"
+### arg44 2025-10-02
+},{"id": "78375e55-1ada-42d0-87ff-2427361f0448","alterId": 0,"email": "arg44"
+### n430 2025-09-28
+},{"id": "21287132-9c91-4391-820f-ce950aefe574","alterId": 0,"email": "n430"
+### m4al 2025-09-28
+},{"id": "028305f2-9210-4a7d-a0f4-c0505e958d45","alterId": 0,"email": "m4al"
+### al1e 2025-09-28
+},{"id": "75abb30a-d61f-4ec7-a1ca-204dde91b6d6","alterId": 0,"email": "al1e"
+### roni17 2025-09-27
+},{"id": "b4289ab5-cb5e-4687-83aa-0fa3ac3d1b06","alterId": 0,"email": "roni17"
+### nadiasol 2025-09-26
+},{"id": "ebbd136e-9308-4419-a349-e3faa0fb70a3","alterId": 0,"email": "nadiasol"
+### ph4m 2025-09-25
+},{"id": "3371690c-f7fb-4308-bbbf-ef7884f347a8","alterId": 0,"email": "ph4m"
+### tmn3 2025-09-24
+},{"id": "34e9ceb7-af49-479c-96d3-db47bf311dea","alterId": 0,"email": "tmn3"
+### k1ng 2025-09-21
+},{"id": "33ca0b12-8ebc-45bb-9491-bf8e2dac07c7","alterId": 0,"email": "k1ng"
+### roni10 2025-09-17
+},{"id": "b1197358-55cc-48aa-b654-59bad96bb16b","alterId": 0,"email": "roni10"
+### itu3 2025-09-12
+},{"id": "d062f0ac-77a6-4522-a780-c8c39c5f9175","alterId": 0,"email": "itu3"
+### c4lda 2025-09-11
+},{"id": "b08fa548-efe7-4d14-a83b-42067f597ffd","alterId": 0,"email": "c4lda"
+### ahm4d 2025-09-10
+},{"id": "4a06167f-6290-4a6b-8fbf-dbbc23593df9","alterId": 0,"email": "ahm4d"
+### b0l3 2025-09-09
+},{"id": "7e017621-a26c-4e26-baa2-91aae9734897","alterId": 0,"email": "b0l3"
+### amin3 2025-09-07
+},{"id": "28c240f0-88a1-408f-b3e4-b410216c99fd","alterId": 0,"email": "amin3"
+### pribadi 2033-08-25
+},{"id": "7c4ee36f-b35a-4db2-a371-1ee5bddb932e","alterId": 0,"email": "pribadi"
+             }
+          ]
+       },
           "streamSettings":{
              "network": "grpc",
              "grpcSettings": {
@@ -430,13 +499,13 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
-### akutro 2025-10-03
-},{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
-### tro 2025-09-06
-},{"password": "a6dfd7b7-16b7-4a8c-9a21-d361672e3e2a","email": "tro"
-          }
-        ]
-      },
+### trojen 2025-09-29
+},{"password": "d9cc76b0-ef7b-4296-9c7a-ac294566daa8","email": "trojen"
+### tr0 2025-09-27
+},{"password": "c0f52fca-fad2-4878-a202-08148304b4bd","email": "tr0"
+               }
+           ]
+        },
          "streamSettings":{
          "network": "grpc",
            "grpcSettings": {
