@@ -338,9 +338,13 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-             }
-          ]
-       },
+### aku 2026-06-30
+},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
+### sal 2025-09-06
+},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -357,7 +361,10 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
               {
                  "password": "${uuid}"
-#trojangrpc
+### akutro 2025-10-03
+},{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
+### tro 2025-09-06
+},{"password": "a6dfd7b7-16b7-4a8c-9a21-d361672e3e2a","email": "tro"
           }
         ],
          "udp": true
@@ -379,8 +386,13 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vmessgrpc
-             }
-          ]
+### aku 2026-06-30
+},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
+### sal 2025-09-06
+},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
+          }
+        ]
+      },
        },
           "streamSettings":{
              "network": "grpc",
@@ -399,9 +411,13 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
+### aku 2026-06-30
+},{"id": "4e9dbf6e-b599-4257-86d0-c25497282ce0","alterId": 0,"email": "aku"
+### sal 2025-09-06
+},{"id": "1b184004-16bf-4ea8-ab60-479b46389ed6","alterId": 0,"email": "sal"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -419,6 +435,10 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
+### akutro 2025-10-03
+},{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
+### tro 2025-09-06
+},{"password": "a6dfd7b7-16b7-4a8c-9a21-d361672e3e2a","email": "tro"
           }
         ]
       },
