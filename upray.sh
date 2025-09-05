@@ -361,6 +361,7 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
               {
                  "password": "${uuid}"
+#trojanws
 ### akutro 2025-10-03
 },{"password": "737f977e-7df5-471f-bf96-05750d7f9854","email": "akutro"
 ### tro 2025-09-06
