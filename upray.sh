@@ -338,30 +338,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### sintia 2025-10-08
-},{"id": "4a2feb1e-ab9c-42c4-a7a7-9c68513fdc58","alterId": 0,"email": "sintia"
-### rohata 2025-10-05
-},{"id": "1b3a361e-a52b-4c4e-83e2-1bef6cae06e1","alterId": 0,"email": "rohata"
-### yuli 2025-10-05
-},{"id": "39b904fc-4ec2-473b-8b18-b04f83f6f50f","alterId": 0,"email": "yuli"
-### n0pri 2025-10-05
-},{"id": "20656798-e1d0-4b0d-9bdb-d931da83c849","alterId": 0,"email": "n0pri"
-### el15 2025-09-13
-},{"id": "a67af5df-8784-4ba7-b86a-11e4f976715c","alterId": 0,"email": "el15"
-### roni12 2025-09-20
-},{"id": "c36ee02b-d8e1-41eb-a239-2f54b09e772e","alterId": 0,"email": "roni12"
-### cin3 2025-09-17
-},{"id": "22c923ae-1250-483a-80bd-8a4f86726bfc","alterId": 0,"email": "cin3"
-### dandy 2025-09-16
-},{"id": "11be4c69-d364-497e-9cd1-270168cb5966","alterId": 0,"email": "dandy"
-### ditunggu 2025-09-14
-},{"id": "f13126f9-1430-4e13-b717-71d9e7d7e271","alterId": 0,"email": "ditunggu"
-### roni9 2025-09-14
-},{"id": "cae5edcd-e5a7-4127-89de-332b3a7cdc80","alterId": 0,"email": "roni9"
-### gss30 2025-09-13
-},{"id": "12229bd5-7932-4ec2-a915-fd552d061710","alterId": 0,"email": "gss30"
-### sold1er 2025-09-09
-},{"id": "5084cd20-4d82-4c54-b766-60007e280758","alterId": 0,"email": "sold1er"
              }
           ]
        },
@@ -423,30 +399,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### sintia 2025-10-08
-},{"id": "4a2feb1e-ab9c-42c4-a7a7-9c68513fdc58","alterId": 0,"email": "sintia"
-### rohata 2025-10-05
-},{"id": "1b3a361e-a52b-4c4e-83e2-1bef6cae06e1","alterId": 0,"email": "rohata"
-### yuli 2025-10-05
-},{"id": "39b904fc-4ec2-473b-8b18-b04f83f6f50f","alterId": 0,"email": "yuli"
-### n0pri 2025-10-05
-},{"id": "20656798-e1d0-4b0d-9bdb-d931da83c849","alterId": 0,"email": "n0pri"
-### el15 2025-09-13
-},{"id": "a67af5df-8784-4ba7-b86a-11e4f976715c","alterId": 0,"email": "el15"
-### roni12 2025-09-20
-},{"id": "c36ee02b-d8e1-41eb-a239-2f54b09e772e","alterId": 0,"email": "roni12"
-### cin3 2025-09-17
-},{"id": "22c923ae-1250-483a-80bd-8a4f86726bfc","alterId": 0,"email": "cin3"
-### dandy 2025-09-16
-},{"id": "11be4c69-d364-497e-9cd1-270168cb5966","alterId": 0,"email": "dandy"
-### ditunggu 2025-09-14
-},{"id": "f13126f9-1430-4e13-b717-71d9e7d7e271","alterId": 0,"email": "ditunggu"
-### roni9 2025-09-14
-},{"id": "cae5edcd-e5a7-4127-89de-332b3a7cdc80","alterId": 0,"email": "roni9"
-### gss30 2025-09-13
-},{"id": "12229bd5-7932-4ec2-a915-fd552d061710","alterId": 0,"email": "gss30"
-### sold1er 2025-09-09
-},{"id": "5084cd20-4d82-4c54-b766-60007e280758","alterId": 0,"email": "sold1er"
              }
           ]
        },
