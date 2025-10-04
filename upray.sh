@@ -338,6 +338,34 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### inabiz4 2025-11-01
+},{"id": "c7f2d980-69d8-4f63-8894-5ba75039975e","alterId": 0,"email": "inabiz4"
+### k3nrbt 2025-11-01
+},{"id": "9079e0ed-188a-4d75-b674-ac22f2de1321","alterId": 0,"email": "k3nrbt"
+### ab8 2025-10-30
+},{"id": "91228e54-6169-47be-aff3-2fa731bb7419","alterId": 0,"email": "ab8"
+### okelah 2025-10-30
+},{"id": "4b907160-3401-4e42-a226-c6c1ea967145","alterId": 0,"email": "okelah"
+### banjar 2025-10-27
+},{"id": "30dc9134-5211-4693-a946-23e3ba58b5c9","alterId": 0,"email": "banjar"
+### wayan 2025-10-27
+},{"id": "e659223f-c485-46ec-adfb-505102807f50","alterId": 0,"email": "wayan"
+### startbiz 2025-10-26
+},{"id": "ee28c63d-3007-48d8-8c8b-da34563267b9","alterId": 0,"email": "startbiz"
+### bizlite 2025-10-26
+},{"id": "39345a88-fa3a-44a8-ac1d-9006ef0c5cf3","alterId": 0,"email": "bizlite"
+### bis30 2025-10-24
+},{"id": "c48d4018-010d-4f63-bc34-1d18eb3c0d24","alterId": 0,"email": "bis30"
+### joko30 2025-10-21
+},{"id": "360a8a24-c06c-46da-bba6-08273de16773","alterId": 0,"email": "joko30"
+### madura 2025-10-21
+},{"id": "2341803f-0fa0-4a5c-a01c-843a6044c977","alterId": 0,"email": "madura"
+### vd30 2025-10-10
+},{"id": "394b6521-3dac-4baa-8019-143bd91968a3","alterId": 0,"email": "vd30"
+### vdioxl 2025-10-10
+},{"id": "5e714295-d101-41a2-9b9d-b13ebe7d4c99","alterId": 0,"email": "vdioxl"
+### dufsg 2025-10-08
+},{"id": "1238dc1d-fcef-4f38-8b24-be041e6a7a88","alterId": 0,"email": "dufsg"
              }
           ]
        },
@@ -399,6 +427,34 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### inabiz4 2025-11-01
+},{"id": "c7f2d980-69d8-4f63-8894-5ba75039975e","alterId": 0,"email": "inabiz4"
+### k3nrbt 2025-11-01
+},{"id": "9079e0ed-188a-4d75-b674-ac22f2de1321","alterId": 0,"email": "k3nrbt"
+### ab8 2025-10-30
+},{"id": "91228e54-6169-47be-aff3-2fa731bb7419","alterId": 0,"email": "ab8"
+### okelah 2025-10-30
+},{"id": "4b907160-3401-4e42-a226-c6c1ea967145","alterId": 0,"email": "okelah"
+### banjar 2025-10-27
+},{"id": "30dc9134-5211-4693-a946-23e3ba58b5c9","alterId": 0,"email": "banjar"
+### wayan 2025-10-27
+},{"id": "e659223f-c485-46ec-adfb-505102807f50","alterId": 0,"email": "wayan"
+### startbiz 2025-10-26
+},{"id": "ee28c63d-3007-48d8-8c8b-da34563267b9","alterId": 0,"email": "startbiz"
+### bizlite 2025-10-26
+},{"id": "39345a88-fa3a-44a8-ac1d-9006ef0c5cf3","alterId": 0,"email": "bizlite"
+### bis30 2025-10-24
+},{"id": "c48d4018-010d-4f63-bc34-1d18eb3c0d24","alterId": 0,"email": "bis30"
+### joko30 2025-10-21
+},{"id": "360a8a24-c06c-46da-bba6-08273de16773","alterId": 0,"email": "joko30"
+### madura 2025-10-21
+},{"id": "2341803f-0fa0-4a5c-a01c-843a6044c977","alterId": 0,"email": "madura"
+### vd30 2025-10-10
+},{"id": "394b6521-3dac-4baa-8019-143bd91968a3","alterId": 0,"email": "vd30"
+### vdioxl 2025-10-10
+},{"id": "5e714295-d101-41a2-9b9d-b13ebe7d4c99","alterId": 0,"email": "vdioxl"
+### dufsg 2025-10-08
+},{"id": "1238dc1d-fcef-4f38-8b24-be041e6a7a88","alterId": 0,"email": "dufsg"
              }
           ]
        },
