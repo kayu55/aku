@@ -338,6 +338,32 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### Trial-8X44 2025-10-05
+},{"id": "3260a3f5-3faa-42c2-be29-9d4f9e88daa7","alterId": 0,"email": "Trial-8X44"
+### mbar0k 2025-11-03
+},{"id": "978e23f8-3423-426b-80ae-8b8e5acdd647","alterId": 0,"email": "mbar0k"
+### caldra3 2025-10-28
+},{"id": "2a5f967c-01cc-47a4-a316-68f97f518bbf","alterId": 0,"email": "caldra3"
+### aj4 2025-10-27
+},{"id": "09c9f661-1da2-48ea-93f1-45518dd89e4e","alterId": 0,"email": "aj4"
+### riau30 2025-10-27
+},{"id": "74d2beea-65c7-4ac4-b7ed-b10c66e0be6d","alterId": 0,"email": "riau30"
+### l4mpung 2025-10-26
+},{"id": "7f1765d5-6c24-4ce3-a4d4-d4c360b452ad","alterId": 0,"email": "l4mpung"
+### wahi 2025-10-11
+},{"id": "fd9fe036-ea6d-4951-a450-20fbf519bcc3","alterId": 0,"email": "wahi"
+### bis30 2025-10-22
+},{"id": "019a7b0d-c2d6-4d22-8d58-ee38b1fb4dfc","alterId": 0,"email": "bis30"
+### jun30 2025-10-20
+},{"id": "6caba5bf-a505-477d-913c-07ddc9d3ba9d","alterId": 0,"email": "jun30"
+### simbah 2025-10-18
+},{"id": "20ce8f5b-31e2-4cbf-a6e7-f6b80d1c10fe","alterId": 0,"email": "simbah"
+### roni20 2025-10-14
+},{"id": "da076d0b-e7e0-4e0f-ac11-4a91bc9f39f4","alterId": 0,"email": "roni20"
+### roni19 2025-10-13
+},{"id": "aa71a867-15a4-4fb6-9e35-a3f07fdbfdaa","alterId": 0,"email": "roni19"
+### sintia 2025-10-08
+},{"id": "4a2feb1e-ab9c-42c4-a7a7-9c68513fdc58","alterId": 0,"email": "sintia"
              }
           ]
        },
@@ -399,6 +425,32 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### Trial-8X44 2025-10-05
+},{"id": "3260a3f5-3faa-42c2-be29-9d4f9e88daa7","alterId": 0,"email": "Trial-8X44"
+### mbar0k 2025-11-03
+},{"id": "978e23f8-3423-426b-80ae-8b8e5acdd647","alterId": 0,"email": "mbar0k"
+### caldra3 2025-10-28
+},{"id": "2a5f967c-01cc-47a4-a316-68f97f518bbf","alterId": 0,"email": "caldra3"
+### aj4 2025-10-27
+},{"id": "09c9f661-1da2-48ea-93f1-45518dd89e4e","alterId": 0,"email": "aj4"
+### riau30 2025-10-27
+},{"id": "74d2beea-65c7-4ac4-b7ed-b10c66e0be6d","alterId": 0,"email": "riau30"
+### l4mpung 2025-10-26
+},{"id": "7f1765d5-6c24-4ce3-a4d4-d4c360b452ad","alterId": 0,"email": "l4mpung"
+### wahi 2025-10-11
+},{"id": "fd9fe036-ea6d-4951-a450-20fbf519bcc3","alterId": 0,"email": "wahi"
+### bis30 2025-10-22
+},{"id": "019a7b0d-c2d6-4d22-8d58-ee38b1fb4dfc","alterId": 0,"email": "bis30"
+### jun30 2025-10-20
+},{"id": "6caba5bf-a505-477d-913c-07ddc9d3ba9d","alterId": 0,"email": "jun30"
+### simbah 2025-10-18
+},{"id": "20ce8f5b-31e2-4cbf-a6e7-f6b80d1c10fe","alterId": 0,"email": "simbah"
+### roni20 2025-10-14
+},{"id": "da076d0b-e7e0-4e0f-ac11-4a91bc9f39f4","alterId": 0,"email": "roni20"
+### roni19 2025-10-13
+},{"id": "aa71a867-15a4-4fb6-9e35-a3f07fdbfdaa","alterId": 0,"email": "roni19"
+### sintia 2025-10-08
+},{"id": "4a2feb1e-ab9c-42c4-a7a7-9c68513fdc58","alterId": 0,"email": "sintia"
              }
           ]
        },
