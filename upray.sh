@@ -338,64 +338,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### t4ji 2025-11-13
-},{"id": "bc0bf4bb-b4fa-4bcf-b653-77d3c82458c3","alterId": 0,"email": "t4ji"
-### l4mpung 2025-11-13
-},{"id": "0988cf25-3bd6-408f-95e2-c7e5b5e9a858","alterId": 0,"email": "l4mpung"
-### iw4n 2025-11-12
-},{"id": "3be174d4-04af-487b-b1b0-79a1745c0884","alterId": 0,"email": "iw4n"
-### rafiq 2025-11-11
-},{"id": "45198510-d8fd-4e78-b678-d394f8ef10b5","alterId": 0,"email": "rafiq"
-### xlite3 2025-11-11
-},{"id": "da75f779-b7d6-4dd2-b219-468257e8d99d","alterId": 0,"email": "xlite3"
-### ini3 2025-10-21
-},{"id": "16860e6f-08ca-4f7a-ab32-e3c5397d9463","alterId": 0,"email": "ini3"
-### angg1 2025-11-10
-},{"id": "41931b92-1c26-4f76-93b3-b4fe93cc27dc","alterId": 0,"email": "angg1"
-### ksl 2025-11-08
-},{"id": "7aff610e-844b-4845-b066-b05d59364a02","alterId": 0,"email": "ksl"
-### n30 2025-11-10
-},{"id": "3dd55ada-f389-438d-93fb-42da23b24ee2","alterId": 0,"email": "n30"
-### tap1 2025-11-04
-},{"id": "ca21bee7-07f2-48c2-9225-f71275ff1789","alterId": 0,"email": "tap1"
-### bahru30 2025-11-06
-},{"id": "48872e42-57bf-49df-ad88-06f140f21d0d","alterId": 0,"email": "bahru30"
-### lw 2025-10-31
-},{"id": "2acbec8f-c150-4225-aa4f-811e67a6229e","alterId": 0,"email": "lw"
-### bizm4d 2025-11-05
-},{"id": "d6930134-39ba-49bb-a268-996cf7a1ee11","alterId": 0,"email": "bizm4d"
-### 4hmad 2025-11-05
-},{"id": "1010a37a-462c-4b39-8569-d8ba27055a6a","alterId": 0,"email": "4hmad"
-### lanabiz 2025-11-01
-},{"id": "cfd7d768-f051-4830-96af-6525a6535a3a","alterId": 0,"email": "lanabiz"
-### in1 2025-11-03
-},{"id": "284f40ad-44bb-49a4-abfc-fd83bf451152","alterId": 0,"email": "in1"
-### fbiz3 2025-11-04
-},{"id": "48ba0a81-1955-427c-ba79-8253462ef43e","alterId": 0,"email": "fbiz3"
-### ff30 2025-11-04
-},{"id": "aab38d45-8e63-42c2-9824-db31d0012ffe","alterId": 0,"email": "ff30"
-### sg4 2025-11-04
-},{"id": "31bc3cc3-0a82-4d41-82e2-7b68f36cabdb","alterId": 0,"email": "sg4"
-### inabiz4 2025-11-01
-},{"id": "c7f2d980-69d8-4f63-8894-5ba75039975e","alterId": 0,"email": "inabiz4"
-### ab8 2025-10-30
-},{"id": "91228e54-6169-47be-aff3-2fa731bb7419","alterId": 0,"email": "ab8"
-### okelah 2025-10-30
-},{"id": "4b907160-3401-4e42-a226-c6c1ea967145","alterId": 0,"email": "okelah"
-### banjar 2025-10-27
-},{"id": "30dc9134-5211-4693-a946-23e3ba58b5c9","alterId": 0,"email": "banjar"
-### wayan 2025-10-27
-},{"id": "e659223f-c485-46ec-adfb-505102807f50","alterId": 0,"email": "wayan"
-### startbiz 2025-10-26
-},{"id": "ee28c63d-3007-48d8-8c8b-da34563267b9","alterId": 0,"email": "startbiz"
-### bizlite 2025-10-26
-},{"id": "39345a88-fa3a-44a8-ac1d-9006ef0c5cf3","alterId": 0,"email": "bizlite"
-### bis30 2025-10-24
-},{"id": "c48d4018-010d-4f63-bc34-1d18eb3c0d24","alterId": 0,"email": "bis30"
-### joko30 2025-10-21
-},{"id": "360a8a24-c06c-46da-bba6-08273de16773","alterId": 0,"email": "joko30"
-### madura 2025-10-21
-},{"id": "2341803f-0fa0-4a5c-a01c-843a6044c977","alterId": 0,"email": "madura"
              }
           ]
        },
@@ -457,64 +399,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### t4ji 2025-11-13
-},{"id": "bc0bf4bb-b4fa-4bcf-b653-77d3c82458c3","alterId": 0,"email": "t4ji"
-### l4mpung 2025-11-13
-},{"id": "0988cf25-3bd6-408f-95e2-c7e5b5e9a858","alterId": 0,"email": "l4mpung"
-### iw4n 2025-11-12
-},{"id": "3be174d4-04af-487b-b1b0-79a1745c0884","alterId": 0,"email": "iw4n"
-### rafiq 2025-11-11
-},{"id": "45198510-d8fd-4e78-b678-d394f8ef10b5","alterId": 0,"email": "rafiq"
-### xlite3 2025-11-11
-},{"id": "da75f779-b7d6-4dd2-b219-468257e8d99d","alterId": 0,"email": "xlite3"
-### ini3 2025-10-21
-},{"id": "16860e6f-08ca-4f7a-ab32-e3c5397d9463","alterId": 0,"email": "ini3"
-### angg1 2025-11-10
-},{"id": "41931b92-1c26-4f76-93b3-b4fe93cc27dc","alterId": 0,"email": "angg1"
-### ksl 2025-11-08
-},{"id": "7aff610e-844b-4845-b066-b05d59364a02","alterId": 0,"email": "ksl"
-### n30 2025-11-10
-},{"id": "3dd55ada-f389-438d-93fb-42da23b24ee2","alterId": 0,"email": "n30"
-### tap1 2025-11-04
-},{"id": "ca21bee7-07f2-48c2-9225-f71275ff1789","alterId": 0,"email": "tap1"
-### bahru30 2025-11-06
-},{"id": "48872e42-57bf-49df-ad88-06f140f21d0d","alterId": 0,"email": "bahru30"
-### lw 2025-10-31
-},{"id": "2acbec8f-c150-4225-aa4f-811e67a6229e","alterId": 0,"email": "lw"
-### bizm4d 2025-11-05
-},{"id": "d6930134-39ba-49bb-a268-996cf7a1ee11","alterId": 0,"email": "bizm4d"
-### 4hmad 2025-11-05
-},{"id": "1010a37a-462c-4b39-8569-d8ba27055a6a","alterId": 0,"email": "4hmad"
-### lanabiz 2025-11-01
-},{"id": "cfd7d768-f051-4830-96af-6525a6535a3a","alterId": 0,"email": "lanabiz"
-### in1 2025-11-03
-},{"id": "284f40ad-44bb-49a4-abfc-fd83bf451152","alterId": 0,"email": "in1"
-### fbiz3 2025-11-04
-},{"id": "48ba0a81-1955-427c-ba79-8253462ef43e","alterId": 0,"email": "fbiz3"
-### ff30 2025-11-04
-},{"id": "aab38d45-8e63-42c2-9824-db31d0012ffe","alterId": 0,"email": "ff30"
-### sg4 2025-11-04
-},{"id": "31bc3cc3-0a82-4d41-82e2-7b68f36cabdb","alterId": 0,"email": "sg4"
-### inabiz4 2025-11-01
-},{"id": "c7f2d980-69d8-4f63-8894-5ba75039975e","alterId": 0,"email": "inabiz4"
-### ab8 2025-10-30
-},{"id": "91228e54-6169-47be-aff3-2fa731bb7419","alterId": 0,"email": "ab8"
-### okelah 2025-10-30
-},{"id": "4b907160-3401-4e42-a226-c6c1ea967145","alterId": 0,"email": "okelah"
-### banjar 2025-10-27
-},{"id": "30dc9134-5211-4693-a946-23e3ba58b5c9","alterId": 0,"email": "banjar"
-### wayan 2025-10-27
-},{"id": "e659223f-c485-46ec-adfb-505102807f50","alterId": 0,"email": "wayan"
-### startbiz 2025-10-26
-},{"id": "ee28c63d-3007-48d8-8c8b-da34563267b9","alterId": 0,"email": "startbiz"
-### bizlite 2025-10-26
-},{"id": "39345a88-fa3a-44a8-ac1d-9006ef0c5cf3","alterId": 0,"email": "bizlite"
-### bis30 2025-10-24
-},{"id": "c48d4018-010d-4f63-bc34-1d18eb3c0d24","alterId": 0,"email": "bis30"
-### joko30 2025-10-21
-},{"id": "360a8a24-c06c-46da-bba6-08273de16773","alterId": 0,"email": "joko30"
-### madura 2025-10-21
-},{"id": "2341803f-0fa0-4a5c-a01c-843a6044c977","alterId": 0,"email": "madura"
              }
           ]
        },
