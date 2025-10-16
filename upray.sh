@@ -236,7 +236,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -318,8 +318,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
-### vlesbiz 2025-10-31
-},{"id": "6f3f3fe7-ed18-4d93-93db-72b9a071d72e","email": "vlesbiz"
              }
           ]
        },
@@ -340,49 +338,57 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### genta6 2025-11-03
-},{"id": "b9db2812-6cb5-487d-a0fb-c42add42a096","alterId": 0,"email": "genta6"
-### genta5 2025-11-03
-},{"id": "6f74fbaa-f77d-404d-b18d-2cc48d5ce9df","alterId": 0,"email": "genta5"
-### aang 2025-11-01
-},{"id": "8c026de6-4c40-4792-b4ba-88c7dff95c3e","alterId": 0,"email": "aang"
-### nn30 2025-10-31
-},{"id": "0e21446c-23e4-4d04-baed-004ff91ab16c","alterId": 0,"email": "nn30"
-### ntbiz30 2025-10-29
-},{"id": "cfcdd62e-b76e-4125-88c9-3dce4956caea","alterId": 0,"email": "ntbiz30"
-### le9 2025-10-29
-},{"id": "f28a1a82-821c-4b63-8551-5484c3299908","alterId": 0,"email": "le9"
-### genta4 2025-10-28
-},{"id": "5d253f20-1d08-45b6-830e-3ec736fd3014","alterId": 0,"email": "genta4"
-### genta3 2025-10-27
-},{"id": "228e9d3b-c30b-45a1-8ef8-15ec75218d1b","alterId": 0,"email": "genta3"
-### genta2 2025-10-27
-},{"id": "e418b8e7-12ad-4dae-a6cc-fef14ede822c","alterId": 0,"email": "genta2"
-### b4nten 2025-10-26
-},{"id": "b16f1224-8ce4-4fa4-837a-00cb9e429a34","alterId": 0,"email": "b4nten"
-### akudewe 2026-01-04
-},{"id": "2c754e15-f2fe-4945-8bac-4c8b24a9e5e7","alterId": 0,"email": "akudewe"
-### genta1 2025-10-26
-},{"id": "c894c7a3-96f2-401f-801c-ff5c68786eb3","alterId": 0,"email": "genta1"
-### genta 2025-10-26
-},{"id": "9191aaa1-666a-4810-b504-b338e6fd9588","alterId": 0,"email": "genta"
-### dand1 2025-10-24
-},{"id": "06502c89-7986-48e5-b57b-ab926abc8684","alterId": 0,"email": "dand1"
-### bintang 2025-10-22
-},{"id": "9e980412-e339-4118-8f21-e5f50bbd1220","alterId": 0,"email": "bintang"
-### putri 2025-10-12
-},{"id": "2ff6fdc5-7ef3-4ac3-94d7-49f6ff992dd1","alterId": 0,"email": "putri"
-### fahrol 2025-10-12
-},{"id": "0f800385-e364-4f47-823b-68b82c8d2f66","alterId": 0,"email": "fahrol"
-### pribadi 2033-08-25
-},{"id": "7c4ee36f-b35a-4db2-a371-1ee5bddb932e","alterId": 0,"email": "pribadi"
+### ut4ri 2025-11-14
+},{"id": "ce539ff6-2bd0-48bf-b285-47f9d0ed4dbb","alterId": 0,"email": "ut4ri"
+### anw4r 2025-11-12
+},{"id": "b1a3b129-4cdc-44cf-8043-02dbe6f257fb","alterId": 0,"email": "anw4r"
+### azam 2025-11-12
+},{"id": "c92dc379-865e-4f0c-8ad2-f7ab73d4c22b","alterId": 0,"email": "azam"
+### b0g0r 2025-11-10
+},{"id": "698a697b-2548-4dea-a7e8-6683f043361b","alterId": 0,"email": "b0g0r"
+### p30 2025-11-10
+},{"id": "5d245242-d205-44eb-a939-60b3bb04fe0f","alterId": 0,"email": "p30"
+### lixl 2025-11-10
+},{"id": "62a772c1-7a8f-41c4-9ad4-ef9211bdf30a","alterId": 0,"email": "lixl"
+### blote 2025-11-09
+},{"id": "4c510840-09f3-49d0-9a29-a7502c7a6062","alterId": 0,"email": "blote"
+### late 2025-11-02
+},{"id": "ef87794a-efbb-4513-8ee5-8d5017be2fb1","alterId": 0,"email": "late"
+### ini 2025-11-09
+},{"id": "6f4a4d02-ac1a-458c-ac9a-7ba017c6d898","alterId": 0,"email": "ini"
+### tgr30 2025-11-09
+},{"id": "66c73104-b0ef-47e6-9baf-63a42b32be1c","alterId": 0,"email": "tgr30"
+### ap0r 2025-11-08
+},{"id": "9af4b5b0-0305-4e90-b272-70aed1d577db","alterId": 0,"email": "ap0r"
+### a4b 2025-11-08
+},{"id": "02770c2f-42db-47d9-9dd9-43441b65b22c","alterId": 0,"email": "a4b"
+### zaka 2025-11-08
+},{"id": "8c2eb76a-5ed2-4513-b4f2-cc5d9562a91d","alterId": 0,"email": "zaka"
+### najma 2025-11-07
+},{"id": "811b3ddb-44d7-4cfa-b71a-b4281dd4113e","alterId": 0,"email": "najma"
+### mbar0k 2025-11-03
+},{"id": "978e23f8-3423-426b-80ae-8b8e5acdd647","alterId": 0,"email": "mbar0k"
+### caldra3 2025-10-28
+},{"id": "2a5f967c-01cc-47a4-a316-68f97f518bbf","alterId": 0,"email": "caldra3"
+### aj4 2025-10-27
+},{"id": "09c9f661-1da2-48ea-93f1-45518dd89e4e","alterId": 0,"email": "aj4"
+### riau30 2025-10-27
+},{"id": "74d2beea-65c7-4ac4-b7ed-b10c66e0be6d","alterId": 0,"email": "riau30"
+### l4mpung 2025-10-26
+},{"id": "7f1765d5-6c24-4ce3-a4d4-d4c360b452ad","alterId": 0,"email": "l4mpung"
+### bis30 2025-10-22
+},{"id": "019a7b0d-c2d6-4d22-8d58-ee38b1fb4dfc","alterId": 0,"email": "bis30"
+### jun30 2025-10-20
+},{"id": "6caba5bf-a505-477d-913c-07ddc9d3ba9d","alterId": 0,"email": "jun30"
+### simbah 2025-10-18
+},{"id": "20ce8f5b-31e2-4cbf-a6e7-f6b80d1c10fe","alterId": 0,"email": "simbah"
              }
           ]
        },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "/vmess"
           }
         }
      },
@@ -396,8 +402,6 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
-### troo 2025-10-15
-},{"password": "651f0ef9-0666-4b36-badd-80b92ed62789","email": "troo"
               }
           ],
          "udp": true
@@ -419,8 +423,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### vlesbiz 2025-10-31
-},{"id": "6f3f3fe7-ed18-4d93-93db-72b9a071d72e","email": "vlesbiz"
              }
           ]
        },
@@ -441,42 +443,50 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### genta6 2025-11-03
-},{"id": "b9db2812-6cb5-487d-a0fb-c42add42a096","alterId": 0,"email": "genta6"
-### genta5 2025-11-03
-},{"id": "6f74fbaa-f77d-404d-b18d-2cc48d5ce9df","alterId": 0,"email": "genta5"
-### aang 2025-11-01
-},{"id": "8c026de6-4c40-4792-b4ba-88c7dff95c3e","alterId": 0,"email": "aang"
-### nn30 2025-10-31
-},{"id": "0e21446c-23e4-4d04-baed-004ff91ab16c","alterId": 0,"email": "nn30"
-### ntbiz30 2025-10-29
-},{"id": "cfcdd62e-b76e-4125-88c9-3dce4956caea","alterId": 0,"email": "ntbiz30"
-### le9 2025-10-29
-},{"id": "f28a1a82-821c-4b63-8551-5484c3299908","alterId": 0,"email": "le9"
-### genta4 2025-10-28
-},{"id": "5d253f20-1d08-45b6-830e-3ec736fd3014","alterId": 0,"email": "genta4"
-### genta3 2025-10-27
-},{"id": "228e9d3b-c30b-45a1-8ef8-15ec75218d1b","alterId": 0,"email": "genta3"
-### genta2 2025-10-27
-},{"id": "e418b8e7-12ad-4dae-a6cc-fef14ede822c","alterId": 0,"email": "genta2"
-### b4nten 2025-10-26
-},{"id": "b16f1224-8ce4-4fa4-837a-00cb9e429a34","alterId": 0,"email": "b4nten"
-### akudewe 2026-01-04
-},{"id": "2c754e15-f2fe-4945-8bac-4c8b24a9e5e7","alterId": 0,"email": "akudewe"
-### genta1 2025-10-26
-},{"id": "c894c7a3-96f2-401f-801c-ff5c68786eb3","alterId": 0,"email": "genta1"
-### genta 2025-10-26
-},{"id": "9191aaa1-666a-4810-b504-b338e6fd9588","alterId": 0,"email": "genta"
-### dand1 2025-10-24
-},{"id": "06502c89-7986-48e5-b57b-ab926abc8684","alterId": 0,"email": "dand1"
-### bintang 2025-10-22
-},{"id": "9e980412-e339-4118-8f21-e5f50bbd1220","alterId": 0,"email": "bintang"
-### putri 2025-10-12
-},{"id": "2ff6fdc5-7ef3-4ac3-94d7-49f6ff992dd1","alterId": 0,"email": "putri"
-### fahrol 2025-10-12
-},{"id": "0f800385-e364-4f47-823b-68b82c8d2f66","alterId": 0,"email": "fahrol"
-### pribadi 2033-08-25
-},{"id": "7c4ee36f-b35a-4db2-a371-1ee5bddb932e","alterId": 0,"email": "pribadi"
+### ut4ri 2025-11-14
+},{"id": "ce539ff6-2bd0-48bf-b285-47f9d0ed4dbb","alterId": 0,"email": "ut4ri"
+### anw4r 2025-11-12
+},{"id": "b1a3b129-4cdc-44cf-8043-02dbe6f257fb","alterId": 0,"email": "anw4r"
+### azam 2025-11-12
+},{"id": "c92dc379-865e-4f0c-8ad2-f7ab73d4c22b","alterId": 0,"email": "azam"
+### b0g0r 2025-11-10
+},{"id": "698a697b-2548-4dea-a7e8-6683f043361b","alterId": 0,"email": "b0g0r"
+### p30 2025-11-10
+},{"id": "5d245242-d205-44eb-a939-60b3bb04fe0f","alterId": 0,"email": "p30"
+### lixl 2025-11-10
+},{"id": "62a772c1-7a8f-41c4-9ad4-ef9211bdf30a","alterId": 0,"email": "lixl"
+### blote 2025-11-09
+},{"id": "4c510840-09f3-49d0-9a29-a7502c7a6062","alterId": 0,"email": "blote"
+### late 2025-11-02
+},{"id": "ef87794a-efbb-4513-8ee5-8d5017be2fb1","alterId": 0,"email": "late"
+### ini 2025-11-09
+},{"id": "6f4a4d02-ac1a-458c-ac9a-7ba017c6d898","alterId": 0,"email": "ini"
+### tgr30 2025-11-09
+},{"id": "66c73104-b0ef-47e6-9baf-63a42b32be1c","alterId": 0,"email": "tgr30"
+### ap0r 2025-11-08
+},{"id": "9af4b5b0-0305-4e90-b272-70aed1d577db","alterId": 0,"email": "ap0r"
+### a4b 2025-11-08
+},{"id": "02770c2f-42db-47d9-9dd9-43441b65b22c","alterId": 0,"email": "a4b"
+### zaka 2025-11-08
+},{"id": "8c2eb76a-5ed2-4513-b4f2-cc5d9562a91d","alterId": 0,"email": "zaka"
+### najma 2025-11-07
+},{"id": "811b3ddb-44d7-4cfa-b71a-b4281dd4113e","alterId": 0,"email": "najma"
+### mbar0k 2025-11-03
+},{"id": "978e23f8-3423-426b-80ae-8b8e5acdd647","alterId": 0,"email": "mbar0k"
+### caldra3 2025-10-28
+},{"id": "2a5f967c-01cc-47a4-a316-68f97f518bbf","alterId": 0,"email": "caldra3"
+### aj4 2025-10-27
+},{"id": "09c9f661-1da2-48ea-93f1-45518dd89e4e","alterId": 0,"email": "aj4"
+### riau30 2025-10-27
+},{"id": "74d2beea-65c7-4ac4-b7ed-b10c66e0be6d","alterId": 0,"email": "riau30"
+### l4mpung 2025-10-26
+},{"id": "7f1765d5-6c24-4ce3-a4d4-d4c360b452ad","alterId": 0,"email": "l4mpung"
+### bis30 2025-10-22
+},{"id": "019a7b0d-c2d6-4d22-8d58-ee38b1fb4dfc","alterId": 0,"email": "bis30"
+### jun30 2025-10-20
+},{"id": "6caba5bf-a505-477d-913c-07ddc9d3ba9d","alterId": 0,"email": "jun30"
+### simbah 2025-10-18
+},{"id": "20ce8f5b-31e2-4cbf-a6e7-f6b80d1c10fe","alterId": 0,"email": "simbah"
              }
           ]
        },
@@ -497,8 +507,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
-### troo 2025-10-15
-},{"password": "651f0ef9-0666-4b36-badd-80b92ed62789","email": "troo"
                }
            ]
         },
