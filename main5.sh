@@ -217,7 +217,7 @@ wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/babi
 #wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
 #wget -q -O /usr/bin/px "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/px.sh"
 wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
-wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
+#wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
 
 #chmod +x /usr/bin/jam
 #chmod +x /usr/bin/update-xray
@@ -250,7 +250,7 @@ chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/info
 #chmod +x /usr/bin/set-bw
 chmod +x /usr/bin/cekssh
-chmod +x /usr/bin/cekudp
+#chmod +x /usr/bin/cekudp
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -276,11 +276,6 @@ cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 7 * * * root /usr/bin/clearlog
-END
-cat > /etc/cron.d/px_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 6 * * * root /usr/bin/px
 END
 cat > /home/re_otm <<-END
 7
