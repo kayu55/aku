@@ -5,7 +5,7 @@ apt install python3 -y
 apt install python3-pip -y
 apt install python3-requests -y
 
-wspro="/etc/aryapro"
+wspro="/etc/wspro"
 
 mkdir -p $wspro
 
