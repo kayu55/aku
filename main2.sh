@@ -283,11 +283,11 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 7 * * * root /usr/bin/clearlog
 END
-cat > /etc/cron.d/px_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 6 * * * root /usr/bin/px
-END
+#cat > /etc/cron.d/px_otm <<-END
+#SHELL=/bin/sh
+#PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+#0 6 * * * root /usr/bin/px
+#END
 cat > /home/re_otm <<-END
 7
 END
