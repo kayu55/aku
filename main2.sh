@@ -215,9 +215,9 @@ wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/opti
 wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/babi.sh"
 #wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
 #wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
-wget -q -O /usr/bin/px "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/px.sh"
+#wget -q -O /usr/bin/px "https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/px.sh"
 wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
-wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
+#wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
 
 #chmod +x /usr/bin/jam
 #chmod +x /usr/bin/update-xray
@@ -249,9 +249,9 @@ chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/info
 #chmod +x /usr/bin/set-bw
-chmod +x /usr/bin/px
+#chmod +x /usr/bin/px
 chmod +x /usr/bin/cekssh
-chmod +x /usr/bin/cekudp
+#chmod +x /usr/bin/cekudp
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
