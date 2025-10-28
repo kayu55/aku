@@ -295,14 +295,14 @@ wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
 wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
-wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
-wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
+#wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
+#wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
 wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
-wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
-wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
+#wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
+#wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
 
-chmod +x /usr/bin/jam
-chmod +x /usr/bin/update-xray
+#chmod +x /usr/bin/jam
+#chmod +x /usr/bin/update-xray
 chmod +x /usr/bin/babi
 chmod +x /usr/bin/usernew
 chmod +x /usr/bin/trialssh
@@ -329,8 +329,8 @@ chmod +x /usr/bin/xp
 chmod +x /usr/bin/addhost
 chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
-chmod +x /usr/bin/info
-chmod +x /usr/bin/set-bw
+#chmod +x /usr/bin/info
+#chmod +x /usr/bin/set-bw
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
