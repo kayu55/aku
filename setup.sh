@@ -270,6 +270,7 @@ wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && ch
 sleep 1
 
 echo -e "${GREEN}Download Data Menu${NC}"
+wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
 wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kayu55/aku/main/add-ws.sh"
@@ -302,7 +303,7 @@ wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/
 #wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
 
 #chmod +x /usr/bin/jam
-#chmod +x /usr/bin/update-xray
+chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/babi
 chmod +x /usr/bin/usernew
 chmod +x /usr/bin/trialssh
