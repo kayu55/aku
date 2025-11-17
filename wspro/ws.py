@@ -18,7 +18,7 @@ PASS = ''
 BUFLEN = 4096 * 4
 TIMEOUT = 60
 DEFAULT_HOST = '127.0.0.1:109'
-RESPONSE = (b'HTTP/1.1 101 <font color="green"><b><i>Order Wa 081450330727</i></b></font>\r\n'
+RESPONSE = (b'HTTP/1.1 101 <font color="green"><b><i>Direct By Nbc-Group</i></b></font>\r\n'
             b'Upgrade: websocket\r\n'
             b'Connection: Upgrade\r\n'
             b'Sec-WebSocket-Accept: foo\r\n\r\n')
