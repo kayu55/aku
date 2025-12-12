@@ -23,13 +23,13 @@ if [ "$sshstunel" = "active" ]; then
 resst="${green}ON${NC}"
 else
 resst="${red}OFF${NC}"
-fi
+#fi
 # // SSH Websocket Proxy
-ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $ssh_ws == "running" ]]; then
-    status_ws_epro="${green}ON${NC}"
-else
-    status_ws_epro="${red}OFF${NC}"
+#ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+#if [[ $ssh_ws == "running" ]]; then
+#    status_ws_epro="${green}ON${NC}"
+#else
+#    status_ws_epro="${red}OFF${NC}"
 fi
 ngx=$(service nginx status | grep active | cut -d ' ' $stat)
 if [ "$ngx" = "active" ]; then
