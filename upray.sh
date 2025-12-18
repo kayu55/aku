@@ -236,7 +236,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -338,25 +338,13 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### ren2 2026-01-07
-},{"id": "94dc697b-0bc1-43e1-a749-2931516f7685","alterId": 0,"email": "ren2"
-### duc 2026-01-02
-},{"id": "16267d6f-6146-44b8-91a0-ceef42c04470","alterId": 0,"email": "duc"
-### jkt 2025-12-30
-},{"id": "d4dc6b0a-416f-41ce-aff7-245ac542f292","alterId": 0,"email": "jkt"
-### roni4 2025-12-29
-},{"id": "a701ecb5-fb7d-4ed2-bdd9-33681cd56d52","alterId": 0,"email": "roni4"
-### roni3 2025-12-29
-},{"id": "f966520b-b717-4183-8ca3-e2151637cdca","alterId": 0,"email": "roni3"
-### ag4 2025-12-23
-},{"id": "93caa3e7-c8fb-4ee3-9faf-95535b033d4c","alterId": 0,"email": "ag4"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vmess"
+                "path": "/servlets/mms"
           }
         }
      },
@@ -411,18 +399,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### ren2 2026-01-07
-},{"id": "94dc697b-0bc1-43e1-a749-2931516f7685","alterId": 0,"email": "ren2"
-### duc 2026-01-02
-},{"id": "16267d6f-6146-44b8-91a0-ceef42c04470","alterId": 0,"email": "duc"
-### jkt 2025-12-30
-},{"id": "d4dc6b0a-416f-41ce-aff7-245ac542f292","alterId": 0,"email": "jkt"
-### roni4 2025-12-29
-},{"id": "a701ecb5-fb7d-4ed2-bdd9-33681cd56d52","alterId": 0,"email": "roni4"
-### roni3 2025-12-29
-},{"id": "f966520b-b717-4183-8ca3-e2151637cdca","alterId": 0,"email": "roni3"
-### ag4 2025-12-23
-},{"id": "93caa3e7-c8fb-4ee3-9faf-95535b033d4c","alterId": 0,"email": "ag4"
              }
           ]
        },
