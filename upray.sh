@@ -236,7 +236,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -338,13 +338,33 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### rez 2026-01-26
+},{"id": "53d6db5f-5153-43bf-a2f8-8f57f17ee899","alterId": 0,"email": "rez"
+### roni7 2026-01-24
+},{"id": "ce4944e6-99f0-40c3-ad5b-6db670f5b1c1","alterId": 0,"email": "roni7"
+### covid 2026-01-15
+},{"id": "fd750faa-dd70-4675-a538-b18c2133b0e6","alterId": 0,"email": "covid"
+### tolak 2026-01-13
+},{"id": "abc8331e-d876-4dde-bd64-faa63da4e2f0","alterId": 0,"email": "tolak"
+### cofren 2026-01-13
+},{"id": "5b99789d-8b14-4639-9885-a3c4a4992aab","alterId": 0,"email": "cofren"
+### indon 2026-01-10
+},{"id": "52d92e50-900c-4563-b912-5f8cbc50047a","alterId": 0,"email": "indon"
+### sahri 2026-01-07
+},{"id": "b42de3c0-85a1-4c43-b948-8127afdd1ea5","alterId": 0,"email": "sahri"
+### roni6 2026-01-04
+},{"id": "0a8d2b7c-0328-4d73-8157-cb0c32873265","alterId": 0,"email": "roni6"
+### smtra 2026-01-04
+},{"id": "620bfb02-b9b2-4f27-bb65-ac233e4fc799","alterId": 0,"email": "smtra"
+### bangray1999 2026-01-20
+},{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
              }
           ]
        },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "/vmess"
           }
         }
      },
@@ -399,6 +419,26 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### rez 2026-01-26
+},{"id": "53d6db5f-5153-43bf-a2f8-8f57f17ee899","alterId": 0,"email": "rez"
+### roni7 2026-01-24
+},{"id": "ce4944e6-99f0-40c3-ad5b-6db670f5b1c1","alterId": 0,"email": "roni7"
+### covid 2026-01-15
+},{"id": "fd750faa-dd70-4675-a538-b18c2133b0e6","alterId": 0,"email": "covid"
+### tolak 2026-01-13
+},{"id": "abc8331e-d876-4dde-bd64-faa63da4e2f0","alterId": 0,"email": "tolak"
+### cofren 2026-01-13
+},{"id": "5b99789d-8b14-4639-9885-a3c4a4992aab","alterId": 0,"email": "cofren"
+### indon 2026-01-10
+},{"id": "52d92e50-900c-4563-b912-5f8cbc50047a","alterId": 0,"email": "indon"
+### sahri 2026-01-07
+},{"id": "b42de3c0-85a1-4c43-b948-8127afdd1ea5","alterId": 0,"email": "sahri"
+### roni6 2026-01-04
+},{"id": "0a8d2b7c-0328-4d73-8157-cb0c32873265","alterId": 0,"email": "roni6"
+### smtra 2026-01-04
+},{"id": "620bfb02-b9b2-4f27-bb65-ac233e4fc799","alterId": 0,"email": "smtra"
+### bangray1999 2026-01-20
+},{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
              }
           ]
        },
