@@ -4,7 +4,6 @@ NC='\033[0;37m'
 green='\033[0;32m' 
 
 clear
-#source /var/lib/scrz-prem/ipvps.conf
 if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
@@ -338,6 +337,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### kaf 2026-02-06
+},{"id": "63be8897-abda-4e90-8168-b53c5cc07e1e","alterId": 0,"email": "kaf"
 ### rez 2026-01-26
 },{"id": "53d6db5f-5153-43bf-a2f8-8f57f17ee899","alterId": 0,"email": "rez"
 ### roni7 2026-01-24
@@ -350,12 +351,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "5b99789d-8b14-4639-9885-a3c4a4992aab","alterId": 0,"email": "cofren"
 ### indon 2026-01-10
 },{"id": "52d92e50-900c-4563-b912-5f8cbc50047a","alterId": 0,"email": "indon"
-### sahri 2026-01-07
-},{"id": "b42de3c0-85a1-4c43-b948-8127afdd1ea5","alterId": 0,"email": "sahri"
-### roni6 2026-01-04
-},{"id": "0a8d2b7c-0328-4d73-8157-cb0c32873265","alterId": 0,"email": "roni6"
-### smtra 2026-01-04
-},{"id": "620bfb02-b9b2-4f27-bb65-ac233e4fc799","alterId": 0,"email": "smtra"
 ### bangray1999 2026-01-20
 },{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
              }
@@ -419,6 +414,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### kaf 2026-02-06
+},{"id": "63be8897-abda-4e90-8168-b53c5cc07e1e","alterId": 0,"email": "kaf"
 ### rez 2026-01-26
 },{"id": "53d6db5f-5153-43bf-a2f8-8f57f17ee899","alterId": 0,"email": "rez"
 ### roni7 2026-01-24
@@ -431,12 +428,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "5b99789d-8b14-4639-9885-a3c4a4992aab","alterId": 0,"email": "cofren"
 ### indon 2026-01-10
 },{"id": "52d92e50-900c-4563-b912-5f8cbc50047a","alterId": 0,"email": "indon"
-### sahri 2026-01-07
-},{"id": "b42de3c0-85a1-4c43-b948-8127afdd1ea5","alterId": 0,"email": "sahri"
-### roni6 2026-01-04
-},{"id": "0a8d2b7c-0328-4d73-8157-cb0c32873265","alterId": 0,"email": "roni6"
-### smtra 2026-01-04
-},{"id": "620bfb02-b9b2-4f27-bb65-ac233e4fc799","alterId": 0,"email": "smtra"
 ### bangray1999 2026-01-20
 },{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
              }
@@ -543,7 +534,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
