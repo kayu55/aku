@@ -337,25 +337,29 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### kaf 2026-02-06
-},{"id": "63be8897-abda-4e90-8168-b53c5cc07e1e","alterId": 0,"email": "kaf"
-### rez 2026-01-26
-},{"id": "53d6db5f-5153-43bf-a2f8-8f57f17ee899","alterId": 0,"email": "rez"
-### roni7 2026-01-24
-},{"id": "ce4944e6-99f0-40c3-ad5b-6db670f5b1c1","alterId": 0,"email": "roni7"
-### covid 2026-01-15
-},{"id": "fd750faa-dd70-4675-a538-b18c2133b0e6","alterId": 0,"email": "covid"
-### tolak 2026-01-13
-},{"id": "abc8331e-d876-4dde-bd64-faa63da4e2f0","alterId": 0,"email": "tolak"
-### cofren 2026-01-13
-},{"id": "5b99789d-8b14-4639-9885-a3c4a4992aab","alterId": 0,"email": "cofren"
-### indon 2026-01-10
-},{"id": "52d92e50-900c-4563-b912-5f8cbc50047a","alterId": 0,"email": "indon"
-### bangray1999 2026-01-20
-},{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
-             }
-          ]
-       },
+### lam 2026-02-07
+},{"id": "8a1f1029-c7c9-471c-9170-8ca922e3c6c8","alterId": 0,"email": "lam"
+### roni12 2026-02-06
+},{"id": "efc543f2-e714-4166-82a3-057bd9fa806d","alterId": 0,"email": "roni12"
+### kaf15 2026-01-21
+},{"id": "3cdb7c71-a8ec-482e-b52a-2f168f894f70","alterId": 0,"email": "kaf15"
+### roni11 2026-02-05
+},{"id": "033e64ff-f4cb-4094-9941-3d901ef21cfa","alterId": 0,"email": "roni11"
+### roni10 2026-02-05
+},{"id": "e86c9820-8985-468c-a974-ec2759fc4206","alterId": 0,"email": "roni10"
+### roni9 2026-02-05
+},{"id": "65f34cd7-9886-4add-8650-3e8ff9e1c95b","alterId": 0,"email": "roni9"
+### gase 2026-01-25
+},{"id": "3f882bf9-d591-432c-96b2-93b7f1ac0cc6","alterId": 0,"email": "gase"
+### roni8 2026-01-26
+},{"id": "909c9cbb-7be8-4d67-84ff-77e8b7e186a3","alterId": 0,"email": "roni8"
+### genta8 2026-01-25
+},{"id": "0819e9e7-a1b2-4d06-8cd7-02e31a900308","alterId": 0,"email": "genta8"
+### genta 2026-01-26
+},{"id": "f6ffbfec-c5be-4b75-aaec-b148c592cb98","alterId": 0,"email": "genta"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -414,25 +418,29 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### kaf 2026-02-06
-},{"id": "63be8897-abda-4e90-8168-b53c5cc07e1e","alterId": 0,"email": "kaf"
-### rez 2026-01-26
-},{"id": "53d6db5f-5153-43bf-a2f8-8f57f17ee899","alterId": 0,"email": "rez"
-### roni7 2026-01-24
-},{"id": "ce4944e6-99f0-40c3-ad5b-6db670f5b1c1","alterId": 0,"email": "roni7"
-### covid 2026-01-15
-},{"id": "fd750faa-dd70-4675-a538-b18c2133b0e6","alterId": 0,"email": "covid"
-### tolak 2026-01-13
-},{"id": "abc8331e-d876-4dde-bd64-faa63da4e2f0","alterId": 0,"email": "tolak"
-### cofren 2026-01-13
-},{"id": "5b99789d-8b14-4639-9885-a3c4a4992aab","alterId": 0,"email": "cofren"
-### indon 2026-01-10
-},{"id": "52d92e50-900c-4563-b912-5f8cbc50047a","alterId": 0,"email": "indon"
-### bangray1999 2026-01-20
-},{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
-             }
-          ]
-       },
+### lam 2026-02-07
+},{"id": "8a1f1029-c7c9-471c-9170-8ca922e3c6c8","alterId": 0,"email": "lam"
+### roni12 2026-02-06
+},{"id": "efc543f2-e714-4166-82a3-057bd9fa806d","alterId": 0,"email": "roni12"
+### kaf15 2026-01-21
+},{"id": "3cdb7c71-a8ec-482e-b52a-2f168f894f70","alterId": 0,"email": "kaf15"
+### roni11 2026-02-05
+},{"id": "033e64ff-f4cb-4094-9941-3d901ef21cfa","alterId": 0,"email": "roni11"
+### roni10 2026-02-05
+},{"id": "e86c9820-8985-468c-a974-ec2759fc4206","alterId": 0,"email": "roni10"
+### roni9 2026-02-05
+},{"id": "65f34cd7-9886-4add-8650-3e8ff9e1c95b","alterId": 0,"email": "roni9"
+### gase 2026-01-25
+},{"id": "3f882bf9-d591-432c-96b2-93b7f1ac0cc6","alterId": 0,"email": "gase"
+### roni8 2026-01-26
+},{"id": "909c9cbb-7be8-4d67-84ff-77e8b7e186a3","alterId": 0,"email": "roni8"
+### genta8 2026-01-25
+},{"id": "0819e9e7-a1b2-4d06-8cd7-02e31a900308","alterId": 0,"email": "genta8"
+### genta 2026-01-26
+},{"id": "f6ffbfec-c5be-4b75-aaec-b148c592cb98","alterId": 0,"email": "genta"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -534,7 +542,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
