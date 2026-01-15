@@ -117,6 +117,13 @@ wget https://raw.githubusercontent.com/kayu55/aku/main/install-dropbear.sh && ch
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/main3.sh && chmod +x main3.sh && ./main3.sh
 ````
+
+### INSTALL DROPBEAR 2019
+
+````
+wget https://raw.githubusercontent.com/kayu55/aku/main/drop.sh && chmod +x drop.sh && ./drop.sh
+````
+
 ## STUNEL5 UPGRADE
 
 
