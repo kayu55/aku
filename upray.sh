@@ -227,7 +227,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -329,13 +329,31 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-             }
-          ]
-       },
+### lam 2026-02-07
+},{"id": "8a1f1029-c7c9-471c-9170-8ca922e3c6c8","alterId": 0,"email": "lam"
+### roni12 2026-02-06
+},{"id": "efc543f2-e714-4166-82a3-057bd9fa806d","alterId": 0,"email": "roni12"
+### kaf15 2026-01-21
+},{"id": "3cdb7c71-a8ec-482e-b52a-2f168f894f70","alterId": 0,"email": "kaf15"
+### roni11 2026-02-05
+},{"id": "033e64ff-f4cb-4094-9941-3d901ef21cfa","alterId": 0,"email": "roni11"
+### roni10 2026-02-05
+},{"id": "e86c9820-8985-468c-a974-ec2759fc4206","alterId": 0,"email": "roni10"
+### roni9 2026-02-05
+},{"id": "65f34cd7-9886-4add-8650-3e8ff9e1c95b","alterId": 0,"email": "roni9"
+### roni8 2026-01-26
+},{"id": "909c9cbb-7be8-4d67-84ff-77e8b7e186a3","alterId": 0,"email": "roni8"
+### genta8 2026-01-25
+},{"id": "0819e9e7-a1b2-4d06-8cd7-02e31a900308","alterId": 0,"email": "genta8"
+### genta 2026-01-26
+},{"id": "f6ffbfec-c5be-4b75-aaec-b148c592cb98","alterId": 0,"email": "genta"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "/vmess"
           }
         }
      },
@@ -390,9 +408,27 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
+### lam 2026-02-07
+},{"id": "8a1f1029-c7c9-471c-9170-8ca922e3c6c8","alterId": 0,"email": "lam"
+### roni12 2026-02-06
+},{"id": "efc543f2-e714-4166-82a3-057bd9fa806d","alterId": 0,"email": "roni12"
+### kaf15 2026-01-21
+},{"id": "3cdb7c71-a8ec-482e-b52a-2f168f894f70","alterId": 0,"email": "kaf15"
+### roni11 2026-02-05
+},{"id": "033e64ff-f4cb-4094-9941-3d901ef21cfa","alterId": 0,"email": "roni11"
+### roni10 2026-02-05
+},{"id": "e86c9820-8985-468c-a974-ec2759fc4206","alterId": 0,"email": "roni10"
+### roni9 2026-02-05
+},{"id": "65f34cd7-9886-4add-8650-3e8ff9e1c95b","alterId": 0,"email": "roni9"
+### roni8 2026-01-26
+},{"id": "909c9cbb-7be8-4d67-84ff-77e8b7e186a3","alterId": 0,"email": "roni8"
+### genta8 2026-01-25
+},{"id": "0819e9e7-a1b2-4d06-8cd7-02e31a900308","alterId": 0,"email": "genta8"
+### genta 2026-01-26
+},{"id": "f6ffbfec-c5be-4b75-aaec-b148c592cb98","alterId": 0,"email": "genta"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
