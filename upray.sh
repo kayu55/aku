@@ -329,24 +329,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### lam 2026-02-07
-},{"id": "8a1f1029-c7c9-471c-9170-8ca922e3c6c8","alterId": 0,"email": "lam"
-### roni12 2026-02-06
-},{"id": "efc543f2-e714-4166-82a3-057bd9fa806d","alterId": 0,"email": "roni12"
-### kaf15 2026-01-21
-},{"id": "3cdb7c71-a8ec-482e-b52a-2f168f894f70","alterId": 0,"email": "kaf15"
-### roni11 2026-02-05
-},{"id": "033e64ff-f4cb-4094-9941-3d901ef21cfa","alterId": 0,"email": "roni11"
-### roni10 2026-02-05
-},{"id": "e86c9820-8985-468c-a974-ec2759fc4206","alterId": 0,"email": "roni10"
-### roni9 2026-02-05
-},{"id": "65f34cd7-9886-4add-8650-3e8ff9e1c95b","alterId": 0,"email": "roni9"
-### roni8 2026-01-26
-},{"id": "909c9cbb-7be8-4d67-84ff-77e8b7e186a3","alterId": 0,"email": "roni8"
-### genta8 2026-01-25
-},{"id": "0819e9e7-a1b2-4d06-8cd7-02e31a900308","alterId": 0,"email": "genta8"
-### genta 2026-01-26
-},{"id": "f6ffbfec-c5be-4b75-aaec-b148c592cb98","alterId": 0,"email": "genta"
+### bis 2026-01-31
+},{"id": "6fa273a2-41bc-440d-ade1-cddea4d4306a","alterId": 0,"email": "bis"
+### ind4 2026-02-10
+},{"id": "0da2ffa8-d07b-40ca-9333-488d409bb74a","alterId": 0,"email": "ind4"
+### edy 2026-02-09
+},{"id": "aa6ebbcb-e491-412b-a324-1b82cc5ced4d","alterId": 0,"email": "edy"
+### bz 2026-02-04
+},{"id": "c1e99d0e-4a18-46fa-8cbb-6093e9a81731","alterId": 0,"email": "bz"
+### fi26 2026-02-01
+},{"id": "61db1844-da54-422f-9187-7faff4c6140f","alterId": 0,"email": "fi26"
+### im 2026-01-26
+},{"id": "8b05c488-1293-449b-9e56-e4ca69442bdc","alterId": 0,"email": "im"
+### am4d 2026-01-21
+},{"id": "ecdcb6ab-63df-42b3-9b0b-662e803f2d18","alterId": 0,"email": "am4d"
+### ituja 2026-01-19
+},{"id": "d63b895b-57f7-48e4-8c05-c567cf9036ab","alterId": 0,"email": "ituja"
           }
         ]
       },
@@ -408,27 +406,25 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### lam 2026-02-07
-},{"id": "8a1f1029-c7c9-471c-9170-8ca922e3c6c8","alterId": 0,"email": "lam"
-### roni12 2026-02-06
-},{"id": "efc543f2-e714-4166-82a3-057bd9fa806d","alterId": 0,"email": "roni12"
-### kaf15 2026-01-21
-},{"id": "3cdb7c71-a8ec-482e-b52a-2f168f894f70","alterId": 0,"email": "kaf15"
-### roni11 2026-02-05
-},{"id": "033e64ff-f4cb-4094-9941-3d901ef21cfa","alterId": 0,"email": "roni11"
-### roni10 2026-02-05
-},{"id": "e86c9820-8985-468c-a974-ec2759fc4206","alterId": 0,"email": "roni10"
-### roni9 2026-02-05
-},{"id": "65f34cd7-9886-4add-8650-3e8ff9e1c95b","alterId": 0,"email": "roni9"
-### roni8 2026-01-26
-},{"id": "909c9cbb-7be8-4d67-84ff-77e8b7e186a3","alterId": 0,"email": "roni8"
-### genta8 2026-01-25
-},{"id": "0819e9e7-a1b2-4d06-8cd7-02e31a900308","alterId": 0,"email": "genta8"
-### genta 2026-01-26
-},{"id": "f6ffbfec-c5be-4b75-aaec-b148c592cb98","alterId": 0,"email": "genta"
-          }
-        ]
-      },
+### bis 2026-01-31
+},{"id": "6fa273a2-41bc-440d-ade1-cddea4d4306a","alterId": 0,"email": "bis"
+### ind4 2026-02-10
+},{"id": "0da2ffa8-d07b-40ca-9333-488d409bb74a","alterId": 0,"email": "ind4"
+### edy 2026-02-09
+},{"id": "aa6ebbcb-e491-412b-a324-1b82cc5ced4d","alterId": 0,"email": "edy"
+### bz 2026-02-04
+},{"id": "c1e99d0e-4a18-46fa-8cbb-6093e9a81731","alterId": 0,"email": "bz"
+### fi26 2026-02-01
+},{"id": "61db1844-da54-422f-9187-7faff4c6140f","alterId": 0,"email": "fi26"
+### im 2026-01-26
+},{"id": "8b05c488-1293-449b-9e56-e4ca69442bdc","alterId": 0,"email": "im"
+### am4d 2026-01-21
+},{"id": "ecdcb6ab-63df-42b3-9b0b-662e803f2d18","alterId": 0,"email": "am4d"
+### ituja 2026-01-19
+},{"id": "d63b895b-57f7-48e4-8c05-c567cf9036ab","alterId": 0,"email": "ituja"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
