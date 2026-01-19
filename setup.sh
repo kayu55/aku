@@ -454,7 +454,7 @@ echo ""
 echo "===============-[ Script By Arya Blitar ]-==============="
 echo ""
 echo  "------------------------------------------------------------"
-echo -e "Wa Me +6281931615811"
+echo  "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
