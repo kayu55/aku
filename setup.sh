@@ -394,7 +394,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
 clear
-print_install "Memasang Swap 2 GB"
+#print_install "Memasang Swap 2 GB"
 
 # Mengambil versi terbaru gotop
 gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
