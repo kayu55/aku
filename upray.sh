@@ -329,18 +329,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### rez 2026-01-27
-},{"id": "5c196566-7263-489f-aa6b-2fca3f474d2e","alterId": 0,"email": "rez"
-### gasenusa 2026-01-25
-},{"id": "7c52fbc2-0ddd-4237-b598-3bcc82d354cb","alterId": 0,"email": "gasenusa"
-### okee 2026-02-10
-},{"id": "d6aa3c99-9f49-4de3-b4cc-3f5dd6c9d98e","alterId": 0,"email": "okee"
-### kaf 2026-02-06
-},{"id": "63be8897-abda-4e90-8168-b53c5cc07e1e","alterId": 0,"email": "kaf"
-### roni7 2026-01-24
-},{"id": "ce4944e6-99f0-40c3-ad5b-6db670f5b1c1","alterId": 0,"email": "roni7"
-### bangray1999 2026-02-20
-},{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
              }
           ]
        },
@@ -402,18 +390,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### rez 2026-01-27
-},{"id": "5c196566-7263-489f-aa6b-2fca3f474d2e","alterId": 0,"email": "rez"
-### gasenusa 2026-01-25
-},{"id": "7c52fbc2-0ddd-4237-b598-3bcc82d354cb","alterId": 0,"email": "gasenusa"
-### okee 2026-02-10
-},{"id": "d6aa3c99-9f49-4de3-b4cc-3f5dd6c9d98e","alterId": 0,"email": "okee"
-### kaf 2026-02-06
-},{"id": "63be8897-abda-4e90-8168-b53c5cc07e1e","alterId": 0,"email": "kaf"
-### roni7 2026-01-24
-},{"id": "ce4944e6-99f0-40c3-ad5b-6db670f5b1c1","alterId": 0,"email": "roni7"
-### bangray1999 2026-02-20
-},{"id": "6ea8545a-9a5d-409e-b227-5756b1e484c8","alterId": 0,"email": "bangray1999"
              }
           ]
        },
