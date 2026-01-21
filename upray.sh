@@ -329,29 +329,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### mbrck 2026-02-20
-},{"id": "8ed6d03c-c5b3-4e01-b9ab-0eb3361efba1","alterId": 0,"email": "mbrck"
-### nurul 2026-02-19
-},{"id": "ac416631-e4f0-422f-98a0-aba7f161a8b1","alterId": 0,"email": "nurul"
-### boh0r 2026-02-18
-},{"id": "26ab5155-4b1d-4250-8062-2324ec591188","alterId": 0,"email": "boh0r"
-### bis 2026-01-31
-},{"id": "6fa273a2-41bc-440d-ade1-cddea4d4306a","alterId": 0,"email": "bis"
-### ind4 2026-02-10
-},{"id": "0da2ffa8-d07b-40ca-9333-488d409bb74a","alterId": 0,"email": "ind4"
-### edy 2026-02-09
-},{"id": "aa6ebbcb-e491-412b-a324-1b82cc5ced4d","alterId": 0,"email": "edy"
-### bz 2026-02-04
-},{"id": "c1e99d0e-4a18-46fa-8cbb-6093e9a81731","alterId": 0,"email": "bz"
-### fi26 2026-02-01
-},{"id": "61db1844-da54-422f-9187-7faff4c6140f","alterId": 0,"email": "fi26"
-### im 2026-01-26
-},{"id": "8b05c488-1293-449b-9e56-e4ca69442bdc","alterId": 0,"email": "im"
-### am4d 2026-01-21
-},{"id": "ecdcb6ab-63df-42b3-9b0b-662e803f2d18","alterId": 0,"email": "am4d"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -410,26 +390,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### mbrck 2026-02-20
-},{"id": "8ed6d03c-c5b3-4e01-b9ab-0eb3361efba1","alterId": 0,"email": "mbrck"
-### nurul 2026-02-19
-},{"id": "ac416631-e4f0-422f-98a0-aba7f161a8b1","alterId": 0,"email": "nurul"
-### boh0r 2026-02-18
-},{"id": "26ab5155-4b1d-4250-8062-2324ec591188","alterId": 0,"email": "boh0r"
-### bis 2026-01-31
-},{"id": "6fa273a2-41bc-440d-ade1-cddea4d4306a","alterId": 0,"email": "bis"
-### ind4 2026-02-10
-},{"id": "0da2ffa8-d07b-40ca-9333-488d409bb74a","alterId": 0,"email": "ind4"
-### edy 2026-02-09
-},{"id": "aa6ebbcb-e491-412b-a324-1b82cc5ced4d","alterId": 0,"email": "edy"
-### bz 2026-02-04
-},{"id": "c1e99d0e-4a18-46fa-8cbb-6093e9a81731","alterId": 0,"email": "bz"
-### fi26 2026-02-01
-},{"id": "61db1844-da54-422f-9187-7faff4c6140f","alterId": 0,"email": "fi26"
-### im 2026-01-26
-},{"id": "8b05c488-1293-449b-9e56-e4ca69442bdc","alterId": 0,"email": "im"
-### am4d 2026-01-21
-},{"id": "ecdcb6ab-63df-42b3-9b0b-662e803f2d18","alterId": 0,"email": "am4d"
              }
           ]
        },
