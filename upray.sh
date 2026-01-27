@@ -227,7 +227,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -329,13 +329,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### mng4 2026-02-10
+},{"id": "960a593e-593e-4810-91b2-4e5ab6d742a1","alterId": 0,"email": "mng4"
+### ok3 2026-02-11
+},{"id": "123f568f-ec5b-46bb-9438-24e812d815b6","alterId": 0,"email": "ok3"
+### iw4k 2026-02-06
+},{"id": "9438da1a-4aa7-425e-8add-97ad2d921083","alterId": 0,"email": "iw4k"
+### c3pat 2026-02-02
+},{"id": "cc0b4073-8f1c-4e17-9d9f-357f6772c1c2","alterId": 0,"email": "c3pat"
              }
           ]
        },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "/vmess"
           }
         }
      },
@@ -390,6 +398,14 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### mng4 2026-02-10
+},{"id": "960a593e-593e-4810-91b2-4e5ab6d742a1","alterId": 0,"email": "mng4"
+### ok3 2026-02-11
+},{"id": "123f568f-ec5b-46bb-9438-24e812d815b6","alterId": 0,"email": "ok3"
+### iw4k 2026-02-06
+},{"id": "9438da1a-4aa7-425e-8add-97ad2d921083","alterId": 0,"email": "iw4k"
+### c3pat 2026-02-02
+},{"id": "cc0b4073-8f1c-4e17-9d9f-357f6772c1c2","alterId": 0,"email": "c3pat"
              }
           ]
        },
