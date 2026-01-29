@@ -227,7 +227,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -329,21 +329,23 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### mng4 2026-02-10
-},{"id": "960a593e-593e-4810-91b2-4e5ab6d742a1","alterId": 0,"email": "mng4"
-### ok3 2026-02-11
-},{"id": "123f568f-ec5b-46bb-9438-24e812d815b6","alterId": 0,"email": "ok3"
-### iw4k 2026-02-06
-},{"id": "9438da1a-4aa7-425e-8add-97ad2d921083","alterId": 0,"email": "iw4k"
-### c3pat 2026-02-02
-},{"id": "cc0b4073-8f1c-4e17-9d9f-357f6772c1c2","alterId": 0,"email": "c3pat"
-             }
-          ]
-       },
+### ssg 2026-02-14
+},{"id": "d674c0d6-0352-4453-9680-b8a14c3385ea","alterId": 0,"email": "ssg"
+### order 2026-02-09
+},{"id": "5178a5fc-a927-4b7b-b401-48c543cd4141","alterId": 0,"email": "order"
+### cov 2026-02-06
+},{"id": "669e19e0-7b66-4443-928e-184d72e00d95","alterId": 0,"email": "cov"
+### sidiq 2026-02-04
+},{"id": "c0b9dbce-5e38-4d99-bc4d-41f2d8e2dfa0","alterId": 0,"email": "sidiq"
+### akuaa 2132-09-05
+},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vmess"
+                "path": "/servlets/mms"
           }
         }
      },
@@ -398,14 +400,16 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### mng4 2026-02-10
-},{"id": "960a593e-593e-4810-91b2-4e5ab6d742a1","alterId": 0,"email": "mng4"
-### ok3 2026-02-11
-},{"id": "123f568f-ec5b-46bb-9438-24e812d815b6","alterId": 0,"email": "ok3"
-### iw4k 2026-02-06
-},{"id": "9438da1a-4aa7-425e-8add-97ad2d921083","alterId": 0,"email": "iw4k"
-### c3pat 2026-02-02
-},{"id": "cc0b4073-8f1c-4e17-9d9f-357f6772c1c2","alterId": 0,"email": "c3pat"
+### ssg 2026-02-14
+},{"id": "d674c0d6-0352-4453-9680-b8a14c3385ea","alterId": 0,"email": "ssg"
+### order 2026-02-09
+},{"id": "5178a5fc-a927-4b7b-b401-48c543cd4141","alterId": 0,"email": "order"
+### cov 2026-02-06
+},{"id": "669e19e0-7b66-4443-928e-184d72e00d95","alterId": 0,"email": "cov"
+### sidiq 2026-02-04
+},{"id": "c0b9dbce-5e38-4d99-bc4d-41f2d8e2dfa0","alterId": 0,"email": "sidiq"
+### akuaa 2132-09-05
+},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
              }
           ]
        },
