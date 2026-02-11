@@ -39,14 +39,6 @@ ressh="${green}ON${NC}"
 else
 ressh="${red}OFF${NC}"
 fi
-# STATUS SERVICE  VNSTAT 
-vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-# STATUS SERVICE  VNSTAT 
-if [[ $vnstat_service == "running" ]]; then 
-   status_vnstat="${green}ON${NC}"
-else
-   status_vnstat="${red}OFF${NC}"
-fi
 sshstunel=$(service stunnel5 status | grep active | cut -d ' ' $stat)
 if [ "$sshstunel" = "active" ]; then
 resst="${green}ON${NC}"
@@ -92,8 +84,8 @@ MEMOFREE=$(printf '%-1s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')"
 LOADCPU=$(printf '%-0.00001s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
 MODEL=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')
 CORE=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
-#DATEVPS=$(date +'%d/%m/%Y')
-#TIMEZONE=$(printf '%(%H:%M:%S)T')
+DATEVPS=$(date +'%d/%m/%Y')
+TIMEZONE=$(printf '%(%H:%M:%S)T')
 dtoday="$(vnstat | grep today | awk '{print $2" "substr ($3, 1, 3)}')"
 utoday="$(vnstat | grep today | awk '{print $5" "substr ($6, 1, 3)}')"
 ttoday="$(vnstat | grep today | awk '{print $8" "substr ($9, 1, 3)}')"
@@ -118,16 +110,16 @@ echo -e " ${BICyan}│  ${ICyan} Usage Memory :${NC} $MEMOFREE "
 echo -e " ${BICyan}│  ${ICyan} LoadCPU      : ${NC}$LOADCPU% "
 echo -e " ${BICyan}│  ${ICyan} Core System  : ${NC}$CORE "
 echo -e " ${BICyan}│  ${ICyan} System OS    : ${NC}$MODEL "
-#echo -e " ${BICyan}│  ${ICyan} Date         : ${NC}$DATEVPS "
-#echo -e " ${BICyan}│  ${ICyan} Time         : ${NC}$TIMEZONE "
+echo -e " ${BICyan}│  ${ICyan} Date         : ${NC}$DATEVPS "
+echo -e " ${BICyan}│  ${ICyan} Time         : ${NC}$TIMEZONE "
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo -e " ${BICyan}╭═════════════════════════════════════════════════════╮${NC}"
 echo -e "${BICyan} │                    ${NC}SSH     ${ICyan}: ${ORANGE}$ssh1      ${NC} "
 echo -e "${BICyan} │                    ${NC}ALLXRAY ${ICyan}: ${ORANGE}$vma     ${NC} "
 echo -e " ${BICyan}╰═════════════════════════════════════════════════════╯${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "   ${NC}SSH ${ORANGE}    : ${RED}$ressh""${NC} NGINX ${ORANGE}   : ${RED}$resngx"" ${NC}XRAY ${ORANGE}  : ${RED}$resv2r"" ${NC}TROJAN${ORANGE} : ${RED}$resv2r"
-echo -e "   ${NC}TUNNEL5 ${ORANGE}: ${RED}$resst""${NC} DROPBEAR ${ORANGE}: ${RED}$resdbr" "${NC}SSH-WS ${ORANGE}: ${RED}$ressshws" "${NC}VNSTAT ${ORANGE}: ${RED}$status_vnstat"
+echo -e "    ${NC} SSH ${ORANGE}: ${RED}$ressh"" ${NC} NGINX ${ORANGE}: ${RED}$resngx"" ${NC}  XRAY ${ORANGE}: ${RED}$resv2r"" ${NC} TROJAN ${ORANGE}: ${RED}$resv2r"
+echo -e "  ${NC}     STUNNEL ${ORANGE}: ${RED}$resst" "${NC} DROPBEAR ${ORANGE}: ${RED}$resdbr" "${NC} SSH-WS ${ORANGE}: ${RED}$ressshws"
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "      ${NC} Hari ini                    Bulan ini  ${NC}"
@@ -152,7 +144,7 @@ echo -e "${GREEN}  ${RED}▁ ${CYAN}▂ ${GREEN}▄ ${ORANGE}▅${PINK} ▆${GRE
 echo -e "${BICyan} └─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e " ${BICyan}┌─────────────────────────────────────────────────────┐${NC}"
-echo -e " ${BICyan}│ ${ORANGE} Version : ${NC}PREMIUM HAPPY NEW YEAR 2026  ${NC}"
+echo -e " ${BICyan}│ ${ORANGE} Version       : ${NC}PREMIUM 2026 V 8.0  ${NC}"
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo
 read -p " Select menu : " opt
