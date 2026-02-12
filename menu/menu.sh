@@ -69,6 +69,13 @@ resv2r="${green}ON${NC}"
 else
 resv2r="${red}OFF${NC}"
 fi
+# STATUS SERVICE  VNSTAT 
+vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+if [[ $vnstat_service == "running" ]]; then 
+   status_vnstat="${green}ON${NC}"
+else
+   status_vnstat="${red}OFF${NC}"
+fi
 ISP=$(curl -s ipinfo.io/org | cut -d " " -f 2-10)
 # TOTAL RAM
 #total_ram=` grep "MemTotal: " /proc/meminfo | awk '{ print $2}'`
@@ -101,15 +108,15 @@ echo -e ""
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "${BICyan} │$NC\033[42m                   SYSTEM INFORMATION                ${BICyan}│${NC} "
 echo -e "${BICyan} │ "
-echo -e " ${BICyan}│  ${ICyan} Hostname     : ${NC}$HOSTNAME "
-echo -e " ${BICyan}│  ${ICyan} Public IP    : ${NC}$IPVPS ${NC} "
-echo -e " ${BICyan}│  ${ICyan} Domain       : ${NC}$(cat /etc/xray/domain) "
-echo -e " ${BICyan}│  ${ICyan} ISP          : ${NC}$ISP "
-echo -e " ${BICyan}│  ${ICyan} Total RAM    : ${NC}$uram / $tram MB ${NC}"
-echo -e " ${BICyan}│  ${ICyan} Usage Memory :${NC} $MEMOFREE "
-echo -e " ${BICyan}│  ${ICyan} LoadCPU      : ${NC}$LOADCPU% "
-echo -e " ${BICyan}│  ${ICyan} Core System  : ${NC}$CORE "
-echo -e " ${BICyan}│  ${ICyan} System OS    : ${NC}$MODEL "
+echo -e " ${BICyan}│  ${ORANGE} Hostname     ${ICyan}: ${NC}$HOSTNAME "
+echo -e " ${BICyan}│  ${ORANGE} Public IP    ${ICyan}: ${NC}$IPVPS ${NC} "
+echo -e " ${BICyan}│  ${ORANGE} Domain       ${ICyan}: ${NC}$(cat /etc/xray/domain) "
+echo -e " ${BICyan}│  ${ORANGE} ISP          ${ICyan}: ${NC}$ISP "
+echo -e " ${BICyan}│  ${ORANGE} Total RAM    ${ICyan}: ${NC}$uram / $tram MB ${NC}"
+echo -e " ${BICyan}│  ${ORANGE} Usage Memory ${ICyan}:${NC} $MEMOFREE "
+echo -e " ${BICyan}│  ${ORANGE} LoadCPU      ${ICyan}: ${NC}$LOADCPU% "
+echo -e " ${BICyan}│  ${ORANGE} Core System  ${ICyan}: ${NC}$CORE "
+echo -e " ${BICyan}│  ${ORANGE} System OS    ${ICyan}: ${NC}$MODEL "
 #echo -e " ${BICyan}│  ${ICyan} Date         : ${NC}$DATEVPS "
 #echo -e " ${BICyan}│  ${ICyan} Time         : ${NC}$TIMEZONE "
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
@@ -118,8 +125,8 @@ echo -e "${BICyan} │                    ${NC}SSH     ${ICyan}: ${ORANGE}$ssh1 
 echo -e "${BICyan} │                    ${NC}ALLXRAY ${ICyan}: ${ORANGE}$vma     ${NC} "
 echo -e " ${BICyan}╰═════════════════════════════════════════════════════╯${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "    ${NC} SSH ${ORANGE}: ${RED}$ressh"" ${NC} NGINX ${ORANGE}: ${RED}$resngx"" ${NC}  XRAY ${ORANGE}: ${RED}$resv2r"" ${NC} TROJAN ${ORANGE}: ${RED}$resv2r"
-echo -e "  ${NC}     STUNNEL ${ORANGE}: ${RED}$resst" "${NC} DROPBEAR ${ORANGE}: ${RED}$resdbr" "${NC} SSH-WS ${ORANGE}: ${RED}$ressshws"
+echo -e "${NC}   SSH-TUN  ${ORANGE}: ${RED}$ressh""${NC} NGINX    ${ORANGE}: ${RED}$resngx" "${NC}XRAY  ${ORANGE}: ${RED}$resv2r" "${NC}TROJAN ${ORANGE}: ${RED}$resv2r"
+echo -e "${NC}   STUNNEL5 ${ORANGE}: ${RED}$resst" "${NC}DROPBEAR ${ORANGE}: ${RED}$resdbr" "${NC}WSPRO ${ORANGE}: ${RED}$ressshws" "${NC}VNSTAT ${ORANGE}: ${RED}$status_vnstat "
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "      ${NC} Hari ini                    Bulan ini  ${NC}"
