@@ -227,7 +227,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -329,23 +329,15 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### ssg 2026-02-14
-},{"id": "d674c0d6-0352-4453-9680-b8a14c3385ea","alterId": 0,"email": "ssg"
-### order 2026-02-09
-},{"id": "5178a5fc-a927-4b7b-b401-48c543cd4141","alterId": 0,"email": "order"
-### cov 2026-02-06
-},{"id": "669e19e0-7b66-4443-928e-184d72e00d95","alterId": 0,"email": "cov"
-### sidiq 2026-02-04
-},{"id": "c0b9dbce-5e38-4d99-bc4d-41f2d8e2dfa0","alterId": 0,"email": "sidiq"
-### akuaa 2132-09-05
-},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
+### simb4h 2026-03-03
+},{"id": "2e6f1117-2347-4fee-92c4-4d361083f8ef","alterId": 0,"email": "simb4h"
           }
         ]
       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "/vmess"
           }
         }
      },
@@ -400,19 +392,11 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### ssg 2026-02-14
-},{"id": "d674c0d6-0352-4453-9680-b8a14c3385ea","alterId": 0,"email": "ssg"
-### order 2026-02-09
-},{"id": "5178a5fc-a927-4b7b-b401-48c543cd4141","alterId": 0,"email": "order"
-### cov 2026-02-06
-},{"id": "669e19e0-7b66-4443-928e-184d72e00d95","alterId": 0,"email": "cov"
-### sidiq 2026-02-04
-},{"id": "c0b9dbce-5e38-4d99-bc4d-41f2d8e2dfa0","alterId": 0,"email": "sidiq"
-### akuaa 2132-09-05
-},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
-             }
-          ]
-       },
+### simb4h 2026-03-03
+},{"id": "2e6f1117-2347-4fee-92c4-4d361083f8ef","alterId": 0,"email": "simb4h"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
