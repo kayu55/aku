@@ -329,11 +329,19 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### simb4h 2026-03-03
-},{"id": "2e6f1117-2347-4fee-92c4-4d361083f8ef","alterId": 0,"email": "simb4h"
-          }
-        ]
-      },
+### aceh 2026-03-13
+},{"id": "5af7ab37-2623-413f-8623-f0709cb2183c","alterId": 0,"email": "aceh"
+### roni17 2026-03-10
+},{"id": "b5e81d3b-118d-40a8-8d61-7e19482146b5","alterId": 0,"email": "roni17"
+### iw4ke 2026-03-08
+},{"id": "0b217e91-38a5-4d7e-8899-79682376e53f","alterId": 0,"email": "iw4ke"
+### roni16 2026-03-07
+},{"id": "4427ca45-c1df-4a46-88c7-3855a341067c","alterId": 0,"email": "roni16"
+### roni15 2026-03-07
+},{"id": "caa5f2e4-2f34-4952-a64a-1808312fe8eb","alterId": 0,"email": "roni15"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -392,11 +400,19 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### simb4h 2026-03-03
-},{"id": "2e6f1117-2347-4fee-92c4-4d361083f8ef","alterId": 0,"email": "simb4h"
-          }
-        ]
-      },
+### aceh 2026-03-13
+},{"id": "5af7ab37-2623-413f-8623-f0709cb2183c","alterId": 0,"email": "aceh"
+### roni17 2026-03-10
+},{"id": "b5e81d3b-118d-40a8-8d61-7e19482146b5","alterId": 0,"email": "roni17"
+### iw4ke 2026-03-08
+},{"id": "0b217e91-38a5-4d7e-8899-79682376e53f","alterId": 0,"email": "iw4ke"
+### roni16 2026-03-07
+},{"id": "4427ca45-c1df-4a46-88c7-3855a341067c","alterId": 0,"email": "roni16"
+### roni15 2026-03-07
+},{"id": "caa5f2e4-2f34-4952-a64a-1808312fe8eb","alterId": 0,"email": "roni15"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
