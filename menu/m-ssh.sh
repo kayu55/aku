@@ -192,7 +192,7 @@ echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━�
 echo -e ""
 echo -e " Username : $User"
 echo -e " Days Added : $Days Days"
-echo -e " Expires on :  $Expiration_Display"
+echo -e " Expires on :  $Expiration_Display 👍"
 echo -e ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 else
