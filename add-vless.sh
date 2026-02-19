@@ -49,7 +49,7 @@ echo -e "\033[0;34m═══════════\033[0;33mXRAY/VLESS\033[0;3
 echo -e "\033[0;34m════════════════════════════════${NC}"
 echo -e "Remarks       : ${user}" 
 echo -e "Created       : $hariini"
-echo -e "Expired On    : $exp" 
+echo -e "Expired On    : $exp 👍" 
 echo -e "Domain        : ${domain}" 
 echo -e "port none TLS : 80, 8080, 8880, 2082, 2086, 2052, 2095"
 echo -e "port TLS      : 443, 8443, 2087, 2096, 2053, 2083"

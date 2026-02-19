@@ -48,7 +48,7 @@ clear
 echo -e "\033[0;34m════════════\033[0;33mXRAY/TROJANWS\033[0;34m════════════${NC}"
 echo -e "Remarks     : ${user}" 
 echo -e "Created     : $hariini"
-echo -e "Expired On  : $exp" 
+echo -e "Expired On  : $exp 👍"
 echo -e "Host/IP     : ${domain}" 
 echo -e "Port        : 443, 8443, 2087, 2096, 2053, 2083 "
 echo -e "Key         : ${uuid}" 
