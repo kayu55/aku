@@ -329,14 +329,20 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### con 2026-04-08
-},{"id": "e8252e35-bd41-449b-bafb-6e65f5569e8a","alterId": 0,"email": "con"
-### roni20 2026-04-06
-},{"id": "051fa7a0-8a2a-4a74-844b-f7dcdf5e25ae","alterId": 0,"email": "roni20"
-### aceh 2026-03-13
-},{"id": "5af7ab37-2623-413f-8623-f0709cb2183c","alterId": 0,"email": "aceh"
-### iw4k 2026-04-06
-},{"id": "0b217e91-38a5-4d7e-8899-79682376e53f","alterId": 0,"email": "iw4ke"
+### gasem2 2026-03-31
+},{"id": "5dd8d1a2-d699-445f-90ad-c600df8d07de","alterId": 0,"email": "gasem2"
+### gas1 2026-03-31
+},{"id": "acc3226b-d8bc-4f61-b185-0a04a080c099","alterId": 0,"email": "gas1"
+### fadil 2026-03-30
+},{"id": "4a32ba02-69de-4432-a619-185715ef58c3","alterId": 0,"email": "fadil"
+### ferdy 2026-03-31
+},{"id": "78277bf8-5d72-49c7-8178-c122534d81ff","alterId": 0,"email": "ferdy"
+### tolak 2026-03-18
+},{"id": "dd3ca2ab-f35c-4d56-9047-7c57b64301f0","alterId": 0,"email": "tolak"
+### net5 2026-03-17
+},{"id": "31d1314d-a01b-49cd-a778-05f9b52c04c7","alterId": 0,"email": "net5"
+### cofr3n 2026-03-15
+},{"id": "8c85c06e-fc69-461a-bb7e-5274303cdc2d","alterId": 0,"email": "cofr3n"
              }
           ]
        },
@@ -398,14 +404,20 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### con 2026-04-08
-},{"id": "e8252e35-bd41-449b-bafb-6e65f5569e8a","alterId": 0,"email": "con"
-### roni20 2026-04-06
-},{"id": "051fa7a0-8a2a-4a74-844b-f7dcdf5e25ae","alterId": 0,"email": "roni20"
-### aceh 2026-03-13
-},{"id": "5af7ab37-2623-413f-8623-f0709cb2183c","alterId": 0,"email": "aceh"
-### iw4k 2026-04-06
-},{"id": "0b217e91-38a5-4d7e-8899-79682376e53f","alterId": 0,"email": "iw4ke"
+### gasem2 2026-03-31
+},{"id": "5dd8d1a2-d699-445f-90ad-c600df8d07de","alterId": 0,"email": "gasem2"
+### gas1 2026-03-31
+},{"id": "acc3226b-d8bc-4f61-b185-0a04a080c099","alterId": 0,"email": "gas1"
+### fadil 2026-03-30
+},{"id": "4a32ba02-69de-4432-a619-185715ef58c3","alterId": 0,"email": "fadil"
+### ferdy 2026-03-31
+},{"id": "78277bf8-5d72-49c7-8178-c122534d81ff","alterId": 0,"email": "ferdy"
+### tolak 2026-03-18
+},{"id": "dd3ca2ab-f35c-4d56-9047-7c57b64301f0","alterId": 0,"email": "tolak"
+### net5 2026-03-17
+},{"id": "31d1314d-a01b-49cd-a778-05f9b52c04c7","alterId": 0,"email": "net5"
+### cofr3n 2026-03-15
+},{"id": "8c85c06e-fc69-461a-bb7e-5274303cdc2d","alterId": 0,"email": "cofr3n"
              }
           ]
        },
