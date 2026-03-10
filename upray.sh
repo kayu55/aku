@@ -329,25 +329,27 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### kekgitu 2026-03-30
-},{"id": "685cd55d-b1e2-4c30-81d2-2fef3e8328d0","alterId": 0,"email": "kekgitu"
-### s4m 2026-03-31
-},{"id": "90758dd4-5799-4e76-82e4-cc59cbf65f08","alterId": 0,"email": "s4m"
-### f4ko 2026-03-29
-},{"id": "7253594b-b9b2-4b3c-b80b-edcb8fdc7b6e","alterId": 0,"email": "f4ko"
-### ngilmu 2026-03-12
-},{"id": "37ce77c6-a498-4822-9604-9c19fd3a4f52","alterId": 0,"email": "ngilmu"
-### nurul 2026-03-20
-},{"id": "9ebd3f7e-8cdd-4844-b308-3385de4324c3","alterId": 0,"email": "nurul"
-### ng3b 2026-03-19
-},{"id": "3bee742b-440d-44d8-98ec-115606e91874","alterId": 0,"email": "ng3b"
-### v2box 2026-03-17
-},{"id": "c6149c38-8763-4c4d-84e9-77b563ae8fc9","alterId": 0,"email": "v2box"
-### slot 2026-03-14
-},{"id": "82686ebc-a24b-4f35-b1c0-436973dae3fc","alterId": 0,"email": "slot"
-          }
-        ]
-      },
+### cofre 2026-04-08
+},{"id": "7c58e6a9-f253-458d-85e4-84ffeea50212","alterId": 0,"email": "cofre"
+### bu4t 2026-04-07
+},{"id": "3803b7bd-d6da-43c6-9d44-0673b5276883","alterId": 0,"email": "bu4t"
+### eduk 2026-04-06
+},{"id": "375bc30d-3663-4e7d-99ad-814029a005ca","alterId": 0,"email": "eduk"
+### mhmin 2026-04-03
+},{"id": "c774566e-3ed2-4de3-b76f-991bebef69b3","alterId": 0,"email": "mhmin"
+### ya 2026-03-14
+},{"id": "ffc9c3ac-4f58-4172-aa16-2a202c45e37e","alterId": 0,"email": "ya"
+### jun0 2026-03-29
+},{"id": "164e6fb1-fac9-484a-be24-2216c5d87ef8","alterId": 0,"email": "jun0"
+### rezi 2026-03-29
+},{"id": "3fe53f7c-58f1-4aac-8966-fb7d32284be4","alterId": 0,"email": "rezi"
+### az 2026-04-03
+},{"id": "529efd59-f933-4f8c-87e5-679f0cdf0cf7","alterId": 0,"email": "az"
+### w4hyu 2026-03-12
+},{"id": "2929156f-c819-4779-8270-df40e3437132","alterId": 0,"email": "w4hyu"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -406,22 +408,24 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### kekgitu 2026-03-30
-},{"id": "685cd55d-b1e2-4c30-81d2-2fef3e8328d0","alterId": 0,"email": "kekgitu"
-### s4m 2026-03-31
-},{"id": "90758dd4-5799-4e76-82e4-cc59cbf65f08","alterId": 0,"email": "s4m"
-### f4ko 2026-03-29
-},{"id": "7253594b-b9b2-4b3c-b80b-edcb8fdc7b6e","alterId": 0,"email": "f4ko"
-### ngilmu 2026-03-12
-},{"id": "37ce77c6-a498-4822-9604-9c19fd3a4f52","alterId": 0,"email": "ngilmu"
-### nurul 2026-03-20
-},{"id": "9ebd3f7e-8cdd-4844-b308-3385de4324c3","alterId": 0,"email": "nurul"
-### ng3b 2026-03-19
-},{"id": "3bee742b-440d-44d8-98ec-115606e91874","alterId": 0,"email": "ng3b"
-### v2box 2026-03-17
-},{"id": "c6149c38-8763-4c4d-84e9-77b563ae8fc9","alterId": 0,"email": "v2box"
-### slot 2026-03-14
-},{"id": "82686ebc-a24b-4f35-b1c0-436973dae3fc","alterId": 0,"email": "slot"
+### cofre 2026-04-08
+},{"id": "7c58e6a9-f253-458d-85e4-84ffeea50212","alterId": 0,"email": "cofre"
+### bu4t 2026-04-07
+},{"id": "3803b7bd-d6da-43c6-9d44-0673b5276883","alterId": 0,"email": "bu4t"
+### eduk 2026-04-06
+},{"id": "375bc30d-3663-4e7d-99ad-814029a005ca","alterId": 0,"email": "eduk"
+### mhmin 2026-04-03
+},{"id": "c774566e-3ed2-4de3-b76f-991bebef69b3","alterId": 0,"email": "mhmin"
+### ya 2026-03-14
+},{"id": "ffc9c3ac-4f58-4172-aa16-2a202c45e37e","alterId": 0,"email": "ya"
+### jun0 2026-03-29
+},{"id": "164e6fb1-fac9-484a-be24-2216c5d87ef8","alterId": 0,"email": "jun0"
+### rezi 2026-03-29
+},{"id": "3fe53f7c-58f1-4aac-8966-fb7d32284be4","alterId": 0,"email": "rezi"
+### az 2026-04-03
+},{"id": "529efd59-f933-4f8c-87e5-679f0cdf0cf7","alterId": 0,"email": "az"
+### w4hyu 2026-03-12
+},{"id": "2929156f-c819-4779-8270-df40e3437132","alterId": 0,"email": "w4hyu"
              }
           ]
        },
