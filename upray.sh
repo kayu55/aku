@@ -227,7 +227,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -329,27 +329,23 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### gasem2 2026-03-31
-},{"id": "5dd8d1a2-d699-445f-90ad-c600df8d07de","alterId": 0,"email": "gasem2"
-### gas1 2026-03-31
-},{"id": "acc3226b-d8bc-4f61-b185-0a04a080c099","alterId": 0,"email": "gas1"
-### fadil 2026-03-30
-},{"id": "4a32ba02-69de-4432-a619-185715ef58c3","alterId": 0,"email": "fadil"
-### ferdy 2026-03-31
-},{"id": "78277bf8-5d72-49c7-8178-c122534d81ff","alterId": 0,"email": "ferdy"
-### tolak 2026-03-18
-},{"id": "dd3ca2ab-f35c-4d56-9047-7c57b64301f0","alterId": 0,"email": "tolak"
-### net5 2026-03-17
-},{"id": "31d1314d-a01b-49cd-a778-05f9b52c04c7","alterId": 0,"email": "net5"
-### cofr3n 2026-03-15
-},{"id": "8c85c06e-fc69-461a-bb7e-5274303cdc2d","alterId": 0,"email": "cofr3n"
-             }
-          ]
-       },
+### sidiq 2026-04-03
+},{"id": "1ca7a325-c628-45ba-950a-d3e922422aac","alterId": 0,"email": "sidiq"
+### imam 2026-03-29
+},{"id": "510435e2-fcd8-4ae7-b370-7a0bd931171a","alterId": 0,"email": "imam"
+### cp3t 2026-03-25
+},{"id": "1cd2ba4e-3865-4289-b395-f295aaea3898","alterId": 0,"email": "cp3t"
+### roni18 2026-03-17
+},{"id": "0384094f-154d-409b-82ba-ab8fd7fcd3e2","alterId": 0,"email": "roni18"
+### akuaa 2132-09-05
+},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vmess"
+                "path": "/servlets/mms"
           }
         }
      },
@@ -404,20 +400,16 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### gasem2 2026-03-31
-},{"id": "5dd8d1a2-d699-445f-90ad-c600df8d07de","alterId": 0,"email": "gasem2"
-### gas1 2026-03-31
-},{"id": "acc3226b-d8bc-4f61-b185-0a04a080c099","alterId": 0,"email": "gas1"
-### fadil 2026-03-30
-},{"id": "4a32ba02-69de-4432-a619-185715ef58c3","alterId": 0,"email": "fadil"
-### ferdy 2026-03-31
-},{"id": "78277bf8-5d72-49c7-8178-c122534d81ff","alterId": 0,"email": "ferdy"
-### tolak 2026-03-18
-},{"id": "dd3ca2ab-f35c-4d56-9047-7c57b64301f0","alterId": 0,"email": "tolak"
-### net5 2026-03-17
-},{"id": "31d1314d-a01b-49cd-a778-05f9b52c04c7","alterId": 0,"email": "net5"
-### cofr3n 2026-03-15
-},{"id": "8c85c06e-fc69-461a-bb7e-5274303cdc2d","alterId": 0,"email": "cofr3n"
+### sidiq 2026-04-03
+},{"id": "1ca7a325-c628-45ba-950a-d3e922422aac","alterId": 0,"email": "sidiq"
+### imam 2026-03-29
+},{"id": "510435e2-fcd8-4ae7-b370-7a0bd931171a","alterId": 0,"email": "imam"
+### cp3t 2026-03-25
+},{"id": "1cd2ba4e-3865-4289-b395-f295aaea3898","alterId": 0,"email": "cp3t"
+### roni18 2026-03-17
+},{"id": "0384094f-154d-409b-82ba-ab8fd7fcd3e2","alterId": 0,"email": "roni18"
+### akuaa 2132-09-05
+},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
              }
           ]
        },
