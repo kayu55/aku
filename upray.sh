@@ -329,14 +329,16 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### roni22 2026-04-15
+},{"id": "5a86d15a-f673-4537-ac43-c44915cbee48","alterId": 0,"email": "roni22"
+### roni21 2026-04-12
+},{"id": "6880993c-8951-416d-ad2f-83255b117585","alterId": 0,"email": "roni21"
 ### sidiq 2026-04-03
 },{"id": "1ca7a325-c628-45ba-950a-d3e922422aac","alterId": 0,"email": "sidiq"
 ### imam 2026-03-29
 },{"id": "510435e2-fcd8-4ae7-b370-7a0bd931171a","alterId": 0,"email": "imam"
 ### cp3t 2026-03-25
 },{"id": "1cd2ba4e-3865-4289-b395-f295aaea3898","alterId": 0,"email": "cp3t"
-### roni18 2026-03-17
-},{"id": "0384094f-154d-409b-82ba-ab8fd7fcd3e2","alterId": 0,"email": "roni18"
 ### akuaa 2132-09-05
 },{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
           }
@@ -400,14 +402,16 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### roni22 2026-04-15
+},{"id": "5a86d15a-f673-4537-ac43-c44915cbee48","alterId": 0,"email": "roni22"
+### roni21 2026-04-12
+},{"id": "6880993c-8951-416d-ad2f-83255b117585","alterId": 0,"email": "roni21"
 ### sidiq 2026-04-03
 },{"id": "1ca7a325-c628-45ba-950a-d3e922422aac","alterId": 0,"email": "sidiq"
 ### imam 2026-03-29
 },{"id": "510435e2-fcd8-4ae7-b370-7a0bd931171a","alterId": 0,"email": "imam"
 ### cp3t 2026-03-25
 },{"id": "1cd2ba4e-3865-4289-b395-f295aaea3898","alterId": 0,"email": "cp3t"
-### roni18 2026-03-17
-},{"id": "0384094f-154d-409b-82ba-ab8fd7fcd3e2","alterId": 0,"email": "roni18"
 ### akuaa 2132-09-05
 },{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
              }
@@ -514,7 +518,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
