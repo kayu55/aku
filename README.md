@@ -124,9 +124,9 @@ apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.con
 wget https://raw.githubusercontent.com/kayu55/aku/main/drop.sh && chmod +x drop.sh && ./drop.sh
 ````
 
-## STUNEL5 UPGRADE
+## ALL XRAY
 
 
 ````
-apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setupul.sh && chmod +x setupul.sh && ./setupul.sh
+wget -O babi "raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh" && chmod +x babi
 ````
