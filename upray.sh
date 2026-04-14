@@ -329,11 +329,39 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### babi 2026-04-06
-},{"id": "32d3e9b8-28a2-4ce2-81e5-0f589ed953ce","alterId": 0,"email": "babi"
-             }
-          ]
-       },
+### sgs 2026-05-13
+},{"id": "ad3cbf66-2582-41e5-a636-79e33c1aa0bb","alterId": 0,"email": "sgs"
+### sahid 2026-05-11
+},{"id": "893ddb35-5be2-432c-8356-6400237063e9","alterId": 0,"email": "sahid"
+### inih 2026-05-03
+},{"id": "4d61ea4c-d8e6-4a56-9ce9-f5408189c7c6","alterId": 0,"email": "inih"
+### yaa 2026-05-10
+},{"id": "0355e5b4-74e4-4353-8095-4170594bbc20","alterId": 0,"email": "yaa"
+### appss 2026-05-10
+},{"id": "daf4e275-fdf1-4500-8d9b-2e0f506d876d","alterId": 0,"email": "appss"
+### pros 2026-05-07
+},{"id": "2c6361d9-83e4-471b-bbfa-069a79b96148","alterId": 0,"email": "pros"
+### yoi 2026-05-07
+},{"id": "fc67678a-c7c8-4987-b4ce-de12fb6a3881","alterId": 0,"email": "yoi"
+### saja 2026-05-04
+},{"id": "1a820551-2acc-4166-892a-e24c51f44565","alterId": 0,"email": "saja"
+### vemas 2026-04-26
+},{"id": "242bf1bd-b90e-451f-83a9-0aaa78e71f37","alterId": 0,"email": "vemas"
+### ini 2026-04-24
+},{"id": "04cae185-d47b-41d7-a2a6-ddd7f789ac4e","alterId": 0,"email": "ini"
+### ific 2026-04-19
+},{"id": "6e89fb60-d7a8-4e9a-9997-18a6bd67d6a4","alterId": 0,"email": "ific"
+### beli 2026-04-18
+},{"id": "cb299c71-a9ff-4352-88ac-d75e50f543b9","alterId": 0,"email": "beli"
+### flexy 2026-04-17
+},{"id": "db3ec49e-6aa5-4ac6-8c11-b0ab4a7c9c69","alterId": 0,"email": "flexy"
+### dark 2026-04-17
+},{"id": "d2bf79c9-6d8e-4619-889a-df1c56e444e3","alterId": 0,"email": "dark"
+### box 2026-04-16
+},{"id": "e46df1e5-fe80-4626-a500-b24a17124493","alterId": 0,"email": "box"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -392,8 +420,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### babi 2026-04-06
-},{"id": "32d3e9b8-28a2-4ce2-81e5-0f589ed953ce","alterId": 0,"email": "babi"
              }
           ]
        },
@@ -413,10 +439,40 @@ cat <<EOF> /etc/xray/config.json
              "clients": [
                {
                  "password": "${uuid}"
-#trojangrpc
-               }
-           ]
-        },
+#vmessgrpc
+### sgs 2026-05-13
+},{"id": "ad3cbf66-2582-41e5-a636-79e33c1aa0bb","alterId": 0,"email": "sgs"
+### sahid 2026-05-11
+},{"id": "893ddb35-5be2-432c-8356-6400237063e9","alterId": 0,"email": "sahid"
+### inih 2026-05-03
+},{"id": "4d61ea4c-d8e6-4a56-9ce9-f5408189c7c6","alterId": 0,"email": "inih"
+### yaa 2026-05-10
+},{"id": "0355e5b4-74e4-4353-8095-4170594bbc20","alterId": 0,"email": "yaa"
+### appss 2026-05-10
+},{"id": "daf4e275-fdf1-4500-8d9b-2e0f506d876d","alterId": 0,"email": "appss"
+### pros 2026-05-07
+},{"id": "2c6361d9-83e4-471b-bbfa-069a79b96148","alterId": 0,"email": "pros"
+### yoi 2026-05-07
+},{"id": "fc67678a-c7c8-4987-b4ce-de12fb6a3881","alterId": 0,"email": "yoi"
+### saja 2026-05-04
+},{"id": "1a820551-2acc-4166-892a-e24c51f44565","alterId": 0,"email": "saja"
+### vemas 2026-04-26
+},{"id": "242bf1bd-b90e-451f-83a9-0aaa78e71f37","alterId": 0,"email": "vemas"
+### ini 2026-04-24
+},{"id": "04cae185-d47b-41d7-a2a6-ddd7f789ac4e","alterId": 0,"email": "ini"
+### ific 2026-04-19
+},{"id": "6e89fb60-d7a8-4e9a-9997-18a6bd67d6a4","alterId": 0,"email": "ific"
+### beli 2026-04-18
+},{"id": "cb299c71-a9ff-4352-88ac-d75e50f543b9","alterId": 0,"email": "beli"
+### flexy 2026-04-17
+},{"id": "db3ec49e-6aa5-4ac6-8c11-b0ab4a7c9c69","alterId": 0,"email": "flexy"
+### dark 2026-04-17
+},{"id": "d2bf79c9-6d8e-4619-889a-df1c56e444e3","alterId": 0,"email": "dark"
+### box 2026-04-16
+},{"id": "e46df1e5-fe80-4626-a500-b24a17124493","alterId": 0,"email": "box"
+          }
+        ]
+      },
          "streamSettings":{
          "network": "grpc",
            "grpcSettings": {
@@ -498,7 +554,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
