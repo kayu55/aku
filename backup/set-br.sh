@@ -14,7 +14,10 @@ curl -fsSL https://rclone.org/install.sh | bash > /dev/null 2>&1
 printf "q\n" | rclone config > /dev/null 2>&1
 sleep 1
 echo -e "[ ${green}INFO${NC} ] Downloading rclone config ... "
-wget -q -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/kayu55/aku/main/backup/rclone.conf"
+apt install rclone -y
+printf "q\n" | rclone config
+wget -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/kayu55/aku/main/backup/rclone.conf"
+#wget -q -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/kayu55/aku/main/backup/rclone.conf"
 cd /bin
 git clone https://github.com/magnific0/wondershaper.git
 cd wondershaper
