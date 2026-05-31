@@ -262,12 +262,32 @@ echo -e "└──────────────────────�
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 sleep 1
-#echo -e "┌─────────────────────────────────────────┐"
-#echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
-#echo -e "└─────────────────────────────────────────┘"
-#sleep 1
-#wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
-#sleep 1
+echo -e "┌─────────────────────────────────────────┐"
+echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
+echo -e "└─────────────────────────────────────────┘"
+sleep 1
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
+sleep 1
+clear
+#print_install "Memasang Backup Server"
+#BackupOption
+apt install rclone -y
+printf "q\n" | rclone config
+wget -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/kayu55/aku/main/rclone.conf"
+#Install Wondershaper
+cd /bin
+git clone  https://github.com/magnific0/wondershaper.git
+cd wondershaper
+sudo make install
+cd
+rm -rf wondershaper
+echo > /home/limit
+apt install msmtp-mta ca-certificates bsd-mailx -y
+cat<<EOF>>/etc/msmtprc
+defaults
+tls on
+tls_starttls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
 
 echo -e "${GREEN}Download Data Menu${NC}"
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
