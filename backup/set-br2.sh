@@ -22,13 +22,6 @@ cd wondershaper
 sudo make install
 cd
 rm -rf wondershaper
-echo > /home/limit
-apt install msmtp-mta ca-certificates bsd-mailx -y
-cat<<EOF>>/etc/msmtprc
-defaults
-tls on
-tls_starttls on
-tls_trust_file /etc/ssl/certs/ca-certificates.crt
 
 # Buat file dummy untuk backup (kalau belum ada)
 echo > /home/files
