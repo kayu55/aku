@@ -5,33 +5,8 @@ green='\033[0;32m'
 clear
 echo ""
 sleep 1
-echo -e "[ ${green}INFO${NC} ] Checking... "
-#sleep 2
-#sleep 1
-echo -e "[ ${green}INFO${NC} ] Download & Install rclone... "
-clear
-#print_install "Memasang Backup Server"
-#BackupOption
-apt install rclone -y
-printf "q\n" | rclone config
-wget -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/kayu55/aku/main/rclone.conf"
-#Install Wondershaper
-cd /bin
-git clone  https://github.com/magnific0/wondershaper.git
-cd wondershaper
-sudo make install
-cd
-rm -rf wondershaper
+echo -e "[ ${green}INFO${NC} ] install backup... "
 
-# Buat file dummy untuk backup (kalau belum ada)
-echo > /home/files
-
-pkgs='msmtp-mta ca-certificates bsd-mailx'
-if ! dpkg -s $pkgs > /dev/null 2>&1; then
-echo -e "[ ${green}INFO${NC} ] Installing... "
-apt install -y $pkgs > /dev/null 2>&1
-else
-echo -e "[ ${green}INFO${NC} ] Already Installed... "
 fi
 echo -e "[ ${green}INFO${NC} ] Creating service... "
 echo -e "[ ${green}INFO${NC} ] Downloading files... "
@@ -42,4 +17,4 @@ wget -q -O /usr/bin/autobackup "https://raw.githubusercontent.com/kayu55/aku/mai
 
 service cron restart > /dev/null 2>&1
 
-rm -f /root/set-br.sh2
+rm -f /root/set-br2.sh
