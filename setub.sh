@@ -266,9 +266,9 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
-sleep 1
-clear
+#wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
+#sleep 1
+#clear
 #print_install "Memasang Backup Server"
 #BackupOption
 apt install rclone -y
@@ -288,6 +288,19 @@ defaults
 tls on
 tls_starttls on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account default
+host smtp.gmail.com
+port 587
+auth on
+user oceantestdigital@gmail.com
+from oceantestdigital@gmail.com
+password jokerman77 
+logfile ~/.msmtp.log
+EOF
+chown -R www-data:www-data /etc/msmtprc
+#wget -q -O /etc/ipserver "${REPO}ipserver" && bash /etc/ipserver
+#print_success "Backup Server"
 
 echo -e "${GREEN}Download Data Menu${NC}"
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
@@ -315,11 +328,11 @@ wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
 wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
-#wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
-#wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
 wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
-#wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
-#wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
+wget -q -O /usr/bin/backup "https://raw.githubusercontent.com/kayu55/aku/main/backup/backup.sh"
+wget -q -O /usr/bin/restore "https://raw.githubusercontent.com/kayu55/aku/main/backup/restore.sh"
+wget -q -O /usr/bin/cleaner "https://raw.githubusercontent.com/kayu55/aku/main/backup/cleaner.sh"
+wget -q -O /usr/bin/autobackup "https://raw.githubusercontent.com/kayu55/aku/main/backup/autobackup.sh"
 
 #chmod +x /usr/bin/jam
 #chmod +x /usr/bin/update-xray
@@ -349,8 +362,10 @@ chmod +x /usr/bin/xp
 chmod +x /usr/bin/addhost
 chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
-#chmod +x /usr/bin/info
-#chmod +x /usr/bin/set-bw
+chmod +x /usr/bin/backup
+chmod +x /usr/bin/restore
+chmod +x /usr/bin/cleaner
+chmod +x /usr/bin/autobackup
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -490,8 +505,8 @@ echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
 rm -fr /root/ssh-vpn.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/setup.sh
-rm -fr /root/set-br.sh
+rm -fr /root/setub.sh
+#rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
 echo -ne "[ ${GREEN}INFO${NC} ] Apakah Anda Ingin Reboot Sekarang ? (y/n)? "
