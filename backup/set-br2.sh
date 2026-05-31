@@ -8,9 +8,9 @@ sleep 1
 echo -e "[ ${green}INFO${NC} ] Checking... "
 #sleep 2
 #sleep 1
-#echo -e "[ ${green}INFO${NC} ] Download & Install rclone... "
+echo -e "[ ${green}INFO${NC} ] Download & Install rclone... "
 clear
-print_install "Memasang Backup Server"
+#print_install "Memasang Backup Server"
 #BackupOption
 apt install rclone -y
 printf "q\n" | rclone config
