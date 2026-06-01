@@ -263,7 +263,7 @@ sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
-echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
+echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
