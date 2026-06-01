@@ -266,13 +266,13 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
 sleep 1
 
 echo -e "${GREEN}Download Data Menu${NC}"
-wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
+wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
 wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kayu55/aku/main/add-ws.sh"
 wget -q -O /usr/bin/trialvmess "https://raw.githubusercontent.com/kayu55/aku/main/trialvmess.sh"
 wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/kayu55/aku/main/add-vless.sh"
@@ -303,11 +303,12 @@ wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/
 #wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
 
 #chmod +x /usr/bin/jam
-chmod +x /usr/bin/cekssh
+#chmod +x /usr/bin/update-xray
 chmod +x /usr/bin/babi
 chmod +x /usr/bin/usernew
 chmod +x /usr/bin/trialssh
 chmod +x /usr/bin/add-ws
+chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/trialvmess
 chmod +x /usr/bin/add-vless
 chmod +x /usr/bin/trialvless
@@ -394,16 +395,6 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
 clear
-#print_install "Memasang Swap 2 GB"
-
-# Mengambil versi terbaru gotop
-gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v${gotop_latest}_linux_amd64.deb"
-
-# Download & install gotop
-curl -sL "$gotop_link" -o /tmp/gotop.deb
-dpkg -i /tmp/gotop.deb >/dev/null 2>&1
-
 # Membuat swap file 2GB
 dd if=/dev/zero of=/swapfile bs=1M count=2048
 mkswap /swapfile
@@ -411,6 +402,10 @@ mkswap /swapfile
  chmod 0600 /swapfile
  swapon /swapfile >/dev/null 2>&1
 
+ # Sinkronisasi waktu dengan server Indonesia
+chronyd -q 'server 0.id.pool.ntp.org iburst'
+chronyc sourcestats -v
+chronyc tracking -v
 # Tambahkan swap ke fstab agar aktif saat boot
 sed -i '$ i\/swapfile swap swap defaults 0 0' /etc/fstab
 
@@ -454,7 +449,7 @@ echo ""
 echo "===============-[ Script By Arya Blitar ]-==============="
 echo ""
 echo  "------------------------------------------------------------"
-echo  "Wa Me +6281931615811"
+echo -e "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
