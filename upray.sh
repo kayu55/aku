@@ -329,19 +329,31 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### y4h 2026-06-28
-},{"id": "53cd4e21-9bb0-42c0-84d7-318ebc5c2260","alterId": 0,"email": "y4h"
-### okeni 2026-06-09
-},{"id": "aace69ae-0cfb-4b21-b01e-7a6d8ab8e7db","alterId": 0,"email": "okeni"
-### pr0s 2026-06-07
-},{"id": "b1b37fa2-2001-4cae-ba6f-65830916ff30","alterId": 0,"email": "pr0s"
-### saja 2026-06-04
-},{"id": "4d1f5a8d-7378-4f02-9091-8190f1dd53e9","alterId": 0,"email": "saja"
-### yakini 2026-06-03
-},{"id": "9ad0a85c-3f7c-43ad-92e1-c18f92821c3f","alterId": 0,"email": "yakini"
-          }
-        ]
-      },
+### biyas4 2026-06-30
+},{"id": "348ce9af-89cc-4dd3-b1ba-48555934e872","alterId": 0,"email": "biyas4"
+### c3kbang 2026-07-28
+},{"id": "87640171-1558-4a88-88ce-2dd8b1fde34c","alterId": 0,"email": "c3kbang"
+### abcd 2026-06-25
+},{"id": "5333ba2a-8f9e-4597-9329-b87e43f6fb2f","alterId": 0,"email": "abcd"
+### roni1 2026-06-23
+},{"id": "f97a1bd3-77a4-4c4c-a095-9e33c5a5c73c","alterId": 0,"email": "roni1"
+### genta 2026-06-23
+},{"id": "357c4ac8-ef8b-434e-afb2-f292608d344f","alterId": 0,"email": "genta"
+### komar06 2026-06-19
+},{"id": "a7bb628c-743d-4c42-8c00-c49de62314cd","alterId": 0,"email": "komar06"
+### eduati 2026-06-09
+},{"id": "64e9e677-5480-407c-a1b0-e0b449fbcf55","alterId": 0,"email": "eduati"
+### bangray1999 2026-06-03
+},{"id": "d142873b-945e-456a-8665-33a5f4e46b7e","alterId": 0,"email": "bangray1999"
+### wil 2026-06-02
+},{"id": "5264ce9c-0bdf-412f-92bd-331dcad9b222","alterId": 0,"email": "wil"
+### ilp3d 2026-06-21
+},{"id": "15958b13-9176-4b6f-bea5-b6205ab3b8bd","alterId": 0,"email": "ilp3d"
+### indoja 2026-06-12
+},{"id": "c563d6cc-f7d3-4467-8ed6-de3b1db40895","alterId": 0,"email": "indoja"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -400,19 +412,31 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### y4h 2026-06-28
-},{"id": "53cd4e21-9bb0-42c0-84d7-318ebc5c2260","alterId": 0,"email": "y4h"
-### okeni 2026-06-09
-},{"id": "aace69ae-0cfb-4b21-b01e-7a6d8ab8e7db","alterId": 0,"email": "okeni"
-### pr0s 2026-06-07
-},{"id": "b1b37fa2-2001-4cae-ba6f-65830916ff30","alterId": 0,"email": "pr0s"
-### saja 2026-06-04
-},{"id": "4d1f5a8d-7378-4f02-9091-8190f1dd53e9","alterId": 0,"email": "saja"
-### yakini 2026-06-03
-},{"id": "9ad0a85c-3f7c-43ad-92e1-c18f92821c3f","alterId": 0,"email": "yakini"
-          }
-        ]
-      },
+### biyas4 2026-06-30
+},{"id": "348ce9af-89cc-4dd3-b1ba-48555934e872","alterId": 0,"email": "biyas4"
+### c3kbang 2026-07-28
+},{"id": "87640171-1558-4a88-88ce-2dd8b1fde34c","alterId": 0,"email": "c3kbang"
+### abcd 2026-06-25
+},{"id": "5333ba2a-8f9e-4597-9329-b87e43f6fb2f","alterId": 0,"email": "abcd"
+### roni1 2026-06-23
+},{"id": "f97a1bd3-77a4-4c4c-a095-9e33c5a5c73c","alterId": 0,"email": "roni1"
+### genta 2026-06-23
+},{"id": "357c4ac8-ef8b-434e-afb2-f292608d344f","alterId": 0,"email": "genta"
+### komar06 2026-06-19
+},{"id": "a7bb628c-743d-4c42-8c00-c49de62314cd","alterId": 0,"email": "komar06"
+### eduati 2026-06-09
+},{"id": "64e9e677-5480-407c-a1b0-e0b449fbcf55","alterId": 0,"email": "eduati"
+### bangray1999 2026-06-03
+},{"id": "d142873b-945e-456a-8665-33a5f4e46b7e","alterId": 0,"email": "bangray1999"
+### wil 2026-06-02
+},{"id": "5264ce9c-0bdf-412f-92bd-331dcad9b222","alterId": 0,"email": "wil"
+### ilp3d 2026-06-21
+},{"id": "15958b13-9176-4b6f-bea5-b6205ab3b8bd","alterId": 0,"email": "ilp3d"
+### indoja 2026-06-12
+},{"id": "c563d6cc-f7d3-4467-8ed6-de3b1db40895","alterId": 0,"email": "indoja"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
