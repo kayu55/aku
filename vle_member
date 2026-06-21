@@ -1,0 +1,31 @@
+#!/bin/bash
+clear
+    # Baca nama dari config, pisahkan username, dan hilangkan duplikat
+    users=$(grep -E "^#& " "/etc/xray/config.json" | sed -E 's/^#& ([^ ]+).*/\1/' | awk '!seen[$0]++')
+
+    # Tampilkan Banner Member
+    echo -e "\e[97;1m======================================\e[0m"
+    echo -e "\e[97;1m            MEMBER LIST               \e[0m"
+    echo -e "\e[97;1m======================================\e[0m"
+
+    # Tampilkan daftar user
+    i=1
+    for user in $users; do
+        echo -e "\e[37;1m $i) $user\e[0m"
+        ((i++))
+    done
+
+    # Tambahkan garis pemisah
+    echo -e "\e[97;1m======================================\e[0m"
+
+    # Hitung total akun
+    total_users=$(echo "$users" | wc -l)
+
+    # Tampilkan total akun
+    echo -e "\e[92;1m TOTAL : \e[0;36m$total_users Account\e[0m"
+    echo -e "\e[97;1m======================================\e[0m"
+    echo -e ""
+
+
+
+exec bash
