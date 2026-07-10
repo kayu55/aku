@@ -337,7 +337,7 @@ chmod +x /usr/bin/menu-set
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 3 * * * root /bin/cleaner
+0 4 * * * root /bin/cleaner
 END
 cat > /etc/cron.d/ba_otm <<-END
 SHELL=/bin/sh
