@@ -169,7 +169,7 @@ echo "$SUB_DOMAIN" > /etc/xray/domain
 echo "$SUB_DOMAIN" > /etc/v2ray/domain
 echo "$SUB_DOMAIN" > /etc/xray/scdomain
 echo "IP=$SUB_DOMAIN" > /var/scrz-prem/ipvps.conf
-
+rm -rf cf
 sleep 1
 yellow "Domain added.."
 sleep 3
@@ -266,9 +266,10 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
-sleep 1
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+sleep 2
 
+echo -e "${GREEN}Install File ..${NC}"
 echo -e "${GREEN}Download Data Menu${NC}"
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
@@ -331,8 +332,6 @@ chmod +x /usr/bin/xp
 chmod +x /usr/bin/addhost
 chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
-#chmod +x /usr/bin/info
-#chmod +x /usr/bin/set-bw
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -385,7 +384,16 @@ fi
 if [ ! -f "/etc/log-create-user.log" ]; then
 echo "Log All Account " > /etc/log-create-user.log
 fi
-
+#history -c
+#echo $serverV > /opt/.ver
+#aureb=$(cat /home/re_otm)
+#b=11
+#$if [ $aureb -gt $b ]
+#then
+#gg="PM"
+#else
+#gg="AM"
+#fi
 curl -sS ifconfig.me > /etc/myipvps
 
 #install gotop
@@ -395,21 +403,6 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
 clear
-# Membuat swap file 2GB
-dd if=/dev/zero of=/swapfile bs=1M count=2048
-mkswap /swapfile
- chown root:root /swapfile
- chmod 0600 /swapfile
- swapon /swapfile >/dev/null 2>&1
-
- # Sinkronisasi waktu dengan server Indonesia
-chronyd -q 'server 0.id.pool.ntp.org iburst'
-chronyc sourcestats -v
-chronyc tracking -v
-# Tambahkan swap ke fstab agar aktif saat boot
-sed -i '$ i\/swapfile swap swap defaults 0 0' /etc/fstab
-
-clear
 echo  ""
 echo  "Sukses Sayank..!!"
 echo  "------------------------------------------------------------"
@@ -417,10 +410,10 @@ echo ""
 echo "===============-[ Script By Arya Blitar ]-==============="
 echo ""
 echo  "   >>> Service & Port"  | tee -a log-install.txt
-echo  "   - OpenSSH                 : 22, 2253"  | tee -a log-install.txt
+echo  "   - OpenSSH                 : 22"  | tee -a log-install.txt
 echo  "   - SSH Websocket           : 80" | tee -a log-install.txt
 echo  "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo  "   - Stunnel5                : 444, 445, 447, 777" | tee -a log-install.txt
+echo  "   - Stunnel5                : 445, 447, 777" | tee -a log-install.txt
 echo  "   - Dropbear                : 109, 143" | tee -a log-install.txt
 echo  "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
 echo  "   - Nginx                   : 81" | tee -a log-install.txt
@@ -430,6 +423,7 @@ echo  "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
 echo  "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
 echo  "   - Trojan GRPC             : 443" | tee -a log-install.txt
 echo  "   - Trojan WS               : 443" | tee -a log-install.txt
+#echo  "   - Sodosok WS/GRPC         : 443, 8443, 2087, 2096" | tee -a log-install.txt
 echo  ""  | tee -a log-install.txt
 echo  "   >>> Server Information & Other Features"  | tee -a log-install.txt
 echo  "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
@@ -438,7 +432,7 @@ echo  "   - Dflate                  : [ON]"  | tee -a log-install.txt
 echo  "   - IPtables                : [ON]"  | tee -a log-install.txt
 echo  "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
 echo  "   - Autoreboot              : 05.00 GMT +7" | tee -a log-install.txt
-echo  "   - AutoBackup              : 01.00 GMT +7" | tee -a log-install.txt
+echo  "   - AutoBackup             : 01.00 GMT +7" | tee -a log-install.txt
 echo  "   - AutoKill Multi Login User" | tee -a log-install.txt
 echo  "   - Auto Delete Expired Account" | tee -a log-install.txt
 echo  "   - Fully automatic script" | tee -a log-install.txt
