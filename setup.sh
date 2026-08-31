@@ -266,7 +266,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 sleep 1
 
 echo -e "${GREEN}Download Data Menu${NC}"
@@ -456,7 +456,7 @@ rm -fr /root/vnstat.sh
 rm -fr /root/ssh-vpn.sh
 rm -fr /root/ins-xray.sh
 rm -fr /root/setup.sh
-rm -fr /root/set-br2.sh
+rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
 echo -ne "[ ${GREEN}INFO${NC} ] Apakah Anda Ingin Reboot Sekarang ? (y/n)? "
