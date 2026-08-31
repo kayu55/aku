@@ -449,14 +449,14 @@ echo ""
 echo "===============-[ Script By Arya Blitar ]-==============="
 echo ""
 echo  "------------------------------------------------------------"
-echo -e "Wa Me +6281931615811"
+echo -e "Wa Me +6281450330727"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
 rm -fr /root/ssh-vpn.sh
 rm -fr /root/ins-xray.sh
 rm -fr /root/setup.sh
-rm -fr /root/set-br.sh
+rm -fr /root/set-br2.sh
 rm -fr /root/domain
 history -c
 echo -ne "[ ${GREEN}INFO${NC} ] Apakah Anda Ingin Reboot Sekarang ? (y/n)? "
