@@ -266,7 +266,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 sleep 2
 
 echo -e "${GREEN}Install File ..${NC}"
