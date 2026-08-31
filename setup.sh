@@ -266,7 +266,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/set-br2.sh && chmod +x set-br2.sh && ./set-br2.sh
 sleep 1
 
 echo -e "${GREEN}Download Data Menu${NC}"
@@ -337,7 +337,7 @@ chmod +x /usr/bin/menu-set
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 4 * * * root /bin/cleaner
+0 3 * * * root /bin/cleaner
 END
 cat > /etc/cron.d/ba_otm <<-END
 SHELL=/bin/sh
@@ -352,7 +352,7 @@ END
 cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 23 * * * root /usr/bin/xp
+0 2 * * * root /usr/bin/xp
 END
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -449,7 +449,7 @@ echo ""
 echo "===============-[ Script By Arya Blitar ]-==============="
 echo ""
 echo  "------------------------------------------------------------"
-echo -e "Wa Me +6281450330727"
+echo -e "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
