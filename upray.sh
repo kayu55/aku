@@ -329,27 +329,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### f4ko 2026-10-02
-},{"id": "3ca6b13d-6926-4c04-945f-c2273ef24701","alterId": 0,"email": "f4ko"
-### s4tu 2026-09-26
-},{"id": "d4d490b0-18d5-4e52-9082-6339511b5a95","alterId": 0,"email": "s4tu"
-### atm0 2026-09-25
-},{"id": "8cae2fd5-3511-4c4a-8998-7c69eefd7ef8","alterId": 0,"email": "atm0"
-### sinag4 2026-09-25
-},{"id": "4a2c1fad-615c-45f7-8ac5-b6ae8dffba01","alterId": 0,"email": "sinag4"
-### 1hp 2026-09-19
-},{"id": "4c3cf038-e917-40e4-911b-95b92eb9659d","alterId": 0,"email": "1hp"
-### flixy4 2026-09-19
-},{"id": "9a7a5caa-da9a-4b7d-8f7f-02498f614452","alterId": 0,"email": "flixy4"
-### b4ru 2026-09-09
-},{"id": "01b375f3-f2bf-455b-b394-9b76a5bc70b8","alterId": 0,"email": "b4ru"
-### ole 2026-09-08
-},{"id": "a1b31329-47a5-4bf3-a137-a6cc5e0bccca","alterId": 0,"email": "ole"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -408,24 +390,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### f4ko 2026-10-02
-},{"id": "3ca6b13d-6926-4c04-945f-c2273ef24701","alterId": 0,"email": "f4ko"
-### s4tu 2026-09-26
-},{"id": "d4d490b0-18d5-4e52-9082-6339511b5a95","alterId": 0,"email": "s4tu"
-### atm0 2026-09-25
-},{"id": "8cae2fd5-3511-4c4a-8998-7c69eefd7ef8","alterId": 0,"email": "atm0"
-### sinag4 2026-09-25
-},{"id": "4a2c1fad-615c-45f7-8ac5-b6ae8dffba01","alterId": 0,"email": "sinag4"
-### 1hp 2026-09-19
-},{"id": "4c3cf038-e917-40e4-911b-95b92eb9659d","alterId": 0,"email": "1hp"
-### flixy4 2026-09-19
-},{"id": "9a7a5caa-da9a-4b7d-8f7f-02498f614452","alterId": 0,"email": "flixy4"
-### b4ru 2026-09-09
-},{"id": "01b375f3-f2bf-455b-b394-9b76a5bc70b8","alterId": 0,"email": "b4ru"
-### ole 2026-09-08
-},{"id": "a1b31329-47a5-4bf3-a137-a6cc5e0bccca","alterId": 0,"email": "ole"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
              }
           ]
        },
