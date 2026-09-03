@@ -329,9 +329,41 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-             }
-          ]
-       },
+### xb 2026-10-03
+},{"id": "95c713f8-b5c9-467b-b9c2-a66d1aa7fbad","alterId": 0,"email": "xb"
+### a300 2026-10-02
+},{"id": "ec6424a7-17ee-4602-a9f8-28b326100331","alterId": 0,"email": "a300"
+### a30 2026-09-26
+},{"id": "dbcce25d-961e-4d79-8d74-bdb43841be71","alterId": 0,"email": "a30"
+### sg0m 2026-09-21
+},{"id": "51d94f1e-c660-48ef-85ad-8c133babc1e3","alterId": 0,"email": "sg0m"
+### baidawi 2026-09-20
+},{"id": "562aeff8-6219-4f51-8682-64d5ea1bd8f0","alterId": 0,"email": "baidawi"
+### d0r 2026-09-19
+},{"id": "16f5fee3-59be-4bf6-a735-418681c9dc6d","alterId": 0,"email": "d0r"
+### akud3w3 2027-06-11
+},{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
+### fixz 2026-09-14
+},{"id": "727f150a-77de-43b5-b036-103c71fc4d26","alterId": 0,"email": "fixz"
+### y4hni 2026-09-13
+},{"id": "6293686f-4717-410c-ae06-9ec28547c168","alterId": 0,"email": "y4hni"
+### f4ing 2026-09-10
+},{"id": "53f8f93d-ba17-47a6-ac0d-fadb74e71427","alterId": 0,"email": "f4ing"
+### j4b4r 2026-09-08
+},{"id": "e33b63e8-36f7-4ef5-812a-5f1009030279","alterId": 0,"email": "j4b4r"
+### b4yu 2026-09-06
+},{"id": "815fef04-110b-42d3-94f9-f745e3a7ebaa","alterId": 0,"email": "b4yu"
+### flik 2026-09-06
+},{"id": "0c108eaa-bbbb-448a-b035-5bfe6f109b89","alterId": 0,"email": "flik"
+### sah 2026-09-05
+},{"id": "25833fc1-693d-46a4-84c1-9ecafc5e16e6","alterId": 0,"email": "sah"
+### m5dura 2026-09-04
+},{"id": "41fa90c0-73a9-42ce-b45d-6657105c76c5","alterId": 0,"email": "m5dura"
+### pr0s 2026-10-02
+},{"id": "67d0d321-8505-4436-9ff9-1b2449834e28","alterId": 0,"email": "pr0s"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -390,9 +422,41 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
+### xb 2026-10-03
+},{"id": "95c713f8-b5c9-467b-b9c2-a66d1aa7fbad","alterId": 0,"email": "xb"
+### a300 2026-10-02
+},{"id": "ec6424a7-17ee-4602-a9f8-28b326100331","alterId": 0,"email": "a300"
+### a30 2026-09-26
+},{"id": "dbcce25d-961e-4d79-8d74-bdb43841be71","alterId": 0,"email": "a30"
+### sg0m 2026-09-21
+},{"id": "51d94f1e-c660-48ef-85ad-8c133babc1e3","alterId": 0,"email": "sg0m"
+### baidawi 2026-09-20
+},{"id": "562aeff8-6219-4f51-8682-64d5ea1bd8f0","alterId": 0,"email": "baidawi"
+### d0r 2026-09-19
+},{"id": "16f5fee3-59be-4bf6-a735-418681c9dc6d","alterId": 0,"email": "d0r"
+### akud3w3 2027-06-11
+},{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
+### fixz 2026-09-14
+},{"id": "727f150a-77de-43b5-b036-103c71fc4d26","alterId": 0,"email": "fixz"
+### y4hni 2026-09-13
+},{"id": "6293686f-4717-410c-ae06-9ec28547c168","alterId": 0,"email": "y4hni"
+### f4ing 2026-09-10
+},{"id": "53f8f93d-ba17-47a6-ac0d-fadb74e71427","alterId": 0,"email": "f4ing"
+### j4b4r 2026-09-08
+},{"id": "e33b63e8-36f7-4ef5-812a-5f1009030279","alterId": 0,"email": "j4b4r"
+### b4yu 2026-09-06
+},{"id": "815fef04-110b-42d3-94f9-f745e3a7ebaa","alterId": 0,"email": "b4yu"
+### flik 2026-09-06
+},{"id": "0c108eaa-bbbb-448a-b035-5bfe6f109b89","alterId": 0,"email": "flik"
+### sah 2026-09-05
+},{"id": "25833fc1-693d-46a4-84c1-9ecafc5e16e6","alterId": 0,"email": "sah"
+### m5dura 2026-09-04
+},{"id": "41fa90c0-73a9-42ce-b45d-6657105c76c5","alterId": 0,"email": "m5dura"
+### pr0s 2026-10-02
+},{"id": "67d0d321-8505-4436-9ff9-1b2449834e28","alterId": 0,"email": "pr0s"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
