@@ -449,7 +449,7 @@ echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
 rm -fr /root/ssh-vpn7.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/setup.sh
+rm -fr /root/tunel4
 rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
