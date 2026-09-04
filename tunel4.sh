@@ -281,7 +281,7 @@ wget -q -O /usr/bin/trialvless "https://raw.githubusercontent.com/kayu55/aku/mai
 wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/kayu55/aku/main/add-tr.sh"
 wget -q -O /usr/bin/trialtrojan "https://raw.githubusercontent.com/kayu55/aku/main/trialtrojan.sh"
 wget -q -O /usr/bin/autoreboot "https://raw.githubusercontent.com/kayu55/aku/main/options/autoreboot.sh"
-wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kayu55/aku/main/options/restart.sh"
+wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kayu55/bc/main/sg/restart.sh"
 wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/kayu55/aku/main/options/tendang.sh"
 wget -q -O /usr/bin/clearlog "https://raw.githubusercontent.com/kayu55/aku/main/options/clearlog.sh"
 wget -q -O /usr/bin/running "https://raw.githubusercontent.com/kayu55/bc/main/sg/running.sh"
@@ -341,12 +341,17 @@ END
 cat > /etc/cron.d/ba_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 1 * * * root /bin/backup
+*/60 * * * * root /bin/backup
 END
 cat > /etc/cron.d/re_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 5 * * * root /sbin/reboot
+END
+cat > /etc/cron.d/re_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 5 * * * root /sbin/restart
 END
 cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
