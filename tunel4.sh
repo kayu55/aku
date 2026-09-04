@@ -118,7 +118,7 @@ if [[ $choose_domain == "2" ]]; then # // Using Automatic Domain
 mkdir -p /usr/bin
 rm -fr /usr/local/bin/xray
 rm -fr /usr/local/bin/stunnel
-rm -fr /usr/local/bin/stunnel5
+rm -fr /usr/local/bin/stunnel4
 rm -fr /etc/nginx
 rm -fr /var/lib/scrz-prem/
 rm -fr /usr/bin/xray
@@ -211,7 +211,7 @@ fi
 mkdir -p /usr/bin
 rm -fr /usr/local/bin/xray
 rm -fr /usr/local/bin/stunnel
-rm -fr /usr/local/bin/stunnel5
+rm -fr /usr/local/bin/stunnel4
 rm -fr /etc/nginx
 rm -fr /var/lib/scrz-prem/
 rm -fr /usr/bin/xray
@@ -292,7 +292,7 @@ wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/kayu55/aku/mai
 wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-trojan.sh"
 wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-ssh.sh"
 wget -q -O /usr/bin/menu-backup "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-backup.sh"
-wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/bc/sg/menu.sh"
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/bc/main/sg/menu.sh"
 wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
 wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
