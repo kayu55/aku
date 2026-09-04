@@ -359,8 +359,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "25833fc1-693d-46a4-84c1-9ecafc5e16e6","alterId": 0,"email": "sah"
 ### m5dura 2026-09-04
 },{"id": "41fa90c0-73a9-42ce-b45d-6657105c76c5","alterId": 0,"email": "m5dura"
-### pr0s 2026-10-02
-},{"id": "67d0d321-8505-4436-9ff9-1b2449834e28","alterId": 0,"email": "pr0s"
           }
         ]
       },
@@ -452,8 +450,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "25833fc1-693d-46a4-84c1-9ecafc5e16e6","alterId": 0,"email": "sah"
 ### m5dura 2026-09-04
 },{"id": "41fa90c0-73a9-42ce-b45d-6657105c76c5","alterId": 0,"email": "m5dura"
-### pr0s 2026-10-02
-},{"id": "67d0d321-8505-4436-9ff9-1b2449834e28","alterId": 0,"email": "pr0s"
           }
         ]
       },
