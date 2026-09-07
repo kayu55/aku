@@ -104,6 +104,7 @@ cd
 #systemctl restart ws-dropbear >/dev/null 2>&1
 
 clear 
+
 # Getting websocket ssl stunnel
 wget -O install-ws "raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh" && chmod +x install-ws
 
@@ -446,4 +447,4 @@ sleep 5
 clear
 rm -fr /root/key.pem >/dev/null 2>&1
 rm -fr /root/cert.pem >/dev/null 2>&1
-rm -fr /root/ssh-vpn7.sh >/dev/null 2>&1
+rm -fr /root/ssh-vpn.sh >/dev/null 2>&1
