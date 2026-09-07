@@ -106,7 +106,7 @@ cd
 clear 
 
 # Getting websocket ssl stunnel
-wget -O install-ws "raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh" && chmod +x install-ws
+wget https://raw.githubusercontent.com/kayu55/aku/main/wspro/wspro.sh &&  chmod +x wspro.sh && ./wspro.sh
 
 clear
 cd
