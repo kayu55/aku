@@ -104,33 +104,8 @@ cd
 #systemctl restart ws-dropbear >/dev/null 2>&1
 
 clear 
-
 # Getting websocket ssl stunnel
-wget -q -O /usr/local/bin/ws-stunnel "https://raw.githubusercontent.com/kayu55/aku/main/tools/ws-stunnel"
-chmod +x /usr/local/bin/ws-stunnel
-
-# Installing Service Ovpn Websocket
-cat > /etc/systemd/system/ws-stunnel.service << END
-[Unit]
-Description=Ovpn Websocket AryaStore Blitar
-Documentation=https://aryavpnstore.biz.id
-After=network.target nss-lookup.target
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/bin/python2 -O /usr/local/bin/ws-stunnel
-Restart=on-failure
-[Install]
-WantedBy=multi-user.target
-END
-
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable ws-stunnel >/dev/null 2>&1
-systemctl start ws-stunnel >/dev/null 2>&1
-systemctl restart ws-stunnel >/dev/null 2>&1
+wget -O install-ws "raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh" && chmod +x install-ws
 
 clear
 cd
