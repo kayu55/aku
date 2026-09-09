@@ -732,26 +732,6 @@ LOG_FILES=(
 )
 
 }
-# Mengecek apakah konfigurasi untuk dropbear sudah ada
-check_dropbear_log() {
-  grep -q 'if \$programname == "dropbear"' "$RSYSLOG_FILE"
-}
-
-# Fungsi untuk menambahkan konfigurasi dropbear
-add_dropbear_log() {
-  echo "Menambahkan konfigurasi Dropbear ke $RSYSLOG_FILE..."
-  sudo bash -c "echo -e 'if \$programname == \"dropbear\" then /var/log/auth.log\n& stop' >> $RSYSLOG_FILE"
-  systemctl restart rsyslog
-  echo "Konfigurasi Dropbear ditambahkan dan Rsyslog direstart."
-}
-
-if check_dropbear_log; then
-  echo "Konfigurasi Dropbear sudah ada, tidak ada perubahan yang dilakukan."
-else
-  add_dropbear_log
-fi
-
-}
 
 clear
 function ins_SSHD(){
