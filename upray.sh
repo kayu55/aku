@@ -329,28 +329,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### genta 2026-10-17
-},{"id": "1e91cd6d-8a08-462d-ae6c-737e8997e9fe","alterId": 0,"email": "genta"
-### will 2026-10-01
-},{"id": "5c44f90f-1a12-40c3-b158-e73461773ce0","alterId": 0,"email": "will"
-### s4tu 2026-09-30
-},{"id": "89cf1492-b70a-4d03-9dd5-68cb64ae64cb","alterId": 0,"email": "s4tu"
-### in1 2026-09-30
-},{"id": "e69d75da-e5df-41d0-a7de-68213a1d7735","alterId": 0,"email": "in1"
-### 3s 2026-09-30
-},{"id": "fb9b1019-4d66-40f2-8696-83a32fc35320","alterId": 0,"email": "3s"
-### iy4 2026-09-29
-},{"id": "e922208f-e69d-4505-898b-eca197b94d30","alterId": 0,"email": "iy4"
-### muiz 2026-09-30
-},{"id": "ea613601-bcc9-4634-9a53-8d10360953f3","alterId": 0,"email": "muiz"
-### g4ss 2026-09-27
-},{"id": "a061907e-1175-47b5-9ed8-666d748e2600","alterId": 0,"email": "g4ss"
-### j4k4r 2026-09-22
-},{"id": "08d6a9d2-09b6-4e10-b278-c22fad7390c9","alterId": 0,"email": "j4k4r"
-### 0l3 2026-09-20
-},{"id": "aaf5fd00-f26e-454d-8adf-b852fe3282ef","alterId": 0,"email": "0l3"
-### indoja 2026-10-11
-},{"id": "c563d6cc-f7d3-4467-8ed6-de3b1db40895","alterId": 0,"email": "indoja"
              }
           ]
        },
@@ -412,28 +390,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### genta 2026-10-17
-},{"id": "1e91cd6d-8a08-462d-ae6c-737e8997e9fe","alterId": 0,"email": "genta"
-### will 2026-10-01
-},{"id": "5c44f90f-1a12-40c3-b158-e73461773ce0","alterId": 0,"email": "will"
-### s4tu 2026-09-30
-},{"id": "89cf1492-b70a-4d03-9dd5-68cb64ae64cb","alterId": 0,"email": "s4tu"
-### in1 2026-09-30
-},{"id": "e69d75da-e5df-41d0-a7de-68213a1d7735","alterId": 0,"email": "in1"
-### 3s 2026-09-30
-},{"id": "fb9b1019-4d66-40f2-8696-83a32fc35320","alterId": 0,"email": "3s"
-### iy4 2026-09-29
-},{"id": "e922208f-e69d-4505-898b-eca197b94d30","alterId": 0,"email": "iy4"
-### muiz 2026-09-30
-},{"id": "ea613601-bcc9-4634-9a53-8d10360953f3","alterId": 0,"email": "muiz"
-### g4ss 2026-09-27
-},{"id": "a061907e-1175-47b5-9ed8-666d748e2600","alterId": 0,"email": "g4ss"
-### j4k4r 2026-09-22
-},{"id": "08d6a9d2-09b6-4e10-b278-c22fad7390c9","alterId": 0,"email": "j4k4r"
-### 0l3 2026-09-20
-},{"id": "aaf5fd00-f26e-454d-8adf-b852fe3282ef","alterId": 0,"email": "0l3"
-### indoja 2026-10-11
-},{"id": "c563d6cc-f7d3-4467-8ed6-de3b1db40895","alterId": 0,"email": "indoja"
              }
           ]
        },
