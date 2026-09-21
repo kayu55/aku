@@ -28,6 +28,12 @@ sed -i '/#trojanws$/a\### '"$user $exp"'\
 sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
+cat> /etc/cron.d/trialtrojan${user} << EOF
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/$timer * * * * root /usr/bin/trialtrojan $user $uuid $exp
+EOF
+
 systemctl restart xray
 trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
 trojanlink="trojan://${uuid}@bug.com:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"

@@ -20,6 +20,12 @@ vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&
 vlesslink2="vless://${uuid}@${domain}:80$none?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
 vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
+cat> /etc/cron.d/trialvless${user} << EOF
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/$timer * * * * root /usr/bin/trialvless $user $uuid $exp
+EOF
+
 echo "systemctl restart xray" | at now + $pup minutes
 clear
 
