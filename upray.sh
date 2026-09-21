@@ -329,29 +329,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### jun3y 2026-10-13
-},{"id": "0d1b7f39-ff39-496d-a401-c1e8e30549d5","alterId": 0,"email": "jun3y"
-### kgt 2026-10-10
-},{"id": "a2b7fac5-8fb6-403a-b16b-0efb472d5999","alterId": 0,"email": "kgt"
-### roni14 2026-10-04
-},{"id": "091eb620-53eb-47e1-b7a1-01c6a2cfdb4d","alterId": 0,"email": "roni14"
-### roni13 2026-10-04
-},{"id": "10a62e88-45ad-4eb6-b758-dbde97ecc45e","alterId": 0,"email": "roni13"
-### s4m 2026-09-29
-},{"id": "e135f3bb-4db5-44ea-ae4b-152bb2d6d76a","alterId": 0,"email": "s4m"
-### g4n 2026-09-25
-},{"id": "71cc0e52-dd8c-4a79-a005-b87c15c1c4ba","alterId": 0,"email": "g4n"
-### indom4s 2026-09-29
-},{"id": "b536900d-eeb5-46be-9f15-1bb44c3d56e4","alterId": 0,"email": "indom4s"
-### viray 2026-10-15
-},{"id": "a918a17e-a0f6-42c3-9231-691fe9b3cd19","alterId": 0,"email": "viray"
-### akudewe 2027-05-16
-},{"id": "e42ee5b9-8db8-43bc-9fda-29677b949423","alterId": 0,"email": "akudewe"
-### w4nda 2026-09-27
-},{"id": "c8aa2b9c-4452-49ae-bef9-62be5a53a72e","alterId": 0,"email": "w4nda"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -410,29 +390,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### jun3y 2026-10-13
-},{"id": "0d1b7f39-ff39-496d-a401-c1e8e30549d5","alterId": 0,"email": "jun3y"
-### kgt 2026-10-10
-},{"id": "a2b7fac5-8fb6-403a-b16b-0efb472d5999","alterId": 0,"email": "kgt"
-### roni14 2026-10-04
-},{"id": "091eb620-53eb-47e1-b7a1-01c6a2cfdb4d","alterId": 0,"email": "roni14"
-### roni13 2026-10-04
-},{"id": "10a62e88-45ad-4eb6-b758-dbde97ecc45e","alterId": 0,"email": "roni13"
-### s4m 2026-09-29
-},{"id": "e135f3bb-4db5-44ea-ae4b-152bb2d6d76a","alterId": 0,"email": "s4m"
-### g4n 2026-09-25
-},{"id": "71cc0e52-dd8c-4a79-a005-b87c15c1c4ba","alterId": 0,"email": "g4n"
-### indom4s 2026-09-29
-},{"id": "b536900d-eeb5-46be-9f15-1bb44c3d56e4","alterId": 0,"email": "indom4s"
-### viray 2026-10-15
-},{"id": "a918a17e-a0f6-42c3-9231-691fe9b3cd19","alterId": 0,"email": "viray"
-### akudewe 2027-05-16
-},{"id": "e42ee5b9-8db8-43bc-9fda-29677b949423","alterId": 0,"email": "akudewe"
-### w4nda 2026-09-27
-},{"id": "c8aa2b9c-4452-49ae-bef9-62be5a53a72e","alterId": 0,"email": "w4nda"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
