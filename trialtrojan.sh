@@ -13,7 +13,7 @@ fi
 Login="${1:-Trial}"        
 masaaktif="${2:-1}"        
 iplimit="${3:-1}"
-pup=30
+pup=60
 user="${Login}tr$(tr -dc 0-9 </dev/urandom | head -c3)"
 IP=$(curl -sS ipv4.icanhazip.com)
 ISP=$(cat /etc/xray/isp)

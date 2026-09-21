@@ -7,7 +7,7 @@ clear
 Login="${1:-Trial}"        
 masaaktif="${2:-1}"        
 iplimit="${3:-1}"
-pup=30
+pup=60
 user="${Login}vl$(tr -dc 0-9 </dev/urandom | head -c3)"
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /etc/xray/domain)
