@@ -271,10 +271,10 @@ sleep 2
 
 echo -e "${GREEN}Install File ..${NC}"
 echo -e "${GREEN}Download Data Menu${NC}"
-wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
+wget -q -O /usr/bin/create_ssh "https://raw.githubusercontent.com/kayu55/aku/main/create_ssh.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
 wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
-wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kayu55/aku/main/add-ws.sh"
+wget -q -O /usr/bin/create_vmess "https://raw.githubusercontent.com/kayu55/aku/main/create_vmess.sh"
 wget -q -O /usr/bin/trialvmess "https://raw.githubusercontent.com/kayu55/aku/main/trialvmess.sh"
 wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/kayu55/aku/main/add-vless.sh"
 wget -q -O /usr/bin/trialvless "https://raw.githubusercontent.com/kayu55/aku/main/trialvless.sh"
@@ -306,9 +306,9 @@ wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/
 #chmod +x /usr/bin/jam
 #chmod +x /usr/bin/update-xray
 chmod +x /usr/bin/babi
-chmod +x /usr/bin/usernew
+chmod +x /usr/bin/create_ssh
 chmod +x /usr/bin/trialssh
-chmod +x /usr/bin/add-ws
+chmod +x /usr/bin/create_vmess
 chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/trialvmess
 chmod +x /usr/bin/add-vless
