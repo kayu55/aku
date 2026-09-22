@@ -329,6 +329,14 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### f1x 2026-10-20
+},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
+### va3rul 2026-10-18
+},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
+### k3diri 2026-10-18
+},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
+### biyasa 2026-10-06
+},{"id": "64fc4597-5fba-4daa-92c9-b717d230f8f7","alterId": 0,"email": "biyasa"
              }
           ]
        },
@@ -390,6 +398,14 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### f1x 2026-10-20
+},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
+### va3rul 2026-10-18
+},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
+### k3diri 2026-10-18
+},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
+### biyasa 2026-10-06
+},{"id": "64fc4597-5fba-4daa-92c9-b717d230f8f7","alterId": 0,"email": "biyasa"
              }
           ]
        },
