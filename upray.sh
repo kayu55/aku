@@ -331,8 +331,6 @@ cat <<EOF> /etc/xray/config.json
 #vmess
 ### y4p 2026-10-25
 },{"id": "ab622235-0098-4fd1-afb3-db482b29daab","alterId": 0,"email": "y4p"
-### HgyughVM718 2026-09-26
-},{"id": "5c893e0e-5883-4133-933e-82ac6c5d28d7","alterId": 0,"email": "HgyughVM718"
 ### ins4n 2026-10-22
 },{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
 ### s1ap 2026-10-18
@@ -365,10 +363,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "95c713f8-b5c9-467b-b9c2-a66d1aa7fbad","alterId": 0,"email": "xb"
 ### a300 2026-10-02
 },{"id": "ec6424a7-17ee-4602-a9f8-28b326100331","alterId": 0,"email": "a300"
-### a30 2026-09-26
-},{"id": "dbcce25d-961e-4d79-8d74-bdb43841be71","alterId": 0,"email": "a30"
-### d0r 2026-10-19
-},{"id": "16f5fee3-59be-4bf6-a735-418681c9dc6d","alterId": 0,"email": "d0r"
 ### akud3w3 2027-06-11
 },{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
           }
@@ -434,8 +428,6 @@ cat <<EOF> /etc/xray/config.json
 #vmessgrpc
 ### y4p 2026-10-25
 },{"id": "ab622235-0098-4fd1-afb3-db482b29daab","alterId": 0,"email": "y4p"
-### HgyughVM718 2026-09-26
-},{"id": "5c893e0e-5883-4133-933e-82ac6c5d28d7","alterId": 0,"email": "HgyughVM718"
 ### ins4n 2026-10-22
 },{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
 ### s1ap 2026-10-18
@@ -468,10 +460,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "95c713f8-b5c9-467b-b9c2-a66d1aa7fbad","alterId": 0,"email": "xb"
 ### a300 2026-10-02
 },{"id": "ec6424a7-17ee-4602-a9f8-28b326100331","alterId": 0,"email": "a300"
-### a30 2026-09-26
-},{"id": "dbcce25d-961e-4d79-8d74-bdb43841be71","alterId": 0,"email": "a30"
-### d0r 2026-10-19
-},{"id": "16f5fee3-59be-4bf6-a735-418681c9dc6d","alterId": 0,"email": "d0r"
 ### akud3w3 2027-06-11
 },{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
           }
