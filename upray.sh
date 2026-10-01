@@ -329,21 +329,47 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### DilaVM171VM275 2026-10-30
-},{"id": "9ac686b3-2e5b-4ddc-8537-447d196a091b","alterId": 0,"email": "DilaVM171VM275"
-### is4 2026-10-22
-},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
-### f1x 2026-10-20
-},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
-### va3rul 2026-10-18
-},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
-### k3diri 2026-10-18
-},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
-### biyasa 2026-10-06
-},{"id": "64fc4597-5fba-4daa-92c9-b717d230f8f7","alterId": 0,"email": "biyasa"
-             }
-          ]
-       },
+### sinyalp0r 2026-11-01
+},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
+### y4p 2026-10-25
+},{"id": "ab622235-0098-4fd1-afb3-db482b29daab","alterId": 0,"email": "y4p"
+### ins4n 2026-10-22
+},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
+### s1ap 2026-10-18
+},{"id": "f82fab0f-0003-4558-bcd0-b08fe7216c50","alterId": 0,"email": "s1ap"
+### sip0r 2026-10-17
+},{"id": "37b080da-08d2-420e-bfae-600e88fb8eb7","alterId": 0,"email": "sip0r"
+### 0k3 2026-10-15
+},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
+### si9 2026-10-12
+},{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
+### fixc 2026-10-05
+},{"id": "a5add94c-b4f3-4dc9-be9a-bdbb24a9a464","alterId": 0,"email": "fixc"
+### amir 2026-10-08
+},{"id": "ec91acf2-ba39-4e91-b266-9f7be363c7bf","alterId": 0,"email": "amir"
+### fing 2026-10-08
+},{"id": "72651716-d582-4574-9087-2e950cf0a239","alterId": 0,"email": "fing"
+### byu 2026-10-06
+},{"id": "fd33885c-aaf1-4287-bb10-fa2d7c6a815d","alterId": 0,"email": "byu"
+### ye3 2026-10-05
+},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
+### aiflix 2026-10-05
+},{"id": "012c8cc7-9d5b-437b-9bf1-7bcb62653d23","alterId": 0,"email": "aiflix"
+### nij4 2026-10-04
+},{"id": "840598de-7de9-4856-ae27-013df4af57e5","alterId": 0,"email": "nij4"
+### y4kni 2026-10-05
+},{"id": "0950cdf8-6a4d-4d88-9009-a77a1c7422fb","alterId": 0,"email": "y4kni"
+### ilp3d 2026-10-21
+},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
+### xb 2026-10-03
+},{"id": "95c713f8-b5c9-467b-b9c2-a66d1aa7fbad","alterId": 0,"email": "xb"
+### a300 2026-10-02
+},{"id": "ec6424a7-17ee-4602-a9f8-28b326100331","alterId": 0,"email": "a300"
+### akud3w3 2027-06-11
+},{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -402,21 +428,47 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### DilaVM171VM275 2026-10-30
-},{"id": "9ac686b3-2e5b-4ddc-8537-447d196a091b","alterId": 0,"email": "DilaVM171VM275"
-### is4 2026-10-22
-},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
-### f1x 2026-10-20
-},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
-### va3rul 2026-10-18
-},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
-### k3diri 2026-10-18
-},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
-### biyasa 2026-10-06
-},{"id": "64fc4597-5fba-4daa-92c9-b717d230f8f7","alterId": 0,"email": "biyasa"
-             }
-          ]
-       },
+### sinyalp0r 2026-11-01
+},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
+### y4p 2026-10-25
+},{"id": "ab622235-0098-4fd1-afb3-db482b29daab","alterId": 0,"email": "y4p"
+### ins4n 2026-10-22
+},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
+### s1ap 2026-10-18
+},{"id": "f82fab0f-0003-4558-bcd0-b08fe7216c50","alterId": 0,"email": "s1ap"
+### sip0r 2026-10-17
+},{"id": "37b080da-08d2-420e-bfae-600e88fb8eb7","alterId": 0,"email": "sip0r"
+### 0k3 2026-10-15
+},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
+### si9 2026-10-12
+},{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
+### fixc 2026-10-05
+},{"id": "a5add94c-b4f3-4dc9-be9a-bdbb24a9a464","alterId": 0,"email": "fixc"
+### amir 2026-10-08
+},{"id": "ec91acf2-ba39-4e91-b266-9f7be363c7bf","alterId": 0,"email": "amir"
+### fing 2026-10-08
+},{"id": "72651716-d582-4574-9087-2e950cf0a239","alterId": 0,"email": "fing"
+### byu 2026-10-06
+},{"id": "fd33885c-aaf1-4287-bb10-fa2d7c6a815d","alterId": 0,"email": "byu"
+### ye3 2026-10-05
+},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
+### aiflix 2026-10-05
+},{"id": "012c8cc7-9d5b-437b-9bf1-7bcb62653d23","alterId": 0,"email": "aiflix"
+### nij4 2026-10-04
+},{"id": "840598de-7de9-4856-ae27-013df4af57e5","alterId": 0,"email": "nij4"
+### y4kni 2026-10-05
+},{"id": "0950cdf8-6a4d-4d88-9009-a77a1c7422fb","alterId": 0,"email": "y4kni"
+### ilp3d 2026-10-21
+},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
+### xb 2026-10-03
+},{"id": "95c713f8-b5c9-467b-b9c2-a66d1aa7fbad","alterId": 0,"email": "xb"
+### a300 2026-10-02
+},{"id": "ec6424a7-17ee-4602-a9f8-28b326100331","alterId": 0,"email": "a300"
+### akud3w3 2027-06-11
+},{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
