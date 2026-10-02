@@ -37,7 +37,7 @@ sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
 cat> /etc/cron.d/trialvmess${user} << EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/$timer * * * * root /usr/bin/trialvmess $user $uuid $exp
+*/$timer * * * * root /usr/bin/trial vmess $user $uuid $exp
 EOF
 asu=`cat<<EOF
       {
@@ -94,6 +94,7 @@ vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 
 echo sed -i \"/$user/d\" /etc/xray/config.json  | at now + $pup minutes
 echo "systemctl restart xray" | at now + $pup minutes
+systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 
 clear
