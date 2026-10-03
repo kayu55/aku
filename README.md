@@ -102,6 +102,14 @@ wget -O add-ws "raw.githubusercontent.com/kayu55/aku/main/opok/add-ws.sh" && chm
 wget -O trialvmess "raw.githubusercontent.com/kayu55/aku/main/opok/trialvmess.sh" && chmod +x trialvmess
 ````
 
+````
+wget -O create_vmess "raw.githubusercontent.com/kayu55/aku/main/opok/create_vmess.sh" && chmod +x create_vmess
+````
+
+````
+wget -O trialvmess "raw.githubusercontent.com/kayu55/aku/main/opok/trialvmess.sh" && chmod +x trialvmess
+````
+
 
 ### OS 24  / 25
 ````
