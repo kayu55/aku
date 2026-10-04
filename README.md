@@ -207,3 +207,47 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 ````
 /etc/init.d/stunnel4 restart >/dev/null 2>&1
 ````
+
+## restart auto stunel4
+
+````
+cat > /etc/cron.d/cl_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 3 * * * root /bin/cleaner
+END
+cat > /etc/cron.d/ba_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/60 * * * * root /bin/backup
+END
+cat > /etc/cron.d/re_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 5 * * * root /sbin/reboot
+END
+cat > /etc/cron.d/re_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 5 * * * root /sbin/restart
+END
+cat > /etc/cron.d/xp_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 23 * * * root /usr/bin/xp
+END
+cat > /etc/cron.d/cl_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 3 * * * root /usr/bin/clearlog
+END
+cat > /home/re_otm <<-END
+7
+END
+````
+````
+service cron restart >/dev/null 2>&1
+````
+````
+service cron reload >/dev/null 2>&1
+````
