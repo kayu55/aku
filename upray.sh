@@ -329,19 +329,25 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### b0s 2026-11-03
-},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
-### is4 2026-10-22
-},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
-### f1x 2026-10-20
-},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
-### va3rul 2026-10-18
-},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
-### k3diri 2026-10-18
-},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
-             }
-          ]
-       },
+### MaduraVM893 2026-11-07
+},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
+### s4m 2026-10-31
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+### w4nda 2026-10-28
+},{"id": "c6877280-9dc3-40de-a2f7-ddc8e9138791","alterId": 0,"email": "w4nda"
+### d4 2026-10-19
+},{"id": "7bbd60ab-4c37-415f-b29f-cb9cade1c828","alterId": 0,"email": "d4"
+### jun3y 2026-10-13
+},{"id": "0d1b7f39-ff39-496d-a401-c1e8e30549d5","alterId": 0,"email": "jun3y"
+### kgt 2026-10-10
+},{"id": "a2b7fac5-8fb6-403a-b16b-0efb472d5999","alterId": 0,"email": "kgt"
+### viray 2026-10-15
+},{"id": "a918a17e-a0f6-42c3-9231-691fe9b3cd19","alterId": 0,"email": "viray"
+### akudewe 2027-05-16
+},{"id": "e42ee5b9-8db8-43bc-9fda-29677b949423","alterId": 0,"email": "akudewe"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -400,19 +406,25 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### b0s 2026-11-03
-},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
-### is4 2026-10-22
-},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
-### f1x 2026-10-20
-},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
-### va3rul 2026-10-18
-},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
-### k3diri 2026-10-18
-},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
-             }
-          ]
-       },
+### MaduraVM893 2026-11-07
+},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
+### s4m 2026-10-31
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+### w4nda 2026-10-28
+},{"id": "c6877280-9dc3-40de-a2f7-ddc8e9138791","alterId": 0,"email": "w4nda"
+### d4 2026-10-19
+},{"id": "7bbd60ab-4c37-415f-b29f-cb9cade1c828","alterId": 0,"email": "d4"
+### jun3y 2026-10-13
+},{"id": "0d1b7f39-ff39-496d-a401-c1e8e30549d5","alterId": 0,"email": "jun3y"
+### kgt 2026-10-10
+},{"id": "a2b7fac5-8fb6-403a-b16b-0efb472d5999","alterId": 0,"email": "kgt"
+### viray 2026-10-15
+},{"id": "a918a17e-a0f6-42c3-9231-691fe9b3cd19","alterId": 0,"email": "viray"
+### akudewe 2027-05-16
+},{"id": "e42ee5b9-8db8-43bc-9fda-29677b949423","alterId": 0,"email": "akudewe"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
