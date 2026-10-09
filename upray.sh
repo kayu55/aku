@@ -329,6 +329,10 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### ayudewe 2027-08-05
+},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
+### Trialvm701 2026-10-10
+},{"id": "dbc3eef7-d2f2-44e1-b6bb-4ab75216469d","alterId": 0,"email": "Trialvm701"
 ### sinyalp0r 2026-11-01
 },{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
 ### ins4n 2026-10-22
@@ -339,16 +343,10 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
 ### si9 2026-10-12
 },{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
-### amir 2026-10-08
-},{"id": "ec91acf2-ba39-4e91-b266-9f7be363c7bf","alterId": 0,"email": "amir"
-### fing 2026-10-08
-},{"id": "72651716-d582-4574-9087-2e950cf0a239","alterId": 0,"email": "fing"
 ### ye3 2026-11-05
 },{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
 ### ilp3d 2026-10-21
 },{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
-### akud3w3 2027-06-11
-},{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
           }
         ]
       },
@@ -410,6 +408,10 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### ayudewe 2027-08-05
+},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
+### Trialvm701 2026-10-10
+},{"id": "dbc3eef7-d2f2-44e1-b6bb-4ab75216469d","alterId": 0,"email": "Trialvm701"
 ### sinyalp0r 2026-11-01
 },{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
 ### ins4n 2026-10-22
@@ -420,16 +422,10 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
 ### si9 2026-10-12
 },{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
-### amir 2026-10-08
-},{"id": "ec91acf2-ba39-4e91-b266-9f7be363c7bf","alterId": 0,"email": "amir"
-### fing 2026-10-08
-},{"id": "72651716-d582-4574-9087-2e950cf0a239","alterId": 0,"email": "fing"
 ### ye3 2026-11-05
 },{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
 ### ilp3d 2026-10-21
 },{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
-### akud3w3 2027-06-11
-},{"id": "f29c959e-5426-4208-84b9-25c044860c3c","alterId": 0,"email": "akud3w3"
           }
         ]
       },
