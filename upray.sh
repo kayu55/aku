@@ -309,6 +309,10 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
+### satuhpVL592 2026-11-05
+},{"id": "e53ebf7a-1153-4bd7-8e82-4206fa3542b2","email": "satuhpVL592"
+### r0my 2026-11-04
+},{"id": "c60a631e-b07f-4a22-ad00-93bc8ed698cb","email": "r0my"
              }
           ]
        },
@@ -329,24 +333,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-### Trialvm701 2026-10-10
-},{"id": "dbc3eef7-d2f2-44e1-b6bb-4ab75216469d","alterId": 0,"email": "Trialvm701"
-### sinyalp0r 2026-11-01
-},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
-### ins4n 2026-10-22
-},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
-### sip0r 2026-10-17
-},{"id": "37b080da-08d2-420e-bfae-600e88fb8eb7","alterId": 0,"email": "sip0r"
-### 0k3 2026-11-01
-},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
-### si9 2026-10-12
-},{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
-### ye3 2026-11-05
-},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
-### ilp3d 2026-10-21
-},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
+### g4reng 2026-11-08
+},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
+### Y3sduVM446 2026-11-04
+},{"id": "522b2779-15f9-47e9-a700-fc6520efc537","alterId": 0,"email": "Y3sduVM446"
+### l4nj41 2026-11-03
+},{"id": "238dcdd4-911d-4b80-8346-6921c94b03e2","alterId": 0,"email": "l4nj41"
+### bd30 2026-10-30
+},{"id": "388d92a3-ab97-49ca-b6e2-57a2802ce241","alterId": 0,"email": "bd30"
+### s4b 2026-10-24
+},{"id": "45b180f8-9112-42dd-a335-d884ae850ffc","alterId": 0,"email": "s4b"
+### p4su 2026-10-23
+},{"id": "416f57a9-0868-4e04-a82a-89ded4be3b48","alterId": 0,"email": "p4su"
+### m4s4k 2026-10-12
+},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
+### asu 2027-05-21
+},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
           }
         ]
       },
@@ -388,6 +390,10 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+### satuhpVL592 2026-11-05
+},{"id": "e53ebf7a-1153-4bd7-8e82-4206fa3542b2","email": "satuhpVL592"
+### r0my 2026-11-04
+},{"id": "c60a631e-b07f-4a22-ad00-93bc8ed698cb","email": "r0my"
              }
           ]
        },
@@ -408,27 +414,25 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-### Trialvm701 2026-10-10
-},{"id": "dbc3eef7-d2f2-44e1-b6bb-4ab75216469d","alterId": 0,"email": "Trialvm701"
-### sinyalp0r 2026-11-01
-},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
-### ins4n 2026-10-22
-},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
-### sip0r 2026-10-17
-},{"id": "37b080da-08d2-420e-bfae-600e88fb8eb7","alterId": 0,"email": "sip0r"
-### 0k3 2026-11-01
-},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
-### si9 2026-10-12
-},{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
-### ye3 2026-11-05
-},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
-### ilp3d 2026-10-21
-},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
-          }
-        ]
-      },
+### g4reng 2026-11-08
+},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
+### Y3sduVM446 2026-11-04
+},{"id": "522b2779-15f9-47e9-a700-fc6520efc537","alterId": 0,"email": "Y3sduVM446"
+### l4nj41 2026-11-03
+},{"id": "238dcdd4-911d-4b80-8346-6921c94b03e2","alterId": 0,"email": "l4nj41"
+### bd30 2026-10-30
+},{"id": "388d92a3-ab97-49ca-b6e2-57a2802ce241","alterId": 0,"email": "bd30"
+### s4b 2026-10-24
+},{"id": "45b180f8-9112-42dd-a335-d884ae850ffc","alterId": 0,"email": "s4b"
+### p4su 2026-10-23
+},{"id": "416f57a9-0868-4e04-a82a-89ded4be3b48","alterId": 0,"email": "p4su"
+### m4s4k 2026-10-12
+},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
+### asu 2027-05-21
+},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
