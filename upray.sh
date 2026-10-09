@@ -309,10 +309,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
-### satuhpVL592 2026-11-05
-},{"id": "e53ebf7a-1153-4bd7-8e82-4206fa3542b2","email": "satuhpVL592"
-### r0my 2026-11-04
-},{"id": "c60a631e-b07f-4a22-ad00-93bc8ed698cb","email": "r0my"
              }
           ]
        },
@@ -333,25 +329,19 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### g4reng 2026-11-08
-},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
-### Y3sduVM446 2026-11-04
-},{"id": "522b2779-15f9-47e9-a700-fc6520efc537","alterId": 0,"email": "Y3sduVM446"
-### l4nj41 2026-11-03
-},{"id": "238dcdd4-911d-4b80-8346-6921c94b03e2","alterId": 0,"email": "l4nj41"
-### bd30 2026-10-30
-},{"id": "388d92a3-ab97-49ca-b6e2-57a2802ce241","alterId": 0,"email": "bd30"
-### s4b 2026-10-24
-},{"id": "45b180f8-9112-42dd-a335-d884ae850ffc","alterId": 0,"email": "s4b"
-### p4su 2026-10-23
-},{"id": "416f57a9-0868-4e04-a82a-89ded4be3b48","alterId": 0,"email": "p4su"
-### m4s4k 2026-10-12
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
-          }
-        ]
-      },
+### b0s 2026-11-03
+},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
+### is4 2026-10-22
+},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
+### f1x 2026-10-20
+},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
+### va3rul 2026-10-18
+},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
+### k3diri 2026-10-18
+},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -390,10 +380,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### satuhpVL592 2026-11-05
-},{"id": "e53ebf7a-1153-4bd7-8e82-4206fa3542b2","email": "satuhpVL592"
-### r0my 2026-11-04
-},{"id": "c60a631e-b07f-4a22-ad00-93bc8ed698cb","email": "r0my"
              }
           ]
        },
@@ -414,22 +400,16 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### g4reng 2026-11-08
-},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
-### Y3sduVM446 2026-11-04
-},{"id": "522b2779-15f9-47e9-a700-fc6520efc537","alterId": 0,"email": "Y3sduVM446"
-### l4nj41 2026-11-03
-},{"id": "238dcdd4-911d-4b80-8346-6921c94b03e2","alterId": 0,"email": "l4nj41"
-### bd30 2026-10-30
-},{"id": "388d92a3-ab97-49ca-b6e2-57a2802ce241","alterId": 0,"email": "bd30"
-### s4b 2026-10-24
-},{"id": "45b180f8-9112-42dd-a335-d884ae850ffc","alterId": 0,"email": "s4b"
-### p4su 2026-10-23
-},{"id": "416f57a9-0868-4e04-a82a-89ded4be3b48","alterId": 0,"email": "p4su"
-### m4s4k 2026-10-12
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
+### b0s 2026-11-03
+},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
+### is4 2026-10-22
+},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
+### f1x 2026-10-20
+},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
+### va3rul 2026-10-18
+},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
+### k3diri 2026-10-18
+},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
              }
           ]
        },
