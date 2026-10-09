@@ -357,20 +357,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### AhyeonVM945 2026-10-16
+},{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
+### r4nVM425 2026-11-06
+},{"id": "0770d998-3745-4fb2-8b70-542609c82614","alterId": 0,"email": "r4nVM425"
 ### myy 2026-10-26
 },{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
 ### kontr0l 2026-10-24
 },{"id": "561fb224-2406-4323-8204-223dd0c72b79","alterId": 0,"email": "kontr0l"
-### ungu 2026-10-06
-},{"id": "a8a21cf8-7b30-4322-916f-0b8a707e21b5","alterId": 0,"email": "ungu"
-### r4n 2026-10-05
-},{"id": "375a336a-ea2f-457f-b87b-12efda35cb4e","alterId": 0,"email": "r4n"
-### sidiq 2026-10-03
+### sidiq 2026-11-03
 },{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
 ### z4n 2026-10-18
 },{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-### akuaa 2132-09-05
-},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
           }
         ]
       },
@@ -391,20 +389,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### AhyeonVM945 2026-10-16
+},{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
+### r4nVM425 2026-11-06
+},{"id": "0770d998-3745-4fb2-8b70-542609c82614","alterId": 0,"email": "r4nVM425"
 ### myy 2026-10-26
 },{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
 ### kontr0l 2026-10-24
 },{"id": "561fb224-2406-4323-8204-223dd0c72b79","alterId": 0,"email": "kontr0l"
-### ungu 2026-10-06
-},{"id": "a8a21cf8-7b30-4322-916f-0b8a707e21b5","alterId": 0,"email": "ungu"
-### r4n 2026-10-05
-},{"id": "375a336a-ea2f-457f-b87b-12efda35cb4e","alterId": 0,"email": "r4n"
-### sidiq 2026-10-03
+### sidiq 2026-11-03
 },{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
 ### z4n 2026-10-18
 },{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-### akuaa 2132-09-05
-},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
           }
         ]
       },
@@ -466,20 +462,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### AhyeonVM945 2026-10-16
+},{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
+### r4nVM425 2026-11-06
+},{"id": "0770d998-3745-4fb2-8b70-542609c82614","alterId": 0,"email": "r4nVM425"
 ### myy 2026-10-26
 },{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
 ### kontr0l 2026-10-24
 },{"id": "561fb224-2406-4323-8204-223dd0c72b79","alterId": 0,"email": "kontr0l"
-### ungu 2026-10-06
-},{"id": "a8a21cf8-7b30-4322-916f-0b8a707e21b5","alterId": 0,"email": "ungu"
-### r4n 2026-10-05
-},{"id": "375a336a-ea2f-457f-b87b-12efda35cb4e","alterId": 0,"email": "r4n"
-### sidiq 2026-10-03
+### sidiq 2026-11-03
 },{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
 ### z4n 2026-10-18
 },{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-### akuaa 2132-09-05
-},{"id": "4d4e0e72-fa6f-4ddf-9d07-ee017411bae5","alterId": 0,"email": "akuaa"
              }
           ]
        },
@@ -583,7 +577,6 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-# Installing Xray Service
 # Installing Xray Service
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 rm -fr /etc/systemd/system/xray.service.d
