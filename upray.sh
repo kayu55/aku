@@ -329,25 +329,35 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### MaduraVM893 2026-11-07
-},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
-### s4m 2026-10-31
-},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
-### w4nda 2026-10-28
-},{"id": "c6877280-9dc3-40de-a2f7-ddc8e9138791","alterId": 0,"email": "w4nda"
-### d4 2026-10-19
-},{"id": "7bbd60ab-4c37-415f-b29f-cb9cade1c828","alterId": 0,"email": "d4"
-### jun3y 2026-10-13
-},{"id": "0d1b7f39-ff39-496d-a401-c1e8e30549d5","alterId": 0,"email": "jun3y"
-### kgt 2026-10-10
-},{"id": "a2b7fac5-8fb6-403a-b16b-0efb472d5999","alterId": 0,"email": "kgt"
-### viray 2026-10-15
-},{"id": "a918a17e-a0f6-42c3-9231-691fe9b3cd19","alterId": 0,"email": "viray"
-### akudewe 2027-05-16
-},{"id": "e42ee5b9-8db8-43bc-9fda-29677b949423","alterId": 0,"email": "akudewe"
-          }
-        ]
-      },
+### ma4p 2026-11-09
+},{"id": "0b6ba292-46de-4266-949c-2c53d4c93b53","alterId": 0,"email": "ma4p"
+### Roni2VM642 2026-11-04
+},{"id": "073f8b95-e033-4bc2-ad50-eee915123e0a","alterId": 0,"email": "Roni2VM642"
+### wi3l 2026-11-03
+},{"id": "f3a32755-a20d-48e1-b812-7cd20d99481d","alterId": 0,"email": "wi3l"
+### cofr3n 2026-10-31
+},{"id": "a68666a4-5d45-4f9f-a4ae-a41161ad1557","alterId": 0,"email": "cofr3n"
+### g4punya 2026-11-01
+},{"id": "fc0b9809-21f8-4418-91ef-c873eda538c8","alterId": 0,"email": "g4punya"
+### oce30 2026-10-30
+},{"id": "23728756-862f-4e7b-88e5-c6f40af09082","alterId": 0,"email": "oce30"
+### Roni2VM457 2026-10-28
+},{"id": "19bd1d31-caed-4e61-91cf-581e7cce8431","alterId": 0,"email": "Roni2VM457"
+### muy4 2026-10-27
+},{"id": "38c4a6cf-ab6d-4cb3-85f7-7fd9bbace612","alterId": 0,"email": "muy4"
+### inijal 2026-10-24
+},{"id": "b5f1b1db-a693-426a-90df-392b2c40eda3","alterId": 0,"email": "inijal"
+### oy3s 2026-10-21
+},{"id": "d3798f48-d2a3-4804-8720-99b885efefa1","alterId": 0,"email": "oy3s"
+### roni1 2026-10-20
+},{"id": "77ddf723-3336-4fae-bfa3-0c5b33f27ebd","alterId": 0,"email": "roni1"
+### genta 2026-10-17
+},{"id": "1e91cd6d-8a08-462d-ae6c-737e8997e9fe","alterId": 0,"email": "genta"
+### indoja 2026-10-11
+},{"id": "c563d6cc-f7d3-4467-8ed6-de3b1db40895","alterId": 0,"email": "indoja"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -406,25 +416,35 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### MaduraVM893 2026-11-07
-},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
-### s4m 2026-10-31
-},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
-### w4nda 2026-10-28
-},{"id": "c6877280-9dc3-40de-a2f7-ddc8e9138791","alterId": 0,"email": "w4nda"
-### d4 2026-10-19
-},{"id": "7bbd60ab-4c37-415f-b29f-cb9cade1c828","alterId": 0,"email": "d4"
-### jun3y 2026-10-13
-},{"id": "0d1b7f39-ff39-496d-a401-c1e8e30549d5","alterId": 0,"email": "jun3y"
-### kgt 2026-10-10
-},{"id": "a2b7fac5-8fb6-403a-b16b-0efb472d5999","alterId": 0,"email": "kgt"
-### viray 2026-10-15
-},{"id": "a918a17e-a0f6-42c3-9231-691fe9b3cd19","alterId": 0,"email": "viray"
-### akudewe 2027-05-16
-},{"id": "e42ee5b9-8db8-43bc-9fda-29677b949423","alterId": 0,"email": "akudewe"
-          }
-        ]
-      },
+### ma4p 2026-11-09
+},{"id": "0b6ba292-46de-4266-949c-2c53d4c93b53","alterId": 0,"email": "ma4p"
+### Roni2VM642 2026-11-04
+},{"id": "073f8b95-e033-4bc2-ad50-eee915123e0a","alterId": 0,"email": "Roni2VM642"
+### wi3l 2026-11-03
+},{"id": "f3a32755-a20d-48e1-b812-7cd20d99481d","alterId": 0,"email": "wi3l"
+### cofr3n 2026-10-31
+},{"id": "a68666a4-5d45-4f9f-a4ae-a41161ad1557","alterId": 0,"email": "cofr3n"
+### g4punya 2026-11-01
+},{"id": "fc0b9809-21f8-4418-91ef-c873eda538c8","alterId": 0,"email": "g4punya"
+### oce30 2026-10-30
+},{"id": "23728756-862f-4e7b-88e5-c6f40af09082","alterId": 0,"email": "oce30"
+### Roni2VM457 2026-10-28
+},{"id": "19bd1d31-caed-4e61-91cf-581e7cce8431","alterId": 0,"email": "Roni2VM457"
+### muy4 2026-10-27
+},{"id": "38c4a6cf-ab6d-4cb3-85f7-7fd9bbace612","alterId": 0,"email": "muy4"
+### inijal 2026-10-24
+},{"id": "b5f1b1db-a693-426a-90df-392b2c40eda3","alterId": 0,"email": "inijal"
+### oy3s 2026-10-21
+},{"id": "d3798f48-d2a3-4804-8720-99b885efefa1","alterId": 0,"email": "oy3s"
+### roni1 2026-10-20
+},{"id": "77ddf723-3336-4fae-bfa3-0c5b33f27ebd","alterId": 0,"email": "roni1"
+### genta 2026-10-17
+},{"id": "1e91cd6d-8a08-462d-ae6c-737e8997e9fe","alterId": 0,"email": "genta"
+### indoja 2026-10-11
+},{"id": "c563d6cc-f7d3-4467-8ed6-de3b1db40895","alterId": 0,"email": "indoja"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
