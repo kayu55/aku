@@ -500,7 +500,7 @@ echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
 rm -fr /root/ssh-vpn.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/setup.sh
+rm -fr /root/setupp.sh
 rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
