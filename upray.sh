@@ -329,6 +329,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### ain 2026-11-13
+},{"id": "3a8332dc-b0ba-49ad-8208-c50189e643f0","alterId": 0,"email": "ain"
 ### ayudewe 2027-08-05
 },{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
 ### sinyalp0r 2026-11-01
@@ -339,8 +341,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "37b080da-08d2-420e-bfae-600e88fb8eb7","alterId": 0,"email": "sip0r"
 ### 0k3 2026-11-01
 },{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
-### si9 2026-10-12
-},{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
 ### ye3 2026-11-05
 },{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
 ### ilp3d 2026-10-21
@@ -406,6 +406,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### ain 2026-11-13
+},{"id": "3a8332dc-b0ba-49ad-8208-c50189e643f0","alterId": 0,"email": "ain"
 ### ayudewe 2027-08-05
 },{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
 ### sinyalp0r 2026-11-01
@@ -416,8 +418,6 @@ cat <<EOF> /etc/xray/config.json
 },{"id": "37b080da-08d2-420e-bfae-600e88fb8eb7","alterId": 0,"email": "sip0r"
 ### 0k3 2026-11-01
 },{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
-### si9 2026-10-12
-},{"id": "a7c204b9-908e-4ff7-93c5-bdc343aa9d73","alterId": 0,"email": "si9"
 ### ye3 2026-11-05
 },{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
 ### ilp3d 2026-10-21
