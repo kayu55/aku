@@ -4,22 +4,20 @@ NC='\033[0;37m'
 MYIP=$(curl -sS ipv4.icanhazip.com)
 
 clear
+Login="${1:-Trial}"        
+masaaktif="${2:-1}"        
+iplimit="${3:-1}"
+Quota="${4:-1}"
+pup=30
+user="${Login}VL$(tr -dc 0-9 </dev/urandom | head -c3)"
+IP=$(curl -sS ipv4.icanhazip.com)
+
+ISP=$(cat /etc/xray/isp)
+CITY=$(cat /etc/xray/city)
 domain=$(cat /etc/xray/domain)
-#masaaktif=1
-Quota=1
-iplimit=10
-user=Trial-VL`</dev/urandom tr -dc 0-9 | head -c3`
-clear 
-echo -e "\033[1;96m___________________________________________\033[0m"
-echo -e " Settings Tittle Triall         "
-echo -e "\033[1;96m___________________________________________\033[0m"
-echo -e ""
-echo -e ""
-echo -e "\033[1;96m___________________________________________\033[0m"
-read -p " Menit : " pup
-echo -e "\033[1;96m___________________________________________\033[0m"
+nama=$(cat /etc/xray/username)
 uuid=$(cat /proc/sys/kernel/random/uuid)
-exp=$(date -d "$masaaktif days" +"%Y-%m-%d")
+clear
 tgl=$(date -d "$masaaktif days" +"%d")
 bln=$(date -d "$masaaktif days" +"%b")
 thn=$(date -d "$masaaktif days" +"%Y")
@@ -28,26 +26,17 @@ tgl2=$(date +"%d")
 bln2=$(date +"%b")
 thn2=$(date +"%Y")
 tnggl="$tgl2 $bln2, $thn2"
+exp=$(date -d "$masaaktif days" +"%Y-%m-%d")
 sed -i '/#vless$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-clear
-vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&encryption=none&type=ws&sni=${domain}#${user}"
-vlesslink2="vless://${uuid}@bug.com:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
-vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
-cat > /etc/cron.d/trialvless_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-* * * * * root /usr/bin/trialvless
-END
-cat > /home/re_otm <<-END
-7
-END
+vlesslink1="vless://${uuid}@${domain}:443?path=/vless&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+vlesslink2="vless://${uuid}@${domain}:80?path=/vless&security=none&host=${domain}&type=ws#${user}"
+vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=${domain}#${user}"
 
-systemctl restart xray
-systemctl restart nginx
+
 if [ ! -e /etc/vless ]; then
   mkdir -p /etc/vless
 fi
@@ -72,10 +61,17 @@ fi
 DATADB=$(cat /etc/vless/.vless.db | grep "^###" | grep -w "${user}" | awk '{print $2}')
 if [[ "${DATADB}" != '' ]]; then
   sed -i "/\b${user}\b/d" /etc/vless/.vless.db
-fi
+  echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit}" >>/etc/vless/.vless.db
+else
 echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit}" >>/etc/vless/.vless.db
+fi
 
-clear
+    systemctl restart xray > /dev/null 2>&1
+		echo sed -i \"/$user/d\" /etc/xray/config.json  | at now + $pup minutes
+
+echo "systemctl restart xray" | at now + $pup minutes
+
+notif_vl
 clear
 
 clear
