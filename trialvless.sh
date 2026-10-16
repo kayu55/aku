@@ -32,8 +32,8 @@ sed -i '/#vless$/a\### '"$user $exp"'\
 sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
-vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-vlesslink2="vless://${uuid}@bug.com:80?path=/vless&security=none&host=${domain}&type=ws#${user}"
+vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&encryption=none&type=ws&sni=${domain}#${user}"
+vlesslink2="vless://${uuid}@bug.com:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
 vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
 
