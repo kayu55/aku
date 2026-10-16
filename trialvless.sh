@@ -4,26 +4,68 @@ NC='\033[0;37m'
 MYIP=$(curl -sS ipv4.icanhazip.com)
 
 clear
-Login="${1:-Trial}"        
-masaaktif="${2:-1}"        
-iplimit="${3:-1}"
-pup=60
-user="${Login}vl$(tr -dc 0-9 </dev/urandom | head -c3)"
-uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /etc/xray/domain)
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+masaaktif=1
+Quota=1
+iplimit=10
+user=Trial-VL`</dev/urandom tr -dc 0-9 | head -c3`
+clear 
+echo -e "\033[1;96m___________________________________________\033[0m"
+echo -e " Settings Tittle Triall         "
+echo -e "\033[1;96m___________________________________________\033[0m"
+echo -e ""
+echo -e ""
+echo -e "\033[1;96m___________________________________________\033[0m"
+read -p " Menit : " pup
+echo -e "\033[1;96m___________________________________________\033[0m"
+uuid=$(cat /proc/sys/kernel/random/uuid)
+exp=$(date -d "$masaaktif days" +"%Y-%m-%d")
+tgl=$(date -d "$masaaktif days" +"%d")
+bln=$(date -d "$masaaktif days" +"%b")
+thn=$(date -d "$masaaktif days" +"%Y")
+expe="$tgl $bln, $thn"
+tgl2=$(date +"%d")
+bln2=$(date +"%b")
+thn2=$(date +"%Y")
+tnggl="$tgl2 $bln2, $thn2"
 sed -i '/#vless$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+clear
 vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&encryption=none&type=ws&sni=${domain}#${user}"
-vlesslink2="vless://${uuid}@${domain}:80$none?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
+vlesslink2="vless://${uuid}@bug.com:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
 vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
-echo "systemctl restart xray" | at now + $pup minutes
 systemctl restart xray
-clear
+systemctl restart nginx
+if [ ! -e /etc/vless ]; then
+  mkdir -p /etc/vless
+fi
 
+if [[ $iplimit -gt 0 ]]; then
+mkdir -p /etc/kyt/limit/vless/ip
+echo -e "$iplimit" > /etc/kyt/limit/vless/ip/$user
+else
+echo > /dev/null
+fi
+
+if [ -z ${Quota} ]; then
+  Quota="0"
+fi
+
+c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
+d=$((${c} * 1024 * 1024 * 1024))
+
+if [[ ${c} != "0" ]]; then
+  echo "${d}" >/etc/vless/${user}
+fi
+DATADB=$(cat /etc/vless/.vless.db | grep "^###" | grep -w "${user}" | awk '{print $2}')
+if [[ "${DATADB}" != '' ]]; then
+  sed -i "/\b${user}\b/d" /etc/vless/.vless.db
+fi
+echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit}" >>/etc/vless/.vless.db
+clear
 
 clear
 echo -e "\033[0;34m═════════════\033[0;33mXRAY/VLESS\033[0;34m═════════════${NC}"
