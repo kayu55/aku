@@ -357,6 +357,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### b1s 2026-11-12
+},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
 ### AhyeonVM945 2026-10-16
 },{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
 ### r4nVM425 2026-11-06
@@ -389,6 +391,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### b1s 2026-11-12
+},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
 ### AhyeonVM945 2026-10-16
 },{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
 ### r4nVM425 2026-11-06
@@ -462,6 +466,8 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### b1s 2026-11-12
+},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
 ### AhyeonVM945 2026-10-16
 },{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
 ### r4nVM425 2026-11-06
