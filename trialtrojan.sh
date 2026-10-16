@@ -34,7 +34,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 
 # Link Trojan Akun
 systemctl restart xray
-trojanlink1="trojan://${uuid}@${domain}?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
+trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
 trojanlink="trojan://${uuid}@bug.com:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
 #trojanlink2="trojan://${uuid}@bugkamu.com:80?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}"
 
