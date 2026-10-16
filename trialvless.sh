@@ -8,7 +8,7 @@ Login="${1:-Trial}"
 masaaktif="${2:-1}"        
 iplimit="${3:-1}"
 Quota="${4:-1}"
-pup=5
+pup=60
 user="${Login}VL$(tr -dc 0-9 </dev/urandom | head -c3)"
 IP=$(curl -sS ipv4.icanhazip.com)
 
@@ -32,9 +32,9 @@ sed -i '/#vless$/a\### '"$user $exp"'\
 sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
-vlesslink1="vless://${uuid}@${domain}:443?path=/vless&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-vlesslink2="vless://${uuid}@${domain}:80?path=/vless&security=none&host=${domain}&type=ws#${user}"
-vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=${domain}#${user}"
+vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+vlesslink2="vless://${uuid}@bug.com:80?path=/vless&security=none&host=${domain}&type=ws#${user}"
+vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
 
 if [ ! -e /etc/vless ]; then
