@@ -37,6 +37,15 @@ vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&
 vlesslink2="vless://${uuid}@bug.com:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
 vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
+cat > /etc/cron.d/trialvless_otm <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+* * * * * root /usr/bin/trialvless
+END
+cat > /home/re_otm <<-END
+7
+END
+
 systemctl restart xray
 systemctl restart nginx
 if [ ! -e /etc/vless ]; then
@@ -66,14 +75,7 @@ if [[ "${DATADB}" != '' ]]; then
 fi
 echo "### ${user} ${exp} ${uuid} ${Quota} ${iplimit}" >>/etc/vless/.vless.db
 
-cat > /etc/cron.d/trialvless_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-* * * * * root /usr/bin/trialvless
-END
-cat > /home/re_otm <<-END
-7
-END
+clear
 clear
 
 clear
