@@ -6,7 +6,7 @@ Login="${1:-Trial}"
 masaaktif="${2:-1}"        
 iplimit="${3:-1}"
 Quota="${4:-1}"
-pup=10
+pup=60
 user="${Login}VM$(tr -dc 0-9 </dev/urandom | head -c3)"
 IP=$(curl -sS ipv4.icanhazip.com)
 
