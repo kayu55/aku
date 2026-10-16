@@ -329,6 +329,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### AnisVM906 2026-11-16
+},{"id": "fd4ac1e5-6db7-41df-aa09-96a818ae81ac","alterId": 0,"email": "AnisVM906"
+### iflixVM629 2026-10-28
+},{"id": "62aa606e-f64d-4cc0-97b3-59d7a8a37c4a","alterId": 0,"email": "iflixVM629"
+### OkebosVM882 2026-10-28
+},{"id": "22e867e0-245e-49a4-934f-7466cba8c89f","alterId": 0,"email": "OkebosVM882"
+### b0s 2026-11-03
+},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
+### is4 2026-10-22
+},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
+### f1x 2026-10-20
+},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
+### va3rul 2026-10-18
+},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
+### k3diri 2026-10-18
+},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
              }
           ]
        },
@@ -390,6 +406,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### AnisVM906 2026-11-16
+},{"id": "fd4ac1e5-6db7-41df-aa09-96a818ae81ac","alterId": 0,"email": "AnisVM906"
+### iflixVM629 2026-10-28
+},{"id": "62aa606e-f64d-4cc0-97b3-59d7a8a37c4a","alterId": 0,"email": "iflixVM629"
+### OkebosVM882 2026-10-28
+},{"id": "22e867e0-245e-49a4-934f-7466cba8c89f","alterId": 0,"email": "OkebosVM882"
+### b0s 2026-11-03
+},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
+### is4 2026-10-22
+},{"id": "c6f0991c-5048-44a2-ab93-6e73f361c907","alterId": 0,"email": "is4"
+### f1x 2026-10-20
+},{"id": "e7d1a975-6448-4aa2-86e1-ab929b14da89","alterId": 0,"email": "f1x"
+### va3rul 2026-10-18
+},{"id": "b0152aad-146c-4874-b535-6a3cb3332847","alterId": 0,"email": "va3rul"
+### k3diri 2026-10-18
+},{"id": "a873dcdc-fde4-4a5b-af23-392e21a4eedb","alterId": 0,"email": "k3diri"
              }
           ]
        },
