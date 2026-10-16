@@ -5,7 +5,7 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
 
 clear
 domain=$(cat /etc/xray/domain)
-masaaktif=1
+#masaaktif=1
 Quota=1
 iplimit=10
 user=Trial-VL`</dev/urandom tr -dc 0-9 | head -c3`
