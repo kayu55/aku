@@ -285,7 +285,8 @@ DROPBEAR_BANNER="/etc/issue.net"
 # DSS hostkey file (default: /etc/dropbear/dropbear_dss_host_key)
 #DROPBEAR_DSSKEY="/etc/dropbear/dropbear_dss_host_key"
 
-# ECDSA hostkey file (default: /etc/dropbear/dropbear_ecdsa_host_k>#DROPBEAR_ECDSAKEY="/etc/dropbear/dropbear_ecdsa_host_key"
+# ECDSA hostkey file (default: /etc/dropbear/dropbear_ecdsa_host_k>
+#DROPBEAR_ECDSAKEY="/etc/dropbear/dropbear_ecdsa_host_key"
 
 # Receive window size - this is a tradeoff between memory and
 # network performance
