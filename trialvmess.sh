@@ -34,8 +34,8 @@ sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
 asu=`cat<<EOF
       {
       "v": "2",
-      "ps": "bug.com",
-      "add": "${domain}",
+      "ps": "${user}",
+      "add": "bug.com",
       "port": "443",
       "id": "${uuid}",
       "aid": "0",
@@ -49,8 +49,8 @@ EOF`
 ask=`cat<<EOF
       {
       "v": "2",
-      "ps": "bug.com",
-      "add": "${domain}",
+      "ps": "${user}",
+      "add": "bug.com",
       "port": "80",
       "id": "${uuid}",
       "aid": "0",
@@ -73,7 +73,7 @@ grpc=`cat<<EOF
       "path": "vmess-grpc",
       "type": "none",
       "host": "${domain}",
-      "tls": "tls"
+      "tls": "tls"   
 }
 EOF`
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
