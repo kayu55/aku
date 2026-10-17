@@ -126,7 +126,7 @@ read -p " Select menu : " opt
 echo -e ""
 case $opt in
 1) clear ; create_trojan ;;
-2) clear ; trial_trojan ;;
+2) clear ; trialtrojan ;;
 3) clear ; delws ;;
 4) clear ; renewws;;
 0) clear ; menu ;;
