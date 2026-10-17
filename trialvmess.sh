@@ -1,12 +1,10 @@
 #!/bin/bash
 
-NC='\033[0;37m' 
-domain=$(cat /etc/xray/domain)
 Login="${1:-Trial}"        
 masaaktif="${2:-1}"        
 iplimit="${3:-1}"
 Quota="${4:-1}"
-pup=60
+pup=30
 user="${Login}VM$(tr -dc 0-9 </dev/urandom | head -c3)"
 IP=$(curl -sS ipv4.icanhazip.com)
 
@@ -35,7 +33,7 @@ asu=`cat<<EOF
       {
       "v": "2",
       "ps": "${user}",
-      "add": "bug.com",
+      "add": "${domain}",
       "port": "443",
       "id": "${uuid}",
       "aid": "0",
@@ -50,7 +48,7 @@ ask=`cat<<EOF
       {
       "v": "2",
       "ps": "${user}",
-      "add": "bug.com",
+      "add": "${domain}",
       "port": "80",
       "id": "${uuid}",
       "aid": "0",
@@ -73,7 +71,7 @@ grpc=`cat<<EOF
       "path": "vmess-grpc",
       "type": "none",
       "host": "${domain}",
-      "tls": "tls"   
+      "tls": "tls"
 }
 EOF`
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
@@ -119,31 +117,24 @@ fi
 
 echo "systemctl restart xray" | at now + $pup minutes
 clear
+echo -e " VMESS XRAY "
 
-echo -e "\033[0;34m═════════════\033[0;33mXRAY/VMESS\033[0;34m═════════════\033[0m"
-echo -e "\033[0;34m════════════════════════════════════\033[0m"
-echo -e "Remarks       : ${user}"
-echo -e "Expired On    : $pup Minutes" 
-echo -e "Domain        : ${domain}" 
-echo -e "Port none TLS : 80, 8080, 8880, 2082, 2086, 2052, 2095"
-echo -e "Port TLS      : 443, 8443, 2087, 2096, 2053, 2083 "
-echo -e "Port gRPC     : 443"
-echo -e "id            : ${uuid}" 
-echo -e "alterId       : 0" 
-echo -e "Security      : auto" 
-echo -e "Network       : ws" 
-echo -e "Path          : /vmess" 
-echo -e "ServiceName   : vmess-grpc"
-echo -e "\033[0;34m════════════════════════════════════\033[0m"
-echo -e "Link TLS       : ${vmesslink1}"
-echo -e "\033[0;34m════════════════════════════════════\033[0m"
-echo -e "Link none TLS  : ${vmesslink2}"
-echo -e "\033[0;34m════════════════════════════════════\033[0m"
-echo -e "Link gRPC      : ${vmesslink3}"
-echo -e "\033[0;34m════════════════════════════════════\033[0m"
-echo -e " SELAMAT MENIKMATI TRIAL DARI KAMI"
-echo -e "\033[0;34m════════════════════════════════════\033[0m"
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
+echo -e " Remark       : ${user}"
+echo -e " Domain        : ${domain}"
+echo -e " Port TLS      : 400,8443"
+echo -e " port WS       : 80,8880,8080,2082"
+echo -e " Key           : ${uuid}"
+echo -e " Localtions    : $CITY"
+echo -e " ISP           : $ISP"
+echo -e " AlterId       : 0"
+echo -e " Security      : auto"
+echo -e " Network       : ws"
+echo -e " Path          : /vmess"
+echo -e " ServiceName   : vmess-grpc"
 
-menu-vmess
+echo -e " Link TLS      : ${vmesslink1}"
+echo -e " Link WS       : ${vmesslink2}"
+echo -e " Link GRPC     : ${vmesslink3}"
+
+echo -e " Days in    : $masaaktif Day "
+echo -e " Expiry in  : $pup Minutes "
