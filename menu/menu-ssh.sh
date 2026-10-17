@@ -293,7 +293,7 @@ read -p " Select menu : " opt
 echo -e ""
 case $opt in
 1) clear ; create_ssh ;;
-2) clear ; trialssh ;;
+2) clear ; trial_ssh ;;
 3) clear ; del ;;
 4) clear ; renew;;
 5) clear ; cekssh ;;
