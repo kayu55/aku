@@ -226,7 +226,7 @@ END
 cat > /etc/cron.d/re_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 5 * * * root /sbin/restart
+5 5 * * * root /sbin/restart
 END
 cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
