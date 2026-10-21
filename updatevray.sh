@@ -165,6 +165,7 @@ mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
 JSONS_PATH=/usr/local/etc/xray
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 
 # Installing Xray Service
 rm -fr /etc/systemd/system/xray.service.d
