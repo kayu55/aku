@@ -282,7 +282,7 @@ sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # xray config
-cat <<EOF> /usr/local/etc/xray/config.json
+cat <<EOF> /etc/xray/config.json
 {
   "log" : {
     "access": "/var/log/xray/access.log",
@@ -494,45 +494,11 @@ cat <<EOF> /usr/local/etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-# Install Xray #
-#==========#
-# / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-# / / Installation Xray Core
-xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
-# / / Ambil Xray Core Version Terbaru
-
-# / / Make Main Directory
-mkdir -p /usr/bin/xray
-mkdir -p /etc/xray
-mkdir -p /usr/local/etc/xray
-# / / Unzip Xray Linux 64
-cd `mktemp -d`
-curl -sL "$xraycore_link" -o xray.zip
-unzip -q xray.zip && rm -rf xray.zip
-mv xray /usr/local/bin/xray
-chmod +x /usr/local/bin/xray
-JSONS_PATH=/usr/local/etc/xray
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
-
-# Installing Xray Service
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
-#new
-rm -fr /etc/systemd/system/xray@.service
-rm -fr /usr/local/bin/xray
-rm -fr /usr/local/etc/xray/*.json
-rm -fr /usr/local/share/xray/geoip.dat
-rm -fr /usr/local/share/xray/geosite.dat
-rm -fr /var/log/xray/
-#instal
-chmod +x /etc/systemd/system/xray@.service
-chmod +x /usr/local/bin/xray
-chmod +x /usr/local/etc/xray/*.json
-chmod +x /usr/local/share/xray/geoip.dat
-chmod +x /usr/local/share/xray/geosite.dat
-chmod +x /var/log/xray/
-
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -562,10 +528,8 @@ systemctl start nginx >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
 # Restart All Service
 echo -e "$yell[SERVICE]$NC Restart All Service"
-sleep 1
 chown -R www-data:www-data /home/vps/public_html
 # Enable & Restart & Xray & Trojan & Nginx
-sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
