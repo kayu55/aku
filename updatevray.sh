@@ -163,11 +163,27 @@ curl -sL "$xraycore_link" -o xray.zip
 unzip -q xray.zip && rm -rf xray.zip
 mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
+JSONS_PATH=/usr/local/etc/xray
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 
 # Installing Xray Service
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
+#new
+rm -fr /etc/systemd/system/xray@.service
+rm -fr /usr/local/bin/xray
+rm -fr /usr/local/etc/xray/*.json
+rm -fr /usr/local/share/xray/geoip.dat
+rm -fr /usr/local/share/xray/geosite.dat
+rm -fr /var/log/xray/
+#instal
+chmod +x /etc/systemd/system/xray@.service
+chmod +x /usr/local/bin/xray
+chmod +x /usr/local/etc/xray/*.json
+chmod +x /usr/local/share/xray/geoip.dat
+chmod +x /usr/local/share/xray/geosite.dat
+chmod +x /var/log/xray/
+
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
 Documentation=https://github.com/xtls
