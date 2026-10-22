@@ -357,23 +357,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### b1s 2026-11-12
-},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
-### AhyeonVM945 2026-10-16
-},{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
-### r4nVM425 2026-11-06
-},{"id": "0770d998-3745-4fb2-8b70-542609c82614","alterId": 0,"email": "r4nVM425"
-### myy 2026-10-26
-},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
-### kontr0l 2026-10-24
-},{"id": "561fb224-2406-4323-8204-223dd0c72b79","alterId": 0,"email": "kontr0l"
-### sidiq 2026-11-03
-},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
-### z4n 2026-10-18
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -391,23 +377,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### b1s 2026-11-12
-},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
-### AhyeonVM945 2026-10-16
-},{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
-### r4nVM425 2026-11-06
-},{"id": "0770d998-3745-4fb2-8b70-542609c82614","alterId": 0,"email": "r4nVM425"
-### myy 2026-10-26
-},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
-### kontr0l 2026-10-24
-},{"id": "561fb224-2406-4323-8204-223dd0c72b79","alterId": 0,"email": "kontr0l"
-### sidiq 2026-11-03
-},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
-### z4n 2026-10-18
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -466,20 +438,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### b1s 2026-11-12
-},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
-### AhyeonVM945 2026-10-16
-},{"id": "d4cb98b0-3e58-4ac6-b471-89dbc20a201a","alterId": 0,"email": "AhyeonVM945"
-### r4nVM425 2026-11-06
-},{"id": "0770d998-3745-4fb2-8b70-542609c82614","alterId": 0,"email": "r4nVM425"
-### myy 2026-10-26
-},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
-### kontr0l 2026-10-24
-},{"id": "561fb224-2406-4323-8204-223dd0c72b79","alterId": 0,"email": "kontr0l"
-### sidiq 2026-11-03
-},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
-### z4n 2026-10-18
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
              }
           ]
        },
