@@ -140,9 +140,9 @@ wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/
 
 # Install Xray #
 # / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+#latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 # / / Installation Xray Core
-xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
+#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 
@@ -151,13 +151,11 @@ mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
 mkdir -p /usr/local/etc/xray
 # / / Unzip Xray Linux 64
-cd `mktemp -d`
-curl -sL "$xraycore_link" -o xray.zip
-unzip -q xray.zip && rm -rf xray.zip
-mv xray /usr/local/bin/xray
-chmod +x /usr/local/bin/xray
-mv xray /usr/local/etc/xray
-chmod +x /usr/local/etc/xray
+#cd `mktemp -d`
+#curl -sL "$xraycore_link" -o xray.zip
+#unzip -q xray.zip && rm -rf xray.zip
+#mv xray /usr/local/bin/xray
+#chmod +x /usr/local/bin/xray
 
 # Random Port Xray
 vless=$((RANDOM + 10000))
@@ -517,28 +515,7 @@ LimitNOFILE=1000000
 [Install]
 WantedBy=multi-user.target
 EOF
-cat <<EOF> /etc/systemd/system/xray.service                
-[Unit]
-Description=Xray Service
-Documentation=https://github.com/xtls
-After=network.target nss-lookup.target
 
-[Service]
-User=nobody
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/config.json
-Restart=on-failure
-RestartPreventExitStatus=23                                       
-LimitNPROC=10000                                                  
-LimitNOFILE=1000000
-RuntimeDirectory=xray
-RuntimeDirectoryMode=0755
-
-[Install]
-WantedBy=multi-user.target
-EOF
 echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Xray"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
