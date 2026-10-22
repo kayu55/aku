@@ -156,6 +156,8 @@ curl -sL "$xraycore_link" -o xray.zip
 unzip -q xray.zip && rm -rf xray.zip
 mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
+mv xray /usr/local/etc/xray
+chmod +x /usr/local/etc/xray
 
 # Random Port Xray
 vless=$((RANDOM + 10000))
@@ -494,8 +496,8 @@ cat <<EOF> /usr/local/etc/xray/config.json
 }
 EOF
 # Installing Xray Service
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 26.3.27
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat >/etc/systemd/system/xray.service <<EOF
