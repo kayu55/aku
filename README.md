@@ -73,6 +73,10 @@ wget -O up-ssh-vpn "raw.githubusercontent.com/kayu55/aku/main/up-ssh-vpn.sh" && 
 wget -O up-ins-xray-opok "raw.githubusercontent.com/kayu55/aku/main/up-ins-xray-opok.sh" && chmod +x up-ins-xray-opok
 ````
 
+```
+wget -O ins-xray "raw.githubusercontent.com/kayu55/aku/main/ins-xray.sh" && chmod +x ins-xray
+````
+
 ### instal ws python3-Wspro
 
 ````
