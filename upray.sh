@@ -282,7 +282,7 @@ sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # xray config
-cat <<EOF> /etc/xray/config.json
+cat <<EOF> /usr/local/etc/xray/config.json
 {
   "log" : {
     "access": "/var/log/xray/access.log",
