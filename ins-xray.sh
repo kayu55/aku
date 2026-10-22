@@ -153,7 +153,55 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 # / / Ambil Xray Core Version Terbaru
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
+secs_to_human() {
+echo -e "${WB}Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds${NC}"
+}
+start=$(date +%s)
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+apt install socat netfilter-persistent -y
+apt install vnstat lsof fail2ban -y
+apt install curl sudo -y
+apt install screen cron screenfetch -y
+mkdir /backup >> /dev/null 2>&1
+mkdir /user >> /dev/null 2>&1
+mkdir /tmp >> /dev/null 2>&1
+apt install resolvconf network-manager dnsutils bind9 -y
+cat > /etc/systemd/resolved.conf << END
+[Resolve]
+DNS=8.8.8.8 8.8.4.4
+Domains=~.
+ReadEtcHosts=yes
+END
+systemctl enable resolvconf
+systemctl enable systemd-resolved
+systemctl enable NetworkManager
+rm -rf /etc/resolv.conf
+rm -rf /etc/resolvconf/resolv.conf.d/head
+echo "
+nameserver 127.0.0.53
+" >> /etc/resolv.conf
+echo "
+" >> /etc/resolvconf/resolv.conf.d/head
+systemctl restart resolvconf
+systemctl restart systemd-resolved
+systemctl restart NetworkManager
+echo "Google DNS" > /user/current
+rm /usr/local/etc/xray/city >> /dev/null 2>&1
+rm /usr/local/etc/xray/org >> /dev/null 2>&1
+rm /usr/local/etc/xray/timezone >> /dev/null 2>&1
+cp /usr/local/bin/xray /backup/xray.official.backup
+curl -s ipinfo.io/city >> /usr/local/etc/xray/city
+curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /usr/local/etc/xray/org
+curl -s ipinfo.io/timezone >> /usr/local/etc/xray/timezone
+clear
+echo -e "${GB}[ INFO ]${NC} ${GB}Downloading Xray-core mod${NC}"
+sleep 0.5
 wget -q -O /backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit"
+echo -e "${GB}[ INFO ]${NC} ${GB}Download Xray-core done${NC}"
+sleep 1
+clear
 
 rm -rf /usr/local/bin/xray
 cp /backup/xray.mod.backup /usr/local/bin/xray
