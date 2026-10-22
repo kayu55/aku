@@ -144,7 +144,7 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
 
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
@@ -496,35 +496,26 @@ cat <<EOF> /usr/local/etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
-cat >/etc/systemd/system/xray.service <<EOF
-[Unit]
+cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
-Documentation=https://xtls.github.io/
+Documentation=https://github.com/xtls
 After=network.target nss-lookup.target
-
 [Service]
-User=xray
-Group=xray
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
-NoNewPrivileges=yes
-UMask=0077
+User=www-data
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
 LimitNOFILE=1000000
-RuntimeDirectory=xray
-RuntimeDirectoryMode=0755
-
 [Install]
 WantedBy=multi-user.target
 EOF
-
 echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Xray"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
