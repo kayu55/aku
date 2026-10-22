@@ -309,7 +309,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vmess-ws",
       "listen": "127.0.0.1",
-      "port": 10001,
+      "port": $vmess,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -436,7 +436,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vmess-grpc",
       "listen": "127.0.0.1",
-      "port": 10002,
+      "port": $vmess,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -564,7 +564,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vmess-httpupgrade",
       "listen": "127.0.0.1",
-      "port": 10003,
+      "port": $vmess,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -691,7 +691,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "trojan-ws",
       "listen": "127.0.0.1",
-      "port": 10004,
+      "port": $trojan,
       "protocol": "trojan",
       "settings": {
         "clients": []
@@ -707,7 +707,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "trojan-grpc",
       "listen": "127.0.0.1",
-      "port": 10005,
+      "port": $trojan,
       "protocol": "trojan",
       "settings": {
         "clients": []
@@ -724,7 +724,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "trojan-httpupgrade",
       "listen": "127.0.0.1",
-      "port": 10006,
+      "port": $trojan,
       "protocol": "trojan",
       "settings": {
         "clients": []
@@ -740,7 +740,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vless-ws",
       "listen": "127.0.0.1",
-      "port": 10007,
+      "port": $vless-ws,
       "protocol": "vless",
       "settings": {
         "clients": [],
@@ -757,7 +757,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vless-grpc",
       "listen": "127.0.0.1",
-      "port": 10008,
+      "port": $vless-grpc,
       "protocol": "vless",
       "settings": {
         "clients": [],
@@ -775,7 +775,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vless-httpupgrade",
       "listen": "127.0.0.1",
-      "port": 10009,
+      "port": $vless,
       "protocol": "vless",
       "settings": {
         "clients": [],
@@ -801,7 +801,7 @@ cat <<EOF> /etc/xray/config.json
     {
       "tag": "vless-reality",
       "listen": "0.0.0.0",
-      "port": 2443,
+      "port": $vless,
       "protocol": "vless",
       "settings": {
         "clients": [],
