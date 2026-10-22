@@ -497,9 +497,27 @@ cat <<EOF> /usr/local/etc/xray/config.json
 EOF
 # Installing Xray Service
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
+Description=Xray Service
+Documentation=https://github.com/xtls
+After=network.target nss-lookup.target
+[Service]
+User=www-data
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+[Install]
+WantedBy=multi-user.target
+EOF
+cat <<EOF> /etc/systemd/system/xray.service                
 [Unit]
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -510,9 +528,10 @@ User=nobody
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/conf>Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
+ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23                                       
+LimitNPROC=10000                                                  
 LimitNOFILE=1000000
 RuntimeDirectory=xray
 RuntimeDirectoryMode=0755
