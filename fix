@@ -75,8 +75,8 @@ rm -fr /var/log/xray/error2.log
 installed: /var/log/xray/
 # / / Ambil Xray Core Version Terbaru
 JSONS_PATH=/usr/local/etc/xray
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.23
+#latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+bash -c "$(curl -L https://github.com/kayu55/aku/raw/main/install-release.sh)" @ install
 
 cat <<EOF> /etc/systemd/system/xray.service
 [Unit]
