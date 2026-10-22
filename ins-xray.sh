@@ -153,10 +153,7 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 # / / Ambil Xray Core Version Terbaru
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
-secs_to_human() {
-echo -e "${WB}Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds${NC}"
-}
-start=$(date +%s)
+
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
