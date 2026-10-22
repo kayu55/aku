@@ -155,6 +155,9 @@ xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_vers
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
 wget -q -O /backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit"
 
+rm -rf /usr/local/bin/xray
+cp /backup/xray.mod.backup /usr/local/bin/xray
+chmod 755 /usr/local/bin/xray
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
@@ -486,9 +489,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-rm -rf /usr/local/bin/xray
-cp /backup/xray.mod.backup /usr/local/bin/xray
-chmod 755 /usr/local/bin/xray
+
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
