@@ -152,7 +152,8 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
+wget -q -O /backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit"
 
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
@@ -181,28 +182,11 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:80;
              listen 8880;
              listen [::]:8880;
-             listen 2082;
-             listen [::]:2082;
-             listen 8080;
-             listen [::]:8080;
-             listen 2052;
-             listen [::]:2052;
-             listen 2095;
-             listen [::]:2095;
-             listen 2086;
              listen [::]:2086;
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              listen 8443 ssl http2 reuseport;
              listen [::]:8443 http2 reuseport;	
-             listen 2096 ssl http2 reuseport;
-             listen [::]:2096 http2 reuseport;	
-             listen 2087 ssl http2 reuseport;
-             listen [::]:2087 http2 reuseport;	
-             listen 2053 ssl http2 reuseport;
-             listen [::]:2053 http2 reuseport;	
-             listen 2083 ssl http2 reuseport;
-             listen [::]:2083 http2 reuseport;	
              server_name 127.0.0.1 localhost;
              ssl_certificate /etc/xray/xray.crt;
              ssl_certificate_key /etc/xray/xray.key;
@@ -502,7 +486,9 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
+rm -rf /usr/local/bin/xray
+cp /backup/xray.mod.backup /usr/local/bin/xray
+chmod 755 /usr/local/bin/xray
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
