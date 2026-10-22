@@ -48,7 +48,7 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.15
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.15
 
 ## crt xray
 systemctl stop nginx
@@ -144,7 +144,7 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
 
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
@@ -282,15 +282,15 @@ sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # xray config
-cat <<EOF> /usr/local/etc/xray/config.json
+cat <<EOF> /etc/xray/config.json
 {
-  "log": {
+  "log" : {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [
-    {
+      {
       "listen": "127.0.0.1",
       "port": 10085,
       "protocol": "dokodemo-door",
@@ -299,127 +299,127 @@ cat <<EOF> /usr/local/etc/xray/config.json
       },
       "tag": "api"
     },
-    {
-      "listen": "127.0.0.1",
-      "port": "$vless",
-      "protocol": "vless",
+   {
+     "listen": "127.0.0.1",
+     "port": "$vless",
+     "protocol": "vless",
       "settings": {
-        "decryption": "none",
-        "clients": [
-          {
-            "id": "${uuid}"
+          "decryption":"none",
+            "clients": [
+               {
+                 "id": "${uuid}"                 
 #vless
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vless"
           }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/vless"
         }
-      }
-    },
-    {
-      "listen": "127.0.0.1",
-      "port": "$vmess",
-      "protocol": "vmess",
+     },
+     {
+     "listen": "127.0.0.1",
+     "port": "$vmess",
+     "protocol": "vmess",
       "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "alterId": 0
+            "clients": [
+               {
+                 "id": "${uuid}",
+                 "alterId": 0
 #vmess
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vmess"
           }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/vmess"
         }
-      }
-    },
-    {
-      "listen": "127.0.0.1",
+     },
+     {
+     "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
       "settings": {
-        "decryption": "none",
-        "clients": [
-          {
-            "password": "${uuid}"
+          "decryption":"none",		
+           "clients": [
+              {
+                 "password": "${uuid}"
 #trojanws
-          }
-        ],
-        "udp": true
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/trojan-ws"
-        }
-      }
-    },
+              }
+          ],
+         "udp": true
+       },
+       "streamSettings":{
+           "network": "ws",
+           "wsSettings": {
+               "path": "/trojan-ws"
+            }
+         }
+     },
     {
-      "listen": "127.0.0.1",
-      "port": "$vlessgrpc",
-      "protocol": "vless",
-      "settings": {
-        "decryption": "none",
-        "clients": [
-          {
-            "id": "${uuid}"
+        "listen": "127.0.0.1",
+        "port": "$vlessgrpc",
+        "protocol": "vless",
+        "settings": {
+         "decryption":"none",
+           "clients": [
+             {
+               "id": "${uuid}"
 #vlessgrpc
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "vless-grpc"
+             }
+          ]
+       },
+          "streamSettings":{
+             "network": "grpc",
+             "grpcSettings": {
+                "serviceName": "vless-grpc"
+           }
         }
-      }
-    },
-    {
+     },
+     {
       "listen": "127.0.0.1",
       "port": "$vmessgrpc",
-      "protocol": "vmess",
+     "protocol": "vmess",
       "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "alterId": 0
+            "clients": [
+               {
+                 "id": "${uuid}",
+                 "alterId": 0
 #vmessgrpc
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "grpc",
+            "grpcSettings": {
+                "serviceName": "vmess-grpc"
           }
-        ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "vmess-grpc"
         }
-      }
-    },
-    {
-      "listen": "127.0.0.1",
-      "port": "$trojangrpc",
-      "protocol": "trojan",
-      "settings": {
-        "decryption": "none",
-        "clients": [
-          {
-            "password": "${uuid}"
+     },
+     {
+        "listen": "127.0.0.1",
+        "port": "$trojangrpc",
+        "protocol": "trojan",
+        "settings": {
+          "decryption":"none",
+             "clients": [
+               {
+                 "password": "${uuid}"
 #trojangrpc
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "trojan-grpc"
-        }
+               }
+           ]
+        },
+         "streamSettings":{
+         "network": "grpc",
+           "grpcSettings": {
+               "serviceName": "trojan-grpc"
+         }
       }
-    }
+    }	
   ],
   "outbounds": [
     {
@@ -455,20 +455,26 @@ cat <<EOF> /usr/local/etc/xray/config.json
         "outboundTag": "blocked"
       },
       {
-        "inboundTag": ["api"],
+        "inboundTag": [
+          "api"
+        ],
         "outboundTag": "api",
         "type": "field"
       },
       {
         "type": "field",
         "outboundTag": "blocked",
-        "protocol": ["bittorrent"]
+        "protocol": [
+          "bittorrent"
+        ]
       }
     ]
   },
   "stats": {},
   "api": {
-    "services": ["StatsService"],
+    "services": [
+      "StatsService"
+    ],
     "tag": "api"
   },
   "policy": {
@@ -481,15 +487,14 @@ cat <<EOF> /usr/local/etc/xray/config.json
     "system": {
       "statsInboundUplink": true,
       "statsInboundDownlink": true,
-      "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
     }
   }
 }
 EOF
 # Installing Xray Service
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
@@ -509,7 +514,6 @@ LimitNOFILE=1000000
 [Install]
 WantedBy=multi-user.target
 EOF
-
 echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Xray"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
@@ -528,7 +532,8 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+systemctl status xray
+
 
 cd /usr/bin
 rm -fr upray
-systemctl status xray
