@@ -146,7 +146,6 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-#intall vray 
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
@@ -338,6 +337,42 @@ cat <<EOF> /etc/xray/config.json
      },
      {
      "listen": "127.0.0.1",
+     "port": "$vmess1",
+     "protocol": "vmess",
+      "settings": {
+            "clients": [
+               {
+                 "id": "${uuid}",
+                 "alterId": 0
+#vmess
+### singja 2026-11-18
+},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
+### ain 2026-11-13
+},{"id": "3a8332dc-b0ba-49ad-8208-c50189e643f0","alterId": 0,"email": "ain"
+### ayudewe 2027-08-05
+},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
+### sinyalp0r 2026-11-01
+},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
+### ins4n 2026-10-22
+},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
+### 0k3 2026-11-01
+},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
+### ye3 2026-11-05
+},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
+### ilp3d 2026-10-21
+},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
+          }
+        ]
+      },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/servlets/mms"
+          }
+        }
+     },
+     {
+      "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
       "settings": {
@@ -387,9 +422,25 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
+### singja 2026-11-18
+},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
+### ain 2026-11-13
+},{"id": "3a8332dc-b0ba-49ad-8208-c50189e643f0","alterId": 0,"email": "ain"
+### ayudewe 2027-08-05
+},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
+### sinyalp0r 2026-11-01
+},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
+### ins4n 2026-10-22
+},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
+### 0k3 2026-11-01
+},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
+### ye3 2026-11-05
+},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
+### ilp3d 2026-10-21
+},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -494,7 +545,7 @@ EOF
 # ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
 # ╚══════════════════════════════════════════════════════════════╝
 echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
-if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install; then
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
     echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
     exit 1
 fi
@@ -504,6 +555,7 @@ if [ ! -x /usr/local/bin/xray ]; then
 fi
 /usr/local/bin/xray version || exit 1
 
+#bash /root/install-release.sh install --version v1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
