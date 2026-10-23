@@ -149,7 +149,7 @@ wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
-echo -e "${green}╚══════════════════════════════════════════════════════════════╝${NC}"
+echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
 echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
 mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 
@@ -317,9 +317,9 @@ cat <<EOF> /etc/xray/config.json
         "sniffing": {
           "enabled": true,
           "destOverride": ["http", "tls"]
-        }
-      },
-      {
+       }
+     },
+   {
      "listen": "127.0.0.1",
      "port": "$vmess",
      "protocol": "vmess",
@@ -341,9 +341,9 @@ cat <<EOF> /etc/xray/config.json
         "sniffing": {
           "enabled": true,
           "destOverride": ["http", "tls"]
-        }
-      },
-        {
+       }
+     },
+   {
      "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
@@ -366,9 +366,9 @@ cat <<EOF> /etc/xray/config.json
         "sniffing": {
           "enabled": true,
           "destOverride": ["http", "tls"]
-        }
-      },
-     {
+         }
+        },
+      {
         "listen": "127.0.0.1",
         "port": "$vlessgrpc",
         "protocol": "vless",
@@ -390,9 +390,9 @@ cat <<EOF> /etc/xray/config.json
          "sniffing": {
            "enabled": true,
            "destOverride": ["http", "tls"]
-         }
-       },
-       {
+        }
+      },
+    {
       "listen": "127.0.0.1",
       "port": "$vmessgrpc",
      "protocol": "vmess",
@@ -414,9 +414,9 @@ cat <<EOF> /etc/xray/config.json
               "sniffing": {
                 "enabled": true,
                 "destOverride": ["http", "tls"]
-              }
-            },
-            {
+          }
+        },
+      {
         "listen": "127.0.0.1",
         "port": "$trojangrpc",
         "protocol": "trojan",
