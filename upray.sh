@@ -307,19 +307,15 @@ cat <<EOF> /etc/xray/config.json
 #vless
              }
           ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/vless"
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vless"
           }
-        },
-        "sniffing": {
-          "enabled": true,
-          "destOverride": ["http", "tls"]
-       }
+        }
      },
-   {
+     {
      "listen": "127.0.0.1",
      "port": "$vmess",
      "protocol": "vmess",
@@ -331,19 +327,15 @@ cat <<EOF> /etc/xray/config.json
 #vmess
              }
           ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/vmess"
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vmess"
           }
-        },
-        "sniffing": {
-          "enabled": true,
-          "destOverride": ["http", "tls"]
-       }
+        }
      },
-   {
+     {
      "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
@@ -352,23 +344,19 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
               {
                  "password": "${uuid}"
-#trojan
+#trojanws
               }
           ],
          "udp": true
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/trojan-ws"
-          }
-        },
-        "sniffing": {
-          "enabled": true,
-          "destOverride": ["http", "tls"]
+       },
+       "streamSettings":{
+           "network": "ws",
+           "wsSettings": {
+               "path": "/trojan-ws"
+            }
          }
-        },
-      {
+     },
+    {
         "listen": "127.0.0.1",
         "port": "$vlessgrpc",
         "protocol": "vless",
@@ -380,19 +368,15 @@ cat <<EOF> /etc/xray/config.json
 #vlessgrpc
              }
           ]
-        },
-        "streamSettings": {
-           "network": "grpc",
-           "grpcSettings": {
-               "serviceName": "vless-grpc"
+       },
+          "streamSettings":{
+             "network": "grpc",
+             "grpcSettings": {
+                "serviceName": "vless-grpc"
            }
-         },
-         "sniffing": {
-           "enabled": true,
-           "destOverride": ["http", "tls"]
         }
-      },
-    {
+     },
+     {
       "listen": "127.0.0.1",
       "port": "$vmessgrpc",
      "protocol": "vmess",
@@ -402,21 +386,17 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-                   }
-                ]
-             },
-             "streamSettings": {
-                "network": "grpc",
-                "grpcSettings": {
-                    "serviceName": "vmess-grpc"
-                }
-              },
-              "sniffing": {
-                "enabled": true,
-                "destOverride": ["http", "tls"]
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "grpc",
+            "grpcSettings": {
+                "serviceName": "vmess-grpc"
           }
-        },
-      {
+        }
+     },
+     {
         "listen": "127.0.0.1",
         "port": "$trojangrpc",
         "protocol": "trojan",
@@ -428,16 +408,11 @@ cat <<EOF> /etc/xray/config.json
 #trojangrpc
                }
            ]
-          },
-          "streamSettings": {
-             "network": "grpc",
-             "grpcSettings": {
-                 "serviceName": "trojan-grpc"
-             }
-           },
-           "sniffing": {
-             "enabled": true,
-             "destOverride": ["http", "tls"]
+        },
+         "streamSettings":{
+         "network": "grpc",
+           "grpcSettings": {
+               "serviceName": "trojan-grpc"
          }
       }
     }	
