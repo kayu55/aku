@@ -5,19 +5,6 @@ ipsaya=$(curl -sS ipv4.icanhazip.com)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
 
-# =====================================================
-# VMESS ONLINE USER CHECKER
-# =====================================================
-
-# Colors
-green="\e[38;5;82m"
-red="\e[38;5;196m"
-yellow="\e[38;5;226m"
-orange="\e[38;5;99m"
-reset="\e[0m"
-bold="\e[1m"
-
-spinner=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
 # Ambil daftar username dari file konfigurasi
 data=( $(cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq) )
 
