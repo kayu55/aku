@@ -146,12 +146,8 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-# ╔══════════════════════════════════════════════════════════════╗
-# ║                 ⚡ X W A N  •  X R A Y ⚡                    ║
-# ║             INSTALL / UPDATE X-RAY CORE TERBARU              ║
-# ╚══════════════════════════════════════════════════════════════╝
-echo -e "\n${green}╔══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${green}║          ⚡ X W A N  •  X R A Y  C O R E ⚡                 ║${NC}"
+echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
 echo -e "${green}╚══════════════════════════════════════════════════════════════╝${NC}"
 echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
@@ -311,15 +307,19 @@ cat <<EOF> /etc/xray/config.json
 #vless
              }
           ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vless"
+        },
+        "streamSettings": {
+          "network": "ws",
+          "wsSettings": {
+            "path": "/vless"
           }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
         }
-     },
-     {
+      },
+      {
      "listen": "127.0.0.1",
      "port": "$vmess",
      "protocol": "vmess",
@@ -329,33 +329,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### singja 2026-11-18
-},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
-### ain 2026-11-13
-},{"id": "3a8332dc-b0ba-49ad-8208-c50189e643f0","alterId": 0,"email": "ain"
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-### sinyalp0r 2026-11-01
-},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
-### ins4n 2026-10-22
-},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
-### 0k3 2026-11-01
-},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
-### ye3 2026-11-05
-},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
-### ilp3d 2026-10-21
-},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
+             }
+          ]
+        },
+        "streamSettings": {
+          "network": "ws",
+          "wsSettings": {
+            "path": "/vmess"
           }
-        ]
-      },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vmess"
-          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
         }
-     },
-     {
+      },
+        {
      "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
@@ -364,19 +352,23 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
               {
                  "password": "${uuid}"
-#trojanws
+#trojan
               }
           ],
          "udp": true
-       },
-       "streamSettings":{
-           "network": "ws",
-           "wsSettings": {
-               "path": "/trojan-ws"
-            }
-         }
-     },
-    {
+        },
+        "streamSettings": {
+          "network": "ws",
+          "wsSettings": {
+            "path": "/trojan-ws"
+          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
+        }
+      },
+     {
         "listen": "127.0.0.1",
         "port": "$vlessgrpc",
         "protocol": "vless",
@@ -388,15 +380,19 @@ cat <<EOF> /etc/xray/config.json
 #vlessgrpc
              }
           ]
-       },
-          "streamSettings":{
-             "network": "grpc",
-             "grpcSettings": {
-                "serviceName": "vless-grpc"
+        },
+        "streamSettings": {
+           "network": "grpc",
+           "grpcSettings": {
+               "serviceName": "vless-grpc"
            }
-        }
-     },
-     {
+         },
+         "sniffing": {
+           "enabled": true,
+           "destOverride": ["http", "tls"]
+         }
+       },
+       {
       "listen": "127.0.0.1",
       "port": "$vmessgrpc",
      "protocol": "vmess",
@@ -406,33 +402,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### singja 2026-11-18
-},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
-### ain 2026-11-13
-},{"id": "3a8332dc-b0ba-49ad-8208-c50189e643f0","alterId": 0,"email": "ain"
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-### sinyalp0r 2026-11-01
-},{"id": "fbe6a48c-d6d7-41b4-8154-6f9c0d6d824f","alterId": 0,"email": "sinyalp0r"
-### ins4n 2026-10-22
-},{"id": "ba0f6b36-4b22-4905-80b5-5977b64f6e9a","alterId": 0,"email": "ins4n"
-### 0k3 2026-11-01
-},{"id": "f96e78b2-bc43-48f9-a471-6664c7e09269","alterId": 0,"email": "0k3"
-### ye3 2026-11-05
-},{"id": "24d12bd8-6a93-4314-b0c6-324f700d72f0","alterId": 0,"email": "ye3"
-### ilp3d 2026-10-21
-},{"id": "bd61dbaf-66b7-4e18-9aa0-2e26ef1d1209","alterId": 0,"email": "ilp3d"
-          }
-        ]
-      },
-       "streamSettings":{
-         "network": "grpc",
-            "grpcSettings": {
-                "serviceName": "vmess-grpc"
-          }
-        }
-     },
-     {
+                   }
+                ]
+             },
+             "streamSettings": {
+                "network": "grpc",
+                "grpcSettings": {
+                    "serviceName": "vmess-grpc"
+                }
+              },
+              "sniffing": {
+                "enabled": true,
+                "destOverride": ["http", "tls"]
+              }
+            },
+            {
         "listen": "127.0.0.1",
         "port": "$trojangrpc",
         "protocol": "trojan",
@@ -444,11 +428,16 @@ cat <<EOF> /etc/xray/config.json
 #trojangrpc
                }
            ]
-        },
-         "streamSettings":{
-         "network": "grpc",
-           "grpcSettings": {
-               "serviceName": "trojan-grpc"
+          },
+          "streamSettings": {
+             "network": "grpc",
+             "grpcSettings": {
+                 "serviceName": "trojan-grpc"
+             }
+           },
+           "sniffing": {
+             "enabled": true,
+             "destOverride": ["http", "tls"]
          }
       }
     }	
