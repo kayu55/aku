@@ -526,7 +526,7 @@ EOF
 # ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
 # ╚══════════════════════════════════════════════════════════════╝
 echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
-if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install; then
     echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
     exit 1
 fi
