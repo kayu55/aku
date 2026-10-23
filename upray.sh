@@ -146,6 +146,7 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
+#intall vray 
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
@@ -325,26 +326,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vmess"
-          }
-        }
-     },
-     {
-     "listen": "127.0.0.1",
-     "port": "$vmess1",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
-#vmess
 ### singja 2026-11-18
 },{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
 ### ain 2026-11-13
@@ -367,12 +348,12 @@ cat <<EOF> /etc/xray/config.json
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "/vmess"
           }
         }
      },
      {
-      "listen": "127.0.0.1",
+     "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
       "settings": {
@@ -555,7 +536,6 @@ if [ ! -x /usr/local/bin/xray ]; then
 fi
 /usr/local/bin/xray version || exit 1
 
-#bash /root/install-release.sh install --version v1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
@@ -595,3 +575,6 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+
+cd /usr/bin
+rm -fr upray
