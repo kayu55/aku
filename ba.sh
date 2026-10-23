@@ -13,48 +13,58 @@ GREEN='\033[0;32m'
 
 clear
 clear
-echo -n >/tmp/other.txt
-data=( `cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
-echo -e "\033[\033[0;34m┌──────────────────────────────────────────┐\033[0m"
-echo -e "            ALLXRAY USER LOGIN            $NC"
-echo -e "\033[\033[0;34m└──────────────────────────────────────────┘\033[0m"
+
+LOG_FILE="/var/log/xray/access.log"
+CONFIG_FILE="/etc/xray/config.json"
+
+data=( $(grep '###' "$CONFIG_FILE" 2>/dev/null | cut -d ' ' -f 2 | sort -u) )
+
+echo -e "\033[0;34m┌──────────────────────────────────────────┐\033[0m"
+echo -e "            ALLXRAY USER LOGIN             $NC"
+echo -e "\033[0;34m└──────────────────────────────────────────┘\033[0m"
 echo -e "\033[1;91m┌──────────────────────────────────────────┐\033[0m"
-for akun in "${data[@]}"
-do
-if [[ -z "$akun" ]]; then
-akun="tidakada"
-fi
 
-echo -n > /tmp/ipvmess.txt
-data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
-for ip in "${data2[@]}"
-do
+for akun in "${data[@]}"; do
+    [[ -z "$akun" ]] && continue
 
-jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
-if [[ "$jum" = "$ip" ]]; then
-echo "$jum" >> /tmp/ipvmess.txt
-else
-echo "$ip" >> /tmp/other.txt
-fi
-jum2=$(cat /tmp/ipvmess.txt)
-lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+    hasil=$(awk -v user="$akun" '
+        index($0, "email: " user) {
+            waktu = $1 " " $2
+            if (match($0, /from [^ ]+/)) {
+                ip = substr($0, RSTART + 5, RLENGTH - 5)
+                sub(/:[0-9]+$/, "", ip)
+                if (ip != "") {
+                    if (!(ip in seen)) {
+                        seen[ip] = 1
+                        ips[++n] = ip
+                    }
+                    last = waktu
+                }
+            }
+        }
+        END {
+            if (n > 0) {
+                print last
+                for (i = 1; i <= n; i++) print ips[i]
+            }
+        }
+    ' "$LOG_FILE" 2>/dev/null)
+
+    [[ -z "$hasil" ]] && continue
+    lastlogin=$(printf '%s\n' "$hasil" | head -n 1)
+    lastlogin=$(printf '%s\n' "$lastlogin" | awk '{split($2,t,"."); print t[1]}')
+    mapfile -t ips < <(printf '%s\n' "$hasil" | tail -n +2)
+
+    echo
+    echo -e "${NC}user :${GREEN} ${akun} ${NC}"
+    echo -e "${MB}Online Jam ${NC}: ${lastlogin} WIB"
+    echo -e "${MB}IP Login   ${NC}:"
+    i=1
+    for ip in "${ips[@]}"; do
+        echo -e "  ${NC}${i}. ${GREEN}${ip}${NC}"
+        ((i++))
+    done
 done
-
-jum=$(cat /tmp/ipvmess.txt)
-if [[ -z "$jum" ]]; then
-echo > /dev/null
-else
-jum2=$(cat /tmp/ipvmess.txt | nl)
-echo -e ""
-echo -e "${NC}user :${GREEN} ${akun} ${NC}
-${MB}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
-echo -e "$jum";
-fi
-rm -rf /tmp/ipvmess.txt
-done
-rm -rf /tmp/other.txt
 echo -e "\033[1;91m└──────────────────────────────────────────┘\033[0m"
 echo -e "${GREEN} "
 echo -e " Sc Arya Blitar ${NC} "
