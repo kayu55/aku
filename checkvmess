@@ -67,7 +67,7 @@ check_vmess() {
     ip_count=$(get_login_count "$user" "$LOG_FILE")
     [[ "$ip_count" -eq 0 ]] && continue
     ((total_loggedin++))
-    usage=$(cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
+    usage=$(cat /etc/xray/config.json | grep '###' /${user} 2>/dev/null || echo 0)
     quota=$(cat /etc/xray/vmess/${user} 2>/dev/null || echo 0)
     ip_limit=$(cat /etc/xray/vmess/${user}IP 2>/dev/null || echo "0")
     ip_limit=$(echo "$ip_limit" | tr -d '[:space:]')
