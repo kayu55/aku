@@ -146,6 +146,7 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
+#intall vray 
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
@@ -503,7 +504,6 @@ if [ ! -x /usr/local/bin/xray ]; then
 fi
 /usr/local/bin/xray version || exit 1
 
-#bash /root/install-release.sh install --version v1.8.23
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
