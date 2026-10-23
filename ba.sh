@@ -50,6 +50,7 @@ echo -e ""
 echo -e "${NC}user :${GREEN} ${akun} ${NC}
 ${MB}Online Jam ${NC}: ${lastlogin} wib";
 echo -e "$jum2";
+echo -e "$jum";
 fi
 rm -rf /tmp/ipvmess.txt
 done
