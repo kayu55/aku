@@ -233,7 +233,7 @@ case $opt in
 1) clear ; create_ssh ;;
 2) clear ; trialssh ;;
 3) clear ; del ;;
-4) clear ; renewssh;;
+4) clear ; renew_ssh ;;
 5) clear ; cekssh ;;
 6) clear ; ceklim ;;
 7) clear ; autodel ;;
