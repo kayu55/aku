@@ -1,18 +1,23 @@
 #!/bin/bash
-# clear # Komentari atau hapus ini
-NC='\033[0;37m' 
-PURPLE='\033[0;34m' 
-GREEN='\033[0;32m' 
+# ==========================================
+# Color
 RED='\033[0;31m'
-BIWhite='\033[1;97m'  
+NC='\033[0m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHT='\033[0;37m'
+# ==========================================
+# Getting
+MYIP=$(wget -qO- ipinfo.io/ip);
 clear
-#function renew(){
-clear
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m               MEMBER SSH                 \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"      
+echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "             List Member SSH                  "
+echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"      
 echo "USERNAME          EXP DATE          STATUS"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 while read expired
 do
 AKUN="$(echo $expired | cut -d: -f1)"
@@ -21,18 +26,15 @@ exp="$(chage -l $AKUN | grep "Account expires" | awk -F": " '{print $2}')"
 status="$(passwd -S $AKUN | awk '{print $2}' )"
 if [[ $ID -ge 1000 ]]; then
 if [[ "$status" = "L" ]]; then
-printf "%-17s %2s %-17s %2s \n" "$AKUN" "$exp     " "LOCKED${NORMAL}"
+printf "%-17s %2s %-17s %2s \n" "$AKUN" "$exp     " "LOCKED"
 else
-printf "%-17s %2s %-17s %2s \n" "$AKUN" "$exp     " "UNLOCKED${NORMAL}"
+printf "%-17s %2s %-17s %2s \n" "$AKUN" "$exp     " "UNLOCKED"
 fi
 fi
 done < /etc/passwd
-JUMLAH="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-echo -e ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m            Perpanjang  User              \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"  
-echo
+echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "           Masukan Usernamenya              "
+echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
 read -p "Username : " User
 egrep "^$User" /etc/passwd >/dev/null
 if [ $? -eq 0 ]; then
@@ -47,24 +49,29 @@ usermod -e  $Expiration $User
 egrep "^$User" /etc/passwd >/dev/null
 echo -e "$Pass\n$Pass\n"|passwd $User &> /dev/null
 clear
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m            Perpanjang  User              \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"  
+echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "        Perpanjang Masa Aktif SSH             "
+echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
 echo -e ""
-echo -e " Username : $User"
+echo -e " Username   : $User"
 echo -e " Days Added : $Days Days"
-echo -e " Expires on :  $Expiration_Display 👍"
+echo -e " Expires on :  $Expiration_Display"
 echo -e ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${ORANGE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+read -n 1 -s -r -p "Press any key to back"
+menu
+
 else
 clear
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m            Perpanjang  User              \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"  
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "        Perpanjang Masa Aktif SSH             "
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
 echo -e ""
-echo -e "   Username Doesnt Exist      "
+echo -e "   Username Tidak Ditemukan      "
 echo -e ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-fi
-read -n 1 -s -r -p "Press any key to back on menu"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+read -n 1 -s -r -p "Press any key to back"
 menu-ssh
+fi
