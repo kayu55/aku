@@ -260,7 +260,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget https://raw.githubusercontent.com/kayu55/aku/main/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
@@ -454,7 +454,7 @@ echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
 rm -fr /root/ssh-vpn7.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/tunel4
+rm -fr /root/tunel4.sh
 rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
