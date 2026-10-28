@@ -326,16 +326,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### TesVM718 2026-10-28
-},{"id": "94a9acdf-b310-462f-b3d1-7a41b86ce608","alterId": 0,"email": "TesVM718"
-### KoirulVM780 2026-11-21
-},{"id": "85188783-cc7a-46b9-98ff-0be800aa6251","alterId": 0,"email": "KoirulVM780"
-### iflixVM629 2026-10-28
-},{"id": "62aa606e-f64d-4cc0-97b3-59d7a8a37c4a","alterId": 0,"email": "iflixVM629"
-### OkebosVM882 2026-10-28
-},{"id": "22e867e0-245e-49a4-934f-7466cba8c89f","alterId": 0,"email": "OkebosVM882"
-### b0s 2026-11-03
-},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
              }
           ]
        },
@@ -397,16 +387,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### TesVM718 2026-10-28
-},{"id": "94a9acdf-b310-462f-b3d1-7a41b86ce608","alterId": 0,"email": "TesVM718"
-### KoirulVM780 2026-11-21
-},{"id": "85188783-cc7a-46b9-98ff-0be800aa6251","alterId": 0,"email": "KoirulVM780"
-### iflixVM629 2026-10-28
-},{"id": "62aa606e-f64d-4cc0-97b3-59d7a8a37c4a","alterId": 0,"email": "iflixVM629"
-### OkebosVM882 2026-10-28
-},{"id": "22e867e0-245e-49a4-934f-7466cba8c89f","alterId": 0,"email": "OkebosVM882"
-### b0s 2026-11-03
-},{"id": "b5f4da07-5161-47b6-a2b8-7d8235dc2a6f","alterId": 0,"email": "b0s"
              }
           ]
        },
