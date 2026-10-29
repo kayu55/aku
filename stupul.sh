@@ -477,7 +477,6 @@ function install_xray() {
     chown www-data:www-data "$domainSock_dir"
 
     # Install Xray Core
-    fi
     if [ ! -f /usr/local/bin/xray ]; then
     bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.23 || true
     fi
