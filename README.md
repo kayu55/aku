@@ -64,6 +64,10 @@ wget -O updatevray "raw.githubusercontent.com/kayu55/aku/main/updatevray.sh" && 
 ````
 wget -O upray "raw.githubusercontent.com/kayu55/aku/main/upray.sh" && chmod +x upray
 ````
+### Up2
+````
+wget -O upray2 "raw.githubusercontent.com/kayu55/aku/main/upray2.sh" && chmod +x upray2
+````
 
 ````
 wget -O up-ssh-vpn "raw.githubusercontent.com/kayu55/aku/main/up-ssh-vpn.sh" && chmod +x up-ssh-vpn
