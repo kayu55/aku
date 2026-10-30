@@ -223,8 +223,8 @@ sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 sed -i '$ ilocation = / {' /etc/nginx/conf.d/xray.conf
-if ($http_upgrade != "Upgrade") {
-rewrite /(.*) /vmess break;
+if ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
+rewrite /(.*) /vmess break; ' /etc/nginx/conf.d/xray.conf
 }
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
