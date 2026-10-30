@@ -175,7 +175,6 @@ wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/
 
 #intall vray 
 clear
-print_install "Core Xray Latest Version"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
 mkdir -p /usr/local/share/xray /usr/local/bin
