@@ -49,15 +49,12 @@ chown www-data.www-data $domainSock_dir
 # Make Folder XRay
 mkdir -p /var/log/xray
 mkdir -p /etc/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
+chown -R www-data:www-data /var/log/xray
+chmod 755 /var/log/xray
 touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
-# / / Ambil Xray Core Version Terbaru
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.15
-
 ## crt xray
 systemctl stop nginx
 mkdir /root/.acme.sh
@@ -93,6 +90,9 @@ touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
+chown -R www-data:www-data /var/log/xray
+chmod 755 /var/log/xray
+chmod 640 /var/log/xray/*.log
 # Make Log Autokill & Log Autoreboot
 rm -fr /root/log-limit.txt
 rm -fr /root/log-reboot.txt
@@ -146,26 +146,12 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-# Install Xray #
-# / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-# / / Installation Xray Core
-xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
-# / / Ambil Xray Core Version Terbaru
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
-wget -q -O /backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit"
-
-# / / Make Main Directory
-mkdir -p /usr/bin/xray
-mkdir -p /etc/xray
-mkdir -p /usr/local/etc/xray
-# / / Unzip Xray Linux 64
-cd `mktemp -d`
-curl -sL "$xraycore_link" -o xray.zip
-unzip -q xray.zip && rm -rf xray.zip
-mv xray /usr/local/bin/xray
+#intall vray 
+if [ ! -f /usr/local/bin/xray ]; then
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.23 || true
+fi
 chmod +x /usr/local/bin/xray
-
+    
 # Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
@@ -182,11 +168,28 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:80;
              listen 8880;
              listen [::]:8880;
+             listen 2082;
+             listen [::]:2082;
+             listen 8080;
+             listen [::]:8080;
+             listen 2052;
+             listen [::]:2052;
+             listen 2095;
+             listen [::]:2095;
+             listen 2086;
              listen [::]:2086;
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              listen 8443 ssl http2 reuseport;
              listen [::]:8443 http2 reuseport;	
+             listen 2096 ssl http2 reuseport;
+             listen [::]:2096 http2 reuseport;	
+             listen 2087 ssl http2 reuseport;
+             listen [::]:2087 http2 reuseport;	
+             listen 2053 ssl http2 reuseport;
+             listen [::]:2053 http2 reuseport;	
+             listen 2083 ssl http2 reuseport;
+             listen [::]:2083 http2 reuseport;	
              server_name 127.0.0.1 localhost;
              ssl_certificate /etc/xray/xray.crt;
              ssl_certificate_key /etc/xray/xray.key;
@@ -485,16 +488,15 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-# Installing Xray Service
-rm -rf /usr/local/bin/xray
-cp /backup/xray.mod.backup /usr/local/bin/xray
-chmod 755 /usr/local/bin/xray
+#Service
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
+[Unit]
 Description=Xray Service
-Documentation=https://github.com/xtls
+Documentation=https://github.com/XTLS/Xray-core
 After=network.target nss-lookup.target
+
 [Service]
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
@@ -526,3 +528,6 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+
+cd /usr/bin
+rm -fr upray
