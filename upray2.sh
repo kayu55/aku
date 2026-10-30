@@ -11,7 +11,34 @@ domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
-
+sleep 2
+ARCH=$(uname -m)
+case "$ARCH" in
+    x86_64|amd64)
+        ARCH_TYPE="x86_64"
+        ARCH_XRAY="64"
+        ARCH_GOTOP="linux_amd64.deb"
+        ;;
+    aarch64|arm64)
+        ARCH_TYPE="arm64"
+        ARCH_XRAY="arm64-v8a"
+        ARCH_GOTOP="linux_arm64.deb"
+        ;;
+    armv7*|armv6*|armhf|arm)
+        ARCH_TYPE="arm"
+        ARCH_XRAY="arm32-v7a"
+        ARCH_GOTOP="linux_arm.deb"
+        ;;
+    i386|i686)
+        ARCH_TYPE="i386"
+        ARCH_XRAY="32"
+        ARCH_GOTOP="linux_386.deb"
+        ;;
+    *)
+        echo -e "${BIWhite} Your Architecture Is Not Supported ( ${BIYellow}$ARCH ${BIWhite})${NC}"
+        exit 1
+        ;;
+esac
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -147,11 +174,29 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
 #intall vray 
+function install_xray() {
+clear
+print_install "Core Xray Latest Version"
+domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
+chown www-data.www-data $domainSock_dir
+mkdir -p /usr/local/share/xray /usr/local/bin
+if [ "$ARCH_TYPE" = "x86_64" ]; then
+    wget -q -O /tmp/xray.zip "${REPO}limit/xray.zip"
+else
+    wget -q -O /tmp/xray.zip "https://github.com/XTLS/Xray-core/releases/download/1.8.23/Xray-linux-${ARCH_XRAY}.zip" || \
+    wget -q -O /tmp/xray.zip "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH_XRAY}.zip"
+fi
+if [ -f /tmp/xray.zip ]; then
+    unzip -o /tmp/xray.zip -d /tmp/xray_ext/ >/dev/null 2>&1
+    mv -f /tmp/xray_ext/xray /usr/local/bin/xray 2>/dev/null || true
+    mv -f /tmp/xray_ext/*.dat /usr/local/share/xray/ 2>/dev/null || true
+    rm -rf /tmp/xray.zip /tmp/xray_ext
+fi
 if [ ! -f /usr/local/bin/xray ]; then
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.23 || true
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.23 || true
 fi
 chmod +x /usr/local/bin/xray
-    
+
 # Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
