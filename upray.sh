@@ -488,7 +488,7 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-
+#Service
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
