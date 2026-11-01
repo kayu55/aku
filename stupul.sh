@@ -93,12 +93,12 @@ sleep 2
 ###### IZIN SC 
 
 # // Checking Os Architecture
-if [[ $( uname -m | awk '{print $1}' ) == "x86_64" ]]; then
-    echo -e "${OK} Your Architecture Is Supported ( ${green}$( uname -m )${NC} )"
-else
-    echo -e "${EROR} Your Architecture Is Not Supported ( ${YELLOW}$( uname -m )${NC} )"
-    exit 1
-fi
+#if [[ $( uname -m | awk '{print $1}' ) == "x86_64" ]]; then
+#    echo -e "${OK} Your Architecture Is Supported ( ${green}$( uname -m )${NC} )"
+#else
+#    echo -e "${EROR} Your Architecture Is Not Supported ( ${YELLOW}$( uname -m )${NC} )"
+#    exit 1
+#fi
 
 # // Checking System
 if [[ $( cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g' ) == "ubuntu" ]]; then
