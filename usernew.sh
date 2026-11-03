@@ -6,10 +6,10 @@ cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
 domen=`cat /etc/xray/domain`
 else
-NS=$( cat /etc/xray/dns )
-PUB=$( cat /etc/slowdns/server.pub )
 domen=`cat /etc/v2ray/domain`
 fi
+NS=$( cat /etc/xray/dns )
+PUB=$( cat /etc/slowdns/server.pub )
 
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "\E[42;1;37m        Create SSH Account         \E[0m"
@@ -39,11 +39,13 @@ echo -e "Expired On : $exp 👍"
 echo -e "\033[0;34m══════════════════════════════════${NC}"
 #echo -e "IP         : $IP" 
 echo -e "Host       : $domen" 
-echo -e "OpenSSH    : $opensh"
-echo -e "Dropbear   : $db" 
+echo -e "OpenSSH    : 22"
+echo -e "Dropbear   : 109, 143" 
 echo -e "SSH-WS     : 80, 8080, 8880, 2082, 2086, 2052, 2095"
 echo -e "SSH WS SSL : 443, 8443, 2087, 2096, 2053, 2083 "
 echo -e "SSL/TLS    : 444, 445, 447, 777" 
+echo -e "Host Slowdns     : ${NS}"
+echo -e "Pub Key          : ${PUB}"
 echo -e "SSH AC    : $domen:443@$Login:$Pass"
 echo -e "UDPGW      : 7100-7300" 
 echo -e "\033[0;34m══════════════════════════════════${NC}"
@@ -69,8 +71,8 @@ echo -e "Created    : $hariini"
 echo -e "Expired On : $exp 👍" 
 echo -e "\033[0;34m══════════════════════════════════${NC}"
 echo -e "Host       : $domen" 
-echo -e "OpenSSH    : $opensh"
-echo -e "Dropbear   : $db" 
+echo -e "OpenSSH    : 22"
+echo -e "Dropbear   : 109, 143" 
 echo -e "SSH-WS     : 80, 8080, 8880, 2082, 2086, 2052, 2095"
 echo -e "SSH-SSL-WS : 443, 8443, 2087, 2096, 2053, 2083 "
 echo -e "SSL/TLS    : 444, 445, 447, 777" 

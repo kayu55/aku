@@ -1,31 +1,5 @@
 #!/bin/bash
 
-export TERM=xterm
-export DEBIAN_FRONTEND=noninteractive
-dpkg-reconfigure debconf -f noninteractive 2>/dev/null
-
-rm -f $0
-
-apt update -y
-apt upgrade -y
-apt install git -y
-apt install at -y
-apt install curl -y
-apt install wget -y
-apt install jq -y
-apt install lolcat -y
-apt install gem -y
-gem install lolcat -y
-apt install dos2unix -y
-apt install python -y
-apt install python3 -y
-apt install socat -y
-apt install netcat -y
-apt install netcat-traditional -y
-apt install netcat-openbsd -y
-apt install nodejs -y
-apt install npm && npm install -g pm2
-
 if [ "${EUID}" -ne 0 ]; then
 echo -e "${EROR} Please Run This Script As Root User !"
 exit 1
@@ -195,7 +169,7 @@ echo "$SUB_DOMAIN" > /etc/xray/domain
 echo "$SUB_DOMAIN" > /etc/v2ray/domain
 echo "$SUB_DOMAIN" > /etc/xray/scdomain
 echo "IP=$SUB_DOMAIN" > /var/scrz-prem/ipvps.conf
-
+rm -rf cf
 sleep 1
 yellow "Domain added.."
 sleep 3
@@ -281,24 +255,31 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn3.sh && chmod +x ssh-vpn3.sh && ./ssh-vpn3.sh
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh && chmod +x install-ws.sh && ./install-ws.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/iri.sh && chmod +x iri.sh && ./iri.sh
+echo -e "┌─────────────────────────────────────────┐"
+echo -e " \E[42;1;37m            >>> Install SlowDns <<<         \E[0m$NC"
+echo -e "└─────────────────────────────────────────┘"
+wget -q -O /tmp/nameserver "https://raw.githubusercontent.com/kayu55/aku/main/slowdns/nameserver"
+chmod +x /tmp/nameserver
+bash /tmp/nameserver
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
-echo -e " \E[42;1;37m           >>> Install Backup <<<           \E[0m$NC"
+echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh
-sleep 1
+sleep 2
 
+echo -e "${GREEN}Install File ..${NC}"
 echo -e "${GREEN}Download Data Menu${NC}"
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
+wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
 wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kayu55/aku/main/add-ws.sh"
 wget -q -O /usr/bin/trialvmess "https://raw.githubusercontent.com/kayu55/aku/main/trialvmess.sh"
 wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/kayu55/aku/main/add-vless.sh"
@@ -309,33 +290,32 @@ wget -q -O /usr/bin/autoreboot "https://raw.githubusercontent.com/kayu55/aku/mai
 wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kayu55/aku/main/options/restart.sh"
 wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/kayu55/aku/main/options/tendang.sh"
 wget -q -O /usr/bin/clearlog "https://raw.githubusercontent.com/kayu55/aku/main/options/clearlog.sh"
-wget -q -O /usr/bin/running "https://raw.githubusercontent.com/kayu55/aku/main/ssh/running.sh"
+wget -q -O /usr/bin/running "https://raw.githubusercontent.com/kayu55/aku/main/options/running.sh"
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/kayu55/aku/main/tools/speedtest_cli.py"
 wget -q -O /usr/bin/cek-bandwidth "https://raw.githubusercontent.com/kayu55/aku/main/options/cek-bandwidth.sh"
 wget -q -O /usr/bin/menu-vless "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-vless.sh"
 wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-vmess.sh"
 wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-trojan.sh"
-wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-ssh.sh"
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/menu-ssh.sh"
 wget -q -O /usr/bin/menu-backup "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-backup.sh"
-wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/opok/menu.sh"
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu.sh"
 wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
 wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
-wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
-wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
-wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/babi.sh"
-wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
-wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
-wget -q -O /usr/bin/cekudp "https://raw.githubusercontent.com/kayu55/aku/main/cekudp.sh"
-wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
+#wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
+#wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
+wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
+#wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
+#wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
 
-chmod +x /usr/bin/jam
-chmod +x /usr/bin/update-xray
+#chmod +x /usr/bin/jam
+#chmod +x /usr/bin/update-xray
 chmod +x /usr/bin/babi
 chmod +x /usr/bin/usernew
 chmod +x /usr/bin/trialssh
 chmod +x /usr/bin/add-ws
+chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/trialvmess
 chmod +x /usr/bin/add-vless
 chmod +x /usr/bin/trialvless
@@ -358,10 +338,6 @@ chmod +x /usr/bin/xp
 chmod +x /usr/bin/addhost
 chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
-chmod +x /usr/bin/info
-chmod +x /usr/bin/set-bw
-chmod +x /usr/bin/cekudp
-chmod +x /usr/bin/cekssh
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -381,7 +357,7 @@ END
 cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 2 * * * root /usr/bin/xp
+0 23 * * * root /usr/bin/xp
 END
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -391,8 +367,6 @@ END
 cat > /home/re_otm <<-END
 7
 END
-
-# === Restart Cron Service ===
 service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
 clear
@@ -416,7 +390,16 @@ fi
 if [ ! -f "/etc/log-create-user.log" ]; then
 echo "Log All Account " > /etc/log-create-user.log
 fi
-
+#history -c
+#echo $serverV > /opt/.ver
+#aureb=$(cat /home/re_otm)
+#b=11
+#$if [ $aureb -gt $b ]
+#then
+#gg="PM"
+#else
+#gg="AM"
+#fi
 curl -sS ifconfig.me > /etc/myipvps
 
 #install gotop
@@ -425,41 +408,6 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     curl -sL "$gotop_link" -o /tmp/gotop.deb
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
-# memory swap 1gb
-cd
-dd if=/dev/zero of=/swapfile bs=1024 count=1048576
-mkswap /swapfile
-chown root:root /swapfile
-chmod 0600 /swapfile >/dev/null 2>&1
-swapon /swapfile >/dev/null 2>&1
-sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
-
-
-echo -e " Memasang Swap 2 GB"
-
-    # Mengambil versi terbaru gotop
-gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v${gotop_latest}_linux_amd64.deb"
-
-    # Download & install gotop
-curl -sL "$gotop_link" -o /tmp/gotop.deb
-dpkg -i /tmp/gotop.deb >/dev/null 2>&1
-
-    # Membuat swap file 2GB
-dd if=/dev/zero of=/swapfile bs=1M count=2048
-mkswap /swapfile
-chown root:root /swapfile
-chmod 0600 /swapfile
-swapon /swapfile >/dev/null 2>&1
-
-# Tambahkan swap ke fstab agar aktif saat boot
-sed -i '$ i\/swapfile swap swap defaults 0 0' /etc/fstab
-
-# Sinkronisasi waktu dengan server Indonesia
-chronyd -q 'server 0.id.pool.ntp.org iburst'
-chronyc sourcestats -v
-chronyc tracking -v
-
 clear
 echo  ""
 echo  "Sukses Sayank..!!"
@@ -468,10 +416,10 @@ echo ""
 echo "===============-[ Script By Arya Blitar ]-==============="
 echo ""
 echo  "   >>> Service & Port"  | tee -a log-install.txt
-echo  "   - OpenSSH                 : 22, 2253"  | tee -a log-install.txt
+echo  "   - OpenSSH                 : 22"  | tee -a log-install.txt
 echo  "   - SSH Websocket           : 80" | tee -a log-install.txt
 echo  "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo  "   - Stunnel5                : 444, 445, 447, 777" | tee -a log-install.txt
+echo  "   - Stunnel5                : 445, 447, 777" | tee -a log-install.txt
 echo  "   - Dropbear                : 109, 143" | tee -a log-install.txt
 echo  "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
 echo  "   - Nginx                   : 81" | tee -a log-install.txt
@@ -481,6 +429,7 @@ echo  "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
 echo  "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
 echo  "   - Trojan GRPC             : 443" | tee -a log-install.txt
 echo  "   - Trojan WS               : 443" | tee -a log-install.txt
+#echo  "   - Sodosok WS/GRPC         : 443, 8443, 2087, 2096" | tee -a log-install.txt
 echo  ""  | tee -a log-install.txt
 echo  "   >>> Server Information & Other Features"  | tee -a log-install.txt
 echo  "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
@@ -489,7 +438,7 @@ echo  "   - Dflate                  : [ON]"  | tee -a log-install.txt
 echo  "   - IPtables                : [ON]"  | tee -a log-install.txt
 echo  "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
 echo  "   - Autoreboot              : 05.00 GMT +7" | tee -a log-install.txt
-echo  "   - AutoBackup              : 01.00 GMT +7" | tee -a log-install.txt
+echo  "   - AutoBackup             : 01.00 GMT +7" | tee -a log-install.txt
 echo  "   - AutoKill Multi Login User" | tee -a log-install.txt
 echo  "   - Auto Delete Expired Account" | tee -a log-install.txt
 echo  "   - Fully automatic script" | tee -a log-install.txt
@@ -504,10 +453,9 @@ echo -e "Wa Me +6281931615811"
 echo  ""
 echo  "" | tee -a log-install.txt
 rm -fr /root/vnstat.sh
-rm -fr /root/install-ws.sh
-rm -fr /root/ssh-vpn3.sh
+rm -fr /root/ssh-vpn.sh
 rm -fr /root/ins-xray.sh
-rm -fr /root/setup3.sh
+rm -fr /root/setup.sh
 rm -fr /root/set-br.sh
 rm -fr /root/domain
 history -c
