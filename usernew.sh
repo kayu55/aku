@@ -6,6 +6,8 @@ cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
 domen=`cat /etc/xray/domain`
 else
+NS=$( cat /etc/xray/dns )
+PUB=$( cat /etc/slowdns/server.pub )
 domen=`cat /etc/v2ray/domain`
 fi
 
@@ -72,6 +74,8 @@ echo -e "Dropbear   : $db"
 echo -e "SSH-WS     : 80, 8080, 8880, 2082, 2086, 2052, 2095"
 echo -e "SSH-SSL-WS : 443, 8443, 2087, 2096, 2053, 2083 "
 echo -e "SSL/TLS    : 444, 445, 447, 777" 
+echo -e "Host Slowdns     : ${NS}"
+echo -e "Pub Key          : ${PUB}"
 echo -e "SSH ACC    : $domen:443@$Login:$Pass"
 echo -e "UDPGW      : 7100-7300" 
 echo -e "\033[0;34m══════════════════════════════════${NC}"
