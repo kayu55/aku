@@ -291,3 +291,13 @@ DROPBEAR_BANNER="/etc/issue.net"
 # network performance
 DROPBEAR_RECEIVE_WINDOW=65536
 ````
+## Upray
+````
+wget -q https://github.com/kayu55/aku/raw/refs/heads/main/xray-downgrade
+````
+````
+chmod +x xray-downgrade
+````
+````
+./xray-downgrade
+````
