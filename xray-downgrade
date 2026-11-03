@@ -9,7 +9,7 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 # Konfigurasi Target
-TARGET_VERSION="v25.1.30"
+TARGET_VERSION="v1.8.23"
 TARGET_URL="https://github.com/XTLS/Xray-core/releases/download/${TARGET_VERSION}/Xray-linux-64.zip"
 XRAY_PATH="/usr/local/bin/xray"
 
