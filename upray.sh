@@ -147,11 +147,13 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
 #intall vray 
-if [ ! -f /usr/local/bin/xray ]; then
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.23 || true
-fi
-chmod +x /usr/local/bin/xray
-    
+echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
+echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
+echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
+echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
+mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
+
 # Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
@@ -222,9 +224,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /' /etc/nginx/conf.d/xray.conf
-sed -i '$http_upgrade != "Upgrade' /etc/nginx/conf.d/xray.conf
-sed -i 'rewrite /(.*) /vmess break' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -306,16 +306,13 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "ws",
-        "wsSettings": {
-          "path": "/vless",
-          "alpn": [
-            "h2",
-            "http/1.1"
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vless"
           }
         }
      },
@@ -329,16 +326,13 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "ws",
-        "wsSettings": {
-          "path": "/",
-          "alpn": [
-            "h2",
-            "http/1.1"
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vmess"
           }
         }
      },
@@ -352,16 +346,6 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "ws",
-        "wsSettings": {
-          "path": "/trojan",
-          "alpn": [
-            "h2",
-            "http/1.1"
               }
           ],
          "udp": true
@@ -382,17 +366,14 @@ cat <<EOF> /etc/xray/config.json
            "clients": [
              {
                "id": "${uuid}"
-#vless-grpc
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "vless-grpc",
-          "alpn": [
-            "h2",
-            "http/1.1"
+#vlessgrpc
+             }
+          ]
+       },
+          "streamSettings":{
+             "network": "grpc",
+             "grpcSettings": {
+                "serviceName": "vless-grpc"
            }
         }
      },
@@ -405,17 +386,14 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}",
                  "alterId": 0
-#vmess-grpc
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "vmess-grpc",
-          "alpn": [
-            "h2",
-            "http/1.1"
+#vmessgrpc
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "grpc",
+            "grpcSettings": {
+                "serviceName": "vmess-grpc"
           }
         }
      },
@@ -429,17 +407,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
-          }
-        ],
-        "udp": true
-      },
-      "streamSettings":{
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "trojan-grpc",
-          "alpn": [
-            "h2",
-            "http/1.1"
                }
            ]
         },
@@ -523,7 +490,20 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-#Service
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
+# ╚══════════════════════════════════════════════════════════════╝
+echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
+    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
+    exit 1
+fi
+if [ ! -x /usr/local/bin/xray ]; then
+    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
+    exit 1
+fi
+/usr/local/bin/xray version || exit 1
+
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
