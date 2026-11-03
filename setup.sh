@@ -260,7 +260,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/iri.sh && chmod +x iri.sh && ./iri.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
@@ -271,10 +271,10 @@ sleep 2
 
 echo -e "${GREEN}Install File ..${NC}"
 echo -e "${GREEN}Download Data Menu${NC}"
-wget -q -O /usr/bin/create_ssh "https://raw.githubusercontent.com/kayu55/aku/main/create_ssh.sh"
+wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
 wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
-wget -q -O /usr/bin/create_vmess "https://raw.githubusercontent.com/kayu55/aku/main/create_vmess.sh"
+wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kayu55/aku/main/add-ws.sh"
 wget -q -O /usr/bin/trialvmess "https://raw.githubusercontent.com/kayu55/aku/main/trialvmess.sh"
 wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/kayu55/aku/main/add-vless.sh"
 wget -q -O /usr/bin/trialvless "https://raw.githubusercontent.com/kayu55/aku/main/trialvless.sh"
@@ -294,7 +294,6 @@ wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/kayu55/aku/main/
 wget -q -O /usr/bin/menu-backup "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-backup.sh"
 wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu.sh"
 wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
-wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/kayu55/aku/main/autodel.sh"
 wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
@@ -307,9 +306,9 @@ wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/
 #chmod +x /usr/bin/jam
 #chmod +x /usr/bin/update-xray
 chmod +x /usr/bin/babi
-chmod +x /usr/bin/create_ssh
+chmod +x /usr/bin/usernew
 chmod +x /usr/bin/trialssh
-chmod +x /usr/bin/create_vmess
+chmod +x /usr/bin/add-ws
 chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/trialvmess
 chmod +x /usr/bin/add-vless
@@ -330,7 +329,6 @@ chmod +x /usr/bin/menu-ssh
 chmod +x /usr/bin/menu-backup
 chmod +x /usr/bin/menu
 chmod +x /usr/bin/xp
-chmod +x /usr/bin/autodel
 chmod +x /usr/bin/addhost
 chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
@@ -354,11 +352,6 @@ cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0 23 * * * root /usr/bin/xp
-END
-cat > /etc/cron.d/auto_otm <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 23 * * * root /usr/bin/autodel
 END
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
@@ -439,7 +432,7 @@ echo  "   - Dflate                  : [ON]"  | tee -a log-install.txt
 echo  "   - IPtables                : [ON]"  | tee -a log-install.txt
 echo  "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
 echo  "   - Autoreboot              : 05.00 GMT +7" | tee -a log-install.txt
-echo  "   - AutoBackup              : 01.00 GMT +7" | tee -a log-install.txt
+echo  "   - AutoBackup             : 01.00 GMT +7" | tee -a log-install.txt
 echo  "   - AutoKill Multi Login User" | tee -a log-install.txt
 echo  "   - Auto Delete Expired Account" | tee -a log-install.txt
 echo  "   - Fully automatic script" | tee -a log-install.txt
