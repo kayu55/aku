@@ -306,8 +306,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
-### EvaVL982 2026-11-14
-},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -328,22 +326,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### MadurVM056 2026-12-06
-},{"id": "dedc8138-9a6a-4a0a-a4e4-e5c8e98a0994","alterId": 0,"email": "MadurVM056"
-### opokVM002 2026-12-04
-},{"id": "feb891c8-82f1-4d2e-aa11-027b61a75297","alterId": 0,"email": "opokVM002"
-### tujuhVM267 2026-11-09
-},{"id": "b94b9b7f-a6f9-475e-8500-ebc89040a36a","alterId": 0,"email": "tujuhVM267"
-### siapVM970 2026-11-29
-},{"id": "fdd06552-d62d-47b3-ba1f-bb1b88093f2e","alterId": 0,"email": "siapVM970"
-### xnnVM209 2026-12-04
-},{"id": "09b5b2e3-74eb-4ff1-8784-f000183537e9","alterId": 0,"email": "xnnVM209"
-### DoneVM771 2026-11-28
-},{"id": "7a0c758a-d2f8-49f8-88c1-61c874d5ff0b","alterId": 0,"email": "DoneVM771"
-### FlixVM202 2026-11-28
-},{"id": "7d51bb7e-14cf-45dd-870c-6e2e4b6bc080","alterId": 0,"email": "FlixVM202"
-### KoirulVM780 2026-11-21
-},{"id": "85188783-cc7a-46b9-98ff-0be800aa6251","alterId": 0,"email": "KoirulVM780"
+### MalasVM321 2026-11-21
+},{"id": "339b53f6-159b-494b-abbf-8108aff3b2e4","alterId": 0,"email": "MalasVM321"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
+### ilp3 2026-11-18
+},{"id": "c929f3e7-5e4b-454a-9986-001aaba2788f","alterId": 0,"email": "ilp3"
+### ahm4di 2026-11-07
+},{"id": "fe77882a-0f35-4906-93ae-425210964217","alterId": 0,"email": "ahm4di"
              }
           ]
        },
@@ -385,8 +379,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### EvaVL982 2026-11-14
-},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -407,22 +399,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### MadurVM056 2026-12-06
-},{"id": "dedc8138-9a6a-4a0a-a4e4-e5c8e98a0994","alterId": 0,"email": "MadurVM056"
-### opokVM002 2026-12-04
-},{"id": "feb891c8-82f1-4d2e-aa11-027b61a75297","alterId": 0,"email": "opokVM002"
-### tujuhVM267 2026-11-09
-},{"id": "b94b9b7f-a6f9-475e-8500-ebc89040a36a","alterId": 0,"email": "tujuhVM267"
-### siapVM970 2026-11-29
-},{"id": "fdd06552-d62d-47b3-ba1f-bb1b88093f2e","alterId": 0,"email": "siapVM970"
-### xnnVM209 2026-12-04
-},{"id": "09b5b2e3-74eb-4ff1-8784-f000183537e9","alterId": 0,"email": "xnnVM209"
-### DoneVM771 2026-11-28
-},{"id": "7a0c758a-d2f8-49f8-88c1-61c874d5ff0b","alterId": 0,"email": "DoneVM771"
-### FlixVM202 2026-11-28
-},{"id": "7d51bb7e-14cf-45dd-870c-6e2e4b6bc080","alterId": 0,"email": "FlixVM202"
-### KoirulVM780 2026-11-21
-},{"id": "85188783-cc7a-46b9-98ff-0be800aa6251","alterId": 0,"email": "KoirulVM780"
+### MalasVM321 2026-11-21
+},{"id": "339b53f6-159b-494b-abbf-8108aff3b2e4","alterId": 0,"email": "MalasVM321"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
+### ilp3 2026-11-18
+},{"id": "c929f3e7-5e4b-454a-9986-001aaba2788f","alterId": 0,"email": "ilp3"
+### ahm4di 2026-11-07
+},{"id": "fe77882a-0f35-4906-93ae-425210964217","alterId": 0,"email": "ahm4di"
              }
           ]
        },
