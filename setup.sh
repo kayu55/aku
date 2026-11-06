@@ -271,14 +271,10 @@ sleep 2
 
 echo -e "${GREEN}Install File ..${NC}"
 echo -e "${GREEN}Download Data Menu${NC}"
-wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kayu55/aku/main/usernew.sh"
 wget -q -O /usr/bin/trialssh "https://raw.githubusercontent.com/kayu55/aku/main/trialssh.sh"
 wget -q -O /usr/bin/cekssh "https://raw.githubusercontent.com/kayu55/aku/main/cekssh.sh"
-wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kayu55/aku/main/add-ws.sh"
 wget -q -O /usr/bin/trialvmess "https://raw.githubusercontent.com/kayu55/aku/main/trialvmess.sh"
-wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/kayu55/aku/main/add-vless.sh"
 wget -q -O /usr/bin/trialvless "https://raw.githubusercontent.com/kayu55/aku/main/trialvless.sh"
-wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/kayu55/aku/main/add-tr.sh"
 wget -q -O /usr/bin/trialtrojan "https://raw.githubusercontent.com/kayu55/aku/main/trialtrojan.sh"
 wget -q -O /usr/bin/autoreboot "https://raw.githubusercontent.com/kayu55/aku/main/options/autoreboot.sh"
 wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kayu55/aku/main/options/restart.sh"
@@ -297,23 +293,21 @@ wget -q -O /usr/bin/xp "https://raw.githubusercontent.com/kayu55/aku/main/xp.sh"
 wget -q -O /usr/bin/addhost "https://raw.githubusercontent.com/kayu55/aku/main/menu/addhost.sh"
 wget -q -O /usr/bin/certxray "https://raw.githubusercontent.com/kayu55/aku/main/menu/cf.sh"
 wget -q -O /usr/bin/menu-set "https://raw.githubusercontent.com/kayu55/aku/main/menu/menu-set.sh"
-#wget -q -O /usr/bin/info "https://raw.githubusercontent.com/kayu55/aku/main/options/info.sh"
-#wget -q -O /usr/bin/jam "https://raw.githubusercontent.com/kayu55/aku/main/tools/jam.sh"
+wget -q -O /usr/bin/create_vmess "https://raw.githubusercontent.com/kayu55/aku/main/create_vmess.sh"
+wget -q -O /usr/bin/create_vless "https://raw.githubusercontent.com/kayu55/aku/main/create_vless.sh"
 wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
-#wget -q -O /usr/bin/update-xray "https://raw.githubusercontent.com/kayu55/aku/main/tools/update-xray.sh"
-#wget -q -O /usr/bin/set-bw "https://raw.githubusercontent.com/kayu55/aku/main/options/set-bw.sh"
+wget -q -O /usr/bin/create_trojan "https://raw.githubusercontent.com/kayu55/aku/main/create_trojan.sh"
+wget -q -O /usr/bin/create_ssh "https://raw.githubusercontent.com/kayu55/aku/main/create_ssh.sh"
 
-#chmod +x /usr/bin/jam
-#chmod +x /usr/bin/update-xray
+chmod +x /usr/bin/create_vmess
+chmod +x /usr/bin/create_vless
+chmod +x /usr/bin/create_trojan
+chmod +x /usr/bin/create_ssh
 chmod +x /usr/bin/babi
-chmod +x /usr/bin/usernew
 chmod +x /usr/bin/trialssh
-chmod +x /usr/bin/add-ws
 chmod +x /usr/bin/cekssh
 chmod +x /usr/bin/trialvmess
-chmod +x /usr/bin/add-vless
 chmod +x /usr/bin/trialvless
-chmod +x /usr/bin/add-tr
 chmod +x /usr/bin/trialtrojan
 chmod +x /usr/bin/autoreboot
 chmod +x /usr/bin/restart
