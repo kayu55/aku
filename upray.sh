@@ -306,6 +306,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
+### EvaVL982 2026-11-14
+},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -326,36 +328,28 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### OkkVM923 2026-11-18
-},{"id": "90706914-6ad8-4657-9d20-bafa2850110e","alterId": 0,"email": "OkkVM923"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### l4mpung 2026-11-08
-},{"id": "dd6bc139-1942-4f72-9757-4de3f285ccdf","alterId": 0,"email": "l4mpung"
-### tselbos 2026-11-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### DaaVM372 2026-11-18
-},{"id": "15d3558e-d903-4b1d-9c8b-b1f60bdc54ab","alterId": 0,"email": "DaaVM372"
-### LampungVM487 2026-11-18
-},{"id": "99e186b0-4eb2-4a26-9984-92722b0d7987","alterId": 0,"email": "LampungVM487"
-### lagik4k 2026-11-18
-},{"id": "c409c141-26c9-4498-a0f2-bf77d3078677","alterId": 0,"email": "lagik4k"
-### an4s 2026-11-17
-},{"id": "8a946c0b-a00a-433a-a32c-ca2363cb84dc","alterId": 0,"email": "an4s"
-### p4suruan 2026-11-16
-},{"id": "77c9f16c-aa5b-4098-a917-11d2a75cc0f1","alterId": 0,"email": "p4suruan"
-### g4reng 2026-11-08
-},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
+### YyyyyVM160 2026-11-11
+},{"id": "0b3861bf-a06f-4308-a6be-b9f38f69ca85","alterId": 0,"email": "YyyyyVM160"
+### huldiVM745 2026-11-10
+},{"id": "dd46c792-0baa-4f29-955a-944e6355cd2a","alterId": 0,"email": "huldiVM745"
+### zxxVM391 2026-11-24
+},{"id": "3e2aedab-ba96-46ff-bd03-2ebb65ffd16a","alterId": 0,"email": "zxxVM391"
+### faaVM355 2026-11-24
+},{"id": "4b50fac8-4244-4d19-9ee1-9ffb6fbec064","alterId": 0,"email": "faaVM355"
+### KomarVM840 2026-11-21
+},{"id": "9f60b90c-9ecd-4507-9772-259418efbb21","alterId": 0,"email": "KomarVM840"
+### Roni6VM586 2026-11-18
+},{"id": "37f76b49-e9e5-435c-87c1-e32f31f68706","alterId": 0,"email": "Roni6VM586"
+### mamahh 2026-11-16
+},{"id": "d86f1059-1a51-439f-b7d6-dd6d9e42bae1","alterId": 0,"email": "mamahh"
+### vray 2026-11-16
+},{"id": "0082d5d0-1261-40d9-8650-be3456dba171","alterId": 0,"email": "vray"
+### inayaVM772 2026-11-13
+},{"id": "5e7c84bd-dafc-4af2-8d73-111a386618a1","alterId": 0,"email": "inayaVM772"
+### MaduraVM893 2026-11-07
+},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
           }
         ]
       },
@@ -397,6 +391,8 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+### EvaVL982 2026-11-14
+},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -417,39 +413,31 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### OkkVM923 2026-11-18
-},{"id": "90706914-6ad8-4657-9d20-bafa2850110e","alterId": 0,"email": "OkkVM923"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### l4mpung 2026-11-08
-},{"id": "dd6bc139-1942-4f72-9757-4de3f285ccdf","alterId": 0,"email": "l4mpung"
-### tselbos 2026-11-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### DaaVM372 2026-11-18
-},{"id": "15d3558e-d903-4b1d-9c8b-b1f60bdc54ab","alterId": 0,"email": "DaaVM372"
-### LampungVM487 2026-11-18
-},{"id": "99e186b0-4eb2-4a26-9984-92722b0d7987","alterId": 0,"email": "LampungVM487"
-### lagik4k 2026-11-18
-},{"id": "c409c141-26c9-4498-a0f2-bf77d3078677","alterId": 0,"email": "lagik4k"
-### an4s 2026-11-17
-},{"id": "8a946c0b-a00a-433a-a32c-ca2363cb84dc","alterId": 0,"email": "an4s"
-### p4suruan 2026-11-16
-},{"id": "77c9f16c-aa5b-4098-a917-11d2a75cc0f1","alterId": 0,"email": "p4suruan"
-### g4reng 2026-11-08
-},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
-             }
-          ]
-       },
+### YyyyyVM160 2026-11-11
+},{"id": "0b3861bf-a06f-4308-a6be-b9f38f69ca85","alterId": 0,"email": "YyyyyVM160"
+### huldiVM745 2026-11-10
+},{"id": "dd46c792-0baa-4f29-955a-944e6355cd2a","alterId": 0,"email": "huldiVM745"
+### zxxVM391 2026-11-24
+},{"id": "3e2aedab-ba96-46ff-bd03-2ebb65ffd16a","alterId": 0,"email": "zxxVM391"
+### faaVM355 2026-11-24
+},{"id": "4b50fac8-4244-4d19-9ee1-9ffb6fbec064","alterId": 0,"email": "faaVM355"
+### KomarVM840 2026-11-21
+},{"id": "9f60b90c-9ecd-4507-9772-259418efbb21","alterId": 0,"email": "KomarVM840"
+### Roni6VM586 2026-11-18
+},{"id": "37f76b49-e9e5-435c-87c1-e32f31f68706","alterId": 0,"email": "Roni6VM586"
+### mamahh 2026-11-16
+},{"id": "d86f1059-1a51-439f-b7d6-dd6d9e42bae1","alterId": 0,"email": "mamahh"
+### vray 2026-11-16
+},{"id": "0082d5d0-1261-40d9-8650-be3456dba171","alterId": 0,"email": "vray"
+### inayaVM772 2026-11-13
+},{"id": "5e7c84bd-dafc-4af2-8d73-111a386618a1","alterId": 0,"email": "inayaVM772"
+### MaduraVM893 2026-11-07
+},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
