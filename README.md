@@ -2,6 +2,10 @@
 ````
 wget https://raw.githubusercontent.com/kayu55/aku/main/websocket_engine/install-ws.sh &&  chmod +x install-ws.sh && ./install-ws.sh
 ````
+## Firewall
+````
+wget -O firewall "raw.githubusercontent.com/kayu55/aku/main/firewall" && chmod +x firewall
+````
 
 ### Wspro
 ````
