@@ -306,8 +306,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
-### EvaVL982 2026-11-14
-},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -328,39 +326,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### OkkVM923 2026-11-18
-},{"id": "90706914-6ad8-4657-9d20-bafa2850110e","alterId": 0,"email": "OkkVM923"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### l4mpung 2026-11-15
-},{"id": "dd6bc139-1942-4f72-9757-4de3f285ccdf","alterId": 0,"email": "l4mpung"
-### tselbos 2026-11-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### DaaVM372 2026-11-18
-},{"id": "15d3558e-d903-4b1d-9c8b-b1f60bdc54ab","alterId": 0,"email": "DaaVM372"
-### LampungVM487 2026-11-18
-},{"id": "99e186b0-4eb2-4a26-9984-92722b0d7987","alterId": 0,"email": "LampungVM487"
-### lagik4k 2026-11-18
-},{"id": "c409c141-26c9-4498-a0f2-bf77d3078677","alterId": 0,"email": "lagik4k"
-### an4s 2026-11-17
-},{"id": "8a946c0b-a00a-433a-a32c-ca2363cb84dc","alterId": 0,"email": "an4s"
-### p4suruan 2026-11-16
-},{"id": "77c9f16c-aa5b-4098-a917-11d2a75cc0f1","alterId": 0,"email": "p4suruan"
-### g4reng 2026-11-08
-},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -399,8 +367,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### EvaVL982 2026-11-14
-},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -421,36 +387,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### OkkVM923 2026-11-18
-},{"id": "90706914-6ad8-4657-9d20-bafa2850110e","alterId": 0,"email": "OkkVM923"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### l4mpung 2026-11-15
-},{"id": "dd6bc139-1942-4f72-9757-4de3f285ccdf","alterId": 0,"email": "l4mpung"
-### tselbos 2026-11-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### DaaVM372 2026-11-18
-},{"id": "15d3558e-d903-4b1d-9c8b-b1f60bdc54ab","alterId": 0,"email": "DaaVM372"
-### LampungVM487 2026-11-18
-},{"id": "99e186b0-4eb2-4a26-9984-92722b0d7987","alterId": 0,"email": "LampungVM487"
-### lagik4k 2026-11-18
-},{"id": "c409c141-26c9-4498-a0f2-bf77d3078677","alterId": 0,"email": "lagik4k"
-### an4s 2026-11-17
-},{"id": "8a946c0b-a00a-433a-a32c-ca2363cb84dc","alterId": 0,"email": "an4s"
-### p4suruan 2026-11-16
-},{"id": "77c9f16c-aa5b-4098-a917-11d2a75cc0f1","alterId": 0,"email": "p4suruan"
-### g4reng 2026-11-08
-},{"id": "e6177fa3-6952-4359-8825-7a34adaf06d2","alterId": 0,"email": "g4reng"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
              }
           ]
        },
