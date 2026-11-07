@@ -328,31 +328,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### YyyyyVM160 2026-11-11
-},{"id": "0b3861bf-a06f-4308-a6be-b9f38f69ca85","alterId": 0,"email": "YyyyyVM160"
-### huldiVM745 2026-11-10
-},{"id": "dd46c792-0baa-4f29-955a-944e6355cd2a","alterId": 0,"email": "huldiVM745"
-### zxxVM391 2026-11-24
-},{"id": "3e2aedab-ba96-46ff-bd03-2ebb65ffd16a","alterId": 0,"email": "zxxVM391"
-### faaVM355 2026-11-24
-},{"id": "4b50fac8-4244-4d19-9ee1-9ffb6fbec064","alterId": 0,"email": "faaVM355"
-### KomarVM840 2026-11-21
-},{"id": "9f60b90c-9ecd-4507-9772-259418efbb21","alterId": 0,"email": "KomarVM840"
-### Roni6VM586 2026-11-18
-},{"id": "37f76b49-e9e5-435c-87c1-e32f31f68706","alterId": 0,"email": "Roni6VM586"
-### mamahh 2026-11-16
-},{"id": "d86f1059-1a51-439f-b7d6-dd6d9e42bae1","alterId": 0,"email": "mamahh"
-### vray 2026-11-16
-},{"id": "0082d5d0-1261-40d9-8650-be3456dba171","alterId": 0,"email": "vray"
-### inayaVM772 2026-11-13
-},{"id": "5e7c84bd-dafc-4af2-8d73-111a386618a1","alterId": 0,"email": "inayaVM772"
-### MaduraVM893 2026-11-07
-},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
-### s4m 2026-11-30
-},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
-          }
-        ]
-      },
+### MalasVM321 2026-11-21
+},{"id": "339b53f6-159b-494b-abbf-8108aff3b2e4","alterId": 0,"email": "MalasVM321"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
+### ilp3 2026-11-18
+},{"id": "c929f3e7-5e4b-454a-9986-001aaba2788f","alterId": 0,"email": "ilp3"
+### ahm4di 2026-11-07
+},{"id": "fe77882a-0f35-4906-93ae-425210964217","alterId": 0,"email": "ahm4di"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -413,31 +403,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### YyyyyVM160 2026-11-11
-},{"id": "0b3861bf-a06f-4308-a6be-b9f38f69ca85","alterId": 0,"email": "YyyyyVM160"
-### huldiVM745 2026-11-10
-},{"id": "dd46c792-0baa-4f29-955a-944e6355cd2a","alterId": 0,"email": "huldiVM745"
-### zxxVM391 2026-11-24
-},{"id": "3e2aedab-ba96-46ff-bd03-2ebb65ffd16a","alterId": 0,"email": "zxxVM391"
-### faaVM355 2026-11-24
-},{"id": "4b50fac8-4244-4d19-9ee1-9ffb6fbec064","alterId": 0,"email": "faaVM355"
-### KomarVM840 2026-11-21
-},{"id": "9f60b90c-9ecd-4507-9772-259418efbb21","alterId": 0,"email": "KomarVM840"
-### Roni6VM586 2026-11-18
-},{"id": "37f76b49-e9e5-435c-87c1-e32f31f68706","alterId": 0,"email": "Roni6VM586"
-### mamahh 2026-11-16
-},{"id": "d86f1059-1a51-439f-b7d6-dd6d9e42bae1","alterId": 0,"email": "mamahh"
-### vray 2026-11-16
-},{"id": "0082d5d0-1261-40d9-8650-be3456dba171","alterId": 0,"email": "vray"
-### inayaVM772 2026-11-13
-},{"id": "5e7c84bd-dafc-4af2-8d73-111a386618a1","alterId": 0,"email": "inayaVM772"
-### MaduraVM893 2026-11-07
-},{"id": "586a6165-2f2f-46f9-82bb-9b77bc55b810","alterId": 0,"email": "MaduraVM893"
-### s4m 2026-11-30
-},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
-          }
-        ]
-      },
+### MalasVM321 2026-11-21
+},{"id": "339b53f6-159b-494b-abbf-8108aff3b2e4","alterId": 0,"email": "MalasVM321"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
+### ilp3 2026-11-18
+},{"id": "c929f3e7-5e4b-454a-9986-001aaba2788f","alterId": 0,"email": "ilp3"
+### ahm4di 2026-11-07
+},{"id": "fe77882a-0f35-4906-93ae-425210964217","alterId": 0,"email": "ahm4di"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
