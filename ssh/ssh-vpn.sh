@@ -422,7 +422,11 @@ chmod 0600 /swapfile >/dev/null 2>&1
 swapon /swapfile >/dev/null 2>&1
 sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
-
+# install fail2ban
+apt -y install fail2ban
+sudo systemctl enable --now fail2ban
+/etc/init.d/fail2ban restart
+/etc/init.d/fail2ban status
 # install ddos
 rm -fr /usr/local/ddos
 mkdir -p /usr/local/ddos >/dev/null 2>&1
@@ -474,6 +478,18 @@ sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
 sudo netfilter-persistent reload >/dev/null 2>&1
 
+#ip tables
+echo "/bin/false" >>/etc/shells
+echo "/usr/sbin/nologin" >>/etc/shells
+cat >/etc/rc.local <<EOF
+#!/bin/sh -e
+# rc.local
+# By default this script does nothing.
+iptables -I INPUT -p udp --dport 5300 -j ACCEPT
+iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
+systemctl restart netfilter-persistent
+exit 0
+EOF
 
 # remove unnecessary files
 sleep 1
