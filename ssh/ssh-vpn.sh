@@ -220,9 +220,9 @@ systemctl start rc-local.service >/dev/null 2>&1
 systemctl restart rc-local.service >/dev/null 2>&1
 
 # /etc/ssh/sshd_config
-sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
-echo "Port 22" >> /etc/ssh/sshd_config
+sed -i 's/Port 2222/Port 2222/g' /etc/ssh/sshd_config
+sed -i '/Port 2222/a Port 2253' /etc/ssh/sshd_config
+echo "Port 2222" >> /etc/ssh/sshd_config
 echo "Port 40000" >> /etc/ssh/sshd_config
 echo "X11Forwarding yes" >> /etc/ssh/sshd_config
 echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
@@ -478,18 +478,6 @@ sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
 sudo netfilter-persistent reload >/dev/null 2>&1
 
-#ip tables
-echo "/bin/false" >>/etc/shells
-echo "/usr/sbin/nologin" >>/etc/shells
-cat >/etc/rc.local <<EOF
-#!/bin/sh -e
-# rc.local
-# By default this script does nothing.
-iptables -I INPUT -p udp --dport 5300 -j ACCEPT
-iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
-systemctl restart netfilter-persistent
-exit 0
-EOF
 
 # remove unnecessary files
 sleep 1
