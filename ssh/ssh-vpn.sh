@@ -220,9 +220,9 @@ systemctl start rc-local.service >/dev/null 2>&1
 systemctl restart rc-local.service >/dev/null 2>&1
 
 # /etc/ssh/sshd_config
-sed -i 's/Port 2222/Port 2222/g' /etc/ssh/sshd_config
-sed -i '/Port 2222/a Port 2253' /etc/ssh/sshd_config
-echo "Port 2222" >> /etc/ssh/sshd_config
+sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
+echo "Port 22" >> /etc/ssh/sshd_config
 echo "Port 40000" >> /etc/ssh/sshd_config
 echo "X11Forwarding yes" >> /etc/ssh/sshd_config
 echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
@@ -422,11 +422,7 @@ chmod 0600 /swapfile >/dev/null 2>&1
 swapon /swapfile >/dev/null 2>&1
 sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
-# install fail2ban
-apt -y install fail2ban
-sudo systemctl enable --now fail2ban
-/etc/init.d/fail2ban restart
-/etc/init.d/fail2ban status
+
 # install ddos
 rm -fr /usr/local/ddos
 mkdir -p /usr/local/ddos >/dev/null 2>&1
