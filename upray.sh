@@ -325,6 +325,14 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
+### EvaVL985 2026-12-07
+},{"id": "bfb0706f-c391-42f9-a2a2-ee79eb45bbef","email": "EvaVL985"
+### YoanVL270 2026-12-07
+},{"id": "4036c937-10a3-4802-9531-fd0f45e0d0a0","email": "YoanVL270"
+### NonyVL027 2026-12-05
+},{"id": "d06877ab-4f89-4352-9bd5-260156c7cad5","email": "NonyVL027"
+### DennyVL914 2026-11-25
+},{"id": "82666bae-c256-4636-a1c4-90bb428eb39b","email": "DennyVL914"
              }
           ]
        },
@@ -345,39 +353,25 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### y33 2026-12-08
-},{"id": "742a82de-66bb-4299-ab00-71a9f6a909e5","alterId": 0,"email": "y33"
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### OkkVM923 2026-11-18
-},{"id": "90706914-6ad8-4657-9d20-bafa2850110e","alterId": 0,"email": "OkkVM923"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### l4mpung 2026-11-15
-},{"id": "dd6bc139-1942-4f72-9757-4de3f285ccdf","alterId": 0,"email": "l4mpung"
-### tselbos 2026-11-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### DaaVM372 2026-11-18
-},{"id": "15d3558e-d903-4b1d-9c8b-b1f60bdc54ab","alterId": 0,"email": "DaaVM372"
-### LampungVM487 2026-11-18
-},{"id": "99e186b0-4eb2-4a26-9984-92722b0d7987","alterId": 0,"email": "LampungVM487"
-### lagik4k 2026-11-18
-},{"id": "c409c141-26c9-4498-a0f2-bf77d3078677","alterId": 0,"email": "lagik4k"
-### an4s 2026-11-17
-},{"id": "8a946c0b-a00a-433a-a32c-ca2363cb84dc","alterId": 0,"email": "an4s"
-### p4suruan 2026-11-16
-},{"id": "77c9f16c-aa5b-4098-a917-11d2a75cc0f1","alterId": 0,"email": "p4suruan"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
-          }
-        ]
-      },
+### samatraVM076 2026-11-30
+},{"id": "c0068697-10e5-47ec-b814-549538e129c3","alterId": 0,"email": "samatraVM076"
+### MisiwandaVM309 2026-11-28
+},{"id": "1c04a5b9-3c1b-4f57-b882-0c3c189e44e0","alterId": 0,"email": "MisiwandaVM309"
+### Ardi52VM841 2026-11-26
+},{"id": "fd4a679b-39c1-4eac-80b9-82df83b606b1","alterId": 0,"email": "Ardi52VM841"
+### EdujtVM534 2026-11-21
+},{"id": "498d6fad-4b26-47e9-9a2c-08f679105f69","alterId": 0,"email": "EdujtVM534"
+### l4mpg 2026-11-20
+},{"id": "0b32376a-a62e-4ca2-bfa7-067fc127f9b9","alterId": 0,"email": "l4mpg"
+### blitung 2026-12-08
+},{"id": "1b7d1f65-cf59-47e9-9844-a2692ed64e84","alterId": 0,"email": "blitung"
+### pr0s 2026-12-01
+},{"id": "f8995fe5-26a3-4423-9d43-185ae616fdd5","alterId": 0,"email": "pr0s"
+### rezi 2026-11-28
+},{"id": "d80164c7-798b-4429-b7b9-026300bff1a7","alterId": 0,"email": "rezi"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -416,6 +410,14 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+### EvaVL985 2026-12-07
+},{"id": "bfb0706f-c391-42f9-a2a2-ee79eb45bbef","email": "EvaVL985"
+### YoanVL270 2026-12-07
+},{"id": "4036c937-10a3-4802-9531-fd0f45e0d0a0","email": "YoanVL270"
+### NonyVL027 2026-12-05
+},{"id": "d06877ab-4f89-4352-9bd5-260156c7cad5","email": "NonyVL027"
+### DennyVL914 2026-11-25
+},{"id": "82666bae-c256-4636-a1c4-90bb428eb39b","email": "DennyVL914"
              }
           ]
        },
@@ -436,36 +438,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### y33 2026-12-08
-},{"id": "742a82de-66bb-4299-ab00-71a9f6a909e5","alterId": 0,"email": "y33"
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### OkkVM923 2026-11-18
-},{"id": "90706914-6ad8-4657-9d20-bafa2850110e","alterId": 0,"email": "OkkVM923"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### l4mpung 2026-11-15
-},{"id": "dd6bc139-1942-4f72-9757-4de3f285ccdf","alterId": 0,"email": "l4mpung"
-### tselbos 2026-11-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### DaaVM372 2026-11-18
-},{"id": "15d3558e-d903-4b1d-9c8b-b1f60bdc54ab","alterId": 0,"email": "DaaVM372"
-### LampungVM487 2026-11-18
-},{"id": "99e186b0-4eb2-4a26-9984-92722b0d7987","alterId": 0,"email": "LampungVM487"
-### lagik4k 2026-11-18
-},{"id": "c409c141-26c9-4498-a0f2-bf77d3078677","alterId": 0,"email": "lagik4k"
-### an4s 2026-11-17
-},{"id": "8a946c0b-a00a-433a-a32c-ca2363cb84dc","alterId": 0,"email": "an4s"
-### p4suruan 2026-11-16
-},{"id": "77c9f16c-aa5b-4098-a917-11d2a75cc0f1","alterId": 0,"email": "p4suruan"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
+### samatraVM076 2026-11-30
+},{"id": "c0068697-10e5-47ec-b814-549538e129c3","alterId": 0,"email": "samatraVM076"
+### MisiwandaVM309 2026-11-28
+},{"id": "1c04a5b9-3c1b-4f57-b882-0c3c189e44e0","alterId": 0,"email": "MisiwandaVM309"
+### Ardi52VM841 2026-11-26
+},{"id": "fd4a679b-39c1-4eac-80b9-82df83b606b1","alterId": 0,"email": "Ardi52VM841"
+### EdujtVM534 2026-11-21
+},{"id": "498d6fad-4b26-47e9-9a2c-08f679105f69","alterId": 0,"email": "EdujtVM534"
+### l4mpg 2026-11-20
+},{"id": "0b32376a-a62e-4ca2-bfa7-067fc127f9b9","alterId": 0,"email": "l4mpg"
+### blitung 2026-12-08
+},{"id": "1b7d1f65-cf59-47e9-9844-a2692ed64e84","alterId": 0,"email": "blitung"
+### pr0s 2026-12-01
+},{"id": "f8995fe5-26a3-4423-9d43-185ae616fdd5","alterId": 0,"email": "pr0s"
+### rezi 2026-11-28
+},{"id": "d80164c7-798b-4429-b7b9-026300bff1a7","alterId": 0,"email": "rezi"
              }
           ]
        },
