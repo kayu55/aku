@@ -26,13 +26,7 @@ rm -fr /etc/nginx/conf.d/xray.conf
 cat /etc/nginx/conf.d/xray.conf | grep -c "location ="
 # kudu metu 9, nek metu 18 berarti numpuk
 
-nginx -t
 
-# 2. BARU JALAN KAN BAGIAN RANDOM PORT + PATH + NGINX + CONFIG + SERVICE
-# ... copy dari # Random Port sampe systemctl restart ...
-
-systemctl daemon-reload
-systemctl restart xray nginx
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
