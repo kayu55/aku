@@ -34,6 +34,7 @@ nginx -t
 systemctl daemon-reload
 systemctl restart xray nginx
 
+fi
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
