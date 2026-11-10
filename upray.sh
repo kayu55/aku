@@ -12,7 +12,16 @@ else
 domain=$IP
 fi
 
+rm -fr /etc/nginx/conf.d/xray.conf
 
+
+systemctl stop xray nginx
+
+rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/systemd/system/xray.service.d
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/nginx/conf.d/xray.conf
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
