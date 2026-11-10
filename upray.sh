@@ -26,7 +26,7 @@ rm -fr /etc/nginx/conf.d/xray.conf
 cat /etc/nginx/conf.d/xray.conf | grep -c "location ="
 # kudu metu 9, nek metu 18 berarti numpuk
 
-
+fi
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
