@@ -12,6 +12,27 @@ else
 domain=$IP
 fi
 
+rm -fr /etc/nginx/conf.d/xray.conf
+cat >/etc/nginx/conf.d/xray.conf <<EOF
+
+systemctl stop xray nginx
+
+# 1. HAPUS DISIK, IKI WAJIB
+rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/systemd/system/xray.service.d
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/nginx/conf.d/xray.conf
+cat /etc/nginx/conf.d/xray.conf | grep -c "location ="
+# kudu metu 9, nek metu 18 berarti numpuk
+
+nginx -t
+
+# 2. BARU JALAN KAN BAGIAN RANDOM PORT + PATH + NGINX + CONFIG + SERVICE
+# ... copy dari # Random Port sampe systemctl restart ...
+
+systemctl daemon-reload
+systemctl restart xray nginx
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -286,6 +307,15 @@ cat <<EOF> /etc/xray/config.json
     "error": "/var/log/xray/error.log",
     "loglevel": "warning"
   },
+  "dns": {
+    "servers": [
+      "https://1.1.1.1/dns-query",
+      "https://8.8.8.8/dns-query",
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "queryStrategy": "UseIPv4"
+  },
   "inbounds": [
       {
       "listen": "127.0.0.1",
@@ -306,6 +336,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
+### EvaVL982 2026-11-14
+},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -326,6 +358,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### kirimVM346 2026-12-10
+},{"id": "3734e9c3-ea19-4354-9a99-555b2fc4aba5","alterId": 0,"email": "kirimVM346"
+### MalasVM321 2026-11-21
+},{"id": "339b53f6-159b-494b-abbf-8108aff3b2e4","alterId": 0,"email": "MalasVM321"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
+### ilp3 2026-11-18
+},{"id": "c929f3e7-5e4b-454a-9986-001aaba2788f","alterId": 0,"email": "ilp3"
              }
           ]
        },
@@ -367,6 +411,8 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+### EvaVL982 2026-11-14
+},{"id": "04f53411-2de7-4977-a42a-fa55fbaba5f9","email": "EvaVL982"
              }
           ]
        },
@@ -387,6 +433,18 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### kirimVM346 2026-12-10
+},{"id": "3734e9c3-ea19-4354-9a99-555b2fc4aba5","alterId": 0,"email": "kirimVM346"
+### MalasVM321 2026-11-21
+},{"id": "339b53f6-159b-494b-abbf-8108aff3b2e4","alterId": 0,"email": "MalasVM321"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
+### ilp3 2026-11-18
+},{"id": "c929f3e7-5e4b-454a-9986-001aaba2788f","alterId": 0,"email": "ilp3"
              }
           ]
        },
