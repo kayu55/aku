@@ -12,21 +12,7 @@ else
 domain=$IP
 fi
 
-rm -fr /etc/nginx/conf.d/xray.conf
-cat >/etc/nginx/conf.d/xray.conf <<EOF
 
-systemctl stop xray nginx
-
-# 1. HAPUS DISIK, IKI WAJIB
-rm -fr /etc/nginx/conf.d/xray.conf
-rm -fr /etc/systemd/system/xray.service
-rm -fr /etc/systemd/system/xray.service.d
-rm -fr /etc/systemd/system/xray.service
-rm -fr /etc/nginx/conf.d/xray.conf
-cat /etc/nginx/conf.d/xray.conf | grep -c "location ="
-# kudu metu 9, nek metu 18 berarti numpuk
-
-fi
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
