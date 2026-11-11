@@ -343,20 +343,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### RONI8VM769 2026-12-01
-},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
-### Roni7VM179 2026-11-25
-},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
-### GassVM827 2026-11-21
-},{"id": "d536d972-c735-4e1a-bde3-228284d2eace","alterId": 0,"email": "GassVM827"
-### Roni5VM304 2026-11-15
-},{"id": "3c22eb40-28ba-4ecd-b5c5-93b3a3f7db15","alterId": 0,"email": "Roni5VM304"
-### ok3lah 2026-11-14
-},{"id": "9d70bcf1-5f57-47e3-abec-a12b0f0514ea","alterId": 0,"email": "ok3lah"
-### Roni4VM138 2026-11-11
-},{"id": "421dc032-2a03-4ce9-a707-de981f61e222","alterId": 0,"email": "Roni4VM138"
-### g4nty 2026-11-28
-},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
              }
           ]
        },
@@ -418,20 +404,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### RONI8VM769 2026-12-01
-},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
-### Roni7VM179 2026-11-25
-},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
-### GassVM827 2026-11-21
-},{"id": "d536d972-c735-4e1a-bde3-228284d2eace","alterId": 0,"email": "GassVM827"
-### Roni5VM304 2026-11-15
-},{"id": "3c22eb40-28ba-4ecd-b5c5-93b3a3f7db15","alterId": 0,"email": "Roni5VM304"
-### ok3lah 2026-11-14
-},{"id": "9d70bcf1-5f57-47e3-abec-a12b0f0514ea","alterId": 0,"email": "ok3lah"
-### Roni4VM138 2026-11-11
-},{"id": "421dc032-2a03-4ce9-a707-de981f61e222","alterId": 0,"email": "Roni4VM138"
-### g4nty 2026-11-28
-},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
              }
           ]
        },
