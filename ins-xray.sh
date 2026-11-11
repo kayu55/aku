@@ -11,7 +11,15 @@ domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
+#hpus file lama
+systemctl stop xray nginx
 
+rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/systemd/system/xray.service.d
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/nginx/conf.d/xray.conf
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -49,15 +57,12 @@ chown www-data.www-data $domainSock_dir
 # Make Folder XRay
 mkdir -p /var/log/xray
 mkdir -p /etc/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
+chown -R www-data:www-data /var/log/xray
+chmod 755 /var/log/xray
 touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
-# / / Ambil Xray Core Version Terbaru
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.15
-
 ## crt xray
 systemctl stop nginx
 mkdir /root/.acme.sh
@@ -93,6 +98,9 @@ touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
+chown -R www-data:www-data /var/log/xray
+chmod 755 /var/log/xray
+chmod 640 /var/log/xray/*.log
 # Make Log Autokill & Log Autoreboot
 rm -fr /root/log-limit.txt
 rm -fr /root/log-reboot.txt
@@ -146,73 +154,13 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-# Install Xray #
-# / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-# / / Installation Xray Core
-xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
-# / / Ambil Xray Core Version Terbaru
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.16
-
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
-apt install socat netfilter-persistent -y
-apt install vnstat lsof fail2ban -y
-apt install curl sudo -y
-apt install screen cron screenfetch -y
-mkdir /backup >> /dev/null 2>&1
-mkdir /user >> /dev/null 2>&1
-mkdir /tmp >> /dev/null 2>&1
-apt install resolvconf network-manager dnsutils bind9 -y
-cat > /etc/systemd/resolved.conf << END
-[Resolve]
-DNS=8.8.8.8 8.8.4.4
-Domains=~.
-ReadEtcHosts=yes
-END
-systemctl enable resolvconf
-systemctl enable systemd-resolved
-systemctl enable NetworkManager
-rm -rf /etc/resolv.conf
-rm -rf /etc/resolvconf/resolv.conf.d/head
-echo "
-nameserver 127.0.0.53
-" >> /etc/resolv.conf
-echo "
-" >> /etc/resolvconf/resolv.conf.d/head
-systemctl restart resolvconf
-systemctl restart systemd-resolved
-systemctl restart NetworkManager
-echo "Google DNS" > /user/current
-rm /usr/local/etc/xray/city >> /dev/null 2>&1
-rm /usr/local/etc/xray/org >> /dev/null 2>&1
-rm /usr/local/etc/xray/timezone >> /dev/null 2>&1
-cp /usr/local/bin/xray /backup/xray.official.backup
-curl -s ipinfo.io/city >> /usr/local/etc/xray/city
-curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /usr/local/etc/xray/org
-curl -s ipinfo.io/timezone >> /usr/local/etc/xray/timezone
-clear
-echo -e "${GB}[ INFO ]${NC} ${GB}Downloading Xray-core mod${NC}"
-sleep 0.5
-wget -q -O /backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit"
-echo -e "${GB}[ INFO ]${NC} ${GB}Download Xray-core done${NC}"
-sleep 1
-clear
-
-rm -rf /usr/local/bin/xray
-cp /backup/xray.mod.backup /usr/local/bin/xray
-chmod 755 /usr/local/bin/xray
-# / / Make Main Directory
-mkdir -p /usr/bin/xray
-mkdir -p /etc/xray
-mkdir -p /usr/local/etc/xray
-# / / Unzip Xray Linux 64
-cd `mktemp -d`
-curl -sL "$xraycore_link" -o xray.zip
-unzip -q xray.zip && rm -rf xray.zip
-mv xray /usr/local/bin/xray
-chmod +x /usr/local/bin/xray
+#intall vray 
+echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
+echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
+echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
+echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
+mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 
 # Random Port Xray
 vless=$((RANDOM + 10000))
@@ -230,11 +178,28 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:80;
              listen 8880;
              listen [::]:8880;
+             listen 2082;
+             listen [::]:2082;
+             listen 8080;
+             listen [::]:8080;
+             listen 2052;
+             listen [::]:2052;
+             listen 2095;
+             listen [::]:2095;
+             listen 2086;
              listen [::]:2086;
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              listen 8443 ssl http2 reuseport;
              listen [::]:8443 http2 reuseport;	
+             listen 2096 ssl http2 reuseport;
+             listen [::]:2096 http2 reuseport;	
+             listen 2087 ssl http2 reuseport;
+             listen [::]:2087 http2 reuseport;	
+             listen 2053 ssl http2 reuseport;
+             listen [::]:2053 http2 reuseport;	
+             listen 2083 ssl http2 reuseport;
+             listen [::]:2083 http2 reuseport;	
              server_name 127.0.0.1 localhost;
              ssl_certificate /etc/xray/xray.crt;
              ssl_certificate_key /etc/xray/xray.key;
@@ -328,6 +293,15 @@ cat <<EOF> /etc/xray/config.json
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
     "loglevel": "warning"
+  },
+  "dns": {
+    "servers": [
+      "https://1.1.1.1/dns-query",
+      "https://8.8.8.8/dns-query",
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "queryStrategy": "UseIPv4"
   },
   "inbounds": [
       {
@@ -533,14 +507,28 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-# Installing Xray Service
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
+# ╚══════════════════════════════════════════════════════════════╝
+echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
+    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
+    exit 1
+fi
+if [ ! -x /usr/local/bin/xray ]; then
+    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
+    exit 1
+fi
+/usr/local/bin/xray version || exit 1
 
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
+[Unit]
 Description=Xray Service
-Documentation=https://github.com/xtls
+Documentation=https://github.com/XTLS/Xray-core
 After=network.target nss-lookup.target
+
 [Service]
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
@@ -572,3 +560,6 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+
+cd /usr/bin
+rm -fr upray
