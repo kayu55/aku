@@ -17,9 +17,6 @@ systemctl stop xray nginx
 rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/systemd/system/xray.service
 rm -fr /etc/systemd/system/xray.service.d
-rm -fr /etc/systemd/system/xray.service
-rm -fr /etc/nginx/conf.d/xray.conf
-rm -fr /etc/nginx/conf.d/xray.conf
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -165,11 +162,30 @@ mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 # Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
-vmess1=$((RANDOM + 10000))
 trojanws=$((RANDOM + 10000))
 vlessgrpc=$((RANDOM + 10000))
 vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
+
+# Multipath - Tambahan Port
+vless2=$((RANDOM + 10000))
+vless3=$((RANDOM + 10000))
+vmess2=$((RANDOM + 10000))
+vmess3=$((RANDOM + 10000))
+trojanws2=$((RANDOM + 10000))
+trojanws3=$((RANDOM + 10000))
+
+# === MULTIPATH BEBAS EDIT NENG KENE TOK ===
+# Ganti sak karepmu, ngisor melu otomatis. Wajib diawali /
+VLESS_PATH="/vless"
+VLESS_PATH2="/vless2"
+VLESS_PATH3="/bebas-vless"
+VMESS_PATH="/vmess"
+VMESS_PATH2="/vmess2"
+VMESS_PATH3="/bebas-vmess"
+TROJAN_PATH="/trojan-ws"
+TROJAN_PATH2="/trojan-ws2"
+TROJAN_PATH3="/bebas-trojan"
 
 # nginx xray.conf
 rm -fr /etc/nginx/conf.d/xray.conf
@@ -221,7 +237,8 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
+# VLESS 1
+sed -i '$ ilocation = '"$VLESS_PATH"'' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/conf.d/xray.conf
@@ -233,7 +250,34 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+# VLESS 2
+sed -i '$ ilocation = '"$VLESS_PATH2"'' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vless2"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+# VLESS 3
+sed -i '$ ilocation = '"$VLESS_PATH3"'' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vless3"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+# VMESS 1
+sed -i '$ ilocation = '"$VMESS_PATH"'' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
@@ -245,10 +289,11 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /servlets/mms' /etc/nginx/conf.d/xray.conf
+# VMESS 2
+sed -i '$ ilocation = '"$VMESS_PATH2"'' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess1"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess2"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
@@ -257,10 +302,50 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
+# VMESS 3
+sed -i '$ ilocation = '"$VMESS_PATH3"'' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess3"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+# TROJAN 1
+sed -i '$ ilocation = '"$TROJAN_PATH"'' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+# TROJAN 2
+sed -i '$ ilocation = '"$TROJAN_PATH2"'' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws2"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+# TROJAN 3
+sed -i '$ ilocation = '"$TROJAN_PATH3"'' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws3"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
@@ -297,9 +382,6 @@ sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.c
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 # set uuid xray
-uuid=$(cat /proc/sys/kernel/random/uuid)
-
-# xray config
 cat <<EOF> /etc/xray/config.json
 {
   "log" : {
@@ -334,17 +416,55 @@ cat <<EOF> /etc/xray/config.json
           "decryption":"none",
             "clients": [
                {
-                 "id": "${uuid}"                 
+                 "id": "${uuid}"
 #vless
-### CmpleVL043 2026-11-25
-},{"id": "7ebaa2ae-b3e0-477a-bb61-c312f9dadd70","email": "CmpleVL043"
              }
           ]
        },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vless"
+                "path": "$VLESS_PATH"
+          }
+        }
+     },
+   {
+     "listen": "127.0.0.1",
+     "port": "$vless2",
+     "protocol": "vless",
+      "settings": {
+          "decryption":"none",
+            "clients": [
+               {
+                 "id": "${uuid}"
+#vless2
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "$VLESS_PATH2"
+          }
+        }
+     },
+   {
+     "listen": "127.0.0.1",
+     "port": "$vless3",
+     "protocol": "vless",
+      "settings": {
+          "decryption":"none",
+            "clients": [
+               {
+                 "id": "${uuid}"
+#vless3
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "$VLESS_PATH3"
           }
         }
      },
@@ -358,61 +478,53 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### ngpokVM698 2026-12-02
-},{"id": "67601a03-786a-4a34-819c-c4a52a65ec4f","alterId": 0,"email": "ngpokVM698"
-### OfokVM880 2026-12-02
-},{"id": "d1946063-66d3-45b9-a686-5bf175907139","alterId": 0,"email": "OfokVM880"
-### aaaVM412 2026-12-01
-},{"id": "18af7830-6009-4c8d-8936-867c58664270","alterId": 0,"email": "aaaVM412"
-### b1s 2026-11-12
-},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
-### myy 2026-11-25
-},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
-### sidiq 2026-12-03
-},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
-### z4n 2026-11-17
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vmess"
+                "path": "$VMESS_PATH"
           }
         }
      },
      {
      "listen": "127.0.0.1",
-     "port": "$vmess1",
+     "port": "$vmess2",
      "protocol": "vmess",
       "settings": {
             "clients": [
                {
                  "id": "${uuid}",
                  "alterId": 0
-#vmess
-### ngpokVM698 2026-12-02
-},{"id": "67601a03-786a-4a34-819c-c4a52a65ec4f","alterId": 0,"email": "ngpokVM698"
-### OfokVM880 2026-12-02
-},{"id": "d1946063-66d3-45b9-a686-5bf175907139","alterId": 0,"email": "OfokVM880"
-### aaaVM412 2026-12-01
-},{"id": "18af7830-6009-4c8d-8936-867c58664270","alterId": 0,"email": "aaaVM412"
-### b1s 2026-11-12
-},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
-### myy 2026-11-25
-},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
-### sidiq 2026-12-03
-},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
-### z4n 2026-11-17
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
-          }
-        ]
-      },
+#vmess2
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/servlets/mms"
+                "path": "$VMESS_PATH2"
+          }
+        }
+     },
+     {
+     "listen": "127.0.0.1",
+     "port": "$vmess3",
+     "protocol": "vmess",
+      "settings": {
+            "clients": [
+               {
+                 "id": "${uuid}",
+                 "alterId": 0
+#vmess3
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "$VMESS_PATH3"
           }
         }
      },
@@ -421,7 +533,7 @@ cat <<EOF> /etc/xray/config.json
       "port": "$trojanws",
       "protocol": "trojan",
       "settings": {
-          "decryption":"none",		
+          "decryption":"none",
            "clients": [
               {
                  "password": "${uuid}"
@@ -433,7 +545,49 @@ cat <<EOF> /etc/xray/config.json
        "streamSettings":{
            "network": "ws",
            "wsSettings": {
-               "path": "/trojan-ws"
+               "path": "$TROJAN_PATH"
+            }
+         }
+     },
+     {
+     "listen": "127.0.0.1",
+      "port": "$trojanws2",
+      "protocol": "trojan",
+      "settings": {
+          "decryption":"none",
+           "clients": [
+              {
+                 "password": "${uuid}"
+#trojanws2
+              }
+          ],
+         "udp": true
+       },
+       "streamSettings":{
+           "network": "ws",
+           "wsSettings": {
+               "path": "$TROJAN_PATH2"
+            }
+         }
+     },
+     {
+     "listen": "127.0.0.1",
+      "port": "$trojanws3",
+      "protocol": "trojan",
+      "settings": {
+          "decryption":"none",
+           "clients": [
+              {
+                 "password": "${uuid}"
+#trojanws3
+              }
+          ],
+         "udp": true
+       },
+       "streamSettings":{
+           "network": "ws",
+           "wsSettings": {
+               "path": "$TROJAN_PATH3"
             }
          }
      },
@@ -447,8 +601,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### CmpleVL043 2026-11-25
-},{"id": "7ebaa2ae-b3e0-477a-bb61-c312f9dadd70","email": "CmpleVL043"
              }
           ]
        },
@@ -469,20 +621,6 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### ngpokVM698 2026-12-02
-},{"id": "67601a03-786a-4a34-819c-c4a52a65ec4f","alterId": 0,"email": "ngpokVM698"
-### OfokVM880 2026-12-02
-},{"id": "d1946063-66d3-45b9-a686-5bf175907139","alterId": 0,"email": "OfokVM880"
-### aaaVM412 2026-12-01
-},{"id": "18af7830-6009-4c8d-8936-867c58664270","alterId": 0,"email": "aaaVM412"
-### b1s 2026-11-12
-},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
-### myy 2026-11-25
-},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
-### sidiq 2026-12-03
-},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
-### z4n 2026-11-17
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
              }
           ]
        },
@@ -512,7 +650,7 @@ cat <<EOF> /etc/xray/config.json
                "serviceName": "trojan-grpc"
          }
       }
-    }	
+    }
   ],
   "outbounds": [
     {
