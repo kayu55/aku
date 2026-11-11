@@ -229,11 +229,14 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /' /etc/nginx/conf.d/xray.conf
-if ($http_upgrade != "Upgrade") {
-rewrite /(.*) /vmess break;
+cat >> /etc/nginx/conf.d/xray.conf <<'EOF'
+location = / {
+    if ($http_upgrade != "Upgrade") {
+        rewrite /(.*) /vmess break;
+    }
+    proxy_redirect off;
 }
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+EOF
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
@@ -515,7 +518,7 @@ cat <<EOF> /etc/xray/config.json
 }
 EOF
 # ╔══════════════════════════════════════════════════════════════╗
-# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
+# ║              ?? INSTALL X-RAY CORE STABLE TERBARU            ║
 # ╚══════════════════════════════════════════════════════════════╝
 echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
 if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
