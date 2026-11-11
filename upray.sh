@@ -323,8 +323,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
-### akuu 2027-08-27
-},{"id": "b36eb066-14b2-4aef-a0e3-cc591d26abd4","email": "akuu"
+### CmpleVL043 2026-11-25
+},{"id": "7ebaa2ae-b3e0-477a-bb61-c312f9dadd70","email": "CmpleVL043"
              }
           ]
        },
@@ -345,15 +345,61 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### jbarVM759 2026-12-18
-},{"id": "9af80824-6d44-4356-bb76-14a15caf26a0","alterId": 0,"email": "jbarVM759"
-             }
-          ]
-       },
+### ngpokVM698 2026-12-02
+},{"id": "67601a03-786a-4a34-819c-c4a52a65ec4f","alterId": 0,"email": "ngpokVM698"
+### OfokVM880 2026-12-02
+},{"id": "d1946063-66d3-45b9-a686-5bf175907139","alterId": 0,"email": "OfokVM880"
+### aaaVM412 2026-12-01
+},{"id": "18af7830-6009-4c8d-8936-867c58664270","alterId": 0,"email": "aaaVM412"
+### b1s 2026-11-12
+},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
+### myy 2026-11-25
+},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
+### sidiq 2026-12-03
+},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
+### z4n 2026-11-17
+},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
                 "path": "/vmess"
+          }
+        }
+     },
+     {
+     "listen": "127.0.0.1",
+     "port": "$vmess1",
+     "protocol": "vmess",
+      "settings": {
+            "clients": [
+               {
+                 "id": "${uuid}",
+                 "alterId": 0
+#vmess
+### ngpokVM698 2026-12-02
+},{"id": "67601a03-786a-4a34-819c-c4a52a65ec4f","alterId": 0,"email": "ngpokVM698"
+### OfokVM880 2026-12-02
+},{"id": "d1946063-66d3-45b9-a686-5bf175907139","alterId": 0,"email": "OfokVM880"
+### aaaVM412 2026-12-01
+},{"id": "18af7830-6009-4c8d-8936-867c58664270","alterId": 0,"email": "aaaVM412"
+### b1s 2026-11-12
+},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
+### myy 2026-11-25
+},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
+### sidiq 2026-12-03
+},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
+### z4n 2026-11-17
+},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
+          }
+        ]
+      },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/servlets/mms"
           }
         }
      },
@@ -388,8 +434,8 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### akuu 2027-08-27
-},{"id": "b36eb066-14b2-4aef-a0e3-cc591d26abd4","email": "akuu"
+### CmpleVL043 2026-11-25
+},{"id": "7ebaa2ae-b3e0-477a-bb61-c312f9dadd70","email": "CmpleVL043"
              }
           ]
        },
@@ -410,8 +456,20 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### jbarVM759 2026-12-18
-},{"id": "9af80824-6d44-4356-bb76-14a15caf26a0","alterId": 0,"email": "jbarVM759"
+### ngpokVM698 2026-12-02
+},{"id": "67601a03-786a-4a34-819c-c4a52a65ec4f","alterId": 0,"email": "ngpokVM698"
+### OfokVM880 2026-12-02
+},{"id": "d1946063-66d3-45b9-a686-5bf175907139","alterId": 0,"email": "OfokVM880"
+### aaaVM412 2026-12-01
+},{"id": "18af7830-6009-4c8d-8936-867c58664270","alterId": 0,"email": "aaaVM412"
+### b1s 2026-11-12
+},{"id": "da0ad9f6-0de7-4e04-a045-68df569e4cbb","alterId": 0,"email": "b1s"
+### myy 2026-11-25
+},{"id": "aa10bd1c-6983-49a1-a7d2-e891f2dfb461","alterId": 0,"email": "myy"
+### sidiq 2026-12-03
+},{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
+### z4n 2026-11-17
+},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
              }
           ]
        },
