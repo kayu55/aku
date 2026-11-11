@@ -11,7 +11,15 @@ domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
+#hpus file lama
+systemctl stop xray nginx
 
+rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/systemd/system/xray.service.d
+rm -fr /etc/systemd/system/xray.service
+rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/nginx/conf.d/xray.conf
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -49,15 +57,12 @@ chown www-data.www-data $domainSock_dir
 # Make Folder XRay
 mkdir -p /var/log/xray
 mkdir -p /etc/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
+chown -R www-data:www-data /var/log/xray
+chmod 755 /var/log/xray
 touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
-# / / Ambil Xray Core Version Terbaru
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.15
-
 ## crt xray
 systemctl stop nginx
 mkdir /root/.acme.sh
@@ -93,6 +98,9 @@ touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
+chown -R www-data:www-data /var/log/xray
+chmod 755 /var/log/xray
+chmod 640 /var/log/xray/*.log
 # Make Log Autokill & Log Autoreboot
 rm -fr /root/log-limit.txt
 rm -fr /root/log-reboot.txt
@@ -146,36 +154,13 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-# Install Xray #
+#intall vray 
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
 echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
 echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
 mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
-
-# 1. HAPUS SERVICE LAWAS DULU, BEN GAK TABRAKAN
-# Ojo dihapus sak marine install, hapus e neng kene
-rm -fr /etc/systemd/system/xray.service.d
-rm -fr /etc/systemd/system/xray.service
-
-# 2. BARU INSTALL XRAY
-echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
-if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
-    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
-    exit 1
-fi
-if [ ! -x /usr/local/bin/xray ]; then
-    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
-    exit 1
-fi
-/usr/local/bin/xray version || exit 1
-
-
-# / / Make Main Directory
-mkdir -p /usr/bin/xray
-mkdir -p /etc/xray
-mkdir -p /usr/local/etc/xray
 
 # Random Port Xray
 vless=$((RANDOM + 10000))
@@ -522,14 +507,28 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-# Installing Xray Service
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
+# ╚══════════════════════════════════════════════════════════════╝
+echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
+    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
+    exit 1
+fi
+if [ ! -x /usr/local/bin/xray ]; then
+    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
+    exit 1
+fi
+/usr/local/bin/xray version || exit 1
+
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
 [Unit]
 Description=Xray Service
-Documentation=https://github.com/xtls
+Documentation=https://github.com/XTLS/Xray-core
 After=network.target nss-lookup.target
+
 [Service]
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
@@ -561,3 +560,6 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+
+cd /usr/bin
+rm -fr upray
