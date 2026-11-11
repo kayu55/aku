@@ -276,16 +276,20 @@ client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
-[dropbear]
+
+[dropbear1]
 accept = 447
 connect = 127.0.0.1:109
-[dropbear]
+
+[dropbear2]
 accept = 445
 connect = 127.0.0.1:143
-[openssh]
+
+[openssh1]
 accept = 444
 connect = 127.0.0.1:22
-[openssh]
+
+[openssh2]
 accept = 777
 connect = 127.0.0.1:2253
 END
