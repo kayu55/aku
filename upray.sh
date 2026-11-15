@@ -231,9 +231,6 @@ sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iif (\$http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
-sed -i '$ irewrite /(.*) /vmess break;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
@@ -343,21 +340,17 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "ws",
-        "wsSettings": {
-          "path": "/vmess",
-          "alpn": [
-            "h2",
-            "http/1.1"
+             }
           ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vmess"
+          }
         }
-      }
-    },
-    {
+     },
+     {
      "listen": "127.0.0.1",
       "port": "$trojanws",
       "protocol": "trojan",
@@ -407,22 +400,18 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}",
                  "alterId": 0
-#vmess-grpc
-          }
-        ]
-      },
-      "streamSettings":{
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "vmess-grpc",
-          "alpn": [
-            "h2",
-            "http/1.1"
+#vmessgrpc
+             }
           ]
+       },
+       "streamSettings":{
+         "network": "grpc",
+            "grpcSettings": {
+                "serviceName": "vmess-grpc"
+          }
         }
-      }
-    },
-    {
+     },
+     {
         "listen": "127.0.0.1",
         "port": "$trojangrpc",
         "protocol": "trojan",
