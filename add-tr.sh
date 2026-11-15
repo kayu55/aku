@@ -40,10 +40,13 @@ sed -i '/#trojanws$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#trojanh2$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
 systemctl restart xray
 trojanlink="trojan://${uuid}@bug.com:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
 trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
+trojanh2link="trojan://${uuid}@${domain}:443?path=%2Ftrojan-h2&security=tls&host=${domain}&type=httpupgrade&sni=${domain}#${user}-Trojan-H2"
 clear
 echo -e "\033[0;34m════════════\033[0;33mXRAY/TROJANWS\033[0;34m════════════${NC}"
 echo -e "Remarks     : ${user}" 
@@ -60,7 +63,11 @@ echo -e "${trojanlink}"
 echo -e "\033[0;34m════════════════════════════════════${NC} "
 echo -e "Link GRPC : "
 echo -e "${trojanlink1}"
-echo -e "\033[0;34m════════════════════════════════════${NC}" 
+echo -e "\033[0;34m════════════════════════════════════${NC} "
+echo -e "Link H2 : "
+echo -e "${trojanh2link}"
+echo -e "\033[0;34m════════════════════════════════════${NC} "
+echo -e "Path H2     : /trojan-h2"
 echo -e ""
 echo -e " \033[0;32mSc By Arya Blitar${NC}" 
 echo "" 
