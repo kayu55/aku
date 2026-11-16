@@ -5,84 +5,87 @@ NC='\033[0;37m'
 GREEN='\033[0;32m'
 COLOR1='\033[0;37m'
 clear
-echo "Fitur Ini Hanya Bisa Digunakan Sesuai Data Vps Dengan Autoscript Ini"
-echo "Silakan masukkan tautan ke file cadangan data vps Anda "
-echo "Anda dapat memeriksanya di email Anda jika Anda menjalankan backup data vps sebelumnya "
-echo " "
+echo "=== RESTORE ARYA BLITAR ==="
+echo "Paste Link Backup soko Email / Gmail mu"
+echo "Contoh: https://drive.google.com/u/4/uc?id=xxx&export=download"
+echo ""
 read -rp "Link File: " -e url
-wget -O backup.zip "$url"
-unzip backup.zip
-rm -f backup.zip
-sleep 1
-echo Start Restore
-rm -f /root/backup/backup.zip &> /dev/null
-sleep 1
-cd /root/backup
-cp /root/backup/passwd /etc/ &> /dev/null
-cp /root/backup/group /etc/ &> /dev/null
-cp /root/backup/shadow /etc/ &> /dev/null
-cp /root/backup/gshadow /etc/ &> /dev/null
-cp /root/backup/chap-secrets /etc/ppp/ &> /dev/null
-cp -r /root/backup/scrz-prem/ /var/lib/ &> /dev/null
-cp -r /root/backup/.acme.sh /root/ &> /dev/null
 
-# === 2. RESTORE XRAY ===
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring Xray data (Non-Multipath)..."
+if [[ -z "$url" ]]; then
+  echo "Link kosong!"
+  exit 1
+fi
+
+# Bersih-bersih lawas
+rm -rf /root/backup /root/backup.zip /root/restore_tmp
+cd /root
+
+echo "Downloading..."
+wget --no-check-certificate -O backup.zip "$url"
+
+# CEK DOWNLOAD BENER OPO DUDU
+if [ ! -s /root/backup.zip ]; then
+  echo "GAGAL DOWNLOAD! Link e expired / salah"
+  exit 1
+fi
+
+FILETYPE=$(file /root/backup.zip)
+echo "File: $FILETYPE"
+if echo "$FILETYPE" | grep -q "HTML"; then
+  echo "IKI FILE HTML DUDU ZIP! Link e kudu di-klik Allow / Share Public disek neng Drive"
+  echo "Buka link neng browser, nek metu 'Download anyway' berarti kudu ganti link"
+  exit 1
+fi
+
+echo "Extracting..."
+unzip -o backup.zip > /dev/null 2>&1
+
+# CEK STRUKTUR - backup mu isi ne folder backup/
+if [ -d "/root/backup" ]; then
+  BACKUP_DIR="/root/backup"
+elif [ -d "/root/restore_tmp/backup" ]; then
+  BACKUP_DIR="/root/restore_tmp/backup"
+else
+  echo "Folder backup ora ketemu! Isi zip:"
+  unzip -l backup.zip | head -n 50
+  exit 1
+fi
+
+echo "Start Restore dari: $BACKUP_DIR"
+systemctl stop xray nginx 2>/dev/null
+sleep 1
+
+# === 1. PASSWD & SYSTEM ===
+echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring passwd..."
+cp $BACKUP_DIR/passwd /etc/ 2>/dev/null
+cp $BACKUP_DIR/group /etc/ 2>/dev/null
+cp $BACKUP_DIR/shadow /etc/ 2>/dev/null
+cp $BACKUP_DIR/gshadow /etc/ 2>/dev/null
+cp -r $BACKUP_DIR/.acme.sh /root/ 2>/dev/null
+cp -r $BACKUP_DIR/scrz-prem/ /var/lib/ 2>/dev/null
+
+# === 2. XRAY ===
+echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring Xray..."
 rm -rf /etc/xray
-cp -r /root/backup/xray /etc/ &> /dev/null
+cp -r $BACKUP_DIR/xray /etc/
+# Hapus file info tok, ben config resik
+rm -f /etc/xray/ports.txt /etc/xray/paths.txt
 
-# === 3. KUNCI AUTO KONEK: RESTORE NGINX JUGA ===
+# === 3. NGINX - IKI KUNCINE AUTO KONEK ===
 echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring Nginx..."
 mkdir -p /etc/nginx/conf.d/
-if [ -f /root/backup/nginx/xray.conf ]; then
-  cp /root/backup/nginx/xray.conf /etc/nginx/conf.d/xray.conf
-  echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Nginx lawas berhasil dibalekno, Port & Path wes podo"
+if [ -f "$BACKUP_DIR/nginx/xray.conf" ]; then
+  cp $BACKUP_DIR/nginx/xray.conf /etc/nginx/conf.d/xray.conf
+  echo "Nginx lawas berhasil dibalekno"
 else
-  echo -e "$COLOR1│${NC}  [ ${RED}INFO${NC} ] • Nginx gak ketemu di backup, backup lawas!"
-  echo -e "$COLOR1│${NC}  [ ${RED}INFO${NC} ] • Install ulang Xray disik baru restore user tok"
+  echo "Nginx gak ketemu di backup!"
+fi
+if [ -f "$BACKUP_DIR/nginx/domain" ]; then
+  cp $BACKUP_DIR/nginx/domain /etc/xray/domain
 fi
 
-# Restore domain nek ono
-if [ -f /root/backup/nginx/domain ]; then
-  cp /root/backup/nginx/domain /etc/xray/domain
-fi
-
-# === 4. BENERI PERMISSION & CERT ===
+# === 4. PERMISSION - OJO WWW-DATA ===
 echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Fixing Permission..."
-chown -R www-data:www-data /etc/xray 2>/dev/null
-chmod 644 /etc/xray/config.json 2>/dev/null
-chmod 644 /etc/nginx/conf.d/xray.conf 2>/dev/null
-# Nek cert ilang, gawe sementara ben nginx iso start
-if [ ! -f /etc/xray/xray.crt ]; then
-  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/xray/xray.key -out /etc/xray/xray.crt -subj "/CN=localhost" 2>/dev/null
-fi
-
-# === 5. TEST & RESTART - IKI SING MARAI AUTO KONEK ===
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Testing Config..."
-nginx -t
-/usr/local/bin/xray run -test -config /etc/xray/config.json
-
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restarting Service..."
-systemctl daemon-reload
-systemctl restart xray
-sleep 2
-systemctl restart nginx
-sleep 1
-
-rm -rf /root/backup &> /dev/null
-rm -f /root/backup.zip &> /dev/null
-
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Done... Successfully"
-echo ""
-echo -e "STATUS XRAY : $(systemctl is-active xray)"
-echo -e "STATUS NGINX: $(systemctl is-active nginx)"
-echo ""
-echo -e "CEK PORT:"
-echo "Xray : $(grep -o '\"port\": [0-9]*' /etc/xray/config.json | head -n 3 | tr '\n' ' ')"
-echo "Nginx: $(grep -o '127.0.0.1:[0-9]*' /etc/nginx/conf.d/xray.conf | sort -u | tr '\n' ' ')"
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Done... Successfully"
-rm -f backup.zip
-echo Done
-echo ""
-read -n 1 -s -r -p "   Press any key to back on menu"
-menu
+chown -R root:root /etc/xray
+chmod 644 /etc/xray/config.json
+chmod 644 /etc/nginx/conf.d/xray.conf 
