@@ -160,12 +160,14 @@ echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
 mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 
 # Random Port Xray
+# Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
 trojanws=$((RANDOM + 10000))
 vlessgrpc=$((RANDOM + 10000))
 vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
+trojanh2=$((RANDOM + 10000))
 
 # nginx xray.conf
 rm -fr /etc/nginx/conf.d/xray.conf
@@ -280,6 +282,18 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
+sed -i '$ ilocation = /trojan-h2' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanh2"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
 # set uuid xray
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
@@ -340,9 +354,23 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-             }
-          ]
-       },
+### TrialVM383 2026-11-17
+},{"id": "6a68b0a0-4941-4fd5-9fd1-8c63f1914c0a","alterId": 0,"email": "TrialVM383"
+### akuah 2027-09-11
+},{"id": "9b90bbb7-dec3-49c2-a72d-afd13604b360","alterId": 0,"email": "akuah"
+### ArisbaVM827 2026-11-16
+},{"id": "163cf1c1-9358-4eaf-bb9c-e1f67892fe37","alterId": 0,"email": "ArisbaVM827"
+### AmpunVM025 2026-12-05
+},{"id": "cf8bbc92-006d-49fa-a7d5-7f896bc9d80f","alterId": 0,"email": "AmpunVM025"
+### siporVM342 2026-12-02
+},{"id": "2afe31a3-a17c-4139-8656-cb5d9cbebf14","alterId": 0,"email": "siporVM342"
+### singja 2026-11-18
+},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
+### ayudewe 2027-08-05
+},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -401,9 +429,23 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
+### TrialVM383 2026-11-17
+},{"id": "6a68b0a0-4941-4fd5-9fd1-8c63f1914c0a","alterId": 0,"email": "TrialVM383"
+### akuah 2027-09-11
+},{"id": "9b90bbb7-dec3-49c2-a72d-afd13604b360","alterId": 0,"email": "akuah"
+### ArisbaVM827 2026-11-16
+},{"id": "163cf1c1-9358-4eaf-bb9c-e1f67892fe37","alterId": 0,"email": "ArisbaVM827"
+### AmpunVM025 2026-12-05
+},{"id": "cf8bbc92-006d-49fa-a7d5-7f896bc9d80f","alterId": 0,"email": "AmpunVM025"
+### siporVM342 2026-12-02
+},{"id": "2afe31a3-a17c-4139-8656-cb5d9cbebf14","alterId": 0,"email": "siporVM342"
+### singja 2026-11-18
+},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
+### ayudewe 2027-08-05
+},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -416,7 +458,7 @@ cat <<EOF> /etc/xray/config.json
         "port": "$trojangrpc",
         "protocol": "trojan",
         "settings": {
-          "decryption":"none",
+          "decryption": "none",
              "clients": [
                {
                  "password": "${uuid}"
@@ -424,13 +466,35 @@ cat <<EOF> /etc/xray/config.json
                }
            ]
         },
-         "streamSettings":{
+         "streamSettings": {
          "network": "grpc",
            "grpcSettings": {
                "serviceName": "trojan-grpc"
          }
       }
-    }	
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "$trojanh2",
+      "protocol": "trojan",
+      "settings": {
+        "decryption": "none",
+        "clients": [
+          {
+            "password": "${uuid}"
+#trojanh2
+          }
+        ],
+        "udp": true
+      },
+      "streamSettings": {
+        "network": "httpupgrade",
+        "httpupgradeSettings": {
+          "path": "/trojan-h2",
+          "host": "$domain"
+        }
+      }
+    }
   ],
   "outbounds": [
     {
