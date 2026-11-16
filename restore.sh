@@ -1,26 +1,23 @@
 #!/bin/bash
+
 RED='\033[0;31m'
 NC='\033[0;37m'
 GREEN='\033[0;32m'
 COLOR1='\033[0;37m'
 clear
-echo "Restore VPS - NON MULTIPATH - Arya Blitar"
 echo "Fitur Ini Hanya Bisa Digunakan Sesuai Data Vps Dengan Autoscript Ini"
+echo "Silakan masukkan tautan ke file cadangan data vps Anda "
+echo "Anda dapat memeriksanya di email Anda jika Anda menjalankan backup data vps sebelumnya "
 echo " "
 read -rp "Link File: " -e url
 wget -O backup.zip "$url"
-unzip -o backup.zip
+unzip backup.zip
 rm -f backup.zip
 sleep 1
-echo "Start Restore"
-
-# === 1. STOP DISIK BEN GAK TABRAKAN ===
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Stopping Service..."
-systemctl stop xray nginx 2>/dev/null
+echo Start Restore
+rm -f /root/backup/backup.zip &> /dev/null
 sleep 1
-
 cd /root/backup
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring passwd data..."
 cp /root/backup/passwd /etc/ &> /dev/null
 cp /root/backup/group /etc/ &> /dev/null
 cp /root/backup/shadow /etc/ &> /dev/null
@@ -83,8 +80,9 @@ echo ""
 echo -e "CEK PORT:"
 echo "Xray : $(grep -o '\"port\": [0-9]*' /etc/xray/config.json | head -n 3 | tr '\n' ' ')"
 echo "Nginx: $(grep -o '127.0.0.1:[0-9]*' /etc/nginx/conf.d/xray.conf | sort -u | tr '\n' ' ')"
-echo ""
-echo "Nek loro-lorone ACTIVE, berarti AUTO KONEK, tinggal tes neng HP"
+echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Done... Successfully"
+rm -f backup.zip
+echo Done
 echo ""
 read -n 1 -s -r -p "   Press any key to back on menu"
 menu
