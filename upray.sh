@@ -151,14 +151,13 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-print_install "Core Xray new Latest Version"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 # Install Xray Core
 TARGET_VERSION="v1.8.23"
 TARGET_URL="https://github.com/XTLS/Xray-core/releases/download/${TARGET_VERSION}/Xray-linux-64.zip"
 XRAY_PATH="/usr/local/bin/xray"
 unzip -o Xray-linux-64.zip > /dev/null 2>&1
-#sudo mv xray $XRAY_PATH
+sudo mv xray /usr/local/bin/xray
 sudo chmod +x $XRAY_PATH
 
 # Random Port Xray
