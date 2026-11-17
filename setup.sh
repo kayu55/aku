@@ -298,6 +298,7 @@ wget -q -O /usr/bin/create_vless "https://raw.githubusercontent.com/kayu55/aku/m
 wget -q -O /usr/bin/babi "https://raw.githubusercontent.com/kayu55/aku/main/ssh/babi.sh"
 wget -q -O /usr/bin/create_trojan "https://raw.githubusercontent.com/kayu55/aku/main/create_trojan.sh"
 wget -q -O /usr/bin/create_ssh "https://raw.githubusercontent.com/kayu55/aku/main/create_ssh.sh"
+wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/kayu55/aku/main/autodel.sh"
 
 chmod +x /usr/bin/create_vmess
 chmod +x /usr/bin/create_vless
@@ -326,6 +327,7 @@ chmod +x /usr/bin/xp
 chmod +x /usr/bin/addhost
 chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
+chmod +x /usr/bin/autodel
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
