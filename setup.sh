@@ -260,7 +260,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/iri.sh && chmod +x iri.sh && ./iri.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/tools/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
@@ -345,7 +345,7 @@ END
 cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 23 * * * root /usr/bin/xp
+58 23 * * * root /usr/bin/xp
 END
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
