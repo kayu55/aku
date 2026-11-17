@@ -158,7 +158,7 @@ TARGET_VERSION="v1.8.23"
 TARGET_URL="https://github.com/XTLS/Xray-core/releases/download/${TARGET_VERSION}/Xray-linux-64.zip"
 XRAY_PATH="/usr/local/bin/xray"
 unzip -o Xray-linux-64.zip > /dev/null 2>&1
-sudo mv xray $XRAY_PATH
+#sudo mv xray $XRAY_PATH
 sudo chmod +x $XRAY_PATH
 
 # Random Port Xray
