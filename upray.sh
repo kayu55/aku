@@ -528,8 +528,7 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-# ╔══════════════════════════════════════════════════════════════╗
+# ════════════════════════════════════════════════════╗
 # ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
 # ╚══════════════════════════════════════════════════════════════╝
 echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
