@@ -1,3 +1,4 @@
+cat > /usr/bin/bawok <<'EOF'
 #!/bin/bash
 NC='\033[0;37m'
 GREEN='\033[0;32m'
