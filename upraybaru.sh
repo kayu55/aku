@@ -340,25 +340,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### FlayVM950 2026-12-19
-},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
-### ad1 2026-12-19
-},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
-### GentaVM936 2026-12-16
-},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
-### indoVM013 2026-12-11
-},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
-### RONI8VM769 2026-12-01
-},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
-### Roni7VM179 2026-11-25
-},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
-### GassVM827 2026-11-21
-},{"id": "d536d972-c735-4e1a-bde3-228284d2eace","alterId": 0,"email": "GassVM827"
-### g4nty 2026-11-28
-},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
-             }
-          ]
-       },
+### manyudVM655 2026-12-18
+},{"id": "7ad30e4f-2a96-4f73-95b4-10ac39efa853","alterId": 0,"email": "manyudVM655"
+### xlfix 2026-12-14
+},{"id": "46e70c49-8e87-46bf-bfe6-4b7f75e4a187","alterId": 0,"email": "xlfix"
+### zxxVM391 2026-11-24
+},{"id": "3e2aedab-ba96-46ff-bd03-2ebb65ffd16a","alterId": 0,"email": "zxxVM391"
+### faaVM355 2026-11-24
+},{"id": "4b50fac8-4244-4d19-9ee1-9ffb6fbec064","alterId": 0,"email": "faaVM355"
+### KomarVM840 2026-11-21
+},{"id": "9f60b90c-9ecd-4507-9772-259418efbb21","alterId": 0,"email": "KomarVM840"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -417,25 +413,21 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### FlayVM950 2026-12-19
-},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
-### ad1 2026-12-19
-},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
-### GentaVM936 2026-12-16
-},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
-### indoVM013 2026-12-11
-},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
-### RONI8VM769 2026-12-01
-},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
-### Roni7VM179 2026-11-25
-},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
-### GassVM827 2026-11-21
-},{"id": "d536d972-c735-4e1a-bde3-228284d2eace","alterId": 0,"email": "GassVM827"
-### g4nty 2026-11-28
-},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
-             }
-          ]
-       },
+### manyudVM655 2026-12-18
+},{"id": "7ad30e4f-2a96-4f73-95b4-10ac39efa853","alterId": 0,"email": "manyudVM655"
+### xlfix 2026-12-14
+},{"id": "46e70c49-8e87-46bf-bfe6-4b7f75e4a187","alterId": 0,"email": "xlfix"
+### zxxVM391 2026-11-24
+},{"id": "3e2aedab-ba96-46ff-bd03-2ebb65ffd16a","alterId": 0,"email": "zxxVM391"
+### faaVM355 2026-11-24
+},{"id": "4b50fac8-4244-4d19-9ee1-9ffb6fbec064","alterId": 0,"email": "faaVM355"
+### KomarVM840 2026-11-21
+},{"id": "9f60b90c-9ecd-4507-9772-259418efbb21","alterId": 0,"email": "KomarVM840"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -589,30 +581,6 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
-
-# FIX NGINX CF-REAL - DADI SIJI, ORA USAH FIX MANUAL
-python3 <<'PY'
-import re, glob
-p="/etc/nginx/nginx.conf"
-t=open(p).read()
-if "cf_real" not in t:
-    t=t.replace("http {", 'http {\n    log_format cf_real \'$http_cf_connecting_ip | $remote_addr - $remote_user [$time_local] "$request" $status\';', 1)
-t=re.sub(r"access_log\s+[^;]+;", "access_log /var/log/nginx/access.log cf_real;", t)
-if "access_log" not in t:
-    t=t.replace("http {", "http {\n    access_log /var/log/nginx/access.log cf_real;", 1)
-open(p,"w").write(t)
-for f in glob.glob("/etc/nginx/conf.d/*.conf"):
-    tt=open(f).read()
-    if "access_log" in tt:
-        tt=re.sub(r"access_log\s+[^;]+;", "access_log /var/log/nginx/access.log cf_real;", tt)
-    else:
-        tt=re.sub(r"(server_name[^\n]+\n)", r"\1             access_log /var/log/nginx/access.log cf_real;\n", tt, count=1)
-    open(f,"w").write(tt)
-print("OK FIX NGINX")
-PY
-nginx -t && systemctl restart nginx
-echo "Cek log:"
-tail -n 3 /var/log/nginx/access.log
 
 cd /usr/bin
 rm -fr upray
