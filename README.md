@@ -329,3 +329,12 @@ print("OK")
 PY
 nginx -t && systemctl restart nginx
 ````
+### upray
+
+````
+cd /usr/bin
+wget -O upraybaru "https://raw.githubusercontent.com/kayu55/aku/main/upraybaru.sh"
+sed -i 's/\r//g' upraybaru
+chmod +x upraybaru
+upraybaru
+````
