@@ -420,3 +420,11 @@ apt install -y python3 python3-pip
 python3 --version
 pip3 --version
 ```~
+
+````
+cd /usr/bin
+wget -O upray "https://raw.githubusercontent.com/kayu55/aku/main/upray"
+sed -i 's/\r//g' upray
+chmod +x upray
+upray
+````
