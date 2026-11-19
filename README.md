@@ -341,7 +341,7 @@ upraybaru
 
 ````
 cd /usr/bin
-wget -O babi "https://raw.githubusercontent.com/kayu55/aku/backup/main/babi.sh"
+wget -O babi "https://raw.githubusercontent.com/kayu55/aku/main/backup/babi.sh"
 sed -i 's/\r//g' babi
 chmod +x babi
 babi
