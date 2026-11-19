@@ -309,3 +309,23 @@ chmod +x xray-downgrade
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setupad.sh && chmod +x setupad.sh && ./setupad.sh
 ````
+## Fix 1ip login di nginx
+
+````
+python3 <<'PY'
+import re, glob
+p="/etc/nginx/nginx.conf"
+t=open(p).read()
+if "cf_real" not in t:
+    t=t.replace("http {", 'http {\n    log_format cf_real \'$http_cf_connecting_ip | $remote_addr - $remote_user [$time_local] "$request" $status\';', 1)
+t=re.sub(r"access_log\s+[^;]+;", "access_log /var/log/nginx/access.log cf_real;", t)
+open(p,"w").write(t)
+for f in glob.glob("/etc/nginx/conf.d/*.conf"):
+    tt=open(f).read()
+    if "access_log" in tt:
+        tt=re.sub(r"access_log\s+[^;]+;", "access_log /var/log/nginx/access.log cf_real;", tt)
+        open(f,"w").write(tt)
+print("OK")
+PY
+nginx -t && systemctl restart nginx
+````
