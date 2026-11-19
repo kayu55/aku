@@ -340,21 +340,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### akuah 2027-09-11
-},{"id": "9b90bbb7-dec3-49c2-a72d-afd13604b360","alterId": 0,"email": "akuah"
-### ArisbaVM827 2026-11-16
-},{"id": "163cf1c1-9358-4eaf-bb9c-e1f67892fe37","alterId": 0,"email": "ArisbaVM827"
-### AmpunVM025 2026-12-05
-},{"id": "cf8bbc92-006d-49fa-a7d5-7f896bc9d80f","alterId": 0,"email": "AmpunVM025"
-### siporVM342 2026-12-02
-},{"id": "2afe31a3-a17c-4139-8656-cb5d9cbebf14","alterId": 0,"email": "siporVM342"
-### singja 2026-11-18
-},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -413,21 +401,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### akuah 2027-09-11
-},{"id": "9b90bbb7-dec3-49c2-a72d-afd13604b360","alterId": 0,"email": "akuah"
-### ArisbaVM827 2026-11-16
-},{"id": "163cf1c1-9358-4eaf-bb9c-e1f67892fe37","alterId": 0,"email": "ArisbaVM827"
-### AmpunVM025 2026-12-05
-},{"id": "cf8bbc92-006d-49fa-a7d5-7f896bc9d80f","alterId": 0,"email": "AmpunVM025"
-### siporVM342 2026-12-02
-},{"id": "2afe31a3-a17c-4139-8656-cb5d9cbebf14","alterId": 0,"email": "siporVM342"
-### singja 2026-11-18
-},{"id": "7f2d930c-aa57-46ba-ad4b-f44fff7619ed","alterId": 0,"email": "singja"
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
@@ -528,11 +504,11 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-# ════════════════════════════════════════════════════╗
+# ╔══════════════════════════════════════════════════════════════╗
 # ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
 # ╚══════════════════════════════════════════════════════════════╝
 echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
-if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install; then
     echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
     exit 1
 fi
@@ -542,7 +518,6 @@ if [ ! -x /usr/local/bin/xray ]; then
 fi
 /usr/local/bin/xray version || exit 1
 
-sudo mv xray /usr/local/bin/xray
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
