@@ -340,6 +340,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### FlayVM950 2026-12-19
+},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
+### ad1 2026-12-19
+},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
+### GentaVM936 2026-12-16
+},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
+### indoVM013 2026-12-11
+},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
+### RONI8VM769 2026-12-01
+},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
+### Roni7VM179 2026-11-25
+},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
+### GassVM827 2026-11-21
+},{"id": "d536d972-c735-4e1a-bde3-228284d2eace","alterId": 0,"email": "GassVM827"
+### g4nty 2026-11-28
+},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
              }
           ]
        },
@@ -401,6 +417,22 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### FlayVM950 2026-12-19
+},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
+### ad1 2026-12-19
+},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
+### GentaVM936 2026-12-16
+},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
+### indoVM013 2026-12-11
+},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
+### RONI8VM769 2026-12-01
+},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
+### Roni7VM179 2026-11-25
+},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
+### GassVM827 2026-11-21
+},{"id": "d536d972-c735-4e1a-bde3-228284d2eace","alterId": 0,"email": "GassVM827"
+### g4nty 2026-11-28
+},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
              }
           ]
        },
