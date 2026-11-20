@@ -428,3 +428,75 @@ sed -i 's/\r//g' upray
 chmod +x upray
 upray
 ````
+## iki 2
+````
+cat > /usr/bin/babi << 'EOF'
+#!/bin/bash
+NC='\033[0;37m'
+GREEN='\033[0;32m'
+MB='\033[0;33m'
+YELLOW='\033[1;33m'
+clear
+CFG=/etc/xray/config.json
+LOG=/var/log/xray/access.log
+NGLOG=/var/log/nginx/access.log
+data=( $(cat "$CFG" | grep '###' | cut -d ' ' -f 2 | sort | uniq) )
+echo -e "\033[0;34m┌──────────────────────────────────────────┐\033[0m"
+echo -e "            ALLXRAY USER LOGIN            $NC"
+echo -e "\033[0;34m└──────────────────────────────────────────┘\033[0m"
+echo -e "\033[1;91m┌──────────────────────────────────────────┐\033[0m"
+NOW=$(date +%s)
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then akun="tidakada"; fi
+lines=$(cat "$LOG" 2>/dev/null | grep -w "$akun" | tail -n 1)
+if [[ -z "$lines" ]]; then continue; fi
+lastlogin=$(echo "$lines" | tail -n 1 | awk '{print $1" "$2}')
+tgl=$(echo "$lines" | tail -n 1 | awk '{print $1}' | tr '/' '-')
+jam=$(echo "$lines" | tail -n 1 | awk '{print $2}' | cut -d. -f1)
+LAST_EPOCH=$(date -d "$tgl $jam" +%s 2>/dev/null)
+DIFF=$((NOW - LAST_EPOCH))
+if [[ $DIFF -gt 120 ]]; then continue; fi
+detik=$(echo "$lines" | awk '{print $2}' | cut -d. -f1)
+
+# === FIX: Moco IP ASLI soko kolom 1 (sebelum |) ===
+# Log mu: 182.6.1.85 | 162.158.x = 182.6.1.85 iku IP ASLI
+get_ip() {
+  grep "$1" "$NGLOG" 2>/dev/null | grep "/vmess" | awk -F'|' '{ip=$1; gsub(/ /,"",ip); if (ip != "-" && ip ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) print ip}' | sort -u
+}
+
+ips=$(get_ip ":$detik ")
+label=""
+if [[ -z "$ips" ]]; then
+  for i in 1 2 3 4 5 10 20 30 45 60; do
+    d2=$(date -d "@$((LAST_EPOCH - i))" +"%H:%M:%S")
+    ips=$(get_ip ":$d2 ")
+    if [[ -n "$ips" ]]; then label=" (koneksi lawas, $i detik lalu)"; break; fi
+  done
+fi
+
+echo -e ""
+echo -e "${NC}user :${GREEN} ${akun} ${NC}"
+echo -e "${MB}Online Jam ${NC}: ${lastlogin} wib (aktif ${DIFF} detik lalu)"
+if [[ -n "$ips" ]]; then
+  count=$(echo "$ips" | grep -v '^$' | wc -l)
+  # === ITUNG DEVICE: 1 IP = 1 DEVICE ===
+  if [[ $count -eq 1 ]]; then
+    echo -e "Device : ${GREEN}1 DEVICE${NC} - Aman"
+  else
+    echo -e "Device : ${YELLOW}$count DEVICE${NC} - GANGBANG!"
+  fi
+  echo "$ips" | grep -v '^$' | nl | sed 's/^/  IP /'
+  echo -e "     => $count IP ketdeteksi$label"
+else
+  echo -e "  Device : 0 - IP ora ketemu neng Nginx"
+fi
+done
+echo -e "\033[1;91m└──────────────────────────────────────────┘\033[0m"
+echo -e "${GREEN} Sc Arya Blitar ${NC} "
+read -n 1 -s -r -p " Klik Enter Balik Ke menu"
+menu
+EOF
+chmod +x /usr/bin/babi
+babi
+````
