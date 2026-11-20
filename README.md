@@ -573,3 +573,51 @@ EOF
 chmod +x /usr/bin/babi
 babi
 ````
+## iki 4
+
+````
+cat > /usr/bin/babi << 'EOF'
+#!/bin/bash
+NC='\033[0;37m'; GREEN='\033[0;32m'; MB='\033[0;33m'; RED='\033[1;91m'
+clear
+CFG=/etc/xray/config.json
+LOG=/var/log/xray/access.log
+NGLOG=/var/log/nginx/access.log
+data=( $(cat "$CFG" | grep '###' | cut -d ' ' -f 2 | sort | uniq) )
+echo -e "            ALLXRAY USER LOGIN            $NC"
+NOW=$(date +%s)
+for akun in "${data[@]}"
+do
+lines=$(grep -w "$akun" "$LOG" 2>/dev/null | tail -n 1)
+[ -z "$lines" ] && continue
+lastlogin=$(echo "$lines" | awk '{print $1" "$2}')
+tgl=$(echo "$lines" | awk '{print $1}' | tr '/' '-')
+jam=$(echo "$lines" | awk '{print $2}' | cut -d. -f1)
+LAST_EPOCH=$(date -d "$tgl $jam" +%s 2>/dev/null)
+DIFF=$((NOW - LAST_EPOCH))
+[ "$DIFF" -gt 120 ] && continue
+detik=$(echo "$lines" | awk '{print $2}' | cut -d. -f1)
+# MUNG detik pas, ORA golek lawas 60 detik
+ips=$(grep ":$detik " "$NGLOG" 2>/dev/null | grep "/vmess" | awk -F'|' '{ip=$1; gsub(/ /,"",ip); if (ip ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) print ip}' | sort -u)
+echo ""
+echo -e "${NC}user :${GREEN} ${akun} ${NC}"
+echo -e "${MB}Online Jam ${NC}: ${lastlogin} wib (aktif ${DIFF} detik lalu)"
+if [[ -n "$ips" ]]; then
+  count=$(echo "$ips" | wc -l)
+  # Nek IP e podo karo user liyo (muncul neng >2 user), ojo langsung tuduh Gangbang
+  # Tandai sebagai CAMPURAN
+  echo -e "Device : ${GREEN}$count IP ketdeteksi neng detik iki${NC} - CEK MANUAL, OJO LANGSUNG BANNED"
+  echo "$ips" | nl | sed 's/^/  IP /'
+  echo -e "     => IP bisa kecampur karo user liyo seng online bareng"
+else
+  echo -e "  Device : 0 - IP ora ketemu"
+fi
+done
+echo ""
+echo -e "${GREEN} Sc Arya Blitar ${NC} "
+read -n 1 -s -r -p " Klik Enter Balik Ke menu"
+menu
+EOF
+chmod +x /usr/bin/babi
+babi
+````
