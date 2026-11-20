@@ -309,6 +309,40 @@ chmod +x xray-downgrade
 ````
 apt update && apt upgrade -y && update-grub && sleep 2 && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt upgrade && apt install -y bzip2 gzip coreutils screen curl unzip && wget -q https://raw.githubusercontent.com/kayu55/aku/main/setupad.sh && chmod +x setupad.sh && ./setupad.sh
 ````
+### fix 1
+````
+# === 1 PASTE IKI TOK, OJO DIPISAH ===
+# Cari file seng ono log_format, hapus kabeh, pasang seng bener
+echo "=== FILE LOG_FORMAT LAWAS ==="
+grep -r "log_format" /etc/nginx/ || echo "ora ketemu"
+echo "=== FILE ACCESS_LOG LAWAS ==="
+grep -r "access_log" /etc/nginx/ || echo "ora ketemu"
+
+# Hapus log_format & access_log lawas neng KABEH file nginx
+grep -rl "log_format\|access_log" /etc/nginx/ | while read f; do echo "Bersihke: $f"; sed -i '/log_format/d' "$f"; sed -i '/access_log/d' "$f"; done
+
+# Pasang seng bener neng nginx.conf, njero http {
+# Format: $msec | CF-IP | remote_addr | host | request
+python3 << 'PY'
+with open('/etc/nginx/nginx.conf') as f:
+    txt=f.read()
+# Nek http { ono, sisipke neng sak bare http {
+if 'log_format main' not in txt:
+    txt=txt.replace('http {','http {\n    log_format main \'$msec|$http_cf_connecting_ip|$remote_addr|$http_host|$request|$status\';\n    access_log /var/log/nginx/access.log main;',1)
+    open('/etc/nginx/nginx.conf','w').write(txt)
+    print("log_format main kepasang neng nginx.conf")
+else:
+    print("wes ono")
+PY
+cat /etc/nginx/nginx.conf | grep -A2 "log_format main"
+nginx -t
+systemctl restart nginx
+sleep 2
+echo "=== LOG ANYAR (kudune ono angka ngarep) ==="
+tail -n 3 /var/log/nginx/access.log
+echo "=== NEK SEK FORMAT LAWAS, BERARTI NGINX DURUNG RESTART / LOG DURUNG ONO KONEKSI ANYAR ==="
+echo "Kon user reconnect disek, terus tail maneh"
+````
 ## Fix 1ip login di nginx
 
 ````
