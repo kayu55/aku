@@ -13,10 +13,10 @@ domain=$IP
 fi
 #hpus file lama
 systemctl stop xray nginx
-
 rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/systemd/system/xray.service
 rm -fr /etc/systemd/system/xray.service.d
+rm -fr /etc/xray/config.json
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -91,6 +91,7 @@ chown www-data.www-data /var/log/xray
 chown www-data.www-data /etc/xray
 chmod +x /var/log/xray
 #chmod +x /var/log/trojan
+mkdir -p /usr/bin/xray/
 touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
@@ -151,14 +152,34 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-# Install Xray Core
-#domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-TARGET_VERSION="v1.8.23"
-TARGET_URL="https://github.com/XTLS/Xray-core/releases/download/${TARGET_VERSION}/Xray-linux-64.zip"
-XRAY_PATH="/usr/local/bin/xray"
-unzip -o Xray-linux-64.zip > /dev/null 2>&1
-sudo mv xray $XRAY_PATH
-sudo chmod +x $XRAY_PATH
+#Instal Xray
+function install_xray() {
+    clear
+    print_install "Core Xray Latest Version"
+    install -d -m 755 -o www-data -g www-data /run/xray
+
+    # v1.8.23 telah teruji dengan template config.json bawaan.
+    # Untuk memilih versi lain: XRAY_VERSION=vX.Y.Z bash setup.sh
+    local version="${XRAY_VERSION:-v1.8.23}"
+    local installer
+    installer=$(mktemp /tmp/xray-installer.XXXXXX) || exit 1
+    if ! curl --retry 3 --connect-timeout 15 -fsSL \
+         "https://github.com/XTLS/Xray-install/raw/main/install-release.sh" -o "$installer"; then
+        rm -f "$installer"
+        print_error "Gagal mengunduh installer Xray resmi"
+        exit 1
+    fi
+    if ! bash "$installer" install --version "$version" \
+        --no-update-service --without-logfiles --manually-restart-later; then
+        rm -f "$installer"
+        print_error "Instalasi binary Xray gagal"
+        exit 1
+    fi
+    rm -f "$installer"
+    if [ ! -x /usr/local/bin/xray ]; then
+        print_error "Binary /usr/local/bin/xray tidak ada"
+        exit 1
+    fi
 
 # Random Port Xray
 vless=$((RANDOM + 10000))
