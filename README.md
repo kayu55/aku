@@ -755,7 +755,7 @@ tgl=$(echo "$lines" | tail -n 1 | awk '{print $1}' | tr '/' '-')
 jam=$(echo "$lines" | tail -n 1 | awk '{print $2}' | cut -d. -f1)
 LAST_EPOCH=$(date -d "$tgl $jam" +%s 2>/dev/null)
 DIFF=$((NOW - LAST_EPOCH))
-if [[ $DIFF -gt 60 ]]; then continue; fi
+if [[ $DIFF -gt 30 ]]; then continue; fi
 detik=$(echo "$lines" | awk '{print $2}' | cut -d. -f1)
 get_ip() {
   grep "$1" "$NGLOG" 2>/dev/null | grep -E "/vmess|/vless|/trojan" | awk -F'|' '{ip=$1; gsub(/ /,"",ip); if (ip ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) print "[CF] " ip; else {ip2=$2; gsub(/ /,"",ip2); if (ip2 ~ /^[0-9]+\./) print "[SNI] " ip2}}' | grep -oE '\[(CF|SNI)\] [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | grep -v -E '103\.21\.|103\.22\.|103\.31\.|104\.16\.|104\.17\.|104\.18\.|104\.19\.|104\.20\.|104\.21\.|104\.22\.|104\.23\.|104\.24\.|104\.25\.|104\.26\.|104\.27\.|104\.28\.|104\.29\.|104\.30\.|104\.31\.|108\.162\.|131\.0\.|141\.101\.|162\.158\.|162\.159\.|172\.64\.|172\.65\.|172\.66\.|172\.67\.|172\.68\.|172\.69\.|172\.70\.|172\.71\.|173\.245\.|188\.114\.|190\.93\.|197\.234\.|198\.41\.' | sort | uniq -c | sort -nr | head -n 3 | awk '{print $2" "$3}'
@@ -763,7 +763,7 @@ get_ip() {
 # 1. Coba detik persis (konek baru)
 ips=$(get_ip ":$detik ")
 label=""
-# 2. FALLBACK: Nek kosong, berarti koneksi lawas -> goleki mundur 60 detik
+# 2. FALLBACK: Nek kosong, berarti koneksi lawas -> goleki mundur 30 detik
 if [[ -z "$ips" ]]; then
   for i in 1 2 3 4 5 10 20 30 45 60; do
     d2=$(date -d "@$((LAST_EPOCH - i))" +"%H:%M:%S")
