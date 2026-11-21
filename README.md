@@ -797,3 +797,125 @@ EOF
 chmod +x /usr/bin/babi
 babi
 ````
+## buka opo ae ketok
+````
+cat > /usr/bin/babi << 'EOF'
+#!/bin/bash
+NC='\033[0;37m'
+GREEN='\033[0;32m'
+MB='\033[0;33m'
+YELLOW='\033[1;33m'
+RED='\033[1;91m'
+clear
+CFG=/etc/xray/config.json
+LOG=/var/log/xray/access.log
+NGLOG=/var/log/nginx/access.log
+data=( $(cat "$CFG" | grep '###' | cut -d ' ' -f 2 | sort | uniq) )
+echo -e "\033[0;34m┌──────────────────────────────────────────┐\033[0m"
+echo -e "            ALLXRAY USER LOGIN            $NC"
+echo -e "\033[0;34m└──────────────────────────────────────────┘\033[0m"
+echo -e "\033[1;91m┌──────────────────────────────────────────┐\033[0m"
+NOW=$(date +%s)
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then akun="tidakada"; fi
+lines=$(cat "$LOG" 2>/dev/null | grep -w "$akun" | tail -n 1)
+if [[ -z "$lines" ]]; then continue; fi
+lastlogin=$(echo "$lines" | tail -n 1 | awk '{print $1" "$2}')
+tgl=$(echo "$lines" | tail -n 1 | awk '{print $1}' | tr '/' '-')
+jam=$(echo "$lines" | tail -n 1 | awk '{print $2}' | cut -d. -f1)
+LAST_EPOCH=$(date -d "$tgl $jam" +%s 2>/dev/null)
+DIFF=$((NOW - LAST_EPOCH))
+if [[ $DIFF -lt 0 ]]; then DIFF=0; fi
+if [[ $DIFF -gt 30 ]]; then continue; fi
+detik=$(echo "$lines" | awk '{print $2}' | cut -d. -f1)
+get_ip() {
+  grep "$1" "$NGLOG" 2>/dev/null | grep -E "/vmess|/vless|/trojan" | awk -F'|' '{ip=$1; gsub(/ /,"",ip); if (ip ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) print "[CF] " ip; else {ip2=$2; gsub(/ /,"",ip2); if (ip2 ~ /^[0-9]+\./) print "[SNI] " ip2}}' | grep -oE '\[(CF|SNI)\] [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | grep -v -E '103\.21\.|103\.22\.|103\.31\.|104\.16\.|104\.17\.|104\.18\.|104\.19\.|104\.20\.|104\.21\.|104\.22\.|104\.23\.|104\.24\.|104\.25\.|104\.26\.|104\.27\.|104\.28\.|104\.29\.|104\.30\.|104\.31\.|108\.162\.|131\.0\.|141\.101\.|162\.158\.|162\.159\.|172\.64\.|172\.65\.|172\.66\.|172\.67\.|172\.68\.|172\.69\.|172\.70\.|172\.71\.|173\.245\.|188\.114\.|190\.93\.|197\.234\.|198\.41\.' | sort | uniq -c | sort -nr | head -n 3 | awk '{print $2" "$3}'
+}
+ips=$(get_ip ":$detik ")
+label=""
+if [[ -z "$ips" ]]; then
+  for i in 1 2 3 4 5 10 20 30 45 60; do
+    d2=$(date -d "@$((LAST_EPOCH - i))" +"%H:%M:%S")
+    ips=$(get_ip ":$d2 ")
+    if [[ -n "$ips" ]]; then label=" (koneksi lawas, IP $i detik lalu)"; break; fi
+  done
+fi
+echo -e ""
+echo -e "${NC}user :${GREEN} ${akun}${NC}"
+echo -e "${MB}Online Jam${NC}: ${lastlogin} wib (aktif ${DIFF} detik lalu)"
+if [[ -n "$ips" ]]; then
+echo "$ips" | grep -v '^$' | nl
+count=$(echo "$ips" | grep -v '^$' | wc -l)
+cf_count=$(echo "$ips" | grep -c "\[CF\]")
+sni_count=$(echo "$ips" | grep -c "\[SNI\]")
+if [[ $count -le 2 ]]; then
+  echo -e "Device : ${GREEN}$count DEVICE${NC} - Aman (max 2)"
+else
+  echo -e "Device : ${RED}$count DEVICE${NC} - GANGBANG!"
+fi
+echo -e "     => $count IP ketdeteksi ($cf_count CF, $sni_count SNI)$label"
+else
+echo -e "  IP Cloudflare tok sing ketemu, log_format durung fix"
+fi
+tebak_app() {
+  local T="$1"
+  case "$T" in
+    *google*|*youtube*|*googlevideo*|*gstatic*) echo "GOOGLE/YOUTUBE"; return ;;
+    *facebook*|*fbcdn*|*instagram*|*whatsapp*) echo "META (FB/IG/WA)"; return ;;
+    *telegram*) echo "TELEGRAM"; return ;;
+    *tiktok*|*byte*) echo "TIKTOK"; return ;;
+    *shopee*) echo "SHOPEE"; return ;;
+    *netflix*) echo "NETFLIX"; return ;;
+    *vidio*) echo "VIDIO"; return ;;
+  esac
+  case "$T" in
+    142.250.*|172.217.*|172.253.*|216.58.*|74.125.*|173.194.*|64.233.*|142.251.*|108.177.*) echo "GOOGLE/YOUTUBE"; return ;;
+    157.*|199.*|57.144.*|57.145.*|31.13.*|179.60.*|185.60.*|129.134.*|199.103.*) echo "META (FB/IG/WA)"; return ;;
+    149.154.*|91.108.*|91.105.*) echo "TELEGRAM"; return ;;
+    47.89.*|47.251.*|103.152.*|161.117.*|156.59.*|43.240.*|43.241.*) echo "TIKTOK/BYTEDANCE"; return ;;
+    35.*|34.*|130.211.*|104.154.*) echo "GOOGLE CLOUD"; return ;;
+    52.*|54.*|3.*|18.*|13.*) echo "AMAZON AWS"; return ;;
+    104.*|172.67.*|104.21.*) echo "CLOUDFLARE CDN"; return ;;
+    23.*|167.82.*|167.86.*) echo "AKAMAI CDN"; return ;;
+    151.101.*|199.232.*) echo "FASTLY CDN"; return ;;
+    47.87.*|47.84.*|47.75.*|47.241.*|47.242.*|8.210.*|47.*) echo "ALIBABA CLOUD"; return ;;
+    71.18.*|163.181.*|153.43.*|177.0.*) echo "CDN LUAR (Background)"; return ;;
+    103.111.*|103.169.*|103.119.*|103.137.*|103.41.*|103.229.*) echo "SERVER INDO - Biznet/IDNIC (Game/Vidio/CDN Lokal)"; return ;;
+    116.68.*|116.90.*|116.66.*|36.92.*|36.93.*|118.98.*|114.*|180.*|101.255.*|101.*) echo "SERVER INDO - Telkom/Indihome (Game/CDN Lokal)"; return ;;
+    103.*|116.*|36.*|114.*|180.*|182.*|202.*|61.*) echo "SERVER INDO/CDN LOKAL"; return ;;
+    *) echo "LAINNYA ($T)"; return ;;
+  esac
+}
+TMPFILE=$(mktemp)
+grep -w "$akun" "$LOG" 2>/dev/null | tail -n 30 | while IFS= read -r LG; do
+  [ -z "$LG" ] && continue
+  TUJUAN=$(echo "$LG" | sed -n 's/.*-> //p' | awk '{print $1}' | sed 's/^tcp://;s/^udp://;s/:[0-9]*$//')
+  if [ -z "$TUJUAN" ]; then
+    TUJUAN=$(echo "$LG" | sed -n "s/.*email: $akun//p" | grep -oE "[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:[0-9]+)?|[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(:[0-9]+)?" | head -1 | sed 's/:[0-9]*$//')
+  fi
+  if [ -z "$TUJUAN" ]; then
+    TUJUAN=$(echo "$LG" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+" | tail -1 | sed 's/:[0-9]*$//')
+  fi
+  [ -z "$TUJUAN" ] && continue
+  if [ "$TUJUAN" = "$akun" ]; then continue; fi
+  if [[ "$TUJUAN" == "127.0.0.1" || "$TUJUAN" == "8.8.8.8" || "$TUJUAN" == "8.8.4.4" || "$TUJUAN" == "1.1.1.1" || "$TUJUAN" == "1.0.0.0" || "$TUJUAN" == "1.0.0.1" || "$TUJUAN" == "146.112.41.2" || "$TUJUAN" == "146.112.41.3" || "$TUJUAN" == "208.67.222.222" || "$TUJUAN" == "208.67.220.220" || "$TUJUAN" == "9.9.9.9" ]]; then continue; fi
+  if [[ "$TUJUAN" == 146.112.* || "$TUJUAN" == 208.67.* ]]; then continue; fi
+  if [[ "$TUJUAN" == *ntp* || "$TUJUAN" == *canonical* || "$TUJUAN" == *lambda* || "$TUJUAN" == *arpa* ]]; then continue; fi
+  if [[ "$TUJUAN" == 185.125.* || "$TUJUAN" == 103.105.* || "$TUJUAN" == 91.189.* || "$TUJUAN" == 162.159.* ]]; then continue; fi
+  if [[ "$TUJUAN" == 182.161.* || "$TUJUAN" == 182.4.* || "$TUJUAN" == 140.* || "$TUJUAN" == 203.78.* || "$TUJUAN" == 112.215.* || "$TUJUAN" == 47.241.72.* ]]; then continue; fi
+  tebak_app "$TUJUAN"
+done > "$TMPFILE"
+BROWSING_APP=$(sort "$TMPFILE" | uniq -c | sort -nr | awk '{c=$1; $1=""; sub(/^ /,""); print "     - " $0 " (" c "x)"}')
+rm -f "$TMPFILE"
+echo -e "${MB}Buka Opo Ae${NC} (Resik):"
+if [ -n "$BROWSING_APP" ]; then echo -e "$BROWSING_APP"; else echo -e "     - (Gak browsing, mek konek tok)"; fi
+done
+echo -e "\033[1;91m└──────────────────────────────────────────┘\033[0m"
+echo -e "${GREEN} Sc Arya Blitar ${NC} "
+read -n 1 -s -r -p " Klik Enter Balik Ke menu"
+menu
+EOF
+chmod +x /usr/bin/babi
+babi
+````
