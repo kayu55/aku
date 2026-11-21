@@ -985,6 +985,7 @@ fi
 tebak_app() {
   local T="$1"
   case "$T" in
+    *tencent*|*wechat*|*weixin*|*qq.com*|*qq*|*proximabeta*|*levelinfinite*|*proxima*) echo "TENCENT / WECHAT / QQ / GAME"; return ;;
     *google*|*youtube*|*googlevideo*|*gstatic*) echo "GOOGLE/YOUTUBE"; return ;;
     *facebook*|*fbcdn*|*instagram*|*whatsapp*) echo "META (FB/IG/WA)"; return ;;
     *telegram*) echo "TELEGRAM"; return ;;
@@ -997,7 +998,8 @@ tebak_app() {
     142.250.*|172.217.*|172.253.*|216.58.*|74.125.*|173.194.*|64.233.*|142.251.*|108.177.*) echo "GOOGLE/YOUTUBE"; return ;;
     157.*|199.*|57.144.*|57.145.*|31.13.*|179.60.*|185.60.*|129.134.*|199.103.*) echo "META (FB/IG/WA)"; return ;;
     149.154.*|91.108.*|91.105.*) echo "TELEGRAM"; return ;;
-    47.89.*|47.251.*|103.152.*|161.117.*|156.59.*|43.240.*|43.241.*) echo "TIKTOK/BYTEDANCE"; return ;;
+    47.89.*|47.251.*|103.152.*|161.117.*|156.59.*|43.240.*) echo "TIKTOK/BYTEDANCE"; return ;;
+    162.62.*|203.205.*|183.60.*|183.61.*|49.7.*|101.226.*|119.28.*|129.226.*|124.156.*|150.109.*|43.228.*|140.207.*|58.250.*|121.14.*|111.30.*|112.90.*|120.232.*|14.18.*|14.17.*|113.108.*|122.152.*|123.151.*|36.110.*|106.55.*|139.199.*|193.43.*|101.32.*|101.33.*|119.29.*) echo "TENCENT / WECHAT / QQ / GAME"; return ;;
     35.*|34.*|130.211.*|104.154.*) echo "GOOGLE CLOUD"; return ;;
     52.*|54.*|3.*|18.*|13.*) echo "AMAZON AWS"; return ;;
     104.*|172.67.*|104.21.*) echo "CLOUDFLARE CDN"; return ;;
