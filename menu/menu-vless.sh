@@ -111,67 +111,67 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
 }
 function user-vless(){
 clear
-# MUNG user VLESS tok! Gak campur vmess/trojan!
-# Vless neng config mu ono 2 blok: #vless lan #vlessgrpc, user e podo
-# Dadi ambil soko blok #vless tok
-
-# Golek list user vless: baris sakwise #vless
-mapfile -t USERS < <(grep -A1 '^#vless$' /etc/xray/config.json | grep '^### ' | awk '{print $2}' | sort -u)
+mapfile -t USERS < <(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+seen=set()
+for idx in [1,4]:
+    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+        e=c.get('email')
+        if e and e not in seen:
+            seen.add(e); print(e)
+" | sort -u)
 NUMBER=${#USERS[@]}
-
-if [[ $NUMBER == '0' ]]; then
-  echo "Gak ono user VLESS!"
-  read -n 1 -s -r -p "Press any key to back on menu"
-  menu-vless
-  exit 0
-fi
-
-echo -e "     Check Detail XRAY VLESS"
-echo -e "---------------------------------"
-echo -e "     No  User   Expired"
+if [[ $NUMBER == '0' ]]; then echo "Gak ono user VLESS!"; read -n 1 -s -r -p "Press any key"; menu-vless; exit 0; fi
+echo "     Check Detail XRAY VLESS"
+echo "---------------------------------"
+echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
   e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
   echo "$((i+1))) $u $e"
 done
-
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
 user="${USERS[$((CLIENT_NUMBER-1))]}"
 [ -z "$user" ] && menu-vless
-
 domain=$(cat /etc/xray/domain)
-# UUID VLESS seng bener: sakdurunge ### user neng blok #vless
-uuid=$(grep -B2 "^### ${user} " /etc/xray/config.json | grep '"id"' | head -1 | cut -d '"' -f 4)
 exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
-
+uuid=$(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+for idx in [1,4]:
+    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+        if c.get('email')=='$user': print(c.get('id','')); exit(0)
+")
+# === CEK IP AKTIF - CARA BARU, UDU LOG LAWAS! ===
+IP_AKTIF=$(ss -tn state established '( sport = :443 )' | awk '{print $5}' | cut -d: -f1 | sort -u)
+echo "$IP_AKTIF" | while read IP; do
+  [ -z "$IP" ] && continue
+  grep "$IP" /var/log/nginx/access.log 2>/dev/null | tail -n 5 | grep -q "$user" && echo "[REAL] $IP"
+done | sort -u > /tmp/ip_aktif.txt
+DEVICE=$(wc -l < /tmp/ip_aktif.txt)
 vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&encryption=none&type=ws&sni=${domain}#${user}"
 vlesslink2="vless://${uuid}@${domain}:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
 vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=${domain}#${user}"
-
 clear
 echo -e "=========== XRAY/VLESS ==========="
 echo -e "Remarks       : ${user}"
 echo -e "Expired On    : $exp"
 echo -e "Domain        : ${domain}"
-echo -e "Port none TLS : 80, 8080, 8880, 2082, 2086, 2052, 2095"
-echo -e "Port TLS      : 443, 8443, 2087, 2096, 2053, 2083"
-echo -e "Port gRPC     : 443"
 echo -e "id            : ${uuid}"
-echo -e "Encryption    : none"
-echo -e "Network       : ws"
-echo -e "Path          : /vless"
-echo -e "ServiceName   : vless-grpc"
+echo -e "Device : $DEVICE DEVICE"
+cat /tmp/ip_aktif.txt
 echo -e "=================================="
-echo -e "Link TLS : "
-echo -e "${vlesslink1}"
+echo -e "Link TLS : ${vlesslink1}"
 echo -e "=================================="
-echo -e "Link none TLS : "
-echo -e "${vlesslink2}"
+echo -e "Link none TLS : ${vlesslink2}"
 echo -e "=================================="
-echo -e "Link GRPC : "
-echo -e "${vlesslink3}"
+echo -e "Link GRPC : ${vlesslink3}"
 echo -e "=================================="
-echo -e " Sc By Arya Blitar"
 read -n 1 -s -r -p "Press any key to back on menu"
 menu-vless
 }
@@ -192,7 +192,7 @@ echo ""
 read -p " Select menu : " opt
 echo -e ""
 case $opt in
-1) clear ; add-vless ;;
+1) clear ; create_vless ;;
 2) clear ; trialvless ;;
 3) clear ; delws;;
 4) clear ; renewws ;;

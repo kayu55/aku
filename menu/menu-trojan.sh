@@ -112,14 +112,22 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
 
 function user-trojan() {
 clear
-mapfile -t USERS < <(grep -A1 '^#trojanws$' /etc/xray/config.json | grep '^### ' | awk '{print $2}' | sort -u)
+mapfile -t USERS < <(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+seen=set()
+for idx in [3,6]:
+    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+        e=c.get('email')
+        if e and e not in seen:
+            seen.add(e); print(e)
+" | sort -u)
 NUMBER=${#USERS[@]}
-if [[ $NUMBER == '0' ]]; then
-  echo "Gak ono user TROJAN!"
-  read -n 1 -s -r -p "Press any key"
-  menu-trojan; exit 0
-fi
+if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; read -n 1 -s -r -p "Press any key"; menu-trojan; exit 0; fi
 echo "     Check Detail XRAY TROJAN"
+echo "---------------------------------"
 echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
@@ -130,18 +138,32 @@ read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
 user="${USERS[$((CLIENT_NUMBER-1))]}"
 [ -z "$user" ] && menu-trojan
 domain=$(cat /etc/xray/domain)
-uuid=$(grep -B2 "^### ${user} " /etc/xray/config.json | grep '"password"' | head -1 | cut -d '"' -f 4)
 exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
+uuid=$(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+for idx in [3,6]:
+    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+        if c.get('email')=='$user': print(c.get('password','')); exit(0)
+")
+IP_AKTIF=$(ss -tn state established '( sport = :443 )' | awk '{print $5}' | cut -d: -f1 | sort -u)
+echo "$IP_AKTIF" | while read IP; do
+  [ -z "$IP" ] && continue
+  grep "$IP" /var/log/nginx/access.log 2>/dev/null | tail -n 5 | grep -q "$user" && echo "[REAL] $IP"
+done | sort -u > /tmp/ip_aktif.txt
+DEVICE=$(wc -l < /tmp/ip_aktif.txt)
 trojanlink="trojan://${uuid}@bug.com:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
 trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
 clear
 echo -e "=========== XRAY/TROJAN ==========="
-echo -e "Remarks     : ${user}"
-echo -e "Expired On  : $exp"
-echo -e "Domain      : ${domain}"
-echo -e "Key         : ${uuid}"
-echo -e "Path        : /trojan-ws"
-echo -e "ServiceName : trojan-grpc"
+echo -e "Remarks       : ${user}"
+echo -e "Expired On    : $exp"
+echo -e "Domain        : ${domain}"
+echo -e "password      : ${uuid}"
+echo -e "Device : $DEVICE DEVICE"
+cat /tmp/ip_aktif.txt
 echo -e "=================================="
 echo -e "Link WS : ${trojanlink}"
 echo -e "=================================="
@@ -168,7 +190,7 @@ echo ""
 read -p " Select menu : " opt
 echo -e ""
 case $opt in
-1) clear ; add-tr ;;
+1) clear ; create_trojan ;;
 2) clear ; trialtrojan ;;
 3) clear ; delws ;;
 4) clear ; renewws;;
