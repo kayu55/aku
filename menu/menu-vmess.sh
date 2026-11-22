@@ -11,100 +11,150 @@ clear
 clear
 function renewws(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
-	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
-		clear
-        echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "\E[42;1;37m           Perbarui Vmess          \E[0m"
-        echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-		echo ""
-		echo "You have no existing clients!"
-		echo ""
-		echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo ""
-        read -n 1 -s -r -p "Press any key to back on menu"
-        menu
-	fi
-
-	clear
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "\E[42;1;37m           Perbarui Vmess          \E[0m"
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-  	grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
-    echo ""
-    red "tap enter to go back"
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-	read -rp "Input Username : " user
-    if [ -z $user ]; then
-    menu
-    else
-    read -p "Expired (days): " masaaktif
-    exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-    now=$(date +%Y-%m-%d)
-    d1=$(date -d "$exp" +%s)
-    d2=$(date -d "$now" +%s)
-    exp2=$(( (d1 - d2) / 86400 ))
-    exp3=$(($exp2 + $masaaktif))
-    exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-    sed -i "/### $user/c\### $user $exp4" /etc/xray/config.json
-    systemctl restart xray > /dev/null 2>&1
-    clear
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo " Akun XRAY Berhasil Diperpanjang"
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    echo " Client Name : $user"
-    echo " Expired On  : $exp4 👍"
-    echo ""
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    menu
+# LIST MUNG VMESS TOK - inbound [2,5] podo karo user-ws!
+mapfile -t USERS < <(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+seen=set()
+for idx in [2,5]:
+    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+        e=c.get('email')
+        if e and e not in seen:
+            seen.add(e); print(e)
+" | sort -u)
+NUMBER_OF_CLIENTS=${#USERS[@]}
+if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
+  echo "You have no existing clients!"
+  read -n 1 -s -r -p "Press any key to back on menu"
+  menu
+  return
+fi
+clear
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "\E[42;1;37m           Perbarui Vmess          \E[0m"
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+for u in "${USERS[@]}"; do
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  echo -e "$u $e" | column -t
+done
+echo ""
+red "tap enter to go back"
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+read -rp "Input Username : " user
+if [ -z $user ]; then menu; return; fi
+# VALIDASI: nek user dudu VMESS, tolak! Ojo diterusne!
+if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
+  echo ""; echo "User $user dudu VMESS! Gagal renew!"
+  sleep 2; menu; return
+fi
+read -p "Expired (days): " masaaktif
+exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
+now=$(date +%Y-%m-%d)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+exp3=$(($exp2 + $masaaktif))
+exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
+# Update mung ### line seng duweke user iki tok (VMESS tok, mergo user e wes divalidasi VMESS)
+sed -i "/^### $user /c\### $user $exp4" /etc/xray/config.json
+systemctl restart xray > /dev/null 2>&1
+clear
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo " Akun XRAY Berhasil Diperpanjang"
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+echo " Client Name : $user"
+echo " Expired On  : $exp4 👍"
+echo ""
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
   fi
 }
 function delws() {
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
-	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
-		echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "\E[42;1;37m       Delete Vmess Account        \E[0m"
-        echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-		echo ""
-		echo "You have no existing clients!"
-		echo ""
-		echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-		read -n 1 -s -r -p "Press any key to back on menu"
-        menu
-	fi
-
-	clear
-	echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "\E[42;1;37m       Delete Vmess Account        \E[0m"
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo "  User       Expired  " 
-	echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-	grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
-    echo ""
-    red "tap enter to go back"
-    echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-	read -rp "Input Username : " user
-    if [ -z $user ]; then
-    menu
-    else
-    exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-    sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-    systemctl restart xray > /dev/null 2>&1
-    clear
-    echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e " XRAY Account Deleted Successfully"
-    echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo " Client Name : $user"
-    echo " Expired On  : $exp"
-    echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    
+mapfile -t USERS < <(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+seen=set()
+for idx in [2,5]:
+    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+        e=c.get('email')
+        if e and e not in seen:
+            seen.add(e); print(e)
+" | sort -u)
+NUMBER_OF_CLIENTS=${#USERS[@]}
+if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
+  echo "You have no existing clients!"
+  read -n 1 -s -r -p "Press any key to back on menu"
+  menu; return
+fi
+clear
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "\E[42;1;37m       Delete Vmess Account        \E[0m"
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "  User       Expired  "
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+for u in "${USERS[@]}"; do
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  echo -e "$u $e" | column -t
+done
+echo ""
+red "tap enter to go back"
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+read -rp "Input Username : " user
+if [ -z $user ]; then menu; return; fi
+# VALIDASI: mung VMESS tok seng iso dihapus!
+if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
+  echo ""; echo "User $user dudu VMESS! Gagal hapus!"
+  sleep 2; menu; return
+fi
+exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
+# HAPUS AMAN: mung hapus client neng inbound [2,5] tok, via python!
+# Ojo gawe sed range /},{/d - iku seng marai ngebuk!
+python3 - "$user" << 'PYEOF'
+import sys, re
+user=sys.argv[1]
+lines=open('/etc/xray/config.json').read().splitlines()
+out=[]
+inbound_idx=-1
+skip=False
+for i,line in enumerate(lines):
+    # Itung inbound: tiap ketemu "protocol" berarti inbound anyar
+    if '"protocol"' in line:
+        inbound_idx+=1
+    s=line.strip()
+    # Nek ketemu ### user iki lan inbound e VMESS [2,5], mulai skip
+    if s.startswith('### ') and s.split()[1]==user if len(s.split())>1 else False:
+        if inbound_idx in [2,5]:
+            skip=True
+            continue
+    if skip:
+        # Skip nganti ketemu tutup client "}," utawa "}"
+        # Client VMESS nduwe 2-3 baris: {"id":...}, {"id":..., "alterId":...}
+        # Nek baris e ngandut "}," utawa "}" tok, berarti baris terakhir client -> mandek skip
+        if '}' in line:
+            skip=False
+        continue
+    out.append(line)
+open('/etc/xray/config.json','w').write('\n'.join(out)+'\n')
+PYEOF
+systemctl restart xray > /dev/null 2>&1
+clear
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e " XRAY Account Deleted Successfully"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo " Client Name : $user"
+echo " Expired On  : $exp"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu "
     menu
     fi
 }
