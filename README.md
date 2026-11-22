@@ -1128,3 +1128,7 @@ chmod +x /usr/bin/babi
 cp /usr/bin/babi /usr/bin/babi-final-bagus
 babi
 ````
+## cek geo
+````
+ls -lh /usr/local/share/xray/
+````
