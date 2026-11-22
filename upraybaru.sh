@@ -18,6 +18,7 @@ rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/systemd/system/xray.service
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/xray/config.json
+rm -fr /etc/systemd/system/xray.service
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -163,7 +164,6 @@ mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 # Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
-vmess1=$((RANDOM + 10000))
 trojanws=$((RANDOM + 10000))
 vlessgrpc=$((RANDOM + 10000))
 vmessgrpc=$((RANDOM + 10000))
@@ -171,151 +171,116 @@ trojangrpc=$((RANDOM + 10000))
 
 # nginx xray.conf
 rm -fr /etc/nginx/conf.d/xray.conf
-# nginx xray.conf - VERO IP ASLI - WES RESIK, GAK ONO SED MANEH!
-cat > /etc/nginx/conf.d/xray.conf <<EOF
-server {
-    listen 80;
-    listen [::]:80;
-    listen 8880;
-    listen [::]:8880;
-    listen 2082;
-    listen [::]:2082;
-    listen 8080;
-    listen [::]:8080;
-    listen 2052;
-    listen [::]:2052;
-    listen 2095;
-    listen [::]:2095;
-    listen 2086;
-    listen [::]:2086;
-    listen 443 ssl http2 reuseport;
-    listen [::]:443 http2 reuseport;
-    listen 8443 ssl http2 reuseport;
-    listen [::]:8443 http2 reuseport;
-    listen 2096 ssl http2 reuseport;
-    listen [::]:2096 http2 reuseport;
-    listen 2087 ssl http2 reuseport;
-    listen [::]:2087 http2 reuseport;
-    listen 2053 ssl http2 reuseport;
-    listen [::]:2053 http2 reuseport;
-    listen 2083 ssl http2 reuseport;
-    listen [::]:2083 http2 reuseport;
-    server_name 127.0.0.1 localhost;
-    ssl_certificate /etc/xray/xray.crt;
-    ssl_certificate_key /etc/xray/xray.key;
-    ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
-    ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
-    root /home/vps/public_html;
-
-    # --- BENAKNO IP ASLI SOKO CLOUDFLARE ---
-    set_real_ip_from 103.21.244.0/22;
-    set_real_ip_from 103.22.200.0/22;
-    set_real_ip_from 103.31.4.0/22;
-    set_real_ip_from 104.16.0.0/13;
-    set_real_ip_from 104.24.0.0/14;
-    set_real_ip_from 108.162.192.0/18;
-    set_real_ip_from 131.0.72.0/22;
-    set_real_ip_from 141.101.64.0/18;
-    set_real_ip_from 162.158.0.0/15;
-    set_real_ip_from 172.64.0.0/13;
-    set_real_ip_from 173.245.48.0/20;
-    set_real_ip_from 188.114.96.0/20;
-    set_real_ip_from 197.234.240.0/22;
-    set_real_ip_from 198.41.128.0/17;
-    real_ip_header CF-Connecting-IP;
-    real_ip_recursive on;
-
-    access_log /var/log/nginx/xray_real.log combined;
-
-    set \$realip \$http_cf_connecting_ip;
-    if (\$http_cf_connecting_ip = "") {
-        set \$realip \$remote_addr;
-    }
-
-    location / {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:700;
-        proxy_http_version 1.1;
-        proxy_set_header X-Real-IP \$realip;
-        proxy_set_header X-Forwarded-For \$realip;
-        proxy_set_header CF-Connecting-IP \$realip;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
-    }
-    location = /vless {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:$vless;
-        proxy_http_version 1.1;
-        proxy_set_header X-Real-IP \$realip;
-        proxy_set_header X-Forwarded-For \$realip;
-        proxy_set_header CF-Connecting-IP \$realip;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
-    }
-    location = /vmess {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:$vmess;
-        proxy_http_version 1.1;
-        proxy_set_header X-Real-IP \$realip;
-        proxy_set_header X-Forwarded-For \$realip;
-        proxy_set_header CF-Connecting-IP \$realip;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
-    }
-    location = /servlets/mms {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:$vmess1;
-        proxy_http_version 1.1;
-        proxy_set_header X-Real-IP \$realip;
-        proxy_set_header X-Forwarded-For \$realip;
-        proxy_set_header CF-Connecting-IP \$realip;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
-    }
-    location = /trojan-ws {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:$trojanws;
-        proxy_http_version 1.1;
-        proxy_set_header X-Real-IP \$realip;
-        proxy_set_header X-Forwarded-For \$realip;
-        proxy_set_header CF-Connecting-IP \$realip;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
-    }
-    location ^~ /vless-grpc {
-        proxy_redirect off;
-        grpc_set_header X-Real-IP \$realip;
-        grpc_set_header X-Forwarded-For \$realip;
-        grpc_set_header CF-Connecting-IP \$realip;
-        grpc_set_header Host \$http_host;
-        grpc_pass grpc://127.0.0.1:$vlessgrpc;
-    }
-    location ^~ /vmess-grpc {
-        proxy_redirect off;
-        grpc_set_header X-Real-IP \$realip;
-        grpc_set_header X-Forwarded-For \$realip;
-        grpc_set_header CF-Connecting-IP \$realip;
-        grpc_set_header Host \$http_host;
-        grpc_pass grpc://127.0.0.1:$vmessgrpc;
-    }
-    location ^~ /trojan-grpc {
-        proxy_redirect off;
-        grpc_set_header X-Real-IP \$realip;
-        grpc_set_header X-Forwarded-For \$realip;
-        grpc_set_header CF-Connecting-IP \$realip;
-        grpc_set_header Host \$http_host;
-        grpc_pass grpc://127.0.0.1:$trojangrpc;
-    }
-}
+cat >/etc/nginx/conf.d/xray.conf <<EOF
+    server {
+             listen 80;
+             listen [::]:80;
+             listen 8880;
+             listen [::]:8880;
+             listen 2082;
+             listen [::]:2082;
+             listen 8080;
+             listen [::]:8080;
+             listen 2052;
+             listen [::]:2052;
+             listen 2095;
+             listen [::]:2095;
+             listen 2086;
+             listen [::]:2086;
+             listen 443 ssl http2 reuseport;
+             listen [::]:443 http2 reuseport;	
+             listen 8443 ssl http2 reuseport;
+             listen [::]:8443 http2 reuseport;	
+             listen 2096 ssl http2 reuseport;
+             listen [::]:2096 http2 reuseport;	
+             listen 2087 ssl http2 reuseport;
+             listen [::]:2087 http2 reuseport;	
+             listen 2053 ssl http2 reuseport;
+             listen [::]:2053 http2 reuseport;	
+             listen 2083 ssl http2 reuseport;
+             listen [::]:2083 http2 reuseport;	
+             server_name 127.0.0.1 localhost;
+             ssl_certificate /etc/xray/xray.crt;
+             ssl_certificate_key /etc/xray/xray.key;
+             ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
+             ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+             root /home/vps/public_html;
+        }
 EOF
+sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:700'';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-# Tes langsung, nek error ketok neng kene
-nginx -t
+sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+
+sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/conf.d/xray.conf
+sed -i '$ i{' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 # set uuid xray
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -377,6 +342,28 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
+### jal 2026-11-23
+},{"id": "a0c63481-b304-41bd-89c7-4b693f6b2be2","alterId": 0,"email": "jal"
+### kowe 2026-11-23
+},{"id": "0784d4b6-2ab9-4809-8736-4a4238fb77b9","alterId": 0,"email": "kowe"
+### TrialVM112 2026-11-23
+},{"id": "da6c0e08-e068-4758-bc57-12fe0f4be3ad","alterId": 0,"email": "TrialVM112"
+### ilp3 2026-12-19
+},{"id": "4f36ff34-967f-47b5-a759-dedddddccdac","alterId": 0,"email": "ilp3"
+### ni 2026-11-29
+},{"id": "1fa20d1e-03d5-4e97-b6c0-1706244b37f5","alterId": 0,"email": "ni"
+### lanjur 2026-12-14
+},{"id": "238f0f61-45df-44a2-b3a3-1f7f434504be","alterId": 0,"email": "lanjur"
+### pacar 2026-12-03
+},{"id": "cb639415-00e6-4076-83b7-da220b44daed","alterId": 0,"email": "pacar"
+### kirimVM346 2026-12-10
+},{"id": "3734e9c3-ea19-4354-9a99-555b2fc4aba5","alterId": 0,"email": "kirimVM346"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
              }
           ]
        },
@@ -438,6 +425,28 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
+### jal 2026-11-23
+},{"id": "a0c63481-b304-41bd-89c7-4b693f6b2be2","alterId": 0,"email": "jal"
+### kowe 2026-11-23
+},{"id": "0784d4b6-2ab9-4809-8736-4a4238fb77b9","alterId": 0,"email": "kowe"
+### TrialVM112 2026-11-23
+},{"id": "da6c0e08-e068-4758-bc57-12fe0f4be3ad","alterId": 0,"email": "TrialVM112"
+### ilp3 2026-12-19
+},{"id": "4f36ff34-967f-47b5-a759-dedddddccdac","alterId": 0,"email": "ilp3"
+### ni 2026-11-29
+},{"id": "1fa20d1e-03d5-4e97-b6c0-1706244b37f5","alterId": 0,"email": "ni"
+### lanjur 2026-12-14
+},{"id": "238f0f61-45df-44a2-b3a3-1f7f434504be","alterId": 0,"email": "lanjur"
+### pacar 2026-12-03
+},{"id": "cb639415-00e6-4076-83b7-da220b44daed","alterId": 0,"email": "pacar"
+### kirimVM346 2026-12-10
+},{"id": "3734e9c3-ea19-4354-9a99-555b2fc4aba5","alterId": 0,"email": "kirimVM346"
+### nurulVM703 2026-12-02
+},{"id": "fbf92465-8355-4913-bcd0-dda18f58e832","alterId": 0,"email": "nurulVM703"
+### JeberVM360 2026-11-25
+},{"id": "3c81a191-c591-4007-a3b5-6cf658d582c3","alterId": 0,"email": "JeberVM360"
+### DanVM616 2026-12-01
+},{"id": "6a80ca87-3897-4666-b019-48dff93a5222","alterId": 0,"email": "DanVM616"
              }
           ]
        },
