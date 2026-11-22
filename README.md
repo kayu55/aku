@@ -1132,3 +1132,40 @@ babi
 ````
 ls -lh /usr/local/share/xray/
 ````
+### pekil ben enteng
+````
+# 1. BENERNO BADVPN - 500 dadi 1000, gak dobel
+pkill badvpn-udpgw; sleep 2
+screen -wipe
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
+
+# 2. BENERNO RC.LOCAL - Ben bar reboot BadVPN tetep urip
+cat > /etc/rc.local <<'EOF'
+#!/bin/sh -e
+iptables -I INPUT -p udp --dport 5300 -j ACCEPT
+iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
+systemctl restart netfilter-persistent
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
+exit 0
+EOF
+chmod +x /etc/rc.local
+
+# 3. BENERNO TORRENT - Hapus seng abot, ganti seng enteng
+iptables -F FORWARD
+iptables -A FORWARD -p tcp --dport 6881:6889 -j DROP
+iptables -A FORWARD -p udp --dport 6881:6889 -j DROP
+iptables -A FORWARD -p tcp --dport 6969 -j DROP
+iptables -A FORWARD -p udp --dport 6969 -j DROP
+iptables-save > /etc/iptables.up.rules
+netfilter-persistent save
+
+# 4. CEK!
+echo "=== BADVPN ==="
+ps aux | grep badvpn | grep -v grep
+echo "=== TORRENT ==="
+iptables -L FORWARD -n
+````
