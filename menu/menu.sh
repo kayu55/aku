@@ -145,7 +145,7 @@ echo -e "${BICyan} │    ${ICyan}[${ORANGE}03${ICyan}]${NC} • VLESS      "   
 echo -e "${BICyan} │    ${ICyan}[${ORANGE}04${ICyan}]${NC} • TROJAN     "  "${BICyan}│    ${ICyan}[${ORANGE}11${ICyan}] ${NC}• UPDATE MENU       ${BICyan}│ ${NC}      "
 echo -e "${BICyan} │    ${ICyan}[${ORANGE}05${ICyan}]${NC} • DOMAIN     "     "${BICyan}│    ${ICyan}[${ORANGE}12${ICyan}]${NC} • CEK LOG XRAY      ${BICyan}│${NC}"
 echo -e "${BICyan} │    ${ICyan}[${ORANGE}06${ICyan}]${NC} • BACKUP   "  "  ${BICyan}│    ${ICyan}[${ORANGE}13${ICyan}]${NC} • MENU SYSTEM       ${BICyan}│${NC}"
-echo -e "${BICyan} │    ${ICyan}[${ORANGE}07${ICyan}]${NC} • SPEEDTEST  "  "${BICyan}│    ${ICyan}[${ORANGE}14${ICyan}]${NC} • EXIT              ${BICyan}│${NC}"
+echo -e "${BICyan} │    ${ICyan}[${ORANGE}07${ICyan}]${NC} • SPEEDTEST  "  "${BICyan}│    ${ICyan}[${ORANGE}14${ICyan}]${NC} • CEK GRAFIK        ${BICyan}│${NC}"
 echo -e " ${BICyan}╰═════════════════════════════════════════════════════╯${NC}"
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "${GREEN}  ${RED}▁ ${CYAN}▂ ${GREEN}▄ ${ORANGE}▅${PINK} ▆${GREEN} ▇ ${RED}█${BLUE}𒆜${CYAN} ༻${NC}  SCRIPT ARYA BLITAR ${BLUE}༺ ${RED}𒆜${GREEN}█ ${ORANGE}▇ ${CYAN}▆ ${RED}▅ ${GREEN}▄ ${ORANGE}▂ ${PINK}▁\E[0m"
@@ -171,7 +171,7 @@ case $opt in
 11) clear ; update ;;
 12) clear ; babi ;;
 13) clear ; menu-set ;;
-14) clear ; exit ;;
+14) clear ; cekvps ;;
 0) clear ; menu ;;
 *) echo -e "" ; echo "Press any key to back exit" ; sleep 1 ; exit ;;
 esac
