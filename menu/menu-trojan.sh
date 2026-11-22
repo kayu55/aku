@@ -59,7 +59,7 @@ else
 fi
 if [ -z "$user" ]; then menu; return; fi
 if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
-  echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu-trojan; return
+  echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu; return
 fi
 read -p "Expired (days): " masaaktif
 exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
@@ -82,7 +82,7 @@ echo ""
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
-  menu-trojan
+menu-trojan
   #fi
 }
 
@@ -167,7 +167,7 @@ echo " Expired On  : $exp"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
-    menu-trojan
+menu-trojan
     #fi
 }
 
