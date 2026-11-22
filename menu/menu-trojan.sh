@@ -11,20 +11,19 @@ clear
 clear
 function renewws(){
 clear
-# MUNG TROJAN TOK - [3,6] - ojo diganti!
+# ANTI-BUG: moco by protocol=="trojan", OJO by index [3,6]!
 mapfile -t USERS < <(python3 -c "
 import json
 txt=open('/etc/xray/config.json').read().splitlines()
 clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
 j=json.loads(clean)
 seen=set()
-for idx in [3,6]:
-    try:
-        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-            e=c.get('email')
-            if e and e not in seen:
-                seen.add(e); print(e)
-    except: pass
+for ib in j['inbounds']:
+    if ib.get('protocol')!='trojan': continue
+    for c in ib.get('settings',{}).get('clients',[]):
+        e=c.get('email')
+        if e and e not in seen:
+            seen.add(e); print(e)
 " | sort -u)
 NUMBER=${#USERS[@]}
 if [[ $NUMBER == '0' ]]; then
@@ -44,8 +43,8 @@ echo ""
 echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
-  printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}' | tr -d '\r')
+  printf "%-4s %-20s %s\n" "$((i+1))) " "$u" "$e"
 done
 echo ""
 red "tap enter to go back"
@@ -94,13 +93,12 @@ txt=open('/etc/xray/config.json').read().splitlines()
 clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
 j=json.loads(clean)
 seen=set()
-for idx in [3,6]:
-    try:
-        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-            e=c.get('email')
-            if e and e not in seen:
-                seen.add(e); print(e)
-    except: pass
+for ib in j['inbounds']:
+    if ib.get('protocol')!='trojan': continue
+    for c in ib.get('settings',{}).get('clients',[]):
+        e=c.get('email')
+        if e and e not in seen:
+            seen.add(e); print(e)
 " | sort -u)
 NUMBER=${#USERS[@]}
 if [[ $NUMBER == '0' ]]; then
@@ -119,8 +117,8 @@ echo "     No  User   Expired  "
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
-  printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}' | tr -d '\r')
+  printf "%-4s %-20s %s\n" "$((i+1))) " "$u" "$e"
 done
 echo ""
 red "tap enter to go back"
@@ -137,18 +135,19 @@ if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
   echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu; return
 fi
 exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
-# Hapus AMAN mung inbound [3,6] tok!
+# Hapus AMAN: cek protocol trojan, ojo index!
 python3 - "$user" << 'PYEOF'
-import sys
+import sys, json
 user=sys.argv[1]
 lines=open('/etc/xray/config.json').read().splitlines()
-out=[]; inbound_idx=-1; skip=False
+out=[]; cur_proto=""; skip=False
 for line in lines:
     if '"protocol"' in line:
-        inbound_idx+=1
+        # ambil nama protocol e: "trojan" / "vmess" / "vless"
+        cur_proto=line.split('"')[3] if line.count('"')>=4 else ""
     s=line.strip()
     if s.startswith('### ') and len(s.split())>1 and s.split()[1]==user:
-        if inbound_idx in [3,6]:
+        if cur_proto=='trojan':
             skip=True; continue
     if skip:
         if '}' in line:
@@ -173,31 +172,34 @@ menu-trojan
 
 function user-trojan() {
 clear
+# ANTI-BUG: moco by protocol=="trojan", OJO by index [3,6]!
+# Mergo index mu geser, [3] dadi VMESS, makane metu aaaVM412 wingi!
 mapfile -t USERS < <(python3 -c "
 import json
 txt=open('/etc/xray/config.json').read().splitlines()
 clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
 j=json.loads(clean)
 seen=set()
-for idx in [3,6]:
-    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+for ib in j['inbounds']:
+    if ib.get('protocol')!='trojan': continue
+    for c in ib.get('settings',{}).get('clients',[]):
         e=c.get('email')
         if e and e not in seen:
             seen.add(e); print(e)
 " | sort -u)
 NUMBER=${#USERS[@]}
-if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; read -n 1 -s -r -p "Press any key"; menu-trojan; exit 0; fi
+if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; read -n 1 -s -r -p "Press any key"; menu-trojan; return; fi
 echo "     Check Detail XRAY TROJAN"
 echo "---------------------------------"
 echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
-  echo "$((i+1))) $u $e"
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}' | tr -d '\r')
+  printf "%-4s %-20s %s\n" "$((i+1))) " "$u" "$e"
 done
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-[ -z "$user" ] && menu-trojan
+[ -z "$user" ] && menu-trojan; return
 domain=$(cat /etc/xray/domain)
 exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
 uuid=$(python3 -c "
@@ -205,8 +207,9 @@ import json
 txt=open('/etc/xray/config.json').read().splitlines()
 clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
 j=json.loads(clean)
-for idx in [3,6]:
-    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+for ib in j['inbounds']:
+    if ib.get('protocol')!='trojan': continue
+    for c in ib.get('settings',{}).get('clients',[]):
         if c.get('email')=='$user': print(c.get('password','')); exit(0)
 ")
 IP_AKTIF=$(ss -tn state established '( sport = :443 )' | awk '{print $5}' | cut -d: -f1 | sort -u)
