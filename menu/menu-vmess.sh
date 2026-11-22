@@ -72,9 +72,9 @@ echo ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
-menu
-  fi
+menu-vmess
 }
+
 function delws() {
 clear
 mapfile -t USERS < <(python3 -c "
@@ -156,7 +156,7 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu "
     menu
-    fi
+    #fi
 }
 
 function user-ws(){
