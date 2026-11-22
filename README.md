@@ -1169,3 +1169,88 @@ ps aux | grep badvpn | grep -v grep
 echo "=== TORRENT ==="
 iptables -L FORWARD -n
 ````
+## cekssh
+````
+cat > /usr/local/bin/cekssh <<'EOS'
+#!/bin/bash
+UK="\033[0;34m"; WHITE="\033[1;37m"; NC='\033[0m'
+if [ -e "/var/log/auth.log" ]; then LOG="/var/log/auth.log"; fi
+if [ -e "/var/log/secure" ]; then LOG="/var/log/secure"; fi
+autokill_cek() {
+  > /tmp/cekssh-all.txt
+  data=( `ps aux | grep -i dropbear | awk '{print $2}'`);
+  cat $LOG 2>/dev/null | grep -i dropbear | grep -i "Password auth succeeded" > /tmp/login-db.txt;
+  for PID in "${data[@]}"; do
+    cat /tmp/login-db.txt | grep "dropbear\[$PID\]" > /tmp/login-db-pid.txt;
+    NUM=`cat /tmp/login-db-pid.txt | wc -l`;
+    USER=`cat /tmp/login-db-pid.txt | awk -F"for " '{print $2}' | awk '{print $1}'`;
+    IP=`cat /tmp/login-db-pid.txt | awk -F"for " '{print $2}' | awk '{print $3}'`;
+    if [ $NUM -eq 1 ] && [ -n "$USER" ]; then echo "$USER $IP DROPBEAR $PID" >> /tmp/cekssh-all.txt; fi
+  done
+  cat $LOG 2>/dev/null | grep -i sshd | grep -i "Accepted password for" > /tmp/login-db.txt
+  data=( `ps aux | grep "\[priv\]" | sort -k 72 | awk '{print $2}'`);
+  for PID in "${data[@]}"; do
+    cat /tmp/login-db.txt | grep "sshd\[$PID\]" > /tmp/login-db-pid.txt;
+    NUM=`cat /tmp/login-db-pid.txt | wc -l`;
+    USER=`cat /tmp/login-db-pid.txt | awk -F"for " '{print $2}' | awk '{print $1}'`;
+    IP=`cat /tmp/login-db-pid.txt | awk -F"for " '{print $2}' | awk '{print $3}'`;
+    if [ $NUM -eq 1 ] && [ -n "$USER" ]; then echo "$USER $IP SSH $PID" >> /tmp/cekssh-all.txt; fi
+  done
+}
+tampil() {
+  clear; echo " "; echo " "; autokill_cek
+  echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
+  echo -e "  ${WHITE}        Memeriksa login Dropbear ${NC}"
+  echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+  grep DROPBEAR /tmp/cekssh-all.txt 2>/dev/null | awk '{print $4" - "$1" - "$2}' || echo "Gak ono seng login Dropbear"
+  echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+  echo " "
+  echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
+  echo -e "  ${WHITE}        Memeriksa login OpenSSH ${NC}"
+  echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+  grep " SSH " /tmp/cekssh-all.txt 2>/dev/null | awk '{print $4" - "$1" - "$2}' || echo "Gak ono seng login SSH"
+  echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+  echo ""
+  echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
+  echo -e "  ${WHITE}  USER | JUMLAH SESI (HP) | STATUS ${NC}"
+  echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+  for U in $(awk '{print $1}' /tmp/cekssh-all.txt 2>/dev/null | sort -u); do
+    C=$(grep "^$U " /tmp/cekssh-all.txt | wc -l)
+    ST=$(passwd -S $U 2>/dev/null | awk '{print $2}')
+    if [ "$ST" == "L" ]; then S="KEKUNCI"; else S="AKTIF"; fi
+    echo "$U | $C HP | $S"
+  done
+  if [ ! -s /tmp/cekssh-all.txt ]; then echo "Gak ono user SSH/Dropbear seng login!"; fi
+  echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+  echo ""; echo -e "\033[0;33m┌──────────────────────────────────────────┐\033[0m"
+  echo -e "           Auto Kunci Max 2 HP       "
+  echo -e "\033[0;33m└──────────────────────────────────────────┘\033[0m"
+  echo ""; echo "1. Buka Akun Kekunci"; echo "2. Aktifno Auto Kunci (Tiap 1 Menit)"; echo "3. Pateni Auto Kunci"; echo "0. Balik Menu-Ssh"
+  read -p "Pilih: " PIL
+  case $PIL in
+    1) cat /var/log/autokill-ssh.log 2>/dev/null || echo "Durung ono seng kekunci"; read -p "Jeneng user: " U; usermod -U $U; echo "WES KEBUKA $U!"; sleep 1; cekssh ;;
+    2) (crontab -l 2>/dev/null | grep -v cekssh; echo "*/1 * * * * /usr/local/bin/cekssh cron >/dev/null 2>&1") | crontab -; echo "Auto Kunci AKTIF!"; sleep 1; cekssh ;;
+    3) crontab -l 2>/dev/null | grep -v cekssh | crontab -; echo "Auto Kunci MATI!"; sleep 1; cekssh ;;
+    0) menu-ssh 0 ;;
+    *) cekssh ;;
+  esac
+}
+if [ "$1" == "cron" ]; then
+  autokill_cek
+  for U in $(awk '{print $1}' /tmp/cekssh-all.txt 2>/dev/null | sort -u); do
+    if [ "$U" == "root" ]; then continue; fi
+    C=$(grep "^$U " /tmp/cekssh-all.txt | wc -l)
+    if [ "$C" -gt 2 ]; then
+      echo "[$(date '+%Y-%m-%d %H:%M')] KUNCI $U - Login $C SESI (>2 HP)" >> /var/log/autokill-ssh.log
+      pkill -u $U; killall -u $U 2>/dev/null; usermod -L $U
+    fi
+  done
+  menu-ssh 0
+fi
+tampil
+EOS
+chmod +x /usr/local/bin/cekssh
+(crontab -l 2>/dev/null | grep -v cekssh; echo "*/1 * * * * /usr/local/bin/cekssh cron >/dev/null 2>&1") | crontab -
+echo "BERES! cekssh VERSI BENER Wes Kepasang neng VPS IKI!"
+grep -n "C=\$(grep" /usr/local/bin/cekssh
+````
