@@ -111,8 +111,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
 
 function user-ws(){
 clear
-#MYIP=$(wget -qO- ipv4.icanhazip.com);
-NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2 | sort -u | wc -l)
         if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
                 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
                 echo -e "\E[42;1;37m     Check Detail XRAY Vmess     \E[0m"
@@ -130,7 +129,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
         echo " Press CTRL+C to return"
 		echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo "     No  User   Expired"
-        grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+        grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | sort -u | nl -s ') '
 	    until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
                 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
         echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -139,10 +138,10 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
                         read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
                 fi
         done
-user=$(cat /etc/xray/config.json | grep '^###' | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2 | sort -u | sed -n "${CLIENT_NUMBER}"p)
 domain=$(cat /etc/xray/domain)
-uuid=$(grep "},{" /etc/xray/config.json | cut -b 11-46 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+uuid=$(grep -B 5 "^### ${user} " "/etc/xray/config.json" | grep '"id"' | head -1 | cut -d '"' -f 4)
+exp=$(grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | sort -u | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 asu=`cat<<EOF
       {
       "v": "2",
@@ -188,9 +187,6 @@ grpc=`cat<<EOF
       "tls": "tls"
 }
 EOF`
-vmess_base641=$( base64 -w 0 <<< $vmess_json1)
-vmess_base642=$( base64 -w 0 <<< $vmess_json2)
-vmess_base643=$( base64 -w 0 <<< $vmess_json3)
 vmesslink1="vmess://$(echo $asu | base64 -w 0)"
 vmesslink2="vmess://$(echo $ask | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
