@@ -12,102 +12,163 @@ clear
 
 function renewws(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
-	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
-		clear
-        echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "\E[42;1;37m          Perpanjang Vless         \E[0m"
-        echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-		echo ""
-		echo "You have no existing clients!"
-		echo ""
-		echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo ""
-        read -n 1 -s -r -p "Press any key to back on menu"
-        menu
-	fi
-
-	clear
-	echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "\E[42;1;37m          Perpanjang Vless         \E[0m"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-  	grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
-    echo ""
-    red "tap enter to go back"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-	read -rp "Input Username : " user
-    if [ -z $user ]; then
-    menu
-    else
-    read -p "Expired (days): " masaaktif
-    exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-    now=$(date +%Y-%m-%d)
-    d1=$(date -d "$exp" +%s)
-    d2=$(date -d "$now" +%s)
-    exp2=$(( (d1 - d2) / 86400 ))
-    exp3=$(($exp2 + $masaaktif))
-    exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-    sed -i "/### $user/c\### $user $exp4" /etc/xray/config.json
-    systemctl restart xray > /dev/null 2>&1
-    clear
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo " Akun Vless Berhasil Diperpanjang"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    echo " Client Name : $user"
-    echo " Expired On  : $exp4"
-    echo ""
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    menu
-  fi
+# MUNG VLESS TOK - [1,4] - ojo diganti dadi [2,5]!
+mapfile -t USERS < <(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+seen=set()
+for idx in [1,4]:
+    try:
+        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+            e=c.get('email')
+            if e and e not in seen:
+                seen.add(e); print(e)
+    except: pass
+" | sort -u)
+NUMBER=${#USERS[@]}
+if [[ $NUMBER == '0' ]]; then
+  clear
+  echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "\E[42;1;37m          Perpanjang Vless         \E[0m"
+  echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""; echo "You have no existing clients!"; echo ""
+  echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""; read -n 1 -s -r -p "Press any key to back on menu"; menu; return
+fi
+clear
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "\E[42;1;37m          Perpanjang Vless         \E[0m"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+echo "     No  User   Expired"
+for i in "${!USERS[@]}"; do
+  u="${USERS[$i]}"
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
+done
+echo ""
+red "tap enter to go back"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+read -rp "Input Username / Nomor : " input
+if [ -z "$input" ]; then menu; return; fi
+if [[ "$input" =~ ^[0-9]+$ ]]; then
+  user="${USERS[$((input-1))]}"
+else
+  user="$input"
+fi
+if [ -z "$user" ]; then menu; return; fi
+if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
+  echo ""; echo "User $user dudu VLESS!"; sleep 2; menu; return
+fi
+read -p "Expired (days): " masaaktif
+exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
+now=$(date +%Y-%m-%d)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+exp3=$(($exp2 + $masaaktif))
+exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
+sed -i "/^### $user /c\### $user $exp4" /etc/xray/config.json
+systemctl restart xray > /dev/null 2>&1
+clear
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo " Akun Vless Berhasil Diperpanjang"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+echo " Client Name : $user"
+echo " Expired On  : $exp4"
+echo ""
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
+  #fi
 }
 function delws() {
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
-	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
-		echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e " \E[42;1;37m       Delete XRAY  Account         \E[0m"
-        echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-		echo ""
-		echo "You have no existing clients!"
-		echo ""
-		echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-		read -n 1 -s -r -p "Press any key to back on menu"
-        menu
-	fi
+mapfile -t USERS < <(python3 -c "
+import json
+txt=open('/etc/xray/config.json').read().splitlines()
+clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
+j=json.loads(clean)
+seen=set()
+for idx in [1,4]:
+    try:
+        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
+            e=c.get('email')
+            if e and e not in seen:
+                seen.add(e); print(e)
+    except: pass
+" | sort -u)
+NUMBER=${#USERS[@]}
+if [[ $NUMBER == '0' ]]; then
+  echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e " \E[42;1;37m       Delete XRAY  Account         \E[0m"
+  echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo ""; echo "You have no existing clients!"; echo ""
+  echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  read -n 1 -s -r -p "Press any key to back on menu"; menu; return
+fi
+clear
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "\E[42;1;37m       Delete XRAY Account         \E[0m"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "     No  User   Expired  "
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+for i in "${!USERS[@]}"; do
+  u="${USERS[$i]}"
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
+done
+echo ""
+red "tap enter to go back"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+read -rp "Input Username / Nomor : " input
+if [ -z "$input" ]; then menu; return; fi
+if [[ "$input" =~ ^[0-9]+$ ]]; then
+  user="${USERS[$((input-1))]}"
+else
+  user="$input"
+fi
+if [ -z "$user" ]; then menu; return; fi
+if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
+  echo ""; echo "User $user dudu VLESS!"; sleep 2; menu; return
+fi
+exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
+# Hapus AMAN mung inbound [1,4] tok!
+python3 - "$user" << 'PYEOF'
+import sys
+user=sys.argv[1]
+lines=open('/etc/xray/config.json').read().splitlines()
+out=[]; inbound_idx=-1; skip=False
+for line in lines:
+    if '"protocol"' in line:
+        inbound_idx+=1
+    s=line.strip()
+    if s.startswith('### ') and len(s.split())>1 and s.split()[1]==user:
+        if inbound_idx in [1,4]:
+            skip=True; continue
+    if skip:
+        if '}' in line:
+            skip=False
+        continue
+    out.append(line)
+open('/etc/xray/config.json','w').write('\n'.join(out)+'\n')
+PYEOF
+systemctl restart xray > /dev/null 2>&1
+clear
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e " XRAY Account Deleted Successfully"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo " Client Name : $user"
+echo " Expired On  : $exp"
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
 
-	clear
-	echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "\E[42;1;37m       Delete XRAY Account         \E[0m"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo "  User       Expired  " 
-	echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-	grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
-    echo ""
-    red "tap enter to go back"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-	read -rp "Input Username : " user
-    if [ -z $user ]; then
-    menu
-    else
-    exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-    sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-    systemctl restart xray > /dev/null 2>&1
-    clear
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e " XRAY Account Deleted Successfully"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo " Client Name : $user"
-    echo " Expired On  : $exp"
-    echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    
-    menu
-    fi
 }
 function user-vless(){
 clear
