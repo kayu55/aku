@@ -172,43 +172,18 @@ menu-trojan
 
 function user-trojan() {
 clear
-# MOCO BY MARKER #trojanws / #trojangrpc - podo koyo CREATE mu!
-# Ojo gawe inbounds[3,6] maneh, soale create mu gak gawe iku!
+# CARA BENER: moco by blok protocol=="trojan" + nomer baris!
+# Ojo gawe marker, ojo gawe index [3,6]!
 mapfile -t USERS < <(awk '
-  /#trojanws$/ || /#trojangrpc$/ { in_trojan=1; next }
-  /^#.*(vless|vmess|shadowsocks|vlessgrpc|vmessgrpc|trojanws|trojangrpc)/ {
-    if ($0 !~ /trojan/) in_trojan=0
-    next
+  /"protocol"/ {
+    # Ambil jeneng protocol e: "trojan" / "vmess" / "vless"
+    n=split($0,a,"\"")
+    for(i=1;i<=n;i++) if(a[i]=="protocol") cur=a[i+2]
   }
-  /^#.*$/ && $0 !~ /trojan/ {
-    # Nek ketemu marker liyo, metu teko trojan
-    if ($0 ~ /#vless|#vmess|#ss|#socks/) in_trojan=0
-  }
-  in_trojan && /^### / { print $2 }
+  cur=="trojan" && /^### / { print $2 }
 ' /etc/xray/config.json | sort -u)
-# Fallback: nek awk nduwur gagal, gawe cara simple - moco kabeh ### neng blok trojan
-if [[ ${#USERS[@]} == '0' ]]; then
-  mapfile -t USERS < <(python3 -c "
-import re
-lines=open('/etc/xray/config.json').read().splitlines()
-in_trojan=False
-users=[]
-for l in lines:
-    s=l.strip()
-    if '#trojanws' in s or '#trojangrpc' in s:
-        in_trojan=True; continue
-    if s.startswith('#') and ('vless' in s.lower() or 'vmess' in s.lower()):
-        in_trojan=False; continue
-    if in_trojan and s.startswith('### '):
-        parts=s.split()
-        if len(parts)>=2 and parts[1] not in users:
-            users.append(parts[1])
-for u in sorted(set(users)):
-    print(u)
-")
-fi
 NUMBER=${#USERS[@]}
-if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; echo "Cek: grep -n trojanws /etc/xray/config.json"; read -n 1 -s -r -p "Press any key"; menu-trojan; return; fi
+if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; read -n 1 -s -r -p "Press any key"; menu-trojan; return; fi
 echo "     Check Detail XRAY TROJAN"
 echo "---------------------------------"
 echo "     No  User   Expired"
@@ -219,15 +194,12 @@ for i in "${!USERS[@]}"; do
 done
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-[ -z "$user" ] && menu-trojan; return
+if [ -z "$user" ]; then menu-trojan; return; fi
 domain=$(cat /etc/xray/domain)
 exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
-# PASSWORD: neng baris ngisor ### user mu! Podo koyo CREATE mu!
-# Format create mu: ### user exp  -> baris ngisor e: },{"password": "UUID","email": "user"}
 uuid=$(grep -A1 -w "^### $user" /etc/xray/config.json | grep -o '"password": *"[^"]*"' | head -1 | cut -d'"' -f4)
-# Fallback: nek cara nduwur gagal, golek by email
 if [ -z "$uuid" ]; then
-  uuid=$(grep -B1 -A1 "\"email\": *\"$user\"" /etc/xray/config.json | grep -o '"password": *"[^"]*"' | head -1 | cut -d'"' -f4)
+  uuid=$(grep "\"email\": *\"$user\"" /etc/xray/config.json | grep -o '"password": *"[^"]*"' | head -1 | cut -d'"' -f4)
 fi
 IP_AKTIF=$(ss -tn state established '( sport = :443 )' | awk '{print $5}' | cut -d: -f1 | sort -u)
 echo "$IP_AKTIF" | while read IP; do
