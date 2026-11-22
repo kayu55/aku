@@ -71,7 +71,7 @@ exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "/^### $user /c\### $user $exp4" /etc/xray/config.json
-systemctl restart xray > /dev/null 2>&1
+#systemctl restart xray > /dev/null 2>&1
 clear
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo " Akun Vless Berhasil Diperpanjang"
