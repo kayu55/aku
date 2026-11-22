@@ -151,14 +151,6 @@ wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/m
 #mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-#intall vray 
-echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
-echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
-echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
-echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
-mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
-
 # Random Port Xray
 vless=$((RANDOM + 10000))
 vmess=$((RANDOM + 10000))
@@ -508,7 +500,16 @@ EOF
 # ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
 # ╚══════════════════════════════════════════════════════════════╝
 echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
-if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23; then
+
+# FIX: Ambil versi terbaru dari GitHub, fallback ke v26.11.9
+XRAY_LATEST=$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+if [[ -z "$XRAY_LATEST" ]]; then
+    XRAY_LATEST="v26.11.9"
+fi
+echo -e "[ ${green}INFO${NC} ] Versi Xray Terbaru: $XRAY_LATEST"
+
+# FIX: Install 1x aja, pakai versi terbaru. Jangan pakai --version tanpa nilai!
+if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version "$XRAY_LATEST"; then
     echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
     exit 1
 fi
@@ -517,28 +518,7 @@ if [ ! -x /usr/local/bin/xray ]; then
     exit 1
 fi
 /usr/local/bin/xray version || exit 1
-
-#intall vray 
-echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
-echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
-echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
-echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
-mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
-
-# ╔══════════════════════════════════════════════════════════════╗
-# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
-# ╚══════════════════════════════════════════════════════════════╝
-echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
-if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version; then
-    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
-    exit 1
-fi
-if [ ! -x /usr/local/bin/xray ]; then
-    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
-    exit 1
-fi
-/usr/local/bin/xray version || exit 1
+echo -e "[ ${green}INFO${NC} ] Xray $XRAY_LATEST berhasil dipasang!"
 
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
