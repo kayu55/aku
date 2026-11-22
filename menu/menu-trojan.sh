@@ -109,6 +109,48 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/config.json")
     menu-trojan
     fi
 }
+
+function user-trojan() {
+clear
+mapfile -t USERS < <(grep -A1 '^#trojanws$' /etc/xray/config.json | grep '^### ' | awk '{print $2}' | sort -u)
+NUMBER=${#USERS[@]}
+if [[ $NUMBER == '0' ]]; then
+  echo "Gak ono user TROJAN!"
+  read -n 1 -s -r -p "Press any key"
+  menu-trojan; exit 0
+fi
+echo "     Check Detail XRAY TROJAN"
+echo "     No  User   Expired"
+for i in "${!USERS[@]}"; do
+  u="${USERS[$i]}"
+  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  echo "$((i+1))) $u $e"
+done
+read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
+user="${USERS[$((CLIENT_NUMBER-1))]}"
+[ -z "$user" ] && menu-trojan
+domain=$(cat /etc/xray/domain)
+uuid=$(grep -B2 "^### ${user} " /etc/xray/config.json | grep '"password"' | head -1 | cut -d '"' -f 4)
+exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
+trojanlink="trojan://${uuid}@bug.com:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
+clear
+echo -e "=========== XRAY/TROJAN ==========="
+echo -e "Remarks     : ${user}"
+echo -e "Expired On  : $exp"
+echo -e "Domain      : ${domain}"
+echo -e "Key         : ${uuid}"
+echo -e "Path        : /trojan-ws"
+echo -e "ServiceName : trojan-grpc"
+echo -e "=================================="
+echo -e "Link WS : ${trojanlink}"
+echo -e "=================================="
+echo -e "Link GRPC : ${trojanlink1}"
+echo -e "=================================="
+read -n 1 -s -r -p "Press any key to back on menu"
+menu-trojan
+}
+
 clear
 echo -e "$PURPLE┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$PURPLE│\E[42;1;37m                    TROJAN MENU                  $PURPLE│$NC"
@@ -118,6 +160,7 @@ echo -e "     ${GREEN}[${BIWhite}1${GREEN}] ${NC}Create Trojan Account      "
 echo -e "     ${GREEN}[${BIWhite}2${GREEN}] ${NC}Trial Account Trojan     "
 echo -e "     ${GREEN}[${BIWhite}3${GREEN}] ${NC}Delete Account Trojan      "
 echo -e "     ${GREEN}[${BIWhite}4${GREEN}] ${NC}Renew Account Trojan      "
+echo -e "     ${GREEN}[${BIWhite}4${GREEN}] ${NC}Cek Account Trojan      "
 echo -e " "
 echo -e "     ${GREEN}[${BIWhite}0${GREEN}] Back To Menu     "
 echo -e " ${PURPLE}└──────────────────────────────────────────────┘${NC}"
@@ -125,10 +168,11 @@ echo ""
 read -p " Select menu : " opt
 echo -e ""
 case $opt in
-1) clear ; create_trojan ;;
+1) clear ; add-tr ;;
 2) clear ; trialtrojan ;;
 3) clear ; delws ;;
 4) clear ; renewws;;
+5) clear ; user-trojan;;
 0) clear ; menu ;;
 x) exit ;;
 *) echo -e "" ; echo "Press any key to back on menu" ; sleep 1 ; menu ;;
