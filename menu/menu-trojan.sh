@@ -172,23 +172,43 @@ menu-trojan
 
 function user-trojan() {
 clear
-# ANTI-BUG: moco by protocol=="trojan", OJO by index [3,6]!
-# Mergo index mu geser, [3] dadi VMESS, makane metu aaaVM412 wingi!
-mapfile -t USERS < <(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-seen=set()
-for ib in j['inbounds']:
-    if ib.get('protocol')!='trojan': continue
-    for c in ib.get('settings',{}).get('clients',[]):
-        e=c.get('email')
-        if e and e not in seen:
-            seen.add(e); print(e)
-" | sort -u)
+# MOCO BY MARKER #trojanws / #trojangrpc - podo koyo CREATE mu!
+# Ojo gawe inbounds[3,6] maneh, soale create mu gak gawe iku!
+mapfile -t USERS < <(awk '
+  /#trojanws$/ || /#trojangrpc$/ { in_trojan=1; next }
+  /^#.*(vless|vmess|shadowsocks|vlessgrpc|vmessgrpc|trojanws|trojangrpc)/ {
+    if ($0 !~ /trojan/) in_trojan=0
+    next
+  }
+  /^#.*$/ && $0 !~ /trojan/ {
+    # Nek ketemu marker liyo, metu teko trojan
+    if ($0 ~ /#vless|#vmess|#ss|#socks/) in_trojan=0
+  }
+  in_trojan && /^### / { print $2 }
+' /etc/xray/config.json | sort -u)
+# Fallback: nek awk nduwur gagal, gawe cara simple - moco kabeh ### neng blok trojan
+if [[ ${#USERS[@]} == '0' ]]; then
+  mapfile -t USERS < <(python3 -c "
+import re
+lines=open('/etc/xray/config.json').read().splitlines()
+in_trojan=False
+users=[]
+for l in lines:
+    s=l.strip()
+    if '#trojanws' in s or '#trojangrpc' in s:
+        in_trojan=True; continue
+    if s.startswith('#') and ('vless' in s.lower() or 'vmess' in s.lower()):
+        in_trojan=False; continue
+    if in_trojan and s.startswith('### '):
+        parts=s.split()
+        if len(parts)>=2 and parts[1] not in users:
+            users.append(parts[1])
+for u in sorted(set(users)):
+    print(u)
+")
+fi
 NUMBER=${#USERS[@]}
-if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; read -n 1 -s -r -p "Press any key"; menu-trojan; return; fi
+if [[ $NUMBER == '0' ]]; then echo "Gak ono user TROJAN!"; echo "Cek: grep -n trojanws /etc/xray/config.json"; read -n 1 -s -r -p "Press any key"; menu-trojan; return; fi
 echo "     Check Detail XRAY TROJAN"
 echo "---------------------------------"
 echo "     No  User   Expired"
@@ -202,16 +222,13 @@ user="${USERS[$((CLIENT_NUMBER-1))]}"
 [ -z "$user" ] && menu-trojan; return
 domain=$(cat /etc/xray/domain)
 exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
-uuid=$(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-for ib in j['inbounds']:
-    if ib.get('protocol')!='trojan': continue
-    for c in ib.get('settings',{}).get('clients',[]):
-        if c.get('email')=='$user': print(c.get('password','')); exit(0)
-")
+# PASSWORD: neng baris ngisor ### user mu! Podo koyo CREATE mu!
+# Format create mu: ### user exp  -> baris ngisor e: },{"password": "UUID","email": "user"}
+uuid=$(grep -A1 -w "^### $user" /etc/xray/config.json | grep -o '"password": *"[^"]*"' | head -1 | cut -d'"' -f4)
+# Fallback: nek cara nduwur gagal, golek by email
+if [ -z "$uuid" ]; then
+  uuid=$(grep -B1 -A1 "\"email\": *\"$user\"" /etc/xray/config.json | grep -o '"password": *"[^"]*"' | head -1 | cut -d'"' -f4)
+fi
 IP_AKTIF=$(ss -tn state established '( sport = :443 )' | awk '{print $5}' | cut -d: -f1 | sort -u)
 echo "$IP_AKTIF" | while read IP; do
   [ -z "$IP" ] && continue
@@ -258,7 +275,7 @@ case $opt in
 2) clear ; trialtrojan ;;
 3) clear ; delws ;;
 4) clear ; renewws;;
-5) clear ; user-trojan;;
+5) clear ; user-trojan ;;
 0) clear ; menu ;;
 x) exit ;;
 *) echo -e "" ; echo "Press any key to back on menu" ; sleep 1 ; menu ;;
