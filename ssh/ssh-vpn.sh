@@ -1,33 +1,32 @@
 #!/bin/bash
 # =========================================
 # Quick Setup | Script Setup Manager
-# Edition : Stable Edition
+# Edition : Stable Edition - FINAL FIX BadVPN + Torrent Enteng
 # (C) Copyright 2025
 # =========================================
 
 clear
-BIBlack='\033[1;90m'      # Black
-BIRed='\033[1;91m'        # Red
-BIGreen='\033[1;92m'      # Green
-BIYellow='\033[1;93m'     # Yellow
-BIBlue='\033[1;94m'       # Blue
-BIPurple='\033[1;95m'     # Purple
-BICyan='\033[1;96m'       # Cyan
-BIWhite='\033[1;97m'      # White
-UWhite='\033[4;37m'       # White
-On_IPurple='\033[0;105m'  #
+BIBlack='\033[1;90m'
+BIRed='\033[1;91m'
+BIGreen='\033[1;92m'
+BIYellow='\033[1;93m'
+BIBlue='\033[1;94m'
+BIPurple='\033[1;95m'
+BICyan='\033[1;96m'
+BIWhite='\033[1;97m'
+UWhite='\033[4;37m'
+On_IPurple='\033[0;105m'
 On_IRed='\033[0;101m'
-IBlack='\033[0;90m'       # Black
-IRed='\033[0;91m'         # Red
-IGreen='\033[0;92m'       # Green
-IYellow='\033[0;93m'      # Yellow
-IBlue='\033[0;94m'        # Blue
-IPurple='\033[0;95m'      # Purple
-ICyan='\033[0;96m'        # Cyan
-IWhite='\033[0;97m'       # White
+IBlack='\033[0;90m'
+IRed='\033[0;91m'
+IGreen='\033[0;92m'
+IYellow='\033[0;93m'
+IBlue='\033[0;94m'
+IPurple='\033[0;95m'
+ICyan='\033[0;96m'
+IWhite='\033[0;97m'
 NC='\e[0m'
 
-# // Export Color & Information
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
 export YELLOW='\033[0;33m'
@@ -37,7 +36,6 @@ export CYAN='\033[0;36m'
 export LIGHT='\033[0;37m'
 export NC='\033[0m'
 
-# // Export Banner Status Information
 export EROR="[${RED} EROR ${NC}]"
 export INFO="[${YELLOW} INFO ${NC}]"
 export OKEY="[${GREEN} OKEY ${NC}]"
@@ -45,11 +43,9 @@ export PENDING="[${YELLOW} PENDING ${NC}]"
 export SEND="[${YELLOW} SEND ${NC}]"
 export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
 
-# // Export Align
 export BOLD="\e[1m"
 export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
-
 
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(curl -sS ifconfig.me);
@@ -58,7 +54,6 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-#detail nama perusahaan
 country=ID
 state=Indonesia
 locality=Indonesia
@@ -67,49 +62,13 @@ organizationalunit=Udanawu
 commonname=AryaBlitar081931615811
 email=setyaaries9@gmail.com
 
-# simple password minimal
 wget -q -O /etc/pam.d/common-password "https://raw.githubusercontent.com/kayu55/aku/main/tools/password"
 chmod +x /etc/pam.d/common-password
-
-# go to root
 cd
-
-# Getting websocket dropbear
-#wget -q -O /usr/local/bin/ws-dropbear "https://raw.githubusercontent.com/kipas77pro/tunel/main/tools/ws-dropbear"
-#chmod +x /usr/local/bin/ws-dropbear
-
-# Installing Service
-#cat > /etc/systemd/system/ws-dropbear.service << END
-#[Unit]
-#Description=Ssh Websocket By Arya
-#Documentation=https://aryavpn
-#After=network.target nss-lookup.target
-
-#[Service]
-#Type=simple
-#User=root
-#CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-#AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-#NoNewPrivileges=true
-#ExecStart=/usr/bin/python2 -O /usr/local/bin/ws-dropbear 8880
-#Restart=on-failure
-
-#[Install]
-#WantedBy=multi-user.target
-#END
-
-#systemctl daemon-reload >/dev/null 2>&1
-#systemctl enable ws-dropbear >/dev/null 2>&1
-#systemctl start ws-dropbear >/dev/null 2>&1
-#systemctl restart ws-dropbear >/dev/null 2>&1
-
-clear 
-
-# Getting websocket ssl stunnel
+clear
 wget -q -O /usr/local/bin/ws-stunnel "https://raw.githubusercontent.com/kayu55/aku/main/tools/ws-stunnel"
 chmod +x /usr/local/bin/ws-stunnel
 
-# Installing Service Ovpn Websocket
 cat > /etc/systemd/system/ws-stunnel.service << END
 [Unit]
 Description=Ovpn Websocket AryaStore Blitar
@@ -131,7 +90,6 @@ systemctl daemon-reload >/dev/null 2>&1
 systemctl enable ws-stunnel >/dev/null 2>&1
 systemctl start ws-stunnel >/dev/null 2>&1
 systemctl restart ws-stunnel >/dev/null 2>&1
-
 clear
 cd
 
@@ -150,7 +108,6 @@ SysVStartPriority=99
 WantedBy=multi-user.target
 END
 
-# nano /etc/rc.local
 cat > /etc/rc.local <<-END
 #!/bin/sh -e
 # rc.local
@@ -158,13 +115,11 @@ cat > /etc/rc.local <<-END
 exit 0
 END
 
-# Ubah izin akses
 chmod +x /etc/rc.local
 echo -e "
 "
 date
 echo ""
-# enable rc local
 sleep 1
 echo -e "[ ${green}INFO${NC} ] Checking... "
 sleep 2
@@ -173,18 +128,14 @@ echo -e "[ ${green}INFO$NC ] Enable system rc local"
 systemctl enable rc-local >/dev/null 2>&1
 systemctl start rc-local.service >/dev/null 2>&1
 
-# disable ipv6
 sleep 1
 echo -e "[ ${green}INFO$NC ] Disable ipv6"
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
 
-# set time GMT +7
 sleep 1
 echo -e "[ ${green}INFO$NC ] Set zona local time to Asia/Jakarta GMT+7"
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-
-# set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 
 # install badvpn
@@ -193,7 +144,7 @@ if [ "$tesmatch" = "badvpn" ]; then
 sleep 1
 echo -e "[ ${green}INFO$NC ] Screen badvpn detected"
 rm /root/screenlog > /dev/null 2>&1
-    runningscreen=( `screen -list | awk  '{print $1}' | grep -w "badvpn"` ) # sed 's/\.[^ ]*/ /g'
+    runningscreen=( `screen -list | awk  '{print $1}' | grep -w "badvpn"` )
     for actv in "${runningscreen[@]}"
     do
         cek=( `screen -list | awk  '{print $1}' | grep -w "badvpn"` )
@@ -212,14 +163,13 @@ cd
 echo -e "[ ${green}INFO$NC ] Installing badvpn for game support..."
 wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/kayu55/aku/main/tools/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw  >/dev/null 2>&1
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local >/dev/null 2>&1
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local >/dev/null 2>&1
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local >/dev/null 2>&1
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000' /etc/rc.local >/dev/null 2>&1
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000' /etc/rc.local >/dev/null 2>&1
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000' /etc/rc.local >/dev/null 2>&1
 systemctl daemon-reload >/dev/null 2>&1
 systemctl start rc-local.service >/dev/null 2>&1
 systemctl restart rc-local.service >/dev/null 2>&1
 
-# /etc/ssh/sshd_config
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
 echo "Port 22" >> /etc/ssh/sshd_config
@@ -235,7 +185,6 @@ systemctl daemon-reload >/dev/null 2>&1
 systemctl start ssh >/dev/null 2>&1
 systemctl restart ssh >/dev/null 2>&1
 
-# install dropbear
 sleep 1
 echo -e "[ ${green}INFO$NC ] Settings Dropbear"
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
@@ -252,7 +201,6 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 fi
 
-# Install Stunnel5
 cd /root/
 wget -q "https://raw.githubusercontent.com/kayu55/aku/main/tools/stunnel5.zip"
 unzip stunnel5.zip
@@ -268,7 +216,6 @@ rm -fr /etc/stunnel5
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-# Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/xray/xray.crt
 key = /etc/xray/xray.key
@@ -290,20 +237,6 @@ accept = 777
 connect = 127.0.0.1:2253
 END
 
-# make a certificate
-#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
-#cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-
-# konfigurasi stunnel
-#echo "ENABLED=1" >> /etc/default/stunnel4
-#sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-#systemctl daemon-reload >/dev/null 2>&1
-#/etc/init.d/stunnel4 start >/dev/null 2>&1
-#/etc/init.d/stunnel4 restart >/dev/null 2>&1
-
-# Service Stunnel5 systemctl restart stunnel5
 rm -fr /etc/systemd/system/stunnel5.service
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
@@ -318,47 +251,34 @@ Type=forking
 WantedBy=multi-user.target
 END
 
-# Service Stunnel5 /etc/init.d/stunnel5
 rm -fr /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/kayu55/aku/main/tools/stunnel5.init"
-
-# Ubah Izin Akses
-#chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp -r /usr/local/bin/stunnel /usr/local/bin/stunnel5
-#mv /usr/local/bin/stunnel /usr/local/bin/stunnel5
-
-# Remove File
 rm -r -f /usr/local/share/doc/stunnel/
 rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
 
-# Restart Stunnel5
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable stunnel5 >/dev/null 2>&1
 systemctl start stunnel5 >/dev/null 2>&1
 systemctl restart stunnel5 >/dev/null 2>&1
 
-# Install bbr
 sleep 1
 echo -e "[ ${green}INFO$NC ] Install bbr"
-#Optimasi Speed Mod By Arya
 Add_To_New_Line(){
 	if [ "$(tail -n1 $1 | wc -l)" == "0"  ];then
 		echo "" >> "$1"
 	fi
 	echo "$2" >> "$1"
 }
-
 Check_And_Add_Line(){
 	if [ -z "$(cat "$1" | grep "$2")" ];then
 		Add_To_New_Line "$1" "$2"
 	fi
 }
-
 Install_BBR(){
 echo "#############################################"
 echo "Install TCP_BBR..."
@@ -380,7 +300,6 @@ else
 fi
 echo "#############################################"
 }
-
 Optimize_Parameters(){
 echo "#############################################"
 echo "Optimasi Parameters..."
@@ -413,7 +332,6 @@ Optimize_Parameters
 sleep 1
 echo -e "[ ${green}INFO$NC ] Install successfully..."
 
-# memory swap 1gb
 cd
 dd if=/dev/zero of=/swapfile bs=1024 count=1048576
 mkswap /swapfile
@@ -422,15 +340,12 @@ chmod 0600 /swapfile >/dev/null 2>&1
 swapon /swapfile >/dev/null 2>&1
 sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
-# install fail2ban
 apt -y install fail2ban
 sudo systemctl enable --now fail2ban
 /etc/init.d/fail2ban restart
 /etc/init.d/fail2ban status
-# install ddos
 rm -fr /usr/local/ddos
 mkdir -p /usr/local/ddos >/dev/null 2>&1
-#clear
 sleep 1
 echo -e "[ ${green}INFO$NC ] Install DOS-Deflate"
 sleep 1
@@ -449,7 +364,6 @@ echo -e "[ ${green}INFO$NC ] Install successfully..."
 sleep 1
 echo -e "[ ${green}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
 
-# Banner /etc/issue.net
 rm -fr /etc/issue.net
 rm -fr /etc/issue.net.save
 sleep 1
@@ -459,26 +373,17 @@ chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
-# Blokir Torrent
-echo -e "[ ${green}INFO$NC ] Set iptables"
+# Blokir Torrent - Versi Enteng (FIXED - Tanpa --string, Ping Cilik)
+echo -e "[ ${green}INFO$NC ] Set iptables - Anti Torrent Enteng"
 sleep 1
-sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+sudo iptables -A FORWARD -p tcp --dport 6881:6889 -j DROP
+sudo iptables -A FORWARD -p udp --dport 6881:6889 -j DROP
+sudo iptables -A FORWARD -p tcp --dport 6969 -j DROP
+sudo iptables -A FORWARD -p udp --dport 6969 -j DROP
 sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
 sudo netfilter-persistent reload >/dev/null 2>&1
 
-#ip tables
 echo "/bin/false" >>/etc/shells
 echo "/usr/sbin/nologin" >>/etc/shells
 cat >/etc/rc.local <<EOF
@@ -488,24 +393,19 @@ cat >/etc/rc.local <<EOF
 iptables -I INPUT -p udp --dport 5300 -j ACCEPT
 iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
 systemctl restart netfilter-persistent
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
 exit 0
 EOF
 
-# remove unnecessary files
 sleep 1
 echo -e "[ ${green}INFO$NC ] Clearing trash"
 apt autoclean -y >/dev/null 2>&1
-
 if dpkg -s unscd >/dev/null 2>&1; then
 apt -y remove --purge unscd >/dev/null 2>&1
 fi
 
-# apt-get -y --purge remove samba* >/dev/null 2>&1
-# apt-get -y --purge remove apache2* >/dev/null 2>&1
-# apt-get -y --purge remove bind9* >/dev/null 2>&1
-# apt-get -y remove sendmail* >/dev/null 2>&1
-# apt autoremove -y >/dev/null 2>&1
-# finishing
 cd
 echo -e "[ ${green}ok${NC} ] Restarting Cron"
 /etc/init.d/cron restart >/dev/null 2>&1
@@ -526,12 +426,12 @@ echo -e "[ ${green}ok${NC} ] Restarting Vnstat"
 /etc/init.d/vnstat restart >/dev/null 2>&1
 sleep 1
 echo -e "[ ${green}ok${NC} ] Restarting squid "
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
+pkill badvpn-udpgw >/dev/null 2>&1; sleep 1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000 >/dev/null 2>&1
 history -c
 echo "unset HISTFILE" >> /etc/profile
-
 cd
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 sleep 1
