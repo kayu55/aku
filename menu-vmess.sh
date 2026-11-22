@@ -239,7 +239,7 @@ echo ""
 read -p " Select menu : " opt
 echo -e ""
 case $opt in
-1) clear ; add-ws ;;
+1) clear ; create_vmess ;;
 2) clear ; trialvmess ;;
 3) clear ; delws ;;
 4) clear ; renewws;;
