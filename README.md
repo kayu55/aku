@@ -1538,3 +1538,128 @@ sed -i 's/5.4.0-1133-kvm/5.4.0-196-generic/g' /boot/grub/grub.cfg
 grep "linux /boot/vmlinuz" /boot/grub/grub.cfg
 reboot
 ````
+## latensi final
+````
+cat > /usr/local/bin/cekvps <<'EOS'
+#!/bin/bash
+UK="\033[0;34m"; WHITE="\033[1;37m"; GREEN="\033[0;32m"; YELLOW="\033[1;33m"; RED="\033[0;31m"; CYAN="\033[0;36m"; NC='\033[0m'
+LOG=/var/log/cekvps-history.log
+if [ "$1" == "cron" ]; then
+  P=$(ping -c 1 -W 2 1.1.1.1 2>/dev/null | grep "time=" | awk -F'time=' '{print $2}' | awk '{print $1}')
+  if [ -z "$P" ]; then P="0"; fi
+  echo "$(date +%s) $P" >> $LOG
+  tail -n 40 $LOG > /tmp/cb.tmp && mv /tmp/cb.tmp $LOG
+  exit 0
+fi
+clear
+echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
+echo -e "  ${WHITE}           ARYA - CEK LATENSI ${NC}"
+echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+IP=$(curl -s ipv4.icanhazip.com)
+UP=$(uptime -p | sed 's/up //')
+LOAD=$(uptime | awk -F'load average:' '{print $2}' | xargs)
+DOMAIN=$(cat /etc/xray/domain 2>/dev/null || echo "-")
+OS=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/PRETTY_NAME=//g' | tr -d '"')
+KERNEL=$(uname -r)
+echo -e "IP VPS    : $IP"
+echo -e "Domain    : $DOMAIN"
+echo -e "Uptime    : $UP"
+echo -e "Load      : $LOAD"
+echo -e "OS        : $OS"
+echo -e "Kernel    : $KERNEL"
+echo ""
+
+# ISP + LOKASI - 1x request, cached 24 jam, anti 429
+ISP_CACHE="/tmp/.isp_cache_cekvps"
+if [[ -s "$ISP_CACHE" ]] && [[ $(($(date +%s) - $(stat -c %Y "$ISP_CACHE"))) -lt 86400 ]]; then
+  source "$ISP_CACHE"
+else
+  DATA=$(curl -s --max-time 3 "http://ip-api.com/json/?fields=isp,country,city,org")
+  ISP=$(echo "$DATA" | grep -o '"isp":"[^"]*"' | cut -d'"' -f4)
+  COUNTRY=$(echo "$DATA" | grep -o '"country":"[^"]*"' | cut -d'"' -f4)
+  CITY=$(echo "$DATA" | grep -o '"city":"[^"]*"' | cut -d'"' -f4)
+  [[ -z "$ISP" ]] && ISP="-"
+  [[ -z "$COUNTRY" ]] && COUNTRY="-"
+  [[ -z "$CITY" ]] && CITY="-"
+  echo "ISP=\"$ISP\"; COUNTRY=\"$COUNTRY\"; CITY=\"$CITY\"" > "$ISP_CACHE"
+fi
+echo -e "ISP       : $ISP"
+echo -e "Lokasi    : $CITY, $COUNTRY"
+echo ""
+CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+RAM_T=$(free -m | awk 'NR==2{print $2}'); RAM_U=$(free -m | awk 'NR==2{print $3}'); RAM_P=$((RAM_U*100/RAM_T))
+DISK_U=$(df -h / | awk 'NR==2{print $3}'); DISK_T=$(df -h / | awk 'NR==2{print $2}'); DISK_P=$(df -h / | awk 'NR==2{print $5}' | tr -d '%')
+BBR_ALGO=$(sysctl -n net.ipv4.tcp_congestion_control 2>/dev/null)
+BBR_QDISC=$(sysctl -n net.core.default_qdisc 2>/dev/null)
+if [[ "$BBR_ALGO" == "bbr" ]]; then BBR_STATUS="${GREEN}ON (Aktif)${NC}"; elif [[ "$BBR_ALGO" == "bbr2" ]]; then BBR_STATUS="${GREEN}ON (BBRv2)${NC}"; else BBR_STATUS="${RED}OFF ($BBR_ALGO)${NC}"; fi
+
+# BANDWIDTH HARI INI
+if command -v vnstat >/dev/null 2>&1; then
+  BW_TODAY=$(vnstat | grep today | awk '{print $2" "$3" / "$5" "$6" (Down/Up)"}' 2>/dev/null)
+  [[ -z "$BW_TODAY" ]] && BW_TODAY="-"
+else
+  BW_TODAY="- (vnstat belum install)"
+fi
+
+# STATUS SERVICE
+cek_svc() { systemctl is-active --quiet $1 && echo -e "${GREEN}ON${NC}" || echo -e "${RED}OFF${NC}"; }
+S_XRAY=$(cek_svc xray); S_NGINX=$(cek_svc nginx); S_SSH=$(cek_svc ssh)
+
+echo -e "CPU       : $CPU% [$(nproc) Core]"
+echo -e "RAM       : $RAM_U MB / $RAM_T MB ($RAM_P%)"
+echo -e "DISK      : $DISK_U / $DISK_T ($DISK_P%)"
+echo -e "BBR       : $BBR_STATUS | Qdisc: $BBR_QDISC"
+echo -e "Bandwidth : $BW_TODAY (Hari Ini)"
+echo -e "Service   : XRAY $S_XRAY | NGINX $S_NGINX | SSH $S_SSH"
+echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
+echo -e "               ${WHITE}PING / KONEKSI${NC}"
+echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+PING_G=$(ping -c 1 -W 2 8.8.8.8 2>/dev/null | grep "time=" | awk -F'time=' '{print $2}' | awk '{print $1}')
+PING_C=$(ping -c 1 -W 2 1.1.1.1 2>/dev/null | grep "time=" | awk -F'time=' '{print $2}' | awk '{print $1}')
+PING_SG=$(ping -c 1 -W 2 103.152.19.1 2>/dev/null | grep "time=" | awk -F'time=' '{print $2}' | awk '{print $1}')
+if [ -z "$PING_G" ]; then PING_G="TIMEOUT"; else PING_G="$PING_G ms"; fi
+if [ -z "$PING_C" ]; then PING_C="TIMEOUT"; else PING_C="$PING_C ms"; fi
+if [ -z "$PING_SG" ]; then PING_SG="TIMEOUT"; else PING_SG="$PING_SG ms"; fi
+echo -e "Google (8.8.8.8)      : ${GREEN}$PING_G${NC}"
+echo -e "Cloudflare (1.1.1.1)  : ${GREEN}$PING_C${NC}"
+echo -e "Singapore (SG)       : ${GREEN}$PING_SG${NC}"
+echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+echo ""
+echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
+echo -e "  ${WHITE}  $CITY, $COUNTRY • Online ${GREEN}●${NC}"
+echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+if [ -f "$LOG" ]; then
+  TOTAL=$(wc -l < $LOG); UPCOUNT=$(awk '$2>0' $LOG | wc -l)
+  if [ "$TOTAL" -gt 0 ]; then UPTIME_P=$((UPCOUNT*100/TOTAL)); else UPTIME_P=100; fi
+  echo -n "Grafik $TOTAL cek terakhir: "
+  while read -r TS P; do if [ "$P" == "0" ]; then echo -n "🔴"; else echo -n "🟩"; fi; done < $LOG
+  echo ""; echo ""
+  CUR=$(tail -n 1 $LOG | awk '{print $2}')
+  AVG=$(awk '$2>0{sum+=$2; c++} END{if(c>0) printf "%.1f", sum/c; else print "0"}' $LOG)
+  MIN=$(awk '$2>0{if(min==""||$2<min) min=$2} END{print min+0}' $LOG)
+  MAX=$(awk '$2>0{if($2>max) max=$2} END{print max+0}' $LOG)
+  if (( $(echo "$CUR < 80" | bc -l) )); then STATUS="SANGAT CEPAT"; COLOR=$GREEN
+  elif (( $(echo "$CUR < 150" | bc -l) )); then STATUS="CEPAT"; COLOR=$GREEN
+  elif (( $(echo "$CUR < 250" | bc -l) )); then STATUS="NORMAL / STABIL"; COLOR=$YELLOW
+  else STATUS="LAMBAT"; COLOR=$RED; fi
+  if [ "$CUR" == "0" ]; then STATUS="OFFLINE"; COLOR=$RED; fi
+  echo -e "LATENSI TERKINI : ${COLOR}$CUR ms - $STATUS${NC}"
+  echo -e "RATA-RATA       : $AVG ms"
+  echo -e "MIN / MAX       : $MIN / $MAX ms"
+  echo -e "UPTIME          : $UPTIME_P% ($UPCOUNT / $TOTAL cek)"
+  echo -e "TERAKHIR DIPERIKSA: $(date '+%H:%M:%S') - $TOTAL menit terakhir"
+else
+  echo "Belum ada data! Tunggu 1 menit, cron sedang mengumpulkan data..."
+fi
+echo -e "${UK}└──────────────────────────────────────────┘${NC}"
+echo ""
+read -n 1 -s -r -p "Tekan tombol apa saja untuk kembali ke menu"
+menu
+EOS
+chmod +x /usr/local/bin/cekvps
+apt install bc vnstat -y >/dev/null 2>&1
+(crontab -l 2>/dev/null | grep -v cekvps; echo "* * * * * /usr/local/bin/cekvps cron >/dev/null 2>&1") | crontab -
+rm -f /var/log/cekvps-history.log /tmp/.isp_cache_cekvps
+for i in 1 2 3 4 5; do /usr/local/bin/cekvps cron; sleep 1; done
+echo "BERES! Ketik cekvps!"
+````
