@@ -100,69 +100,7 @@ echo "Account number: $JUMLAH user"
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -n 1 -s -r -p "Press any key to back on menu"
 menu-ssh
-}
-function renew_ssh(){
-clear
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m               MEMBER SSH                 \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"      
-echo "USERNAME          EXP DATE          STATUS"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-while read expired
-do
-AKUN="$(echo $expired | cut -d: -f1)"
-ID="$(echo $expired | grep -v nobody | cut -d: -f3)"
-exp="$(chage -l $AKUN | grep "Account expires" | awk -F": " '{print $2}')"
-status="$(passwd -S $AKUN | awk '{print $2}' )"
-if [[ $ID -ge 1000 ]]; then
-if [[ "$status" = "L" ]]; then
-printf "%-17s %2s %-17s %2s \n" "$AKUN" "$exp     " "LOCKED${NORMAL}"
-else
-printf "%-17s %2s %-17s %2s \n" "$AKUN" "$exp     " "UNLOCKED${NORMAL}"
-fi
-fi
-done < /etc/passwd
-JUMLAH="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-echo -e ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m            Perpanjang  User              \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"  
-echo
-read -p "Username : " User
-egrep "^$User" /etc/passwd >/dev/null
-if [ $? -eq 0 ]; then
-read -p "Day Extend : " Days
-Today=`date +%s`
-Days_Detailed=$(( $Days * 86400 ))
-Expire_On=$(($Today + $Days_Detailed))
-Expiration=$(date -u --date="1970-01-01 $Expire_On sec GMT" +%Y/%m/%d)
-Expiration_Display=$(date -u --date="1970-01-01 $Expire_On sec GMT" '+%d %b %Y')
-passwd -u $User
-usermod -e  $Expiration $User
-egrep "^$User" /etc/passwd >/dev/null
-echo -e "$Pass\n$Pass\n"|passwd $User &> /dev/null
-clear
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m            Perpanjang  User              \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"  
-echo -e ""
-echo -e " Username : $User"
-echo -e " Days Added : $Days Days"
-echo -e " Expires on :  $Expiration_Display"
-echo -e ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-else
-clear
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "\E[42;1;37m            Perpanjang  User              \E[0m"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"  
-echo -e ""
-echo -e "   Username Doesnt Exist      "
-echo -e ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-fi
-read -n 1 -s -r -p "Press any key to back on menu"
-menu-ssh
+
 }
 function autokill(){
 clear
@@ -181,92 +119,44 @@ echo -e "\E[42;1;37m             AUTOKILL SSH          \E[0m"
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "Status Autokill : $sts        "
 echo -e ""
-echo -e "[1]  AutoKill After 5 Minutes"
-echo -e "[2]  AutoKill After 10 Minutes"
-echo -e "[3]  AutoKill After 15 Minutes"
-echo -e "[4]  Turn Off AutoKill/MultiLogin"
+echo -e "[1]  AutoKill After 1 Minutes  - 1 Akun 2 HP"
+echo -e "[2]  AutoKill After 5 Minutes"
+echo -e "[3]  AutoKill After 10 Minutes"
+echo -e "[4]  AutoKill After 15 Minutes"
+echo -e "[5]  Turn Off AutoKill/MultiLogin"
 echo -e "[x]  Menu"
 echo ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e ""
-read -p "Select From Options [1-4 or x] :  " AutoKill
+read -p "Select From Options [1-5 or x] :  " AutoKill
+if [[ "$AutoKill" == "x" ]]; then
+menu
+return
+fi
+if [[ "$AutoKill" == "5" ]]; then
+rm -f /etc/cron.d/tendang
+service cron restart
+echo -e "Autokill OFF"
+sleep 2
+menu
+return
+fi
 read -p "Multilogin Maximum Number Of Allowed: " max
 echo -e ""
+# Tulis cron anyar
+echo "# Autokill" > /etc/cron.d/tendang
 case $AutoKill in
-                1)
-                echo -e ""
-                sleep 1
-                clear
-                echo > /etc/cron.d/tendang
-                echo "# Autokill" >/etc/cron.d/tendang
-                echo "*/5 * * * *  root /usr/bin/tendang $max" >>/etc/cron.d/tendang && chmod +x /etc/cron.d/tendang
-                echo "" > /root/log-limit.txt
-                echo -e ""
-                echo -e "======================================"
-                echo -e ""
-                echo -e "      Allowed MultiLogin : $max"
-                echo -e "      AutoKill Every     : 5 Minutes"      
-                echo -e ""
-                echo -e "======================================"
-                service cron reload >/dev/null 2>&1
-                service cron restart >/dev/null 2>&1                                                                 
-                ;;
-                2)
-                echo -e ""
-                sleep 1
-                clear
-                echo > /etc/cron.d/tendang
-                echo "# Autokill" >/etc/cron.d/tendang
-                echo "*/10 * * * *  root /usr/bin/tendang $max" >>/etc/cron.d/tendang && chmod +x /etc/cron.d/tendang
-                echo "" > /root/log-limit.txt
-                echo -e ""
-                echo -e "======================================"
-                echo -e ""
-                echo -e "      Allowed MultiLogin : $max"
-                echo -e "      AutoKill Every     : 10 Minutes"
-                echo -e ""
-                echo -e "======================================"
-                service cron reload >/dev/null 2>&1
-                service cron restart >/dev/null 2>&1
-                ;;
-                3)
-                echo -e ""
-                sleep 1
-                clear
-                echo > /etc/cron.d/tendang
-                echo "# Autokill" >/etc/cron.d/tendang
-                echo "*/15 * * * *  root /usr/bin/tendang $max" >>/etc/cron.d/tendang && chmod +x /etc/cron.d/tendang
-                echo "" > /root/log-limit.txt
-                echo -e ""
-                echo -e "======================================"
-                echo -e ""
-                echo -e "      Allowed MultiLogin : $max"
-                echo -e "      AutoKill Every     : 15 Minutes"
-                echo -e ""
-                echo -e "======================================"
-                service cron reload >/dev/null 2>&1
-                service cron restart >/dev/null 2>&1          
-                ;;
-                4)
-                rm -fr /etc/cron.d/tendang
-                echo "" > /root/log-limit.txt
-                echo -e ""
-                echo -e "======================================"
-                echo -e ""
-                echo -e "      AutoKill MultiLogin Turned Off"
-                echo -e ""
-                echo -e "======================================"
-                service cron reload >/dev/null 2>&1
-                service cron restart >/dev/null 2>&1
-                ;;
-                x)
-                menu
-                ;;
-                *)
-                echo "Please enter an correct number"
-                ;;
-        esac
-read -n 1 -s -r -p "Press any key to back on menu"
+1) echo "*/1 * * * *  root /usr/bin/tendang $max" >> /etc/cron.d/tendang ;;
+2) echo "*/5 * * * *  root /usr/bin/tendang $max" >> /etc/cron.d/tendang ;;
+3) echo "*/10 * * * *  root /usr/bin/tendang $max" >> /etc/cron.d/tendang ;;
+4) echo "*/15 * * * *  root /usr/bin/tendang $max" >> /etc/cron.d/tendang ;;
+*) echo "Pilihan salah!" ; sleep 2 ; autokill ; return ;;
+esac
+chmod +x /etc/cron.d/tendang
+service cron restart
+echo -e "Autokill ON - Cek tiap $AutoKill menit - Max $max login"
+cat /etc/cron.d/tendang
+sleep 2
 menu-ssh
 }
 clear
