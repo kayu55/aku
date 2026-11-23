@@ -1532,3 +1532,9 @@ BABIEOF
 chmod +x /usr/bin/xray
 xray
 ````
+## atasi bbr of
+````
+sed -i 's/5.4.0-1133-kvm/5.4.0-196-generic/g' /boot/grub/grub.cfg
+grep "linux /boot/vmlinuz" /boot/grub/grub.cfg
+reboot
+````
