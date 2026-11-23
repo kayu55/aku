@@ -300,7 +300,7 @@ wget -q -O /usr/bin/create_trojan "https://raw.githubusercontent.com/kayu55/aku/
 wget -q -O /usr/bin/create_ssh "https://raw.githubusercontent.com/kayu55/aku/main/create_ssh.sh"
 wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/kayu55/aku/main/autodel.sh"
 wget -q -O /usr/local/bin/cekvps "https://raw.githubusercontent.com/kayu55/aku/main/cekvps.sh"
-wget -q -O /usr/renew_ssh "https://raw.githubusercontent.com/kayu55/aku/main/renew_ssh.sh"
+wget -q -O /usr/renewssh "https://raw.githubusercontent.com/kayu55/aku/main/renewssh.sh"
 
 chmod +x /usr/bin/create_vmess
 chmod +x /usr/bin/create_vless
@@ -331,7 +331,8 @@ chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/autodel
 chmod +x /usr/local/bin/cekvps
-chmod +x /usr/renew_ssh
+
+wget -q -O /usr/bin/renewssh "https://raw.githubusercontent.com/kayu55/aku/main/renewssh.sh" && sed -i 's/\r$//' /usr/bin/renewssh && chmod +x /usr/bin/renewssh
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
