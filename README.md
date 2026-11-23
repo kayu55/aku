@@ -1622,7 +1622,7 @@ if [ -z "$PING_C" ]; then PING_C="TIMEOUT"; else PING_C="$PING_C ms"; fi
 if [ -z "$PING_SG" ]; then PING_SG="TIMEOUT"; else PING_SG="$PING_SG ms"; fi
 echo -e "Google (8.8.8.8)      : ${GREEN}$PING_G${NC}"
 echo -e "Cloudflare (1.1.1.1)  : ${GREEN}$PING_C${NC}"
-echo -e "Singapore (SG)       : ${GREEN}$PING_SG${NC}"
+#echo -e "Singapore (SG)       : ${GREEN}$PING_SG${NC}"
 echo -e "${UK}└──────────────────────────────────────────┘${NC}"
 echo ""
 echo -e "${UK}┌──────────────────────────────────────────┐${NC}"
