@@ -1663,3 +1663,71 @@ rm -f /var/log/cekvps-history.log /tmp/.isp_cache_cekvps
 for i in 1 2 3 4 5; do /usr/local/bin/cekvps cron; sleep 1; done
 echo "BERES! Ketik cekvps!"
 ````
+## uninstal ssh-vpn
+````
+cat > /root/uninstall.sh <<'EOF'
+#!/bin/bash
+echo "Mulai uninstall resik..."
+
+# 1. Mateni service
+pkill badvpn-udpgw 2>/dev/null
+screen -wipe 2>/dev/null
+systemctl stop ws-stunnel stunnel5 dropbear fail2ban 2>/dev/null
+systemctl disable ws-stunnel stunnel5 dropbear fail2ban 2>/dev/null
+
+# 2. Hapus service + binary
+rm -f /etc/systemd/system/ws-stunnel.service
+rm -f /etc/systemd/system/stunnel5.service
+rm -f /etc/systemd/system/rc-local.service
+rm -f /usr/bin/badvpn-udpgw /usr/bin/ssh-vpn
+rm -f /usr/local/bin/ws-stunnel /usr/local/bin/stunnel5 /usr/local/bin/stunnel
+rm -rf /etc/stunnel5 /usr/local/ddos /usr/local/sbin/ddos
+rm -f /etc/issue.net /etc/pam.d/common-password
+rm -f /etc/init.d/stunnel5
+
+# 3. Hapus swap
+swapoff /swapfile 2>/dev/null
+rm -f /swapfile
+sed -i '/swapfile/d' /etc/fstab
+
+# 4. Bersihne iptables + torrent block
+iptables -F
+iptables -t nat -F
+iptables -X 2>/dev/null
+iptables-save > /etc/iptables.up.rules 2>/dev/null
+
+# 5. Hapus fail2ban
+apt -y remove --purge fail2ban 2>/dev/null
+apt autoclean -y 2>/dev/null
+
+# 6. Balekne rc.local dadi kosong
+cat > /etc/rc.local <<'EORC'
+#!/bin/sh -e
+exit 0
+EORC
+chmod +x /etc/rc.local
+
+# 7. Balekne sshd_config dadi standar
+sed -i '/Port 2253/d; /Port 40000/d; /Banner \/etc\/issue.net/d' /etc/ssh/sshd_config
+sed -i 's/^Port 22/Port 22/' /etc/ssh/sshd_config
+# Hapus duplikat Port 22, sisakne 1
+awk '!seen[$0]++' /etc/ssh/sshd_config > /tmp/sshd.tmp && mv /tmp/sshd.tmp /etc/ssh/sshd_config
+
+# 8. Hapus cron ddos
+crontab -l 2>/dev/null | grep -v ddos | crontab - 2>/dev/null
+
+# 9. Hapus script iki + backup
+rm -f /root/ssh-vpn.sh /root/backup.sh
+systemctl daemon-reload
+
+echo "UNINSTALL SELESAI - VPS bakal reboot 5 detik"
+sleep 5
+reboot
+EOF
+chmod +x /root/uninstall.sh
+bash /root/uninstall.sh
+````
+````
+systemctl status ssh
+ls /usr/bin/ssh-vpn
+````
