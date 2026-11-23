@@ -1,25 +1,18 @@
 #!/bin/bash
 
-#vlx=$(grep -c -E "^#& " "/etc/xray/config.json")
-#let vla=$vlx/2
 vmc=$(grep -c -E "^### " "/etc/xray/config.json")
 let vma=$vmc/2
 ssh1="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-#trx=$(grep -c -E "^#! " "/etc/xray/config.json")
-#let tra=$trx/2
-#ssx=$(grep -c -E "^## " "/etc/xray/config.json")
-#let ssa=$ssx/2
 
 NC='\033[0;37m'
 BICyan='\033[0;34m'
-ICyan='\033[0;36m'  
+ICyan='\033[0;36m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 green='\033[0;32m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
-NC='\033[0;37m'
 KN='\033[1;33m'
 ORANGE='\033[0;33m'
 PINK='\033[0;35m'
@@ -69,31 +62,42 @@ resv2r="${green}ON${NC}"
 else
 resv2r="${red}OFF${NC}"
 fi
-# STATUS SERVICE  VNSTAT 
 vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-if [[ $vnstat_service == "running" ]]; then 
+if [[ $vnstat_service == "running" ]]; then
    status_vnstat="${green}ON${NC}"
 else
    status_vnstat="${red}OFF${NC}"
 fi
-ISP=$(curl -s ipinfo.io/org | cut -d " " -f 2-10)
-# TOTAL RAM
-#total_ram=` grep "MemTotal: " /proc/meminfo | awk '{ print $2}'`
-#totalram=$(($total_ram/1024))
+
+# ╔══════════════════════════════════════════════════════════════╗
+# ║  FIX ISP - ANTI 429, CACHED, ENTENG - 1x REQUEST / HARI     ║
+# ╚══════════════════════════════════════════════════════════════╝
+ISP_CACHE="/tmp/.isp_cache"
+ISP=""
+# 1. Nek cache iseh anget (< 24 jam), pakai cache ae, gak usah curl
+if [[ -s "$ISP_CACHE" ]] && [[ $(($(date +%s) - $(stat -c %Y "$ISP_CACHE" 2>/dev/null || echo 0))) -lt 86400 ]]; then
+    ISP=$(cat "$ISP_CACHE")
+else
+    # 2. Coba ip-api.com dulu - gratis, tanpa limit
+    ISP=$(curl -s --max-time 3 "http://ip-api.com/json/?fields=isp" | grep -o '"isp":"[^"]*"' | cut -d'"' -f4)
+    # 3. Nek kosong, fallback ke ipinfo.io
+    if [[ -z "$ISP" ]]; then
+        ISP=$(curl -s --max-time 3 ipinfo.io/org 2>/dev/null | cut -d " " -f 2-10)
+        # Nek isine JSON error 429, buang!
+        if [[ "$ISP" == *"429"* ]] || [[ "$ISP" == *"Rate"* ]] || [[ "$ISP" == *"{"* ]]; then ISP=""; fi
+    fi
+    # 4. Nek tetep kosong, kasih strip ae ben gak error
+    if [[ -z "$ISP" ]]; then ISP="-"; fi
+    echo "$ISP" > "$ISP_CACHE" 2>/dev/null
+fi
+
 tram=$( free -m | awk 'NR==2 {print $2}' )
 uram=$( free -m | awk 'NR==2 {print $3}' )
-#CITY=$(curl -s ipinfo.io/city)
-#IPVPS=$(curl -s ipinfo.io/ip)
-#IPVPS=$(curl -sS ifconfig.me)
 IPVPS=$(curl -s ipv4.icanhazip.com)
-#RAM=$(free -m | awk 'NR==2 {print $2}')
-#USAGERAM=$(free -m | awk 'NR==2 {print $3}')
 MEMOFREE=$(printf '%-1s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')")
 LOADCPU=$(printf '%-0.00001s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
 MODEL=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')
 CORE=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
-#DATEVPS=$(date +'%d/%m/%Y')
-#TIMEZONE=$(printf '%(%H:%M:%S)T')
 dtoday="$(vnstat | grep today | awk '{print $2" "substr ($3, 1, 3)}')"
 utoday="$(vnstat | grep today | awk '{print $5" "substr ($6, 1, 3)}')"
 ttoday="$(vnstat | grep today | awk '{print $8" "substr ($9, 1, 3)}')"
@@ -118,8 +122,6 @@ echo -e " ${BICyan}│  ${ORANGE} Usage Memory ${ICyan}:${NC} $MEMOFREE "
 echo -e " ${BICyan}│  ${ORANGE} LoadCPU      ${ICyan}: ${NC}$LOADCPU% "
 echo -e " ${BICyan}│  ${ORANGE} Core System  ${ICyan}: ${NC}$CORE "
 echo -e " ${BICyan}│  ${ORANGE} System OS    ${ICyan}: ${NC}$MODEL "
-#echo -e " ${BICyan}│  ${ICyan} Date         : ${NC}$DATEVPS "
-#echo -e " ${BICyan}│  ${ICyan} Time         : ${NC}$TIMEZONE "
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo -e " ${BICyan}╭═════════════════════════════════════════════════════╮${NC}"
 echo -e "${BICyan} │                    ${NC}SSH     ${ICyan}: ${ORANGE}$ssh1      ${NC} "
