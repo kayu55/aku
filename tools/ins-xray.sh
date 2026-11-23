@@ -1,9 +1,7 @@
 #!/bin/bash
-
 NC='\033[0;37m'
-green='\033[0;32m' 
+green='\033[0;32m'
 
-clear
 clear
 source /var/lib/scrz-prem/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -11,59 +9,53 @@ domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
-#hpus file lama
-systemctl stop xray nginx
+
+# === FIX 1: Simpen UUID + Port lawas ben gak ilang nek install ulang ===
+if [ -f /etc/xray/config.json ]; then
+  cp /etc/xray/config.json /tmp/config.json.bak 2>/dev/null
+  UUID_LAWAS=$(grep -o '"id": "[^"]*"' /etc/xray/config.json | head -1 | cut -d'"' -f4)
+  # Simpen port lawas
+  VLESS_LAWAS=$(grep -A2 '"port":' /etc/xray/config.json | head -20 | grep -o '[0-9]\{5\}' | head -1)
+fi
+
+# === FIX 2: Trap - opo ae terjadi, tetep di-ON-ne maneh ===
+on_exit(){
+  systemctl daemon-reload 2>/dev/null
+  systemctl enable xray nginx 2>/dev/null
+  systemctl restart xray nginx 2>/dev/null || systemctl start xray nginx 2>/dev/null
+}
+trap on_exit EXIT
+
+# Stop sekali tok neng kene, ojo neng tengah-tengah maneh
+systemctl stop nginx xray 2>/dev/null || true
 
 rm -fr /etc/nginx/conf.d/xray.conf
-rm -fr /etc/systemd/system/xray.service
 rm -fr /etc/systemd/system/xray.service.d
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
 sleep 1
 echo -e "[ ${green}INFO$NC ] Setting ntpdate"
-ntpdate pool.ntp.org 
+ntpdate pool.ntp.org
 timedatectl set-ntp true
-sleep 1
-echo -e "[ ${green}INFO$NC ] Enable chronyd"
-systemctl enable chronyd
-systemctl restart chronyd
-sleep 1
-echo -e "[ ${green}INFO$NC ] Enable chrony"
-systemctl enable chrony
-systemctl restart chrony
 timedatectl set-timezone Asia/Jakarta
-sleep 1
-echo -e "[ ${green}INFO$NC ] Setting chrony tracking"
-chronyc sourcestats -v
-chronyc tracking -v
+systemctl enable chrony 2>/dev/null; systemctl restart chrony 2>/dev/null
 echo -e "[ ${green}INFO$NC ] Setting dll"
 apt clean all && apt update
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
-apt install socat cron bash-completion ntpdate -y
-ntpdate pool.ntp.org
-apt -y install chrony
-apt install zip -y
-apt install curl pwgen openssl netcat cron -y
+apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release socat cron bash-completion ntpdate chrony zip pwgen openssl netcat -y
 
 # install xray
-sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
-domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-chown www-data.www-data $domainSock_dir
-# Make Folder XRay
-mkdir -p /var/log/xray
-mkdir -p /etc/xray
+domainSock_dir="/run/xray"; [ -d $domainSock_dir ] || mkdir $domainSock_dir
+chown www-data:www-data $domainSock_dir
+mkdir -p /var/log/xray /etc/xray /home/vps/public_html
 chown -R www-data:www-data /var/log/xray
 chmod 755 /var/log/xray
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
-## crt xray
-systemctl stop nginx
-mkdir /root/.acme.sh
-curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+touch /var/log/xray/access.log /var/log/xray/error.log /var/log/xray/access2.log /var/log/xray/error2.log
+
+## crt xray - FIX 3: Hapus systemctl stop nginx dobel neng kene
+mkdir -p /root/.acme.sh
+curl -s https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
@@ -71,96 +63,41 @@ chmod +x /root/.acme.sh/acme.sh
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 # nginx renew ssl
-echo -n '#!/bin/bash
+cat > /usr/local/bin/ssl_renew.sh <<'EOSSL'
+#!/bin/bash
 /etc/init.d/nginx stop
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
 /etc/init.d/nginx start
-/etc/init.d/nginx status
-' > /usr/local/bin/ssl_renew.sh
+EOSSL
 chmod +x /usr/local/bin/ssl_renew.sh
-if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root 2>/dev/null; then (crontab -l 2>/dev/null; echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab; fi
 
-# Make Folder & Log XRay & Log Trojan
-rm -fr /var/log/xray
-#rm -fr /var/log/trojan
-rm -fr /home/vps/public_html
-mkdir -p /var/log/xray
-#mkdir -p /var/log/trojan
-mkdir -p /home/vps/public_html
-chown www-data.www-data /var/log/xray
-chown www-data.www-data /etc/xray
-chmod +x /var/log/xray
-#chmod +x /var/log/trojan
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
-chown -R www-data:www-data /var/log/xray
+chown www-data:www-data /var/log/xray /etc/xray
 chmod 755 /var/log/xray
-chmod 640 /var/log/xray/*.log
-# Make Log Autokill & Log Autoreboot
-rm -fr /root/log-limit.txt
-rm -fr /root/log-reboot.txt
-touch /root/log-limit.txt
-touch /root/log-reboot.txt
-touch /home/limit
-echo "" > /root/log-limit.txt
-echo "" > /root/log-reboot.txt
-
-# nginx for debian & ubuntu
-install_ssl(){
-    if [ -f "/usr/bin/apt-get" ];then
-            isDebian=`cat /etc/issue|grep Debian`
-            if [ "$isDebian" != "" ];then
-                    apt-get install -y nginx certbot
-                    apt install -y nginx certbot
-                    sleep 3s
-            else
-                    apt-get install -y nginx certbot
-                    apt install -y nginx certbot
-                    sleep 3s
-            fi
-    else
-        yum install -y nginx certbot
-        sleep 3s
-    fi
-
-    systemctl stop nginx.service
-
-    if [ -f "/usr/bin/apt-get" ];then
-            isDebian=`cat /etc/issue|grep Debian`
-            if [ "$isDebian" != "" ];then
-                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-                    sleep 3s
-            else
-                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-                    sleep 3s
-            fi
-    else
-        echo "Y" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-        sleep 3s
-    fi
-}
+chmod 640 /var/log/xray/*.log 2>/dev/null
+rm -fr /root/log-limit.txt /root/log-reboot.txt
+touch /root/log-limit.txt /root/log-reboot.txt /home/limit
 
 # install nginx
 apt install -y nginx
-cd
-rm -fr /etc/nginx/sites-enabled/default
-rm -fr /etc/nginx/sites-available/default
-wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf" 
-#mkdir -p /home/vps/public_html
+rm -fr /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
+wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf"
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-# Random Port Xray
-vless=$((RANDOM + 10000))
-vmess=$((RANDOM + 10000))
-trojanws=$((RANDOM + 10000))
-vlessgrpc=$((RANDOM + 10000))
-vmessgrpc=$((RANDOM + 10000))
-trojangrpc=$((RANDOM + 10000))
+# === FIX 4: Port - pake lawas nek enek, nek gak enek nembe random ===
+if [ -f /tmp/config.json.bak ]; then
+  # Ambil 6 port dari config lawas (urutan: vless, vmess, trojanws, vlessgrpc, vmessgrpc, trojangrpc)
+  PORTS=($(grep -o '"port": [0-9]*' /tmp/config.json.bak | grep -o '[0-9]*' | grep -v 10085))
+  vless=${PORTS[0]}; vmess=${PORTS[1]}; trojanws=${PORTS[2]}; vlessgrpc=${PORTS[3]}; vmessgrpc=${PORTS[4]}; trojangrpc=${PORTS[5]}
+fi
+[ -z "$vless" ] && vless=$((RANDOM + 10000))
+[ -z "$vmess" ] && vmess=$((RANDOM + 10000))
+[ -z "$trojanws" ] && trojanws=$((RANDOM + 10000))
+[ -z "$vlessgrpc" ] && vlessgrpc=$((RANDOM + 10000))
+[ -z "$vmessgrpc" ] && vmessgrpc=$((RANDOM + 10000))
+[ -z "$trojangrpc" ] && trojangrpc=$((RANDOM + 10000))
 
 # nginx xray.conf
-rm -fr /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
              listen 80;
@@ -178,17 +115,17 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen 2086;
              listen [::]:2086;
              listen 443 ssl http2 reuseport;
-             listen [::]:443 http2 reuseport;	
+             listen [::]:443 http2 reuseport;
              listen 8443 ssl http2 reuseport;
-             listen [::]:8443 http2 reuseport;	
+             listen [::]:8443 http2 reuseport;
              listen 2096 ssl http2 reuseport;
-             listen [::]:2096 http2 reuseport;	
+             listen [::]:2096 http2 reuseport;
              listen 2087 ssl http2 reuseport;
-             listen [::]:2087 http2 reuseport;	
+             listen [::]:2087 http2 reuseport;
              listen 2053 ssl http2 reuseport;
-             listen [::]:2053 http2 reuseport;	
+             listen [::]:2053 http2 reuseport;
              listen 2083 ssl http2 reuseport;
-             listen [::]:2083 http2 reuseport;	
+             listen [::]:2083 http2 reuseport;
              server_name 127.0.0.1 localhost;
              ssl_certificate /etc/xray/xray.crt;
              ssl_certificate_key /etc/xray/xray.key;
@@ -200,7 +137,7 @@ EOF
 sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:700'';' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:700;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
@@ -208,7 +145,6 @@ sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
 sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
@@ -220,7 +156,6 @@ sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
 sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
@@ -232,7 +167,6 @@ sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
 sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
@@ -244,7 +178,6 @@ sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
 sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
@@ -253,7 +186,6 @@ sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/ng
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
 sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
@@ -262,7 +194,6 @@ sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/ng
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
 sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
@@ -272,10 +203,14 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-# set uuid xray
-uuid=$(cat /proc/sys/kernel/random/uuid)
+# === FIX 5: UUID - pake lawas nek enek ===
+if [ -n "$UUID_LAWAS" ]; then
+  uuid=$UUID_LAWAS
+else
+  uuid=$(cat /proc/sys/kernel/random/uuid)
+fi
 
-# xray config
+# xray config - sama persis koyok lawas, tapi pake $uuid + $port sing wes disimpen
 cat <<EOF> /etc/xray/config.json
 {
   "log" : {
@@ -284,253 +219,62 @@ cat <<EOF> /etc/xray/config.json
     "loglevel": "warning"
   },
   "dns": {
-    "servers": [
-      "https://1.1.1.1/dns-query",
-      "https://8.8.8.8/dns-query",
-      "1.1.1.1",
-      "8.8.8.8"
-    ],
+    "servers": ["https://1.1.1.1/dns-query","https://8.8.8.8/dns-query","1.1.1.1","8.8.8.8"],
     "queryStrategy": "UseIPv4"
   },
   "inbounds": [
-      {
-      "listen": "127.0.0.1",
-      "port": 10085,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-   {
-     "listen": "127.0.0.1",
-     "port": "$vless",
-     "protocol": "vless",
-      "settings": {
-          "decryption":"none",
-            "clients": [
-               {
-                 "id": "${uuid}"                 
+      {"listen": "127.0.0.1","port": 10085,"protocol": "dokodemo-door","settings": {"address": "127.0.0.1"},"tag": "api"},
+      {"listen": "127.0.0.1","port": "$vless","protocol": "vless","settings": {"decryption":"none","clients": [{"id": "${uuid}"
 #vless
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vless"
-          }
-        }
-     },
-     {
-     "listen": "127.0.0.1",
-     "port": "$vmess",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
+             }]},"streamSettings":{"network": "ws","wsSettings": {"path": "/vless"}}},
+      {"listen": "127.0.0.1","port": "$vmess","protocol": "vmess","settings": {"clients": [{"id": "${uuid}","alterId": 0
 #vmess
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vmess"
-          }
-        }
-     },
-     {
-     "listen": "127.0.0.1",
-      "port": "$trojanws",
-      "protocol": "trojan",
-      "settings": {
-          "decryption":"none",		
-           "clients": [
-              {
-                 "password": "${uuid}"
+             }]},"streamSettings":{"network": "ws","wsSettings": {"path": "/vmess"}}},
+      {"listen": "127.0.0.1","port": "$trojanws","protocol": "trojan","settings": {"decryption":"none","clients": [{"password": "${uuid}"
 #trojanws
-              }
-          ],
-         "udp": true
-       },
-       "streamSettings":{
-           "network": "ws",
-           "wsSettings": {
-               "path": "/trojan-ws"
-            }
-         }
-     },
-    {
-        "listen": "127.0.0.1",
-        "port": "$vlessgrpc",
-        "protocol": "vless",
-        "settings": {
-         "decryption":"none",
-           "clients": [
-             {
-               "id": "${uuid}"
+              }],"udp": true},"streamSettings":{"network": "ws","wsSettings": {"path": "/trojan-ws"}}},
+      {"listen": "127.0.0.1","port": "$vlessgrpc","protocol": "vless","settings": {"decryption":"none","clients": [{"id": "${uuid}"
 #vlessgrpc
-             }
-          ]
-       },
-          "streamSettings":{
-             "network": "grpc",
-             "grpcSettings": {
-                "serviceName": "vless-grpc"
-           }
-        }
-     },
-     {
-      "listen": "127.0.0.1",
-      "port": "$vmessgrpc",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
+             }]},"streamSettings":{"network": "grpc","grpcSettings": {"serviceName": "vless-grpc"}}},
+      {"listen": "127.0.0.1","port": "$vmessgrpc","protocol": "vmess","settings": {"clients": [{"id": "${uuid}","alterId": 0
 #vmessgrpc
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "grpc",
-            "grpcSettings": {
-                "serviceName": "vmess-grpc"
-          }
-        }
-     },
-     {
-        "listen": "127.0.0.1",
-        "port": "$trojangrpc",
-        "protocol": "trojan",
-        "settings": {
-          "decryption":"none",
-             "clients": [
-               {
-                 "password": "${uuid}"
+             }]},"streamSettings":{"network": "grpc","grpcSettings": {"serviceName": "vmess-grpc"}}},
+      {"listen": "127.0.0.1","port": "$trojangrpc","protocol": "trojan","settings": {"decryption":"none","clients": [{"password": "${uuid}"
 #trojangrpc
-               }
-           ]
-        },
-         "streamSettings":{
-         "network": "grpc",
-           "grpcSettings": {
-               "serviceName": "trojan-grpc"
-         }
-      }
-    }	
+               }]},"streamSettings":{"network": "grpc","grpcSettings": {"serviceName": "trojan-grpc"}}}
   ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
-    }
-  ],
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
-        ],
-        "outboundTag": "blocked"
-      },
-      {
-        "inboundTag": [
-          "api"
-        ],
-        "outboundTag": "api",
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
-      }
-    ]
-  },
+  "outbounds": [{"protocol": "freedom","settings": {}},{"protocol": "blackhole","settings": {},"tag": "blocked"}],
+  "routing": {"rules": [
+      {"type": "field","ip": ["0.0.0.0/8","10.0.0.0/8","100.64.0.0/10","169.254.0.0/16","172.16.0.0/12","192.0.0.0/24","192.0.2.0/24","192.168.0.0/16","198.18.0.0/15","198.51.100.0/24","203.0.113.0/24","::1/128","fc00::/7","fe80::/10"],"outboundTag": "blocked"},
+      {"inboundTag": ["api"],"outboundTag": "api","type": "field"},
+      {"type": "field","outboundTag": "blocked","protocol": ["bittorrent"]}
+    ]},
   "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true,
-      "statsOutboundUplink" : true,
-      "statsOutboundDownlink" : true
-    }
-  }
+  "api": {"services": ["StatsService"],"tag": "api"},
+  "policy": {"levels": {"0": {"statsUserDownlink": true,"statsUserUplink": true}},"system": {"statsInboundUplink": true,"statsInboundDownlink": true,"statsOutboundUplink": true,"statsOutboundDownlink": true}}
 }
 EOF
-# ╔══════════════════════════════════════════════════════════════╗
-# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
-# ╚══════════════════════════════════════════════════════════════╝
-echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
 
-# FIX: Ambil versi terbaru dari GitHub, fallback ke v26.11.9
+# INSTALL XRAY CORE
+echo -e "[ ${green}INFO${NC} ] Install Xray Core..."
 XRAY_LATEST=$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-if [[ -z "$XRAY_LATEST" ]]; then
-    XRAY_LATEST="v26.11.9"
-fi
-echo -e "[ ${green}INFO${NC} ] Versi Xray Terbaru: $XRAY_LATEST"
-
-# FIX: Install 1x aja, pakai versi terbaru. Jangan pakai --version tanpa nilai!
+[ -z "$XRAY_LATEST" ] && XRAY_LATEST="v26.11.9"
 if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version "$XRAY_LATEST"; then
-    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
-    exit 1
+  echo "Xray install gagal, balekne config lawas..."
+  [ -f /tmp/config.json.bak ] && cp /tmp/config.json.bak /etc/xray/config.json
+  exit 1
 fi
-if [ ! -x /usr/local/bin/xray ]; then
-    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
-    exit 1
-fi
+[ -x /usr/local/bin/xray ] || exit 1
 /usr/local/bin/xray version || exit 1
-echo -e "[ ${green}INFO${NC} ] Xray $XRAY_LATEST berhasil dipasang!"
 
-rm -fr /etc/systemd/system/xray.service.d
-rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
 [Unit]
 Description=Xray Service
 Documentation=https://github.com/XTLS/Xray-core
 After=network.target nss-lookup.target
-
 [Service]
 User=www-data
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
@@ -541,24 +285,10 @@ LimitNOFILE=1000000
 [Install]
 WantedBy=multi-user.target
 EOF
-echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Xray"
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable xray >/dev/null 2>&1
-systemctl start xray >/dev/null 2>&1
-systemctl restart xray >/dev/null 2>&1
-echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Nginx"
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable nginx >/dev/null 2>&1
-systemctl start nginx >/dev/null 2>&1
-systemctl restart nginx >/dev/null 2>&1
-# Restart All Service
-echo -e "$yell[SERVICE]$NC Restart All Service"
-chown -R www-data:www-data /home/vps/public_html
-# Enable & Restart & Xray & Trojan & Nginx
-echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
-systemctl daemon-reload >/dev/null 2>&1
-systemctl restart xray >/dev/null 2>&1
-systemctl restart nginx >/dev/null 2>&1
 
-cd /usr/bin
-rm -fr upray
+systemctl daemon-reload
+systemctl enable xray nginx
+systemctl restart xray nginx
+chown -R www-data:www-data /home/vps/public_html
+echo -e "[ ${green}INFO${NC} ] Xray Install Selesai - UUID: $uuid"
+systemctl is-active xray nginx
