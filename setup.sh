@@ -255,7 +255,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn.sh -O /usr/bin/ssh-vpn && sed -i 's/\r$//' /usr/bin/ssh-vpn && chmod +x /usr/bin/ssh-vpn && ssh-vpn
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
