@@ -12,7 +12,7 @@ else
 domain=$IP
 fi
 #hpus file lama
-systemctl stop xray nginx
+#systemctl stop xray nginx
 
 rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/systemd/system/xray.service
@@ -342,15 +342,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmess
-### tri 2026-11-22
-},{"id": "dec44592-131d-4f5e-8731-ccb7c2d3cc1b","alterId": 0,"email": "tri"
-### siporVM342 2026-12-02
-},{"id": "2afe31a3-a17c-4139-8656-cb5d9cbebf14","alterId": 0,"email": "siporVM342"
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
@@ -409,15 +403,9 @@ cat <<EOF> /etc/xray/config.json
                  "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
-### tri 2026-11-22
-},{"id": "dec44592-131d-4f5e-8731-ccb7c2d3cc1b","alterId": 0,"email": "tri"
-### siporVM342 2026-12-02
-},{"id": "2afe31a3-a17c-4139-8656-cb5d9cbebf14","alterId": 0,"email": "siporVM342"
-### ayudewe 2027-08-05
-},{"id": "a6eab25c-c41d-4f07-b0c8-f4f456594033","alterId": 0,"email": "ayudewe"
-          }
-        ]
-      },
+             }
+          ]
+       },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": {
