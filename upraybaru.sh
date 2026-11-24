@@ -141,7 +141,7 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 xraymain=8443
 
-# ===== NGINX HTTP : FIX ALL PORT 80 - SSH + VLESS + VMESS + TROJAN =====
+# ===== NGINX HTTP : FIX ALL PORT 80 - SSH + VLESS + VMESS + TROJAN + GRPC =====
 rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/nginx/conf.d/default.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
@@ -192,6 +192,19 @@ server {
         proxy_set_header Connection "upgrade";
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
+    }
+    # === GRPC - FIX BARU ===
+    location /vless-grpc {
+        grpc_pass grpc://127.0.0.1:$vlessgrpc;
+        grpc_set_header Host \$host;
+    }
+    location /vmess-grpc {
+        grpc_pass grpc://127.0.0.1:$vmessgrpc;
+        grpc_set_header Host \$host;
+    }
+    location /trojan-grpc {
+        grpc_pass grpc://127.0.0.1:$trojangrpc;
+        grpc_set_header Host \$host;
     }
     location / {
         proxy_pass http://127.0.0.1:700;
@@ -509,7 +522,7 @@ systemctl restart nginx >/dev/null 2>&1
 echo -e "[ ${GREEN}ok${NC} ] SSH WS Port 80 -> 700 FIXED"
 curl -s -m 3 http://127.0.0.1:80/ | head -c 100; echo ""
 
-# ===== TES PORT 80 - ALL VRAY + SSH =====
+# ===== TES PORT 80 - ALL VRAY + SSH + GRPC =====
 echo -e "[ ${GREEN}ok${NC} ] TES PORT 80..."
 echo "--- VLESS 80 (kudune 400 + Sec-Websocket) ---"
 curl -s -m 3 -v http://127.0.0.1:80/vless 2>&1 | grep -E "HTTP|Sec-Websocket"
@@ -518,7 +531,11 @@ curl -s -m 3 -v http://127.0.0.1:80/vmess 2>&1 | grep -E "HTTP|Sec-Websocket"
 echo "--- TROJAN-WS 80 (kudune 400 + Sec-Websocket) ---"
 curl -s -m 3 -v http://127.0.0.1:80/trojan-ws 2>&1 | grep -E "HTTP|Sec-Websocket"
 echo "--- SSH 80 (kudune 101 Direct By Nbc-Group) ---"
-curl -s -m 3 -v http://127.0.0.1:80/ 2>&1 | grep -E "HTTP"
+curl -s -m 3 -v -H "Connection: Upgrade" -H "Upgrade: websocket" http://127.0.0.1:80/ 2>&1 | grep -E "HTTP"
+echo "--- GRPC 80 (kudune DUDU 101 SSH, tapi HTTP/2) ---"
+curl -s -m 5 --http2-prior-knowledge -v http://127.0.0.1:80/vless-grpc/ 2>&1 | grep -E "HTTP"
+curl -s -m 5 --http2-prior-knowledge -v http://127.0.0.1:80/vmess-grpc/ 2>&1 | grep -E "HTTP"
+curl -s -m 5 --http2-prior-knowledge -v http://127.0.0.1:80/trojan-grpc/ 2>&1 | grep -E "HTTP"
 
 # ===== FIX MENU: BEN GAK KECAMPUR NEK JSON GESER - 1x INSTALL RAMPUNG =====
 cat > /root/fix-menu.sh << 'FIXEOF'
