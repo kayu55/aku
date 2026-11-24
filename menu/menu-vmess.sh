@@ -83,32 +83,21 @@ menu-vmess
 
 function delws() {
 clear
-# MUNG VMESS TOK - [2,5] - podo karo user-ws!
-mapfile -t USERS < <(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-seen=set()
-for idx in [2,5]:
-    try:
-        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-            e=c.get('email')
-            if e and e not in seen:
-                seen.add(e); print(e)
-    except: pass
-" | sort -u)
+# LIST MUNG VMESS TOK - nganggo #vmess, OJO json! Mergo json e rusak!
+mapfile -t USERS < <(awk '
+/^#vmess$/ {in_v=1; next}
+/^#vmessgrpc$/ {in_v=1; next}
+/^#/ && !/^###/ {in_v=0; next}
+in_v && /^### / {print $2}
+' /etc/xray/config.json | sort -u)
 NUMBER=${#USERS[@]}
 if [[ $NUMBER == '0' ]]; then
   echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
   echo -e "\E[42;1;37m       Delete Vmess Account        \E[0m"
   echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-  echo ""
-  echo "You have no existing clients!"
-  echo ""
+  echo ""; echo "You have no existing clients!"; echo ""
   echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-  read -n 1 -s -r -p "Press any key to back on menu"
-  menu; return
+  read -n 1 -s -r -p "Press any key to back on menu"; menu; return
 fi
 clear
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -118,50 +107,34 @@ echo "     No  User   Expired  "
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  e=$(grep -h "^### $u " /etc/xray/config.json | head -1 | awk '{print $3}')
   printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
 done
-echo ""
-red "tap enter to go back"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
 user="${USERS[$((CLIENT_NUMBER-1))]}"
 if [ -z "$user" ]; then menu; return; fi
-exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
-# HAPUS AMAN: mung inbound [2,5] tok, ojo gawe sed /},{/d!
-python3 - "$user" << 'PYEOF'
-import sys
-user=sys.argv[1]
-lines=open('/etc/xray/config.json').read().splitlines()
-out=[]
-inbound_idx=-1
-skip=False
-for line in lines:
-    if '"protocol"' in line:
-        inbound_idx+=1
-    s=line.strip()
-    if s.startswith('### ') and len(s.split())>1 and s.split()[1]==user:
-        if inbound_idx in [2,5]:
-            skip=True
-            continue
-    if skip:
-        if '}' in line:
-            skip=False
-        continue
-    out.append(line)
-open('/etc/xray/config.json','w').write('\n'.join(out)+'\n')
-PYEOF
+exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
+cp /etc/xray/config.json /etc/xray/config.json.bak
+# HAPUS MUNG NENG BAGIAN #vmess / #vmessgrpc TOK!
+# VLESS / TROJAN sing jeneng e podo, AMAN, gak kehapus!
+awk -v u="$user" '
+/^#vmess$/ {in_v=1; print; next}
+/^#vmessgrpc$/ {in_v=1; print; next}
+/^#/ && !/^###/ {in_v=0; print; next}
+in_v && $0 ~ "^### " u " " {next}
+in_v && index($0, "\"email\": \"" u "\"") {next}
+{print}
+' /etc/xray/config.json > /tmp/cfg.tmp && mv /tmp/cfg.tmp /etc/xray/config.json
+# Cek neng bagian VMESS tok, wes ilang pora?
+SISA=$(awk '/^#vmess$/{in_v=1;next} /^#vmessgrpc$/{in_v=1;next} /^#/&&!/^###/{in_v=0;next} in_v && index($0,"'"$user"'")' /etc/xray/config.json | wc -l)
 systemctl restart xray > /dev/null 2>&1
 clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e " XRAY Account Deleted Successfully"
+if [[ "$SISA" == "0" ]]; then echo -e " XRAY Account Deleted Successfully"; else echo -e " GAGAL! File dibalekno!"; cp /etc/xray/config.json.bak /etc/xray/config.json; systemctl restart xray > /dev/null 2>&1; fi
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " Client Name : $user"
-echo " Expired On  : $exp"
-echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu-vmess
+echo " Client Name : $user"; echo " Expired On  : $exp"; echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; echo ""
+read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 }
 
 function user-ws(){
