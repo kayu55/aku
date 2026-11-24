@@ -289,6 +289,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"
 #vless
+### edu 2026-11-26
+},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"
              }
           ]
        },
@@ -326,6 +328,8 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
+### barat 2026-11-26
+},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"
               }
           ],
          "udp": true
@@ -346,6 +350,8 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+### edu 2026-11-26
+},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"
              }
           ]
        },
@@ -383,6 +389,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
+### barat 2026-11-26
+},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"
                }
            ]
         },
@@ -485,6 +493,91 @@ echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+
+# ===== FIX MENU: BEN GAK KECAMPUR NEK JSON GESER - 1x INSTALL RAMPUNG =====
+cat > /root/fix-menu.sh << 'FIXEOF'
+#!/bin/bash
+# Jalankan berkali-kali aman, idempotent
+python3 << 'PYEOF'
+import pathlib, re
+def auto_patch(path, proto):
+    p = pathlib.Path(path)
+    if not p.exists():
+        print(path + " DURUNG ENEK - SKIP")
+        return False
+    t = p.read_text()
+    orig = t
+    # 1. for idx in [angka] -> dinamis
+    t, n1 = re.subn(r"for idx in \[[0-9,\s]+\]:", "for idx in range(len(j['inbounds'])):", t)
+    # 2. for ib in j['inbounds'] -> tambah filter trojan style
+    # handle di bawah via line-by-line
+    needle = "!= '" + proto + "'"
+    needle2 = "!='" + proto + "'"
+    lines = t.splitlines(True)
+    out = []
+    i = 0
+    nambah = 0
+    while i < len(lines):
+        line = lines[i]
+        out.append(line)
+        # Kasus A: for idx in range(...)
+        if "for idx in range(len(j['inbounds'])):" in line:
+            ahead = "".join(lines[i+1:i+6])
+            if needle not in ahead and needle2 not in ahead:
+                nxt = lines[i+1] if i+1 < len(lines) else ""
+                if "try:" in nxt:
+                    out.append(nxt)
+                    indent = nxt[:len(nxt)-len(nxt.lstrip())] + "    "
+                    out.append(indent + "if j['inbounds'][idx].get('protocol') != '" + proto + "':\n")
+                    out.append(indent + "    continue\n")
+                    nambah += 1
+                    i += 2
+                    continue
+                else:
+                    indent = nxt[:len(nxt)-len(nxt.lstrip())]
+                    out.append(indent + "if j['inbounds'][idx].get('protocol') != '" + proto + "': continue\n")
+                    nambah += 1
+                    i += 1
+                    continue
+        # Kasus B: for ib in j['inbounds'] (menu-trojan lawas)
+        if "for ib in j['inbounds']" in line or "for ib in j[" in line:
+            ahead = "".join(lines[i+1:i+4])
+            if needle not in ahead and needle2 not in ahead and "get('protocol')" not in ahead:
+                indent = line[:len(line)-len(line.lstrip())] + "    "
+                out.append(indent + "if ib.get('protocol') != '" + proto + "': continue\n")
+                nambah += 1
+        i += 1
+    t = "".join(out)
+    if t != orig:
+        p.write_text(t)
+        print(path + " -> patched, nambah filter: " + str(nambah))
+    else:
+        print(path + " -> wes bener, skip")
+    return True
+
+for f, pr in [("/usr/bin/menu-vless","vless"),("/usr/bin/menu-vmess","vmess"),("/usr/bin/menu-trojan","trojan"),("/usr/bin/add-vless","vless"),("/usr/bin/add-vmess","vmess"),("/usr/bin/add-trojan","trojan"),("/usr/bin/del-vless","vless"),("/usr/bin/del-vmess","vmess"),("/usr/bin/del-trojan","trojan")]:
+    auto_patch(f, pr)
+PYEOF
+# Nek menu durung enek, pasang cron ben auto jalan pas reboot / pas menu ke-install
+if [ ! -f /usr/bin/menu-vless ] || [ ! -f /usr/bin/menu-vmess ] || [ ! -f /usr/bin/menu-trojan ]; then
+  if ! grep -q 'fix-menu.sh' /var/spool/cron/crontabs/root 2>/dev/null; then
+    (crontab -l 2>/dev/null; echo "@reboot /bin/bash /root/fix-menu.sh >> /root/fix-menu.log 2>&1") | crontab -
+    echo "Menu durung enek, fix-menu.sh dipasang neng cron @reboot"
+  fi
+else
+  echo "Menu wes enek, fix langsung jalan"
+fi
+FIXEOF
+chmod +x /root/fix-menu.sh
+bash /root/fix-menu.sh
+# Jalan no maneh otomatis saben menu di-bukak (hook, ben gak ono jebakan)
+for m in menu-vless menu-vmess menu-trojan; do
+  if [ -f /usr/bin/$m ] && ! grep -q 'fix-menu.sh' /usr/bin/$m; then
+    sed -i '1a [ -f /root/fix-menu.sh ] \&\& bash /root/fix-menu.sh >/dev/null 2>\&1' /usr/bin/$m
+  fi
+done
+echo -e "[ ${GREEN}ok${NC} ] FIX MENU rampung - VLESS/VMESS/TROJAN wes filter protocol"
+# ===== END FIX MENU =====
 
 cd /usr/bin
 rm -fr upraybaru
