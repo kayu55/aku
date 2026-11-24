@@ -11,74 +11,55 @@ clear
 clear
 function renewws(){
 clear
-# MUNG VMESS TOK - [2,5] - podo karo user-ws!
-mapfile -t USERS < <(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-seen=set()
-for idx in [2,5]:
-    try:
-        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-            e=c.get('email')
-            if e and e not in seen:
-                seen.add(e); print(e)
-    except: pass
-" | sort -u)
+mapfile -t USERS < <(awk '
+/^#vmess$/ {in_v=1; next}
+/^#vmessgrpc$/ {in_v=1; next}
+/^#/ && !/^###/ {in_v=0; next}
+in_v && /^### / {print $2}
+' /etc/xray/config.json | sort -u)
 NUMBER=${#USERS[@]}
 if [[ $NUMBER == '0' ]]; then
   clear
   echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
   echo -e "\E[42;1;37m           Perbarui Vmess          \E[0m"
   echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-  echo ""
-  echo "You have no existing clients!"
-  echo ""
+  echo ""; echo "You have no existing clients!"; echo ""
   echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-  echo ""
-  read -n 1 -s -r -p "Press any key to back on menu"
-  menu; return
+  echo ""; read -n 1 -s -r -p "Press any key to back on menu"; menu; return
 fi
 clear
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "\E[42;1;37m           Perbarui Vmess          \E[0m"
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo ""
-echo "     No  User   Expired"
+echo ""; echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  e=$(grep -h "^### $u " /etc/xray/config.json | head -1 | awk '{print $3}')
   printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
 done
-echo ""
-red "tap enter to go back"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
 user="${USERS[$((CLIENT_NUMBER-1))]}"
 if [ -z "$user" ]; then menu; return; fi
 read -p "Expired (days): " masaaktif
-exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
-now=$(date +%Y-%m-%d)
-d1=$(date -d "$exp" +%s)
-d2=$(date -d "$now" +%s)
-exp2=$(( (d1 - d2) / 86400 ))
-exp3=$(($exp2 + $masaaktif))
-exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-sed -i "/^### $user /c\### $user $exp4" /etc/xray/config.json
-#systemctl restart xray > /dev/null 2>&1
+exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
+now=$(date +%Y-%m-%d); d1=$(date -d "$exp" +%s); d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 )); exp3=$(($exp2 + $masaaktif)); exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
+# RENEW MUNG NENG BAGIAN VMESS TOK!
+cp /etc/xray/config.json /etc/xray/config.json.bak
+awk -v u="$user" -v ne="$exp4" '
+/^#vmess$/ {in_v=1; print; next}
+/^#vmessgrpc$/ {in_v=1; print; next}
+/^#/ && !/^###/ {in_v=0; print; next}
+in_v && $0 ~ "^### " u " " {print "### " u " " ne; next}
+{print}
+' /etc/xray/config.json > /tmp/cfg.tmp && mv /tmp/cfg.tmp /etc/xray/config.json
 clear
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " Akun XRAY Berhasil Diperpanjang"
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo ""
-echo " Client Name : $user"
-echo " Expired On  : $exp4 👍"
-echo ""
-echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu-vmess
+echo " Akun XRAY Berhasil Diperpanjang"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""; echo " Client Name : $user"; echo " Expired On  : $exp4 👍"; echo ""
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; echo ""
+read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 }
 
 function delws() {
@@ -139,47 +120,32 @@ read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 
 function user-ws(){
 clear
-# VMESS = inbound ke-2 lan ke-5 (index 2 lan 5) - sesuai debug mu!
-# [1]=vless, [2]=vmess, [3]=trojan, [4]=vless-grpc, [5]=vmess-grpc, [6]=trojan-grpc
-mapfile -t USERS < <(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-seen=set()
-for idx in [2,5]:
-    try:
-        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-            e=c.get('email')
-            if e and e not in seen:
-                seen.add(e); print(e)
-    except: pass
-" | sort -u)
+mapfile -t USERS < <(awk '
+/^#vmess$/ {in_v=1; next}
+/^#vmessgrpc$/ {in_v=1; next}
+/^#/ && !/^###/ {in_v=0; next}
+in_v && /^### / {print $2}
+' /etc/xray/config.json | sort -u)
 NUMBER=${#USERS[@]}
 if [[ $NUMBER == '0' ]]; then echo "Gak ono user VMESS!"; read -n 1 -s -r -p "Press any key"; menu-vmess; exit 0; fi
-echo "     Check Detail XRAY Vmess"
-echo "---------------------------------"
-echo "     No  User   Expired"
+echo "     Check Detail XRAY Vmess"; echo "---------------------------------"; echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  e=$(grep -h "^### $u " /etc/xray/config.json | head -1 | awk '{print $3}')
   echo "$((i+1))) $u $e"
 done
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-user="${USERS[$((CLIENT_NUMBER-1))]}"
-[ -z "$user" ] && menu-vmess
+user="${USERS[$((CLIENT_NUMBER-1))]}"; [ -z "$user" ] && menu-vmess
 domain=$(cat /etc/xray/domain)
-exp=$(grep -w "^### $user" /etc/xray/config.json | head -1 | awk '{print $3}')
-uuid=$(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-for idx in [2,5]:
-    for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-        if c.get('email')=='$user':
-            print(c.get('id','')); exit(0)
-")
+exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
+# UUID dijupuk teko baris email neng bagian VMESS tok, OJO json!
+uuid=$(awk -v u="$user" '
+/^#vmess$/ {in_v=1; next}
+/^#vmessgrpc$/ {in_v=1; next}
+/^#/ && !/^###/ {in_v=0; next}
+in_v && index($0, "\"email\": \"" u "\"") {
+  if (match($0, /"id": *"[^"]*"/)) { s=substr($0, RSTART, RLENGTH); gsub(/"id": *"|"/, "", s); print s; exit }
+}' /etc/xray/config.json)
 asu=`cat <<EOF
       {
       "v": "2",
@@ -230,21 +196,9 @@ vmesslink2="vmess://$(echo $ask | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 clear
 echo -e "=========== XRAY/VMESS ==========="
-echo -e "Remarks       : ${user}"
-echo -e "Expired On    : $exp"
-echo -e "Domain        : ${domain}"
-echo -e "id            : ${uuid}"
-echo -e "Path          : /vmess"
-echo -e "ServiceName   : vmess-grpc"
-echo -e "=================================="
-echo -e "Link TLS : ${vmesslink1}"
-echo -e "=================================="
-echo -e "Link none TLS : ${vmesslink2}"
-echo -e "=================================="
-echo -e "Link GRPC : ${vmesslink3}"
-echo -e "=================================="
-read -n 1 -s -r -p "Press any key to back on menu"
-menu-vmess
+echo -e "Remarks       : ${user}"; echo -e "Expired On    : $exp"; echo -e "Domain        : ${domain}"; echo -e "id            : ${uuid}"; echo -e "Path          : /vmess"; echo -e "ServiceName   : vmess-grpc"
+echo -e "=================================="; echo -e "Link TLS : ${vmesslink1}"; echo -e "=================================="; echo -e "Link none TLS : ${vmesslink2}"; echo -e "=================================="; echo -e "Link GRPC : ${vmesslink3}"; echo -e "=================================="
+read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 }
 
 clear
