@@ -313,6 +313,10 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"
 #vless
+### akuh 2027-12-28
+},{"id": "81c8b1fe-63e0-49dc-8ffd-0c7ec5deb753","email": "akuh"
+### CmpleVL043 2026-11-25
+},{"id": "7ebaa2ae-b3e0-477a-bb61-c312f9dadd70","email": "CmpleVL043"
              }
           ]
        },
@@ -443,7 +447,7 @@ cat <<EOF> /etc/xray/config.json
 ### sidiq 2026-12-03
 },{"id": "cf48df70-25f5-483b-820b-3a330bef08d6","alterId": 0,"email": "sidiq"
 ### z4n 2026-12-17
-},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n""
+},{"id": "5624fced-04d6-40fb-9ee0-dd5d37f8ab86","alterId": 0,"email": "z4n"
              }
           ]
        },
