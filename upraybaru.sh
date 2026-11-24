@@ -69,11 +69,18 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+# FIX: Xray jalan gawe www-data, key kudu iso diwoco www-data
+chown www-data:www-data /etc/xray/xray.crt /etc/xray/xray.key
+chmod 640 /etc/xray/xray.key
+chmod 644 /etc/xray/xray.crt
 
 # nginx renew ssl
 echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
+chown www-data:www-data /etc/xray/xray.crt /etc/xray/xray.key
+chmod 640 /etc/xray/xray.key
+chmod 644 /etc/xray/xray.crt
 /etc/init.d/nginx start
 /etc/init.d/nginx status
 ' > /usr/local/bin/ssl_renew.sh
@@ -170,7 +177,8 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 xraymain=8443
 
-# ===== NGINX HTTP : MUNG PORT 80 / WEB, OJO 443 MANEH =====
+# ===== NGINX HTTP : MUNG PORT 80 / WEB, OJO 443 / 700 MANEH =====
+# FIX: listen 700 DIBUANG, 700 iku duweke Python2
 rm -fr /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
@@ -188,21 +196,18 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:2095;
              listen 2086;
              listen [::]:2086;
-             listen 700;
-             listen [::]:700;
              server_name 127.0.0.1 localhost;
              root /home/vps/public_html;
         }
 EOF
 
 # ===== NGINX STREAM : IKI SING NGIRIM PROXY PROTOCOL (REAL IP) =====
+# FIX: listen 8443 DIBUANG, 8443 iku duweke Xray, Stream mung nerusno tok
 cat >/etc/nginx/stream.conf <<EOF
 stream {
     server {
         listen 443 reuseport;
         listen [::]:443 reuseport;
-        listen 8443 reuseport;
-        listen [::]:8443 reuseport;
         listen 2096 reuseport;
         listen [::]:2096 reuseport;
         listen 2087 reuseport;
@@ -467,6 +472,8 @@ systemctl restart xray >/dev/null 2>&1
 echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable nginx >/dev/null 2>&1
+# FIX: Pateni Nginx lawas sing nyantol ben gak rebutan port
+pkill -9 nginx; sleep 2
 systemctl start nginx >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
 # Restart All Service
