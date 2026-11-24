@@ -328,23 +328,23 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}", "alterId": 0
 #vmess
-### FlayVM950 2026-12-19
-},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
-### ad1 2026-12-19
-},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
-### GentaVM936 2026-12-16
-},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
-### indoVM013 2026-12-11
-},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
-### RONI8VM769 2026-12-01
-},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
-### Roni7VM179 2026-11-25
-},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
-### g4nty 2026-11-28
-},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
-             }
-          ]
-       },
+### zeeenVM839 2026-11-25
+},{"id": "e081fa23-c6e5-4a71-b5b2-5d38c2aec7d3","alterId": 0,"email": "zeeenVM839"
+### Roni9VM561 2027-01-01
+},{"id": "ad278e16-3a78-4039-94c3-f4b68afc2ba0","alterId": 0,"email": "Roni9VM561"
+### nur4 2027-01-21
+},{"id": "1893294f-dd45-43ae-a159-88ceef1dd127","alterId": 0,"email": "nur4"
+### KoeVM039 2026-12-21
+},{"id": "3f77459a-b0b1-4c41-bb91-90f9c8c4d22e","alterId": 0,"email": "KoeVM039"
+### manyudVM655 2026-12-18
+},{"id": "7ad30e4f-2a96-4f73-95b4-10ac39efa853","alterId": 0,"email": "manyudVM655"
+### xlfix 2026-12-14
+},{"id": "46e70c49-8e87-46bf-bfe6-4b7f75e4a187","alterId": 0,"email": "xlfix"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": { "path": "/vmess" },
@@ -399,23 +399,23 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}", "alterId": 0
 #vmessgrpc
-### FlayVM950 2026-12-19
-},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
-### ad1 2026-12-19
-},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
-### GentaVM936 2026-12-16
-},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
-### indoVM013 2026-12-11
-},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
-### RONI8VM769 2026-12-01
-},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
-### Roni7VM179 2026-11-25
-},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
-### g4nty 2026-11-28
-},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
-             }
-          ]
-       },
+### zeeenVM839 2026-11-25
+},{"id": "e081fa23-c6e5-4a71-b5b2-5d38c2aec7d3","alterId": 0,"email": "zeeenVM839"
+### Roni9VM561 2027-01-01
+},{"id": "ad278e16-3a78-4039-94c3-f4b68afc2ba0","alterId": 0,"email": "Roni9VM561"
+### nur4 2027-01-21
+},{"id": "1893294f-dd45-43ae-a159-88ceef1dd127","alterId": 0,"email": "nur4"
+### KoeVM039 2026-12-21
+},{"id": "3f77459a-b0b1-4c41-bb91-90f9c8c4d22e","alterId": 0,"email": "KoeVM039"
+### manyudVM655 2026-12-18
+},{"id": "7ad30e4f-2a96-4f73-95b4-10ac39efa853","alterId": 0,"email": "manyudVM655"
+### xlfix 2026-12-14
+},{"id": "46e70c49-8e87-46bf-bfe6-4b7f75e4a187","alterId": 0,"email": "xlfix"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": { "serviceName": "vmess-grpc" },
