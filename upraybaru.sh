@@ -11,8 +11,6 @@ domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
-#hpus file lama
-#systemctl stop xray nginx
 
 rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/systemd/system/xray.service
@@ -84,15 +82,12 @@ if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo 
 
 # Make Folder & Log XRay & Log Trojan
 rm -fr /var/log/xray
-#rm -fr /var/log/trojan
 rm -fr /home/vps/public_html
 mkdir -p /var/log/xray
-#mkdir -p /var/log/trojan
 mkdir -p /home/vps/public_html
 chown www-data.www-data /var/log/xray
 chown www-data.www-data /etc/xray
 chmod +x /var/log/xray
-#chmod +x /var/log/trojan
 touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
@@ -126,9 +121,7 @@ install_ssl(){
         yum install -y nginx certbot
         sleep 3s
     fi
-
     systemctl stop nginx.service
-
     if [ -f "/usr/bin/apt-get" ];then
             isDebian=`cat /etc/issue|grep Debian`
             if [ "$isDebian" != "" ];then
@@ -150,7 +143,6 @@ cd
 rm -fr /etc/nginx/sites-enabled/default
 rm -fr /etc/nginx/sites-available/default
 wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf" 
-#mkdir -p /home/vps/public_html
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
 #intall vray 
@@ -212,6 +204,7 @@ sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:700'';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
@@ -224,6 +217,7 @@ sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
@@ -236,6 +230,7 @@ sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
@@ -248,6 +243,7 @@ sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
@@ -262,6 +258,7 @@ sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_proxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/conf.d/xray.conf
@@ -271,6 +268,7 @@ sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_proxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/conf.d/xray.conf
@@ -280,6 +278,7 @@ sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_proxy_protocol on;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 # set uuid xray
@@ -322,6 +321,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"                 
 #vless
+### edu 2026-11-26
+},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"
              }
           ]
        },
@@ -329,6 +330,9 @@ cat <<EOF> /etc/xray/config.json
          "network": "ws",
             "wsSettings": {
                 "path": "/vless"
+          },
+          "sockopt": {
+              "acceptProxyProtocol": true
           }
         }
      },
@@ -349,6 +353,9 @@ cat <<EOF> /etc/xray/config.json
          "network": "ws",
             "wsSettings": {
                 "path": "/vmess"
+          },
+          "sockopt": {
+              "acceptProxyProtocol": true
           }
         }
      },
@@ -362,6 +369,8 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
+### barat 2026-11-26
+},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"
               }
           ],
          "udp": true
@@ -370,7 +379,10 @@ cat <<EOF> /etc/xray/config.json
            "network": "ws",
            "wsSettings": {
                "path": "/trojan-ws"
-            }
+            },
+           "sockopt": {
+               "acceptProxyProtocol": true
+           }
          }
      },
     {
@@ -383,6 +395,8 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+### edu 2026-11-26
+},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"
              }
           ]
        },
@@ -390,6 +404,9 @@ cat <<EOF> /etc/xray/config.json
              "network": "grpc",
              "grpcSettings": {
                 "serviceName": "vless-grpc"
+           },
+           "sockopt": {
+               "acceptProxyProtocol": true
            }
         }
      },
@@ -410,6 +427,9 @@ cat <<EOF> /etc/xray/config.json
          "network": "grpc",
             "grpcSettings": {
                 "serviceName": "vmess-grpc"
+          },
+          "sockopt": {
+              "acceptProxyProtocol": true
           }
         }
      },
@@ -423,6 +443,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
+### barat 2026-11-26
+},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"
                }
            ]
         },
@@ -430,7 +452,10 @@ cat <<EOF> /etc/xray/config.json
          "network": "grpc",
            "grpcSettings": {
                "serviceName": "trojan-grpc"
-         }
+         },
+           "sockopt": {
+               "acceptProxyProtocol": true
+           }
       }
     }	
   ],
