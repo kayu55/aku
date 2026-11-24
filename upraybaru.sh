@@ -137,6 +137,14 @@ install_ssl(){
     fi
 }
 
+# ===== UPGRADE NGINX 1.18 -> 1.28 (Wajib, ben STREAM stabil) =====
+apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/ubuntu $(lsb_release -cs) nginx" | tee /etc/apt/sources.list.d/nginx.list
+apt update
+apt install -y nginx
+nginx -v
+
 # install nginx
 apt install -y nginx
 cd
@@ -160,8 +168,9 @@ trojanws=$((RANDOM + 10000))
 vlessgrpc=$((RANDOM + 10000))
 vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
+xraymain=8443
 
-# nginx xray.conf
+# ===== NGINX HTTP : MUNG PORT 80 / WEB, OJO 443 MANEH =====
 rm -fr /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
@@ -179,112 +188,42 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:2095;
              listen 2086;
              listen [::]:2086;
-             listen 443 ssl http2 reuseport;
-             listen [::]:443 http2 reuseport;	
-             listen 8443 ssl http2 reuseport;
-             listen [::]:8443 http2 reuseport;	
-             listen 2096 ssl http2 reuseport;
-             listen [::]:2096 http2 reuseport;	
-             listen 2087 ssl http2 reuseport;
-             listen [::]:2087 http2 reuseport;	
-             listen 2053 ssl http2 reuseport;
-             listen [::]:2053 http2 reuseport;	
-             listen 2083 ssl http2 reuseport;
-             listen [::]:2083 http2 reuseport;	
+             listen 700;
+             listen [::]:700;
              server_name 127.0.0.1 localhost;
-             ssl_certificate /etc/xray/xray.crt;
-             ssl_certificate_key /etc/xray/xray.key;
-             ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
-             ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;
         }
 EOF
-sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:700'';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_proxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_proxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_proxy_protocol on;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+# ===== NGINX STREAM : IKI SING NGIRIM PROXY PROTOCOL (REAL IP) =====
+cat >/etc/nginx/stream.conf <<EOF
+stream {
+    server {
+        listen 443 reuseport;
+        listen [::]:443 reuseport;
+        listen 8443 reuseport;
+        listen [::]:8443 reuseport;
+        listen 2096 reuseport;
+        listen [::]:2096 reuseport;
+        listen 2087 reuseport;
+        listen [::]:2087 reuseport;
+        listen 2053 reuseport;
+        listen [::]:2053 reuseport;
+        listen 2083 reuseport;
+        listen [::]:2083 reuseport;
+        proxy_pass 127.0.0.1:$xraymain;
+        proxy_protocol on;
+        proxy_timeout 1h;
+    }
+}
+EOF
+# Daftarkan stream.conf nang nginx.conf utama, lek durung ono
+grep -q "stream.conf" /etc/nginx/nginx.conf || echo 'include /etc/nginx/stream.conf;' >> /etc/nginx/nginx.conf
 
 # set uuid xray
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-# xray config
+# xray config - Main inbound 8443 nerimo PROXY, fallback ke inbound dalam
 cat <<EOF> /etc/xray/config.json
 {
   "log" : {
@@ -311,6 +250,37 @@ cat <<EOF> /etc/xray/config.json
       },
       "tag": "api"
     },
+    {
+      "listen": "127.0.0.1",
+      "port": $xraymain,
+      "protocol": "vless",
+      "settings": {
+        "decryption": "none",
+        "clients": [
+          { "id": "${uuid}" }
+        ],
+        "fallbacks": [
+          { "path": "/vless", "dest": $vless, "xver": 1 },
+          { "path": "/vmess", "dest": $vmess, "xver": 1 },
+          { "path": "/trojan-ws", "dest": $trojanws, "xver": 1 },
+          { "path": "/vless-grpc", "dest": $vlessgrpc, "xver": 1 },
+          { "path": "/vmess-grpc", "dest": $vmessgrpc, "xver": 1 },
+          { "path": "/trojan-grpc", "dest": $trojangrpc, "xver": 1 },
+          { "dest": 700 }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            { "certificateFile": "/etc/xray/xray.crt", "keyFile": "/etc/xray/xray.key" }
+          ],
+          "alpn": ["h2", "http/1.1"]
+        },
+        "sockopt": { "acceptProxyProtocol": true }
+      }
+    },
    {
      "listen": "127.0.0.1",
      "port": "$vless",
@@ -318,22 +288,14 @@ cat <<EOF> /etc/xray/config.json
       "settings": {
           "decryption":"none",
             "clients": [
-               {
-                 "id": "${uuid}"                 
-#vless
-### edu 2026-11-26
-},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"
-             }
-          ]
+               { "id": "${uuid}" },
+               {"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
+             ]
        },
        "streamSettings":{
          "network": "ws",
-            "wsSettings": {
-                "path": "/vless"
-          },
-          "sockopt": {
-              "acceptProxyProtocol": true
-          }
+            "wsSettings": { "path": "/vless" },
+          "sockopt": { "acceptProxyProtocol": true }
         }
      },
      {
@@ -342,21 +304,13 @@ cat <<EOF> /etc/xray/config.json
      "protocol": "vmess",
       "settings": {
             "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
-#vmess
-             }
-          ]
+               { "id": "${uuid}", "alterId": 0 }
+             ]
        },
        "streamSettings":{
          "network": "ws",
-            "wsSettings": {
-                "path": "/vmess"
-          },
-          "sockopt": {
-              "acceptProxyProtocol": true
-          }
+            "wsSettings": { "path": "/vmess" },
+          "sockopt": { "acceptProxyProtocol": true }
         }
      },
      {
@@ -364,25 +318,17 @@ cat <<EOF> /etc/xray/config.json
       "port": "$trojanws",
       "protocol": "trojan",
       "settings": {
-          "decryption":"none",		
+          "decryption":"none",
            "clients": [
-              {
-                 "password": "${uuid}"
-#trojanws
-### barat 2026-11-26
-},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"
-              }
+              { "password": "${uuid}" },
+              {"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
           ],
          "udp": true
        },
        "streamSettings":{
            "network": "ws",
-           "wsSettings": {
-               "path": "/trojan-ws"
-            },
-           "sockopt": {
-               "acceptProxyProtocol": true
-           }
+           "wsSettings": { "path": "/trojan-ws" },
+           "sockopt": { "acceptProxyProtocol": true }
          }
      },
     {
@@ -392,22 +338,14 @@ cat <<EOF> /etc/xray/config.json
         "settings": {
          "decryption":"none",
            "clients": [
-             {
-               "id": "${uuid}"
-#vlessgrpc
-### edu 2026-11-26
-},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"
-             }
+             { "id": "${uuid}" },
+             {"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
           ]
        },
           "streamSettings":{
              "network": "grpc",
-             "grpcSettings": {
-                "serviceName": "vless-grpc"
-           },
-           "sockopt": {
-               "acceptProxyProtocol": true
-           }
+             "grpcSettings": { "serviceName": "vless-grpc" },
+           "sockopt": { "acceptProxyProtocol": true }
         }
      },
      {
@@ -416,21 +354,13 @@ cat <<EOF> /etc/xray/config.json
      "protocol": "vmess",
       "settings": {
             "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
-#vmessgrpc
-             }
+               { "id": "${uuid}", "alterId": 0 }
           ]
        },
        "streamSettings":{
          "network": "grpc",
-            "grpcSettings": {
-                "serviceName": "vmess-grpc"
-          },
-          "sockopt": {
-              "acceptProxyProtocol": true
-          }
+            "grpcSettings": { "serviceName": "vmess-grpc" },
+          "sockopt": { "acceptProxyProtocol": true }
         }
      },
      {
@@ -440,35 +370,20 @@ cat <<EOF> /etc/xray/config.json
         "settings": {
           "decryption":"none",
              "clients": [
-               {
-                 "password": "${uuid}"
-#trojangrpc
-### barat 2026-11-26
-},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"
-               }
+               { "password": "${uuid}" },
+               {"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
            ]
         },
          "streamSettings":{
          "network": "grpc",
-           "grpcSettings": {
-               "serviceName": "trojan-grpc"
-         },
-           "sockopt": {
-               "acceptProxyProtocol": true
-           }
+           "grpcSettings": { "serviceName": "trojan-grpc" },
+           "sockopt": { "acceptProxyProtocol": true }
       }
-    }	
+    }
   ],
   "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
-    }
+    { "protocol": "freedom", "settings": {} },
+    { "protocol": "blackhole", "settings": {}, "tag": "blocked" }
   ],
   "routing": {
     "rules": [
@@ -492,36 +407,14 @@ cat <<EOF> /etc/xray/config.json
         ],
         "outboundTag": "blocked"
       },
-      {
-        "inboundTag": [
-          "api"
-        ],
-        "outboundTag": "api",
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
-      }
+      { "inboundTag": [ "api" ], "outboundTag": "api", "type": "field" },
+      { "type": "field", "outboundTag": "blocked", "protocol": [ "bittorrent" ] }
     ]
   },
   "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
+  "api": { "services": [ "StatsService" ], "tag": "api" },
   "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
+    "levels": { "0": { "statsUserDownlink": true, "statsUserUplink": true } },
     "system": {
       "statsInboundUplink": true,
       "statsInboundDownlink": true,
@@ -555,7 +448,7 @@ After=network.target nss-lookup.target
 
 [Service]
 User=www-data
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                            
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
@@ -579,7 +472,7 @@ systemctl restart nginx >/dev/null 2>&1
 # Restart All Service
 echo -e "$yell[SERVICE]$NC Restart All Service"
 chown -R www-data:www-data /home/vps/public_html
-# Enable & Restart & Xray & Trojan & Nginx
+# Enable & Restart & Xray & Nginx
 echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
