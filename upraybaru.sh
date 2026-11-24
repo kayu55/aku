@@ -331,41 +331,23 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}", "alterId": 0
 #vmess
-### ni3 2026-12-19
-},{"id": "d5422a71-6d9e-4f16-a03a-358f3d3eece3","alterId": 0,"email": "ni3"
-### daaVM071 2026-12-19
-},{"id": "55470690-a9d8-4fb0-a218-445b739adb5d","alterId": 0,"email": "daaVM071"
-### AmpunVM025 2026-12-05
-},{"id": "b5c67cf3-13ab-493c-a36b-7c20709e5d84","alterId": 0,"email": "AmpunVM025"
-### satuVM474 2026-12-18
-},{"id": "811271f8-2842-47af-944e-70f0ead6de41","alterId": 0,"email": "satuVM474"
-### j4b 2026-12-17
-},{"id": "95faddb8-d2a5-494f-90b7-384893e18d58","alterId": 0,"email": "j4b"
-### inflixVM781 2026-11-25
-},{"id": "0de5e110-3bcb-4ded-a271-38939b848aef","alterId": 0,"email": "inflixVM781"
-### yoyo 2026-12-09
-},{"id": "237ee963-a19b-48b3-83e2-f26eb624bdb9","alterId": 0,"email": "yoyo"
-### kamu 2026-12-14
-},{"id": "edf7fe91-6908-4d48-bb4f-e251e4667476","alterId": 0,"email": "kamu"
-### y33 2026-12-08
-},{"id": "742a82de-66bb-4299-ab00-71a9f6a909e5","alterId": 0,"email": "y33"
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### tselbos 2026-12-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
-          }
-        ]
-      },
+### FlayVM950 2026-12-19
+},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
+### ad1 2026-12-19
+},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
+### GentaVM936 2026-12-16
+},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
+### indoVM013 2026-12-11
+},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
+### RONI8VM769 2026-12-01
+},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
+### Roni7VM179 2026-11-25
+},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
+### g4nty 2026-11-28
+},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
+             }
+          ]
+       },
        "streamSettings":{
          "network": "ws",
             "wsSettings": { "path": "/vmess" },
@@ -420,38 +402,20 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}", "alterId": 0
 #vmessgrpc
-### ni3 2026-12-19
-},{"id": "d5422a71-6d9e-4f16-a03a-358f3d3eece3","alterId": 0,"email": "ni3"
-### daaVM071 2026-12-19
-},{"id": "55470690-a9d8-4fb0-a218-445b739adb5d","alterId": 0,"email": "daaVM071"
-### AmpunVM025 2026-12-05
-},{"id": "b5c67cf3-13ab-493c-a36b-7c20709e5d84","alterId": 0,"email": "AmpunVM025"
-### satuVM474 2026-12-18
-},{"id": "811271f8-2842-47af-944e-70f0ead6de41","alterId": 0,"email": "satuVM474"
-### j4b 2026-12-17
-},{"id": "95faddb8-d2a5-494f-90b7-384893e18d58","alterId": 0,"email": "j4b"
-### inflixVM781 2026-11-25
-},{"id": "0de5e110-3bcb-4ded-a271-38939b848aef","alterId": 0,"email": "inflixVM781"
-### yoyo 2026-12-09
-},{"id": "237ee963-a19b-48b3-83e2-f26eb624bdb9","alterId": 0,"email": "yoyo"
-### kamu 2026-12-14
-},{"id": "edf7fe91-6908-4d48-bb4f-e251e4667476","alterId": 0,"email": "kamu"
-### y33 2026-12-08
-},{"id": "742a82de-66bb-4299-ab00-71a9f6a909e5","alterId": 0,"email": "y33"
-### EduVM924 2026-12-05
-},{"id": "5485d2a9-c7cd-4df1-8350-48c5134e52b2","alterId": 0,"email": "EduVM924"
-### bangrayVM361 2026-12-04
-},{"id": "0ec0e2e0-61ba-4007-867c-b8ecf5aef68d","alterId": 0,"email": "bangrayVM361"
-### f4koVM331 2026-12-04
-},{"id": "54845633-0180-4103-adaf-54114ba7531f","alterId": 0,"email": "f4koVM331"
-### ajizVM446 2026-11-25
-},{"id": "b0378ea7-58b8-423c-abac-8360af05ff2d","alterId": 0,"email": "ajizVM446"
-### tselbos 2026-12-21
-},{"id": "c8117605-d775-4540-aebb-3be51469fa8b","alterId": 0,"email": "tselbos"
-### m4s4k 2026-12-11
-},{"id": "f45ab23e-f312-4a06-b269-a8bd5094bae1","alterId": 0,"email": "m4s4k"
-### asu 2027-05-21
-},{"id": "31c8b839-8d8c-413f-9034-4aff8680c42d","alterId": 0,"email": "asu"
+### FlayVM950 2026-12-19
+},{"id": "c97541aa-bcd1-4c98-87cb-c27126c5155a","alterId": 0,"email": "FlayVM950"
+### ad1 2026-12-19
+},{"id": "d3471b27-50f6-416c-89b4-e42772e697f3","alterId": 0,"email": "ad1"
+### GentaVM936 2026-12-16
+},{"id": "b8391912-441d-4c3a-8d01-f73e23536d3f","alterId": 0,"email": "GentaVM936"
+### indoVM013 2026-12-11
+},{"id": "478e0c2b-cec2-49cd-a1c5-3c15a7ec95ba","alterId": 0,"email": "indoVM013"
+### RONI8VM769 2026-12-01
+},{"id": "2291e85c-a6be-4ee5-a10f-f9d4030b9a64","alterId": 0,"email": "RONI8VM769"
+### Roni7VM179 2026-11-25
+},{"id": "5b72a4ca-bbd7-4190-a8a9-992dc03255f5","alterId": 0,"email": "Roni7VM179"
+### g4nty 2026-11-28
+},{"id": "4d8c97ff-c615-46fb-8bf3-bbca983d3084","alterId": 0,"email": "g4nty"
              }
           ]
        },
