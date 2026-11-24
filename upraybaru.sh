@@ -51,7 +51,6 @@ sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
-# Make Folder XRay
 mkdir -p /var/log/xray
 mkdir -p /etc/xray
 chown -R www-data:www-data /var/log/xray
@@ -69,7 +68,6 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
-# FIX: Xray jalan gawe www-data, key kudu iso diwoco www-data
 chown www-data:www-data /etc/xray/xray.crt /etc/xray/xray.key
 chmod 640 /etc/xray/xray.key
 chmod 644 /etc/xray/xray.crt
@@ -102,7 +100,6 @@ touch /var/log/xray/error2.log
 chown -R www-data:www-data /var/log/xray
 chmod 755 /var/log/xray
 chmod 640 /var/log/xray/*.log
-# Make Log Autokill & Log Autoreboot
 rm -fr /root/log-limit.txt
 rm -fr /root/log-reboot.txt
 touch /root/log-limit.txt
@@ -111,7 +108,6 @@ touch /home/limit
 echo "" > /root/log-limit.txt
 echo "" > /root/log-reboot.txt
 
-# nginx for debian & ubuntu
 install_ssl(){
     if [ -f "/usr/bin/apt-get" ];then
             isDebian=`cat /etc/issue|grep Debian`
@@ -144,7 +140,7 @@ install_ssl(){
     fi
 }
 
-# ===== UPGRADE NGINX 1.18 -> 1.28 (Wajib, ben STREAM stabil) =====
+# ===== UPGRADE NGINX 1.18 -> 1.28 =====
 apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/ubuntu $(lsb_release -cs) nginx" | tee /etc/apt/sources.list.d/nginx.list
@@ -160,12 +156,10 @@ rm -fr /etc/nginx/sites-available/default
 wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf" 
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
-#intall vray 
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  C O R E ⚡                 ║${NC}"
 echo -e "${green}║             Menggunakan rilis stabil terbaru                ║${NC}"
 echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
-echo -e "${green}➜ Menyiapkan direktori Xray...${NC}"
 mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 
 # Random Port Xray
@@ -177,8 +171,7 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 xraymain=8443
 
-# ===== NGINX HTTP : MUNG PORT 80 / WEB, OJO 443 / 700 MANEH =====
-# FIX: listen 700 DIBUANG, 700 iku duweke Python2
+# ===== NGINX HTTP : OJO 700 =====
 rm -fr /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
@@ -201,8 +194,7 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
         }
 EOF
 
-# ===== NGINX STREAM : IKI SING NGIRIM PROXY PROTOCOL (REAL IP) =====
-# FIX: listen 8443 DIBUANG, 8443 iku duweke Xray, Stream mung nerusno tok
+# ===== NGINX STREAM : OJO 8443, REAL IP =====
 cat >/etc/nginx/stream.conf <<EOF
 stream {
     server {
@@ -222,13 +214,12 @@ stream {
     }
 }
 EOF
-# Daftarkan stream.conf nang nginx.conf utama, lek durung ono
 grep -q "stream.conf" /etc/nginx/nginx.conf || echo 'include /etc/nginx/stream.conf;' >> /etc/nginx/nginx.conf
 
 # set uuid xray
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-# xray config - Main inbound 8443 nerimo PROXY, fallback ke inbound dalam
+# xray config - Main 8443 + User edu/barat model lawas (ono # penanda)
 cat <<EOF> /etc/xray/config.json
 {
   "log" : {
@@ -293,8 +284,11 @@ cat <<EOF> /etc/xray/config.json
       "settings": {
           "decryption":"none",
             "clients": [
-               { "id": "${uuid}" },
-               {"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
+               {
+                 "id": "${uuid}"
+#vless
+### edu 2026-11-26
+},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
              ]
        },
        "streamSettings":{
@@ -309,8 +303,11 @@ cat <<EOF> /etc/xray/config.json
      "protocol": "vmess",
       "settings": {
             "clients": [
-               { "id": "${uuid}", "alterId": 0 }
-             ]
+               {
+                 "id": "${uuid}", "alterId": 0
+#vmess
+             }
+          ]
        },
        "streamSettings":{
          "network": "ws",
@@ -325,8 +322,11 @@ cat <<EOF> /etc/xray/config.json
       "settings": {
           "decryption":"none",
            "clients": [
-              { "password": "${uuid}" },
-              {"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
+              {
+                 "password": "${uuid}"
+#trojanws
+### barat 2026-11-26
+},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
           ],
          "udp": true
        },
@@ -343,8 +343,11 @@ cat <<EOF> /etc/xray/config.json
         "settings": {
          "decryption":"none",
            "clients": [
-             { "id": "${uuid}" },
-             {"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
+             {
+               "id": "${uuid}"
+#vlessgrpc
+### edu 2026-11-26
+},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
           ]
        },
           "streamSettings":{
@@ -359,7 +362,10 @@ cat <<EOF> /etc/xray/config.json
      "protocol": "vmess",
       "settings": {
             "clients": [
-               { "id": "${uuid}", "alterId": 0 }
+               {
+                 "id": "${uuid}", "alterId": 0
+#vmessgrpc
+             }
           ]
        },
        "streamSettings":{
@@ -375,8 +381,11 @@ cat <<EOF> /etc/xray/config.json
         "settings": {
           "decryption":"none",
              "clients": [
-               { "password": "${uuid}" },
-               {"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
+               {
+                 "password": "${uuid}"
+#trojangrpc
+### barat 2026-11-26
+},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
            ]
         },
          "streamSettings":{
@@ -429,16 +438,13 @@ cat <<EOF> /etc/xray/config.json
   }
 }
 EOF
-# ╔══════════════════════════════════════════════════════════════╗
-# ║              📦 INSTALL X-RAY CORE STABLE TERBARU            ║
-# ╚══════════════════════════════════════════════════════════════╝
-echo -e "\n${green}✦ Mengunduh installer resmi Xray dan memasang versi stabil terbaru...${NC}"
+echo -e "\n${green}✦ Mengunduh installer resmi Xray...${NC}"
 if ! bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install; then
-    echo -e "\n${NC}❌ Instalasi Xray gagal. Periksa koneksi internet dan log installer."
+    echo -e "\n${NC}❌ Instalasi Xray gagal."
     exit 1
 fi
 if [ ! -x /usr/local/bin/xray ]; then
-    echo -e "❌ Binary Xray tidak ditemukan di /usr/local/bin/xray. Instalasi dibatalkan.${NC}"
+    echo -e "❌ Binary Xray tidak ditemukan."
     exit 1
 fi
 /usr/local/bin/xray version || exit 1
@@ -472,14 +478,11 @@ systemctl restart xray >/dev/null 2>&1
 echo -e "[ ${GREEN}ok${NC} ] Enable & Start & Restart & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable nginx >/dev/null 2>&1
-# FIX: Pateni Nginx lawas sing nyantol ben gak rebutan port
 pkill -9 nginx; sleep 2
 systemctl start nginx >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
-# Restart All Service
 echo -e "$yell[SERVICE]$NC Restart All Service"
 chown -R www-data:www-data /home/vps/public_html
-# Enable & Restart & Xray & Nginx
 echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
