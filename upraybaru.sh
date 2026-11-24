@@ -313,8 +313,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"
 #vless
-### akuu 2027-08-27
-},{"id": "b36eb066-14b2-4aef-a0e3-cc591d26abd4","email": "akuu"
              }
           ]
        },
@@ -333,17 +331,23 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}", "alterId": 0
 #vmess
-### yanurfaVM081 2026-12-07
-},{"id": "f8fafe31-9fe6-4ad8-a14a-37018deab273","alterId": 0,"email": "yanurfaVM081"
-### nihVM860 2026-11-25
-},{"id": "0f24d656-d5d6-429a-a456-b6446462a5fc","alterId": 0,"email": "nihVM860"
-### akiu 2027-09-11
-},{"id": "df6aa5dd-6a36-4422-bedd-cbda93a4cd52","alterId": 0,"email": "akiu"
-### jbarVM759 2026-12-18
-},{"id": "9af80824-6d44-4356-bb76-14a15caf26a0","alterId": 0,"email": "jbarVM759"
-             }
-          ]
-       },
+### zeeenVM839 2026-11-25
+},{"id": "e081fa23-c6e5-4a71-b5b2-5d38c2aec7d3","alterId": 0,"email": "zeeenVM839"
+### Roni9VM561 2027-01-01
+},{"id": "ad278e16-3a78-4039-94c3-f4b68afc2ba0","alterId": 0,"email": "Roni9VM561"
+### nur4 2027-01-21
+},{"id": "1893294f-dd45-43ae-a159-88ceef1dd127","alterId": 0,"email": "nur4"
+### KoeVM039 2026-12-21
+},{"id": "3f77459a-b0b1-4c41-bb91-90f9c8c4d22e","alterId": 0,"email": "KoeVM039"
+### manyudVM655 2026-12-18
+},{"id": "7ad30e4f-2a96-4f73-95b4-10ac39efa853","alterId": 0,"email": "manyudVM655"
+### xlfix 2026-12-14
+},{"id": "46e70c49-8e87-46bf-bfe6-4b7f75e4a187","alterId": 0,"email": "xlfix"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "ws",
             "wsSettings": { "path": "/vmess" },
@@ -380,8 +384,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### akuu 2027-08-27
-},{"id": "b36eb066-14b2-4aef-a0e3-cc591d26abd4","email": "akuu"
              }
           ]
        },
@@ -400,17 +402,23 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}", "alterId": 0
 #vmessgrpc
-### yanurfaVM081 2026-12-07
-},{"id": "f8fafe31-9fe6-4ad8-a14a-37018deab273","alterId": 0,"email": "yanurfaVM081"
-### nihVM860 2026-11-25
-},{"id": "0f24d656-d5d6-429a-a456-b6446462a5fc","alterId": 0,"email": "nihVM860"
-### akiu 2027-09-11
-},{"id": "df6aa5dd-6a36-4422-bedd-cbda93a4cd52","alterId": 0,"email": "akiu"
-### jbarVM759 2026-12-18
-},{"id": "9af80824-6d44-4356-bb76-14a15caf26a0","alterId": 0,"email": "jbarVM759"
-             }
-          ]
-       },
+### zeeenVM839 2026-11-25
+},{"id": "e081fa23-c6e5-4a71-b5b2-5d38c2aec7d3","alterId": 0,"email": "zeeenVM839"
+### Roni9VM561 2027-01-01
+},{"id": "ad278e16-3a78-4039-94c3-f4b68afc2ba0","alterId": 0,"email": "Roni9VM561"
+### nur4 2027-01-21
+},{"id": "1893294f-dd45-43ae-a159-88ceef1dd127","alterId": 0,"email": "nur4"
+### KoeVM039 2026-12-21
+},{"id": "3f77459a-b0b1-4c41-bb91-90f9c8c4d22e","alterId": 0,"email": "KoeVM039"
+### manyudVM655 2026-12-18
+},{"id": "7ad30e4f-2a96-4f73-95b4-10ac39efa853","alterId": 0,"email": "manyudVM655"
+### xlfix 2026-12-14
+},{"id": "46e70c49-8e87-46bf-bfe6-4b7f75e4a187","alterId": 0,"email": "xlfix"
+### s4m 2026-11-30
+},{"id": "a5173da3-6155-4061-aa07-1d94271ff7b6","alterId": 0,"email": "s4m"
+          }
+        ]
+      },
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": { "serviceName": "vmess-grpc" },
