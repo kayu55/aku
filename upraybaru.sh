@@ -287,8 +287,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"
 #vless
-### edu 2026-11-26
-},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
              ]
        },
        "streamSettings":{
@@ -325,8 +323,6 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
-### barat 2026-11-26
-},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
           ],
          "udp": true
        },
@@ -346,8 +342,6 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
-### edu 2026-11-26
-},{"id": "db80489a-7bc3-4023-abe4-70ac8166258e","email": "edu"}
           ]
        },
           "streamSettings":{
@@ -384,8 +378,6 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
-### barat 2026-11-26
-},{"password": "eaba0c0b-2169-4bc2-86d6-956b1e8e8981","email": "barat"}
            ]
         },
          "streamSettings":{
