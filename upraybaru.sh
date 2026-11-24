@@ -6,7 +6,6 @@ GREEN='\033[0;32m'
 yell='\033[1;33m'
 
 clear
-clear
 source /var/lib/scrz-prem/ipvps.conf
 if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
@@ -15,10 +14,10 @@ domain=$IP
 fi
 
 rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/nginx/conf.d/default.conf
 rm -fr /etc/systemd/system/xray.service
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/xray/config.json
-rm -fr /etc/systemd/system/xray.service
 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
@@ -63,7 +62,7 @@ touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 ## crt xray
 systemctl stop nginx
-mkdir /root/.acme.sh
+mkdir -p /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
@@ -110,38 +109,6 @@ touch /home/limit
 echo "" > /root/log-limit.txt
 echo "" > /root/log-reboot.txt
 
-install_ssl(){
-    if [ -f "/usr/bin/apt-get" ];then
-            isDebian=`cat /etc/issue|grep Debian`
-            if [ "$isDebian" != "" ];then
-                    apt-get install -y nginx certbot
-                    apt install -y nginx certbot
-                    sleep 3s
-            else
-                    apt-get install -y nginx certbot
-                    apt install -y nginx certbot
-                    sleep 3s
-            fi
-    else
-        yum install -y nginx certbot
-        sleep 3s
-    fi
-    systemctl stop nginx.service
-    if [ -f "/usr/bin/apt-get" ];then
-            isDebian=`cat /etc/issue|grep Debian`
-            if [ "$isDebian" != "" ];then
-                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-                    sleep 3s
-            else
-                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-                    sleep 3s
-            fi
-    else
-        echo "Y" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-        sleep 3s
-    fi
-}
-
 # ===== UPGRADE NGINX 1.18 -> 1.28 =====
 apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
@@ -155,6 +122,7 @@ apt install -y nginx
 cd
 rm -fr /etc/nginx/sites-enabled/default
 rm -fr /etc/nginx/sites-available/default
+rm -fr /etc/nginx/conf.d/default.conf
 wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf"
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
@@ -173,27 +141,35 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 xraymain=8443
 
-# ===== NGINX HTTP : OJO 700 =====
+# ===== NGINX HTTP : FIX SSH WS PORT 80 -> 700 =====
 rm -fr /etc/nginx/conf.d/xray.conf
+rm -fr /etc/nginx/conf.d/default.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
-    server {
-             listen 80;
-             listen [::]:80;
-             listen 8880;
-             listen [::]:8880;
-             listen 2082;
-             listen [::]:2082;
-             listen 8080;
-             listen [::]:8080;
-             listen 2052;
-             listen [::]:2052;
-             listen 2095;
-             listen [::]:2095;
-             listen 2086;
-             listen [::]:2086;
-             server_name 127.0.0.1 localhost;
-             root /home/vps/public_html;
-        }
+server {
+    listen 80;
+    listen [::]:80;
+    listen 8880;
+    listen [::]:8880;
+    listen 2082;
+    listen [::]:2082;
+    listen 8080;
+    listen [::]:8080;
+    listen 2052;
+    listen [::]:2052;
+    listen 2095;
+    listen [::]:2095;
+    listen 2086;
+    listen [::]:2086;
+    server_name _;
+    location / {
+        proxy_pass http://127.0.0.1:700;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+}
 EOF
 
 # ===== NGINX STREAM : OJO 8443, REAL IP =====
@@ -494,10 +470,16 @@ systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
 
+# ===== FIX SSH WS 80 - PASTIKAN WS-STUNNEL URIP =====
+systemctl enable ws-stunnel >/dev/null 2>&1
+systemctl restart ws-stunnel >/dev/null 2>&1
+systemctl restart nginx >/dev/null 2>&1
+echo -e "[ ${GREEN}ok${NC} ] SSH WS Port 80 -> 700 FIXED"
+curl -s -m 3 http://127.0.0.1:80/ | head -c 100; echo ""
+
 # ===== FIX MENU: BEN GAK KECAMPUR NEK JSON GESER - 1x INSTALL RAMPUNG =====
 cat > /root/fix-menu.sh << 'FIXEOF'
 #!/bin/bash
-# Jalankan berkali-kali aman, idempotent
 python3 << 'PYEOF'
 import pathlib, re
 def auto_patch(path, proto):
@@ -507,10 +489,7 @@ def auto_patch(path, proto):
         return False
     t = p.read_text()
     orig = t
-    # 1. for idx in [angka] -> dinamis
     t, n1 = re.subn(r"for idx in \[[0-9,\s]+\]:", "for idx in range(len(j['inbounds'])):", t)
-    # 2. for ib in j['inbounds'] -> tambah filter trojan style
-    # handle di bawah via line-by-line
     needle = "!= '" + proto + "'"
     needle2 = "!='" + proto + "'"
     lines = t.splitlines(True)
@@ -520,7 +499,6 @@ def auto_patch(path, proto):
     while i < len(lines):
         line = lines[i]
         out.append(line)
-        # Kasus A: for idx in range(...)
         if "for idx in range(len(j['inbounds'])):" in line:
             ahead = "".join(lines[i+1:i+6])
             if needle not in ahead and needle2 not in ahead:
@@ -539,7 +517,6 @@ def auto_patch(path, proto):
                     nambah += 1
                     i += 1
                     continue
-        # Kasus B: for ib in j['inbounds'] (menu-trojan lawas)
         if "for ib in j['inbounds']" in line or "for ib in j[" in line:
             ahead = "".join(lines[i+1:i+4])
             if needle not in ahead and needle2 not in ahead and "get('protocol')" not in ahead:
@@ -558,7 +535,6 @@ def auto_patch(path, proto):
 for f, pr in [("/usr/bin/menu-vless","vless"),("/usr/bin/menu-vmess","vmess"),("/usr/bin/menu-trojan","trojan"),("/usr/bin/add-vless","vless"),("/usr/bin/add-vmess","vmess"),("/usr/bin/add-trojan","trojan"),("/usr/bin/del-vless","vless"),("/usr/bin/del-vmess","vmess"),("/usr/bin/del-trojan","trojan")]:
     auto_patch(f, pr)
 PYEOF
-# Nek menu durung enek, pasang cron ben auto jalan pas reboot / pas menu ke-install
 if [ ! -f /usr/bin/menu-vless ] || [ ! -f /usr/bin/menu-vmess ] || [ ! -f /usr/bin/menu-trojan ]; then
   if ! grep -q 'fix-menu.sh' /var/spool/cron/crontabs/root 2>/dev/null; then
     (crontab -l 2>/dev/null; echo "@reboot /bin/bash /root/fix-menu.sh >> /root/fix-menu.log 2>&1") | crontab -
@@ -570,7 +546,6 @@ fi
 FIXEOF
 chmod +x /root/fix-menu.sh
 bash /root/fix-menu.sh
-# Jalan no maneh otomatis saben menu di-bukak (hook, ben gak ono jebakan)
 for m in menu-vless menu-vmess menu-trojan; do
   if [ -f /usr/bin/$m ] && ! grep -q 'fix-menu.sh' /usr/bin/$m; then
     sed -i '1a [ -f /root/fix-menu.sh ] \&\& bash /root/fix-menu.sh >/dev/null 2>\&1' /usr/bin/$m
