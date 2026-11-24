@@ -88,20 +88,8 @@ menu
 }
 function delws() {
 clear
-mapfile -t USERS < <(python3 -c "
-import json
-txt=open('/etc/xray/config.json').read().splitlines()
-clean='\n'.join([l for l in txt if not l.strip().startswith('#')])
-j=json.loads(clean)
-seen=set()
-for idx in [1,4]:
-    try:
-        for c in j['inbounds'][idx].get('settings',{}).get('clients',[]):
-            e=c.get('email')
-            if e and e not in seen:
-                seen.add(e); print(e)
-    except: pass
-" | sort -u)
+# LIST NGANGGO grep ### TOK, OJO NGANGGO JSON! Mergo JSON e rusak gara-gara create!
+mapfile -t USERS < <(grep -h "^### " /etc/xray/config.json | awk '{print $2}' | sort -u)
 NUMBER=${#USERS[@]}
 if [[ $NUMBER == '0' ]]; then
   echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -119,7 +107,7 @@ echo "     No  User   Expired  "
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
-  e=$(grep -w "^### $u" /etc/xray/config.json | head -1 | awk '{print $3}')
+  e=$(grep -h "^### $u " /etc/xray/config.json | head -1 | awk '{print $3}')
   printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
 done
 echo ""
@@ -134,33 +122,28 @@ else
 fi
 if [ -z "$user" ]; then menu; return; fi
 if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
-  echo ""; echo "User $user dudu VLESS!"; sleep 2; menu; return
+  echo ""; echo "User $user gak ketemu!"; sleep 2; menu; return
 fi
-exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
-# Hapus AMAN mung inbound [1,4] tok!
-python3 - "$user" << 'PYEOF'
-import sys
-user=sys.argv[1]
-lines=open('/etc/xray/config.json').read().splitlines()
-out=[]; inbound_idx=-1; skip=False
-for line in lines:
-    if '"protocol"' in line:
-        inbound_idx+=1
-    s=line.strip()
-    if s.startswith('### ') and len(s.split())>1 and s.split()[1]==user:
-        if inbound_idx in [1,4]:
-            skip=True; continue
-    if skip:
-        if '}' in line:
-            skip=False
-        continue
-    out.append(line)
-open('/etc/xray/config.json','w').write('\n'.join(out)+'\n')
-PYEOF
+exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
+# === HAPUS 2 BARIS SING DIGAWE CREATE MU, TOK! ===
+cp /etc/xray/config.json /etc/xray/config.json.bak
+# 1. Hapus baris ### user
+sed -i "/^### $user /d" /etc/xray/config.json
+# 2. Hapus baris client sing ono email user e (..., "email": "TrialVL168")
+# Iki sing penting! Ojo ngenteni }, mergo create mu gak gawe }!
+sed -i "/\"email\": \"$user\"/d" /etc/xray/config.json
+# Cek tenan wes ilang pora
+SISA=$(grep -c "$user" /etc/xray/config.json || true)
 systemctl restart xray > /dev/null 2>&1
 clear
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e " XRAY Account Deleted Successfully"
+if [[ "$SISA" == "0" ]]; then
+  echo -e " XRAY Account Deleted Successfully"
+else
+  echo -e " GAGAL! Sek ono $SISA baris! File dibalekno!"
+  cp /etc/xray/config.json.bak /etc/xray/config.json
+  systemctl restart xray > /dev/null 2>&1
+fi
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo " Client Name : $user"
 echo " Expired On  : $exp"
@@ -168,6 +151,7 @@ echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu
+}
 
 }
 function user-vless(){
