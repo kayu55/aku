@@ -141,7 +141,7 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 xraymain=8443
 
-# ===== NGINX HTTP : FIX SSH WS PORT 80 -> 700 =====
+# ===== NGINX HTTP : FIX ALL PORT 80 - SSH + VLESS + VMESS + TROJAN =====
 rm -fr /etc/nginx/conf.d/xray.conf
 rm -fr /etc/nginx/conf.d/default.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
@@ -161,6 +161,38 @@ server {
     listen 2086;
     listen [::]:2086;
     server_name _;
+    location /vless {
+        proxy_pass http://127.0.0.1:$vless;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+    location /vmess {
+        proxy_pass http://127.0.0.1:$vmess;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+    location /trojan-ws {
+        proxy_pass http://127.0.0.1:$trojanws;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+    location /trojan {
+        proxy_pass http://127.0.0.1:$trojanws;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
     location / {
         proxy_pass http://127.0.0.1:700;
         proxy_http_version 1.1;
@@ -234,12 +266,12 @@ cat <<EOF> /etc/xray/config.json
           { "id": "${uuid}" }
         ],
         "fallbacks": [
-          { "path": "/vless", "dest": $vless, "xver": 1 },
-          { "path": "/vmess", "dest": $vmess, "xver": 1 },
-          { "path": "/trojan-ws", "dest": $trojanws, "xver": 1 },
-          { "path": "/vless-grpc", "dest": $vlessgrpc, "xver": 1 },
-          { "path": "/vmess-grpc", "dest": $vmessgrpc, "xver": 1 },
-          { "path": "/trojan-grpc", "dest": $trojangrpc, "xver": 1 },
+          { "path": "/vless", "dest": $vless, "xver": 0 },
+          { "path": "/vmess", "dest": $vmess, "xver": 0 },
+          { "path": "/trojan-ws", "dest": $trojanws, "xver": 0 },
+          { "path": "/vless-grpc", "dest": $vlessgrpc, "xver": 0 },
+          { "path": "/vmess-grpc", "dest": $vmessgrpc, "xver": 0 },
+          { "path": "/trojan-grpc", "dest": $trojangrpc, "xver": 0 },
           { "dest": 700 }
         ]
       },
@@ -273,7 +305,7 @@ cat <<EOF> /etc/xray/config.json
        "streamSettings":{
          "network": "ws",
             "wsSettings": { "path": "/vless" },
-          "sockopt": { "acceptProxyProtocol": true }
+          "sockopt": { "acceptProxyProtocol": false }
         }
      },
      {
@@ -291,7 +323,7 @@ cat <<EOF> /etc/xray/config.json
        "streamSettings":{
          "network": "ws",
             "wsSettings": { "path": "/vmess" },
-          "sockopt": { "acceptProxyProtocol": true }
+          "sockopt": { "acceptProxyProtocol": false }
         }
      },
      {
@@ -313,7 +345,7 @@ cat <<EOF> /etc/xray/config.json
        "streamSettings":{
            "network": "ws",
            "wsSettings": { "path": "/trojan-ws" },
-           "sockopt": { "acceptProxyProtocol": true }
+           "sockopt": { "acceptProxyProtocol": false }
          }
      },
     {
@@ -334,7 +366,7 @@ cat <<EOF> /etc/xray/config.json
           "streamSettings":{
              "network": "grpc",
              "grpcSettings": { "serviceName": "vless-grpc" },
-           "sockopt": { "acceptProxyProtocol": true }
+           "sockopt": { "acceptProxyProtocol": false }
         }
      },
      {
@@ -352,7 +384,7 @@ cat <<EOF> /etc/xray/config.json
        "streamSettings":{
          "network": "grpc",
             "grpcSettings": { "serviceName": "vmess-grpc" },
-          "sockopt": { "acceptProxyProtocol": true }
+          "sockopt": { "acceptProxyProtocol": false }
         }
      },
      {
@@ -373,7 +405,7 @@ cat <<EOF> /etc/xray/config.json
          "streamSettings":{
          "network": "grpc",
            "grpcSettings": { "serviceName": "trojan-grpc" },
-           "sockopt": { "acceptProxyProtocol": true }
+           "sockopt": { "acceptProxyProtocol": false }
       }
     }
   ],
@@ -476,6 +508,17 @@ systemctl restart ws-stunnel >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
 echo -e "[ ${GREEN}ok${NC} ] SSH WS Port 80 -> 700 FIXED"
 curl -s -m 3 http://127.0.0.1:80/ | head -c 100; echo ""
+
+# ===== TES PORT 80 - ALL VRAY + SSH =====
+echo -e "[ ${GREEN}ok${NC} ] TES PORT 80..."
+echo "--- VLESS 80 (kudune 400 + Sec-Websocket) ---"
+curl -s -m 3 -v http://127.0.0.1:80/vless 2>&1 | grep -E "HTTP|Sec-Websocket"
+echo "--- VMESS 80 (kudune 400 + Sec-Websocket) ---"
+curl -s -m 3 -v http://127.0.0.1:80/vmess 2>&1 | grep -E "HTTP|Sec-Websocket"
+echo "--- TROJAN-WS 80 (kudune 400 + Sec-Websocket) ---"
+curl -s -m 3 -v http://127.0.0.1:80/trojan-ws 2>&1 | grep -E "HTTP|Sec-Websocket"
+echo "--- SSH 80 (kudune 101 Direct By Nbc-Group) ---"
+curl -s -m 3 -v http://127.0.0.1:80/ 2>&1 | grep -E "HTTP"
 
 # ===== FIX MENU: BEN GAK KECAMPUR NEK JSON GESER - 1x INSTALL RAMPUNG =====
 cat > /root/fix-menu.sh << 'FIXEOF'
