@@ -1,7 +1,9 @@
 #!/bin/bash
 
 NC='\033[0;37m'
-green='\033[0;32m' 
+green='\033[0;32m'
+GREEN='\033[0;32m'
+yell='\033[1;33m'
 
 clear
 clear
@@ -22,7 +24,7 @@ echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
 sleep 1
 echo -e "[ ${green}INFO$NC ] Setting ntpdate"
-ntpdate pool.ntp.org 
+ntpdate pool.ntp.org
 timedatectl set-ntp true
 sleep 1
 echo -e "[ ${green}INFO$NC ] Enable chronyd"
@@ -39,7 +41,7 @@ chronyc sourcestats -v
 chronyc tracking -v
 echo -e "[ ${green}INFO$NC ] Setting dll"
 apt clean all && apt update
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
+apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
@@ -153,7 +155,7 @@ apt install -y nginx
 cd
 rm -fr /etc/nginx/sites-enabled/default
 rm -fr /etc/nginx/sites-available/default
-wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf" 
+wget -q -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/nginx.conf"
 wget -q -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/kayu55/aku/main/tools/vps.conf"
 
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
@@ -287,7 +289,8 @@ cat <<EOF> /etc/xray/config.json
                {
                  "id": "${uuid}"
 #vless
-             ]
+             }
+          ]
        },
        "streamSettings":{
          "network": "ws",
@@ -323,6 +326,7 @@ cat <<EOF> /etc/xray/config.json
               {
                  "password": "${uuid}"
 #trojanws
+              }
           ],
          "udp": true
        },
@@ -342,6 +346,7 @@ cat <<EOF> /etc/xray/config.json
              {
                "id": "${uuid}"
 #vlessgrpc
+             }
           ]
        },
           "streamSettings":{
@@ -378,6 +383,7 @@ cat <<EOF> /etc/xray/config.json
                {
                  "password": "${uuid}"
 #trojangrpc
+               }
            ]
         },
          "streamSettings":{
@@ -478,7 +484,7 @@ chown -R www-data:www-data /home/vps/public_html
 echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
-systemctl restart nginx >/dev/null 2>&
+systemctl restart nginx >/dev/null 2>&1
 
 cd /usr/bin
 rm -fr upraybaru
