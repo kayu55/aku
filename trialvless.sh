@@ -34,7 +34,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 
 vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&encryption=none&type=ws&sni=${domain}#${user}"
 vlesslink2="vless://${uuid}@bug.com:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
-vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
+vlesslink3="vless://${uuid}@${domain}:2087?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 
 
 if [ ! -e /etc/vless ]; then
@@ -80,8 +80,8 @@ echo -e "\033[0;34m════════════════════�
 echo -e "Remarks        : ${user}"
 echo -e "Domain         : ${domain}"
 echo -e "Port none TLS  : 80, 8080, 8880, 2082, 2086, 2052, 2095"
-echo -e "Port TLS       : 443, 8443, 2087, 2096, 2053, 2083 "
-echo -e "Port gRPC      : 443"
+echo -e "Port TLS       : 443, 8443, 2096, 2053, 2083 "
+echo -e "Port gRPC      : 2087"
 echo -e "ID             : ${uuid}"
 echo -e "Encryption     : none"
 echo -e "Network        : ws"

@@ -13,7 +13,9 @@ export UNDERLINE="\e[4m"
 
 clear
 clear
-domen=`cat /etc/xray/domain`
+NS=$(cat /root/nsdomain 2>/dev/null)
+PUB=$(cat /root/server.pub 2>/dev/null)
+domen=$(cat /etc/xray/domain 2>/dev/null)
 #portsshws=`cat ~/log-install.txt | grep -w "SSH Websocket" | cut -d: -f2 | awk '{print $1}'`
 #wsssl=`cat /root/log-install.txt | grep -w "SSH SSL Websocket" | cut -d: -f2 | awk '{print $1}'`
 clear
@@ -57,18 +59,20 @@ echo -e "Host       : $domen"
 echo -e "OpenSSH    : $opensh"
 echo -e "Dropbear   : $db" 
 echo -e "SSH-WS     : 80, 8080, 8880, 2082, 2086, 2052, 2095" 
-echo -e "SSH WS SSL : 443, 8443, 2087, 2096, 2053, 2083 " 
+echo -e "SSH WS SSL : 443, 8443, 2096, 2053, 2083 " 
 echo -e "SSL/TLS    :$ssl" 
 echo -e "SSH HTTP   : $domen:80@$Login:$Pass"
 #echo -e "Link Ovpn  : http://$domen:81"
 echo -e "UDPGW      : 7100-7300" 
-echo -e "${PURPLE}════════════════════════════════════${NC}"
+echo -e "\033[0;34m══════════════════════════════════${NC}"
+echo -e " "
 echo -e "PAYLOD WS : GET / HTTP/1.1[crlf]Host: [host_port][crlf]Upgrade: Websocket[crlf]Connection: Keep-Alive[crlf][crlf]"
-echo -e ""
+echo -e " "
 echo -e "PAYLOD WS/TLS : GET wss://[host_port]/ HTTP/1.1[crlf]Host: [host_port][crlf]Upgrade: Websocket[crlf]Connection: Keep-Alive[crlf][crlf]"
 echo -e " "
 echo -e "${PURPLE}════════════════════════════════════${NC}"
-echo -e "\033[0;32m Sc By Arya Blitar${NC}" 
+echo -e " "
+echo -e "\033[0;32m Sc By Arya Blitar${NC}"
 
 #else
 clear
@@ -83,17 +87,19 @@ echo -e "Host       : $domen"
 echo -e "OpenSSH    : $opensh"
 echo -e "Dropbear   : $db" 
 echo -e "SSH-WS     : 80, 8080, 8880, 2082, 2086, 2052, 2095" 
-echo -e "SSH WS SSL : 443, 8443, 2087, 2096, 2053, 2083 " 
+echo -e "SSH WS SSL : 443, 8443, 2096, 2053, 2083 " 
 echo -e "SSL/TLS    :$ssl" 
 echo -e "SSH HTTP   : $domen:80@$Login:$Pass"
 #echo -e "Link Ovpn  : http://$domen:81"
 echo -e "UDPGW      : 7100-7300" 
-echo -e "${PURPLE}════════════════════════════════════${NC}"
+echo -e "\033[0;34m══════════════════════════════════${NC}"
+echo -e " "
 echo -e "PAYLOD WS : GET / HTTP/1.1[crlf]Host: [host_port][crlf]Upgrade: Websocket[crlf]Connection: Keep-Alive[crlf][crlf]"
 echo -e " "
 echo -e "PAYLOD WS/TLS : GET wss://[host_port]/ HTTP/1.1[crlf]Host: [host_port][crlf]Upgrade: Websocket[crlf]Connection: Keep-Alive[crlf][crlf]"
 echo -e " "
 echo -e "${PURPLE}════════════════════════════════════${NC}"
+echo -e " "
 echo -e "\033[0;32m Sc By Arya Blitar${NC}"
 #fi
 echo ""

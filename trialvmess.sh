@@ -66,7 +66,7 @@ grpc=`cat<<EOF
       "v": "2",
       "ps": "${user}",
       "add": "${domain}",
-      "port": "443",
+      "port": "2087",
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
@@ -126,8 +126,8 @@ echo -e "Remarks       : ${user}"
 echo -e "Expired On    : $pup Minutes" 
 echo -e "Domain        : ${domain}" 
 echo -e "Port none TLS : 80, 8080, 8880, 2082, 2086, 2052, 2095"
-echo -e "Port TLS      : 443, 8443, 2087, 2096, 2053, 2083 "
-echo -e "Port gRPC     : 443"
+echo -e "Port TLS      : 443, 8443, 2096, 2053, 2083 "
+echo -e "Port gRPC     : 2087"
 echo -e "id            : ${uuid}" 
 echo -e "alterId       : 0" 
 echo -e "Security      : auto" 

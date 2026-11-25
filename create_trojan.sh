@@ -43,14 +43,15 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 
 systemctl restart xray
 trojanlink="trojan://${uuid}@bug.com:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
+trojanlink1="trojan://${uuid}@${domain}:2087?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
 clear
 echo -e "\033[0;34m════════════\033[0;33mXRAY/TROJANWS\033[0;34m════════════${NC}"
 echo -e "Remarks     : ${user}" 
 echo -e "Created     : $hariini"
 echo -e "Expired On  : $exp 👍"
 echo -e "Host/IP     : ${domain}" 
-echo -e "Port        : 443, 8443, 2087, 2096, 2053, 2083 "
+echo -e "Port        : 443, 8443, 2096, 2053, 2083 "
+echo -e "Port Grpc   : 2087" 
 echo -e "Key         : ${uuid}" 
 echo -e "Path        : /trojan-ws"
 echo -e "ServiceName : trojan-grpc" 

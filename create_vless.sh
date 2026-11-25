@@ -42,7 +42,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlesslink1="vless://${uuid}@bug.com:443?path=/vless&security=tls&host=${domain}&encryption=none&type=ws&sni=${domain}#${user}"
 vlesslink2="vless://${uuid}@${domain}:80?path=/vless&encryption=none&type=ws&host=${domain}#${user}"
-vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
+vlesslink3="vless://${uuid}@${domain}:2087?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 systemctl restart xray
 clear
 echo -e "\033[0;34m═══════════\033[0;33mXRAY/VLESS\033[0;34m═══════════${NC}"
@@ -52,8 +52,8 @@ echo -e "Created       : $hariini"
 echo -e "Expired On    : $exp 👍" 
 echo -e "Domain        : ${domain}" 
 echo -e "port none TLS : 80, 8080, 8880, 2082, 2086, 2052, 2095"
-echo -e "port TLS      : 443, 8443, 2087, 2096, 2053, 2083"
-echo -e "port GRPC     : 443 "
+echo -e "port TLS      : 443, 8443, 2096, 2053, 2083"
+echo -e "port GRPC     : 2087 "
 echo -e "id            : ${uuid}"
 echo -e "Encryption    : none" 
 echo -e "Network       : ws" 
