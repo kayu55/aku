@@ -1,12 +1,10 @@
 #!/bin/bash
-
 NC='\033[0;37m' 
 PURPLE='\033[0;34m' 
 GREEN='\033[0;32m' 
 RED='\033[0;31m'
 BIWhite='\033[1;97m'  
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-
 clear
 clear
 function renewws(){
@@ -38,11 +36,16 @@ for i in "${!USERS[@]}"; do
   printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
 done
 echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
-if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
-user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu-vmess; return; fi
+read -rp "Pilih NOMER / ketik NAMA [1-$NUMBER / nama]: " INPUT
+if [ -z "$INPUT" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if [[ "$INPUT" =~ ^[0-9]+$ ]]; then
+  if [ "$INPUT" -lt 1 ] || [ "$INPUT" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+  user="${USERS[$((INPUT-1))]}"
+else
+  user="$INPUT"
+  if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then echo "User [$user] gak ketemu!"; sleep 1; menu-vmess; return; fi
+fi
+echo "Kowe milih: $user"
 read -p "Expired (days): " masaaktif
 if [ -z "$masaaktif" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
@@ -63,7 +66,6 @@ echo ""; echo " Client Name : $user"; echo " Expired On  : $exp4 👍"; echo ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; echo ""
 read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 }
-
 function delws() {
 clear
 mapfile -t USERS < <(awk '
@@ -93,12 +95,15 @@ for i in "${!USERS[@]}"; do
   printf "%s) %s %s\n" "$((i+1))" "$u" "$e"
 done
 echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
-if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
-user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu-vmess; return; fi
-exp=$(grep -h "^### $u " /etc/xray/config.json | head -1 | awk '{print $3}')
+read -rp "Pilih NOMER / ketik NAMA [1-$NUMBER / nama]: " INPUT
+if [ -z "$INPUT" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if [[ "$INPUT" =~ ^[0-9]+$ ]]; then
+  if [ "$INPUT" -lt 1 ] || [ "$INPUT" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+  user="${USERS[$((INPUT-1))]}"
+else
+  user="$INPUT"
+  if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then echo "User [$user] gak ketemu! Cek huruf besar/kecil."; sleep 2; menu-vmess; return; fi
+fi
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
 echo ""; echo "Arep hapus VMESS: $user (Exp: $exp) ???"
 read -rp "Ketik y kanggo HAPUS, liyane BATAL [y/n]: " confirm
@@ -121,7 +126,6 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 echo " Client Name : $user"; echo " Expired On  : $exp"; echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; echo ""
 read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 }
-
 function user-ws(){
 clear
 mapfile -t USERS < <(awk '
@@ -138,11 +142,15 @@ for i in "${!USERS[@]}"; do
   e=$(grep -h "^### $u " /etc/xray/config.json | head -1 | awk '{print $3}')
   echo "$((i+1))) $u $e"
 done
-read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
-if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
-user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu-vmess; return; fi
+read -rp "Pilih NOMER / ketik NAMA [1-$NUMBER / nama]: " INPUT
+if [ -z "$INPUT" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if [[ "$INPUT" =~ ^[0-9]+$ ]]; then
+  if [ "$INPUT" -lt 1 ] || [ "$INPUT" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+  user="${USERS[$((INPUT-1))]}"
+else
+  user="$INPUT"
+  if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then echo "User [$user] gak ketemu!"; sleep 1; menu-vmess; return; fi
+fi
 domain=$(cat /etc/xray/domain)
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
 uuid=$(awk -v u="$user" '
@@ -152,7 +160,7 @@ uuid=$(awk -v u="$user" '
 in_v && index($0, "\"email\": \"" u "\"") {
   if (match($0, /"id": *"[^"]*"/)) { s=substr($0, RSTART, RLENGTH); gsub(/"id": *"|"/, "", s); print s; exit }
 }' /etc/xray/config.json)
-asu=`cat <<EOF
+asu=`cat <<EOF2
       {
       "v": "2",
       "ps": "${user}",
@@ -166,8 +174,8 @@ asu=`cat <<EOF
       "host": "${domain}",
       "tls": "tls"
 }
-EOF`
-ask=`cat <<EOF
+EOF2`
+ask=`cat <<EOF2
       {
       "v": "2",
       "ps": "${user}",
@@ -181,8 +189,8 @@ ask=`cat <<EOF
       "host": "${domain}",
       "tls": "none"
 }
-EOF`
-grpc=`cat <<EOF
+EOF2`
+grpc=`cat <<EOF2
       {
       "v": "2",
       "ps": "${user}",
@@ -196,7 +204,7 @@ grpc=`cat <<EOF
       "host": "${domain}",
       "tls": "tls"
 }
-EOF`
+EOF2`
 vmesslink1="vmess://$(echo $asu | base64 -w 0)"
 vmesslink2="vmess://$(echo $ask | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
@@ -206,7 +214,6 @@ echo -e "Remarks       : ${user}"; echo -e "Expired On    : $exp"; echo -e "Doma
 echo -e "=================================="; echo -e "Link TLS : ${vmesslink1}"; echo -e "=================================="; echo -e "Link none TLS : ${vmesslink2}"; echo -e "=================================="; echo -e "Link GRPC : ${vmesslink3}"; echo -e "=================================="
 read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 }
-
 clear
 echo -e "${PURPLE}┌─────────────────────────────────────────────────┐${NC}"
 echo -e "${PURPLE}│\E[42;1;37m                    VMESS MENU                   ${PURPLE}│$NC"
