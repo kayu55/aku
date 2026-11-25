@@ -11,7 +11,6 @@ clear
 clear
 function renewws(){
 clear
-# ANTI-BUG: moco by protocol=="trojan", OJO by index [3,6]!
 mapfile -t USERS < <(python3 -c "
 import json
 txt=open('/etc/xray/config.json').read().splitlines()
@@ -50,17 +49,20 @@ echo ""
 red "tap enter to go back"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 read -rp "Input Username / Nomor : " input
-if [ -z "$input" ]; then menu; return; fi
+if [ -z "$input" ]; then echo "Batal, balik..."; sleep 1; menu-trojan; return; fi
 if [[ "$input" =~ ^[0-9]+$ ]]; then
+  if [ "$input" -lt 1 ] || [ "$input" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-trojan; return; fi
   user="${USERS[$((input-1))]}"
 else
   user="$input"
 fi
-if [ -z "$user" ]; then menu; return; fi
+if [ -z "$user" ]; then menu-trojan; return; fi
 if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
-  echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu; return
+  echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu-trojan; return
 fi
 read -p "Expired (days): " masaaktif
+if [ -z "$masaaktif" ]; then echo "Batal, balik..."; sleep 1; menu-trojan; return; fi
+if ! [[ "$masaaktif" =~ ^[0-9]+$ ]]; then echo "Hari salah, batal..."; sleep 1; menu-trojan; return; fi
 exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
 now=$(date +%Y-%m-%d)
 d1=$(date -d "$exp" +%s)
@@ -69,7 +71,6 @@ exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "/^### $user /c\### $user $exp4" /etc/xray/config.json
-#systemctl restart xray > /dev/null 2>&1
 clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e " \033[0;33mAkun Trojan Berhasil Diperbarui"
@@ -82,7 +83,6 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu-trojan
-  #fi
 }
 
 function delws() {
@@ -124,18 +124,21 @@ echo ""
 red "tap enter to go back"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 read -rp "Input Username / Nomor : " input
-if [ -z "$input" ]; then menu; return; fi
+if [ -z "$input" ]; then echo "Batal, balik..."; sleep 1; menu-trojan; return; fi
 if [[ "$input" =~ ^[0-9]+$ ]]; then
+  if [ "$input" -lt 1 ] || [ "$input" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-trojan; return; fi
   user="${USERS[$((input-1))]}"
 else
   user="$input"
 fi
-if [ -z "$user" ]; then menu; return; fi
+if [ -z "$user" ]; then menu-trojan; return; fi
 if ! printf '%s\n' "${USERS[@]}" | grep -qx "$user"; then
-  echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu; return
+  echo ""; echo "User $user dudu TROJAN!"; sleep 2; menu-trojan; return
 fi
 exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq | head -1)
-# Hapus AMAN: cek protocol trojan, ojo index!
+echo ""; echo "Arep hapus TROJAN: $user (Exp: $exp) ???"
+read -rp "Ketik y kanggo HAPUS, liyane BATAL [y/n]: " confirm
+if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then echo "BATAL hapus, balik..."; sleep 1; menu-trojan; return; fi
 python3 - "$user" << 'PYEOF'
 import sys, json
 user=sys.argv[1]
@@ -143,7 +146,6 @@ lines=open('/etc/xray/config.json').read().splitlines()
 out=[]; cur_proto=""; skip=False
 for line in lines:
     if '"protocol"' in line:
-        # ambil nama protocol e: "trojan" / "vmess" / "vless"
         cur_proto=line.split('"')[3] if line.count('"')>=4 else ""
     s=line.strip()
     if s.startswith('### ') and len(s.split())>1 and s.split()[1]==user:
@@ -167,16 +169,12 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu-trojan
-    #fi
 }
 
 function user-trojan() {
 clear
-# CARA BENER: moco by blok protocol=="trojan" + nomer baris!
-# Ojo gawe marker, ojo gawe index [3,6]!
 mapfile -t USERS < <(awk '
   /"protocol"/ {
-    # Ambil jeneng protocol e: "trojan" / "vmess" / "vless"
     n=split($0,a,"\"")
     for(i=1;i<=n;i++) if(a[i]=="protocol") cur=a[i+2]
   }
@@ -193,6 +191,8 @@ for i in "${!USERS[@]}"; do
   printf "%-4s %-20s %s\n" "$((i+1))) " "$u" "$e"
 done
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-trojan; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-trojan; return; fi
 user="${USERS[$((CLIENT_NUMBER-1))]}"
 if [ -z "$user" ]; then menu-trojan; return; fi
 domain=$(cat /etc/xray/domain)

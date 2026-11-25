@@ -39,13 +39,15 @@ for i in "${!USERS[@]}"; do
 done
 echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu; return; fi
+if [ -z "$user" ]; then menu-vmess; return; fi
 read -p "Expired (days): " masaaktif
+if [ -z "$masaaktif" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
 now=$(date +%Y-%m-%d); d1=$(date -d "$exp" +%s); d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 )); exp3=$(($exp2 + $masaaktif)); exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-# RENEW MUNG NENG BAGIAN VMESS TOK!
 cp /etc/xray/config.json /etc/xray/config.json.bak
 awk -v u="$user" -v ne="$exp4" '
 /^#vmess$/ {in_v=1; print; next}
@@ -64,7 +66,6 @@ read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
 
 function delws() {
 clear
-# LIST MUNG VMESS TOK - nganggo #vmess, OJO json! Mergo json e rusak!
 mapfile -t USERS < <(awk '
 /^#vmess$/ {in_v=1; next}
 /^#vmessgrpc$/ {in_v=1; next}
@@ -93,12 +94,15 @@ for i in "${!USERS[@]}"; do
 done
 echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu; return; fi
+if [ -z "$user" ]; then menu-vmess; return; fi
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
+echo ""; echo "Arep hapus VMESS: $user (Exp: $exp) ???"
+read -rp "Ketik y kanggo HAPUS, liyane BATAL [y/n]: " confirm
+if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then echo "BATAL hapus, balik..."; sleep 1; menu-vmess; return; fi
 cp /etc/xray/config.json /etc/xray/config.json.bak
-# HAPUS MUNG NENG BAGIAN #vmess / #vmessgrpc TOK!
-# VLESS / TROJAN sing jeneng e podo, AMAN, gak kehapus!
 awk -v u="$user" '
 /^#vmess$/ {in_v=1; print; next}
 /^#vmessgrpc$/ {in_v=1; print; next}
@@ -107,7 +111,6 @@ in_v && $0 ~ "^### " u " " {next}
 in_v && index($0, "\"email\": \"" u "\"") {next}
 {print}
 ' /etc/xray/config.json > /tmp/cfg.tmp && mv /tmp/cfg.tmp /etc/xray/config.json
-# Cek neng bagian VMESS tok, wes ilang pora?
 SISA=$(awk '/^#vmess$/{in_v=1;next} /^#vmessgrpc$/{in_v=1;next} /^#/&&!/^###/{in_v=0;next} in_v && index($0,"'"$user"'")' /etc/xray/config.json | wc -l)
 systemctl restart xray > /dev/null 2>&1
 clear
@@ -135,10 +138,12 @@ for i in "${!USERS[@]}"; do
   echo "$((i+1))) $u $e"
 done
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-user="${USERS[$((CLIENT_NUMBER-1))]}"; [ -z "$user" ] && menu-vmess
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+user="${USERS[$((CLIENT_NUMBER-1))]}"
+if [ -z "$user" ]; then menu-vmess; return; fi
 domain=$(cat /etc/xray/domain)
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
-# UUID dijupuk teko baris email neng bagian VMESS tok, OJO json!
 uuid=$(awk -v u="$user" '
 /^#vmess$/ {in_v=1; next}
 /^#vmessgrpc$/ {in_v=1; next}
@@ -181,7 +186,7 @@ grpc=`cat <<EOF
       "v": "2",
       "ps": "${user}",
       "add": "${domain}",
-      "port": "443",
+      "port": "2087",
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
