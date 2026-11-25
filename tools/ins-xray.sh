@@ -85,7 +85,7 @@ chmod 644 /etc/xray/xray.crt
 /etc/init.d/nginx status
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh
-if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "0 0 */5 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 
 # Make Folder & Log XRay & Log Trojan
 rm -fr /var/log/xray
