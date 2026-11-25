@@ -39,12 +39,12 @@ for i in "${!USERS[@]}"; do
 done
 echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
-if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vless; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vless; return; fi
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu-vmess; return; fi
+if [ -z "$user" ]; then menu-vless; return; fi
 read -p "Expired (days): " masaaktif
-if [ -z "$masaaktif" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
+if [ -z "$masaaktif" ]; then echo "Batal, balik..."; sleep 1; menu-vless; return; fi
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
 now=$(date +%Y-%m-%d); d1=$(date -d "$exp" +%s); d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 )); exp3=$(($exp2 + $masaaktif)); exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
@@ -61,7 +61,7 @@ echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━�
 echo " Akun XRAY Berhasil Diperpanjang"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""; echo " Client Name : $user"; echo " Expired On  : $exp4 👍"; echo ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; echo ""
-read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
+read -n 1 -s -r -p "Press any key to back on menu"; menu-vless
 }
 
 function delws() {
@@ -94,14 +94,14 @@ for i in "${!USERS[@]}"; do
 done
 echo ""; red "tap enter to go back"; echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
-if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vless; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vless; return; fi
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu-vmess; return; fi
+if [ -z "$user" ]; then menu-vless; return; fi
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
 echo ""; echo "Arep hapus VMESS: $user (Exp: $exp) ???"
 read -rp "Ketik y kanggo HAPUS, liyane BATAL [y/n]: " confirm
-if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then echo "BATAL hapus, balik..."; sleep 1; menu-vmess; return; fi
+if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then echo "BATAL hapus, balik..."; sleep 1; menu-vless; return; fi
 cp /etc/xray/config.json /etc/xray/config.json.bak
 awk -v u="$user" '
 /^#vmess$/ {in_v=1; print; next}
@@ -118,7 +118,7 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 if [[ "$SISA" == "0" ]]; then echo -e " XRAY Account Deleted Successfully"; else echo -e " GAGAL! File dibalekno!"; cp /etc/xray/config.json.bak /etc/xray/config.json; systemctl restart xray > /dev/null 2>&1; fi
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo " Client Name : $user"; echo " Expired On  : $exp"; echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; echo ""
-read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
+read -n 1 -s -r -p "Press any key to back on menu"; menu-vless
 }
 
 function user-ws(){
@@ -130,7 +130,7 @@ mapfile -t USERS < <(awk '
 in_v && /^### / {print $2}
 ' /etc/xray/config.json | sort -u)
 NUMBER=${#USERS[@]}
-if [[ $NUMBER == '0' ]]; then echo "Gak ono user VMESS!"; read -n 1 -s -r -p "Press any key"; menu-vmess; exit 0; fi
+if [[ $NUMBER == '0' ]]; then echo "Gak ono user VMESS!"; read -n 1 -s -r -p "Press any key"; menu-vless; exit 0; fi
 echo "     Check Detail XRAY Vmess"; echo "---------------------------------"; echo "     No  User   Expired"
 for i in "${!USERS[@]}"; do
   u="${USERS[$i]}"
@@ -138,10 +138,10 @@ for i in "${!USERS[@]}"; do
   echo "$((i+1))) $u $e"
 done
 read -rp "Select one client [1-$NUMBER]: " CLIENT_NUMBER
-if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vmess; return; fi
-if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vmess; return; fi
+if [ -z "$CLIENT_NUMBER" ]; then echo "Batal, balik..."; sleep 1; menu-vless; return; fi
+if ! [[ "$CLIENT_NUMBER" =~ ^[0-9]+$ ]] || [ "$CLIENT_NUMBER" -lt 1 ] || [ "$CLIENT_NUMBER" -gt "$NUMBER" ]; then echo "Nomor salah, batal..."; sleep 1; menu-vless; return; fi
 user="${USERS[$((CLIENT_NUMBER-1))]}"
-if [ -z "$user" ]; then menu-vmess; return; fi
+if [ -z "$user" ]; then menu-vless; return; fi
 domain=$(cat /etc/xray/domain)
 exp=$(grep -h "^### $user " /etc/xray/config.json | head -1 | awk '{print $3}')
 uuid=$(awk -v u="$user" '
@@ -203,7 +203,7 @@ clear
 echo -e "=========== XRAY/VMESS ==========="
 echo -e "Remarks       : ${user}"; echo -e "Expired On    : $exp"; echo -e "Domain        : ${domain}"; echo -e "id            : ${uuid}"; echo -e "Path          : /vmess"; echo -e "ServiceName   : vmess-grpc"
 echo -e "=================================="; echo -e "Link TLS : ${vmesslink1}"; echo -e "=================================="; echo -e "Link none TLS : ${vmesslink2}"; echo -e "=================================="; echo -e "Link GRPC : ${vmesslink3}"; echo -e "=================================="
-read -n 1 -s -r -p "Press any key to back on menu"; menu-vmess
+read -n 1 -s -r -p "Press any key to back on menu"; menu-vless
 }
 
 clear
