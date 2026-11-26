@@ -256,6 +256,11 @@ echo -e " \E[42;1;37m          >>> Install SSH / WS <<<        \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
 wget -q https://raw.githubusercontent.com/kayu55/aku/main/ssh/ssh-vpn.sh -O /usr/bin/ssh-vpn && sed -i 's/\r$//' /usr/bin/ssh-vpn && chmod +x /usr/bin/ssh-vpn && ssh-vpn
+echo -e "┌─────────────────────────────────────────┐"
+echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
+echo -e "└─────────────────────────────────────────┘"
+sleep 1
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/upray-wsgrpc.sh && sed -i 's/\r$//' upray-wsgrpc.sh && chmod +x upray-wsgrpc.sh && ./upray-wsgrpc.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
@@ -326,12 +331,6 @@ chmod +x /usr/bin/certxray
 chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/autodel
 chmod +x /usr/local/bin/cekvps
-
-echo -e "┌─────────────────────────────────────────┐"
-echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
-echo -e "└─────────────────────────────────────────┘"
-sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/upray-wsgrpc.sh && sed -i 's/\r$//' upray-wsgrpc.sh && chmod +x upray-wsgrpc.sh && ./upray-wsgrpc.sh
 
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
