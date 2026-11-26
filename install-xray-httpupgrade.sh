@@ -1,4 +1,3 @@
-cat > /root/install-xray-httpupgrade.sh << 'ENDOFFILE'
 #!/bin/bash
 NC='\033[0;37m'
 green='\033[0;32m'
@@ -652,6 +651,3 @@ done
 echo -e "[ ${GREEN}ok${NC} ] FIX MENU rampung"
 cd /usr/bin
 rm -fr upraybaru
-ENDOFFILE
-chmod +x /root/install-xray-httpupgrade.sh
-bash /root/install-xray-httpupgrade.sh
