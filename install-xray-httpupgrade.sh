@@ -83,14 +83,14 @@ mkdir -p /var/log/xray
 mkdir -p /home/vps/public_html
 chown www-data.www-data /var/log/xray
 chown www-data.www-data /etc/xray
-chmod +x /var/log/xray
+chmod 755 /var/log/xray
 touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 chown -R www-data:www-data /var/log/xray
 chmod 755 /var/log/xray
-chmod 640 /var/log/xray/*.log
+chmod 644 /var/log/xray/*.log
 rm -fr /root/log-limit.txt
 rm -fr /root/log-reboot.txt
 touch /root/log-limit.txt
@@ -529,6 +529,19 @@ if [ ! -x /usr/local/bin/xray ]; then
     exit 1
 fi
 /usr/local/bin/xray version || exit 1
+# ===== FIX TAMBAHAN FINAL - BEN XRAY LANGSUNG ON 1X INSTALL =====
+# Installer resmi Xray gawe ulang /var/log/xray dadi milik root,
+# padahal service jalan gawe www-data, makane mau permission denied.
+# FIX INI WAJIB DIJALANKAN SETELAH install-release.sh, SEBELUM xray.service
+mkdir -p /var/log/xray /etc/xray
+touch /var/log/xray/access.log /var/log/xray/error.log /var/log/xray/access2.log /var/log/xray/error2.log
+chown -R www-data:www-data /var/log/xray /etc/xray
+chmod 755 /var/log/xray
+chmod 644 /var/log/xray/*.log
+chown www-data:www-data /etc/xray/xray.crt /etc/xray/xray.key
+chmod 640 /etc/xray/xray.key
+chmod 644 /etc/xray/xray.crt
+# ===== AKHIR FIX TAMBAHAN FINAL =====
 rm -fr /etc/systemd/system/xray.service.d
 rm -fr /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
@@ -569,13 +582,54 @@ systemctl restart nginx >/dev/null 2>&1
 systemctl enable ws-stunnel >/dev/null 2>&1
 systemctl restart ws-stunnel >/dev/null 2>&1
 systemctl restart nginx >/dev/null 2>&1
+# ===== VERIFIKASI OTOMATIS FINAL - AUTO FIX NEK GAGAL =====
+sleep 2
+if ! systemctl is-active --quiet xray; then
+  echo -e "[ ${yell}WARN${NC} ] Xray gagal start, auto-fix permission..."
+  journalctl -u xray --no-pager -n 10
+  tail -n 10 /var/log/xray/error.log 2>/dev/null
+  mkdir -p /var/log/xray /etc/xray
+  touch /var/log/xray/access.log /var/log/xray/error.log /var/log/xray/access2.log /var/log/xray/error2.log
+  chown -R www-data:www-data /var/log/xray /etc/xray
+  chmod 755 /var/log/xray
+  chmod 644 /var/log/xray/*.log
+  chown www-data:www-data /etc/xray/xray.crt /etc/xray/xray.key 2>/dev/null
+  chmod 640 /etc/xray/xray.key 2>/dev/null; chmod 644 /etc/xray/xray.crt 2>/dev/null
+  systemctl daemon-reload; systemctl restart xray; sleep 2
+fi
+echo -e "[ ${GREEN}ok${NC} ] STATUS: XRAY=$(systemctl is-active xray) NGINX=$(systemctl is-active nginx)"
+# ===== AKHIR VERIFIKASI =====
 echo -e "[ ${GREEN}ok${NC} ] SSH WS Port 80 -> 700 FIXED"
 curl -s -m 3 http://127.0.0.1:80/ | head -c 100; echo ""
+# ===== TES FINAL BENER - HTTPUpgrade KUDU 101, WS KUDU 400 =====
+# PENTING: HTTPUpgrade Xray 26.x jaluk Upgrade: websocket, DUDU h2c / curl biasa.
+# Curl biasa tanpa header = Xray nutup = Nginx bales 502 (iku NORMAL, dudu rusak).
 echo -e "[ ${GREEN}ok${NC} ] TES PORT 80..."
-echo "--- VMESS HTTPUPGRADE 80 ---"
-curl -s -m 3 -v http://127.0.0.1:80/upvmess 2>&1 | grep -E "HTTP|Upgrade"
-echo "--- VLESS HTTPUPGRADE 80 ---"
-curl -s -m 3 -v http://127.0.0.1:80/upvless 2>&1 | grep -E "HTTP|Upgrade"
+echo "--- WS VLESS (kudu 400) ---"
+curl -s -o /dev/null -w "vless: %{http_code}\n" -m 3 http://127.0.0.1:80/vless
+echo "--- WS VMESS (kudu 400) ---"
+curl -s -o /dev/null -w "vmess: %{http_code}\n" -m 3 http://127.0.0.1:80/vmess
+echo "--- VMESS HTTPUPGRADE 80 (kudu 101) ---"
+curl -s -o /dev/null -w "upvmess: %{http_code}\n" -m 3 http://127.0.0.1:80/upvmess -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" -H "Sec-WebSocket-Version: 13"
+echo "--- VLESS HTTPUPGRADE 80 (kudu 101) ---"
+curl -s -o /dev/null -w "upvless: %{http_code}\n" -m 3 http://127.0.0.1:80/upvless -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" -H "Sec-WebSocket-Version: 13"
+echo "--- TROJAN HTTPUPGRADE 80 (kudu 101) ---"
+curl -s -o /dev/null -w "uptrojan: %{http_code}\n" -m 3 http://127.0.0.1:80/uptrojan -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" -H "Sec-WebSocket-Version: 13"
+# ===== SIMPAN SCRIPT CEK GAWE MBESOK =====
+cat > /root/cek-bener.sh << 'CEKEOF'
+#!/bin/bash
+echo "=== WS (kudu 400) ==="
+for p in vless vmess; do curl -s -o /dev/null -w "$p: %{http_code}\n" http://127.0.0.1:80/$p; done
+echo "=== HTTPUPGRADE (kudu 101) ==="
+for p in upvless upvmess uptrojan; do
+  CODE=$(curl -s -m 3 -o /dev/null -w "%{http_code}" http://127.0.0.1:80/$p -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" -H "Sec-WebSocket-Version: 13")
+  echo "$p: $CODE"
+done
+echo "=== SERVICE ==="
+systemctl is-active xray nginx
+CEKEOF
+chmod +x /root/cek-bener.sh
+# ===== AKHIR TES FINAL =====
 cat > /root/fix-menu.sh << 'FIXEOF'
 #!/bin/bash
 python3 << 'PYEOF'

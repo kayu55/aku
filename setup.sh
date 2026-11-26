@@ -260,7 +260,7 @@ echo -e "┌──────────────────────�
 echo -e " \E[42;1;37m            >>> Install Xray <<<         \E[0m$NC"
 echo -e "└─────────────────────────────────────────┘"
 sleep 1
-wget -q https://raw.githubusercontent.com/kayu55/aku/main/ins-xray.sh && sed -i 's/\r$//' install-xray-httpupgrade.sh && chmod +x install-xray-httpupgrade.sh && ./install-xray-httpupgrade.sh
+wget -q https://raw.githubusercontent.com/kayu55/aku/main/install-xray-httpupgrade.sh && sed -i 's/\r$//' install-xray-httpupgrade.sh && chmod +x install-xray-httpupgrade.sh && ./install-xray-httpupgrade.sh
 sleep 1
 echo -e "┌─────────────────────────────────────────┐"
 echo -e " \E[42;1;37m           >>> Install Backup <<<        \E[0m$NC"
