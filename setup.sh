@@ -332,6 +332,8 @@ chmod +x /usr/bin/menu-set
 chmod +x /usr/bin/autodel
 chmod +x /usr/local/bin/cekvps
 
+wget -q -O /usr/bin/renewssh "https://raw.githubusercontent.com/kayu55/aku/main/renewssh.sh" && sed -i 's/\r$//' /usr/bin/renewssh && chmod +x /usr/bin/renewssh
+
 cat > /etc/cron.d/cl_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
