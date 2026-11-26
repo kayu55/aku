@@ -1731,3 +1731,15 @@ bash /root/uninstall.sh
 systemctl status ssh
 ls /usr/bin/ssh-vpn
 ````
+## fix xray saat install of
+````
+mkdir -p /var/log/xray
+touch /var/log/xray/access.log /var/log/xray/error.log /var/log/xray/access2.log /var/log/xray/error2.log
+chown -R www-data:www-data /var/log/xray /etc/xray
+chmod 755 /var/log/xray
+chmod 644 /var/log/xray/*.log
+chown -R www-data:www-data /etc/xray/xray.crt /etc/xray/xray.key 2>/dev/null
+systemctl daemon-reload
+systemctl restart xray
+systemctl status xray --no-pager | grep -E "Active|Main PID"
+````
