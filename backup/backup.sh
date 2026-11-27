@@ -20,6 +20,7 @@ cp /etc/shadow /root/backup/ &> /dev/null
 cp /etc/gshadow /root/backup/ &> /dev/null
 cp -r /var/lib/scrz-prem/ /root/backup/scrz-prem &> /dev/null
 cp -r /etc/xray /root/backup/xray &> /dev/null
+cp -r /etc/nginx /root/backup/nginx &> /dev/null
 cd /root
 zip -r $IP-$date.zip backup > /dev/null 2>&1
 rclone copy /root/$IP-$date.zip dr:backup/

@@ -16,22 +16,22 @@ echo "Start Restore"
 cd /root/backup
 echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring passwd data..."
 cp /root/backup/passwd /etc/ &> /dev/null
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring group data..."
 cp /root/backup/group /etc/ &> /dev/null
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring shadow data..."
 cp /root/backup/shadow /etc/ &> /dev/null
-echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring gshadow data..."
 cp /root/backup/gshadow /etc/ &> /dev/null
 echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring admin data..."
 cp -r /root/backup/scrz-prem/ /var/lib/ &> /dev/null
 cp -r /root/backup/.acme.sh /root/ &> /dev/null
 echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring xray data (config + .BAIK)..."
 cp -r /root/backup/xray /etc/ &> /dev/null
+echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Restoring nginx data (PORT SYNC!)..."
+cp -r /root/backup/nginx /etc/ &> /dev/null
 rm -rf /root/backup &> /dev/null
 rm -f /root/backup.zip
 systemctl restart xray &> /dev/null
+systemctl restart nginx &> /dev/null
 echo -e "$COLOR1│${NC}  [ ${GREEN}INFO${NC} ] • Done... Successfully"
-echo "Done - Xray sudah direstart, user + jimat .BAIK sudah balik"
+echo "Done - Port Xray + Nginx sudah SINGKRON, user langsung konek!"
 echo ""
 read -n 1 -s -r -p "   Press any key to back on menu"
 menu
