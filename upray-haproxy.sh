@@ -10,10 +10,13 @@ domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
-systemctl stop nginx 2>/dev/null
-systemctl disable nginx 2>/dev/null
+# === FIX NGINX - OJO DIPATENI MANEH ===
+apt install -y nginx 2>/dev/null
+if [ -f /etc/nginx/sites-enabled/default ]; then
+  sed -i 's/listen 80 default_server;/listen 81 default_server;/g' /etc/nginx/sites-enabled/default
+  sed -i 's/listen \[::\]:80 default_server;/listen [::]:81 default_server;/g' /etc/nginx/sites-enabled/default
+fi
 rm -fr /etc/nginx/conf.d/xray.conf
-rm -fr /etc/nginx/conf.d/default.conf
 rm -fr /etc/nginx/conf.d/grpc-tls.conf
 rm -fr /etc/nginx/stream.conf
 rm -fr /etc/systemd/system/xray.service
@@ -102,7 +105,7 @@ echo "" > /root/log-limit.txt
 echo "" > /root/log-reboot.txt
 echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${green}║          ⚡ A R Y A  •  X R A Y  HAPROXY ⚡                 ║${NC}"
-echo -e "${green}║             WS + GRPC - HAPROXY ONLY - VERSI LAWAS        ║${NC}"
+echo -e "${green}║       WS + GRPC - HAPROXY + NGINX 81 - VERSI FIX           ║${NC}"
 echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
 mkdir -p /usr/bin/xray /etc/xray /usr/local/etc/xray /usr/local/bin
 vless=$((RANDOM + 10000))
@@ -120,6 +123,8 @@ echo "VMESS GRPC : $vmessgrpc" >> /etc/xray/port.conf
 echo "TROJAN GRPC: $trojangrpc" >> /etc/xray/port.conf
 echo "XRAY MAIN  : $xraymain" >> /etc/xray/port.conf
 apt install -y haproxy
+systemctl enable nginx 2>/dev/null
+nginx -t && systemctl restart nginx 2>/dev/null
 mkdir -p /var/lib/haproxy /etc/haproxy/errors
 chown haproxy:haproxy /var/lib/haproxy
 cat > /etc/haproxy/haproxy.cfg <<EOF
@@ -172,16 +177,12 @@ frontend https-in
     option tcplog
     tcp-request inspect-delay 5s
     tcp-request content accept if { req_ssl_hello_type 1 }
-    # === SNI - NENG KENE NGONE, NJERO HAPROXY.CFG ===
-    # \$domain otomatis keisi teko /etc/xray/domain, dadi gak usah ngedit manual
     acl sni-utama req_ssl_sni -i $domain
     acl sni-cdn req_ssl_sni -i cdn.$domain
     acl sni-ws req_ssl_sni -i ws.$domain
     use_backend xray-main if sni-utama
     use_backend xray-main if sni-cdn
     use_backend xray-main if sni-ws
-    # Nek SNI ne kosong / gak dikenal, tetep diterusno neng Xray ben gak pedot
-    # Ojo diisi domain operator / domain wong liyo, TLS e bakal gagal
     default_backend xray-main
 frontend grpc-in
     bind *:2087 ssl crt /etc/xray/xray.crt alpn h2,http/1.1
@@ -486,13 +487,16 @@ systemctl start haproxy >/dev/null 2>&1
 systemctl restart haproxy >/dev/null 2>&1
 echo -e "$yell[SERVICE]$NC Restart All Service"
 chown -R www-data:www-data /home/vps/public_html
-echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & HAProxy"
+echo -e "[ ${GREEN}ok${NC} ] Restart & Xray & HAProxy & Nginx"
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl restart haproxy >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl restart nginx >/dev/null 2>&1
 systemctl enable ws-stunnel >/dev/null 2>&1
 systemctl restart ws-stunnel >/dev/null 2>&1
 systemctl restart haproxy >/dev/null 2>&1
+systemctl restart nginx >/dev/null 2>&1
 sleep 2
 if ! systemctl is-active --quiet xray; then
   echo -e "[ ${yell}WARN${NC} ] Xray gagal start, auto-fix permission..."
@@ -507,7 +511,7 @@ if ! systemctl is-active --quiet xray; then
   chmod 640 /etc/xray/xray.key 2>/dev/null; chmod 644 /etc/xray/xray.crt 2>/dev/null
   systemctl daemon-reload; systemctl restart xray; sleep 2
 fi
-echo -e "[ ${GREEN}ok${NC} ] STATUS: XRAY=$(systemctl is-active xray) HAPROXY=$(systemctl is-active haproxy)"
+echo -e "[ ${GREEN}ok${NC} ] STATUS: XRAY=$(systemctl is-active xray) HAPROXY=$(systemctl is-active haproxy) NGINX=$(systemctl is-active nginx)"
 echo -e "[ ${GREEN}ok${NC} ] SSH WS Port 80 -> 700 FIXED"
 curl -s -m 3 http://127.0.0.1:80/ | head -c 100; echo ""
 echo -e "[ ${GREEN}ok${NC} ] TES PORT 80 WS + GRPC..."
@@ -529,7 +533,7 @@ grep -E "#vless|#vmess|#trojanws|#vlessgrpc|#vmessgrpc|#trojangrpc" /etc/xray/co
 echo "=== SNI ==="
 grep -A 12 "frontend https-in" /etc/haproxy/haproxy.cfg
 echo "=== SERVICE ==="
-systemctl is-active xray haproxy
+systemctl is-active xray haproxy nginx
 CEKEOF
 chmod +x /root/cek-haproxy.sh
 cat > /root/fix-menu.sh << 'FIXEOF'
@@ -605,3 +609,17 @@ for m in menu-vless menu-vmess menu-trojan; do
   fi
 done
 echo -e "[ ${GREEN}ok${NC} ] FIX MENU rampung"
+# === TAMBAHAN BARU - AUTO CEK AKHIR, NEK KENE LO BRO ===
+# Ben sekali install langsung ketok aman kabeh, gak usah ketik cek manual maneh
+echo -e "\n${green}╔═════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${green}║              ✅ AUTO-CEK AKHIR - SEKALI INSTALL            ║${NC}"
+echo -e "${green}╚═════════════════════════════════════════════════════════════╝${NC}"
+echo -e "[ ${GREEN}ok${NC} ] SERVICE:"
+systemctl is-active xray haproxy nginx
+echo -e "[ ${GREEN}ok${NC} ] PORT:"
+ss -tulpn | grep -E ':80|:81|:443'
+echo -e "[ ${GREEN}ok${NC} ] WS + NGINX:"
+curl -s -o /dev/null -w "vless port 80: %{http_code} (kudu 400 = bener)\n" -m 3 http://127.0.0.1:80/vless
+curl -s -o /dev/null -w "vmess port 80: %{http_code} (kudu 400 = bener)\n" -m 3 http://127.0.0.1:80/vmess
+curl -s -o /dev/null -w "nginx port 81: %{http_code} (kudu 200 = bener)\n" -m 3 http://127.0.0.1:81/
+echo -e "[ ${GREEN}ok${NC} ] BERES - XRAY + HAPROXY + NGINX URIP KABEH, SEKALI INSTALL AMAN"
