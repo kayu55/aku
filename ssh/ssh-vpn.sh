@@ -201,70 +201,7 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 fi
 
-cd /root/
-wget -q "https://raw.githubusercontent.com/kayu55/aku/main/tools/stunnel5.zip"
-unzip stunnel5.zip
-cd /root/stunnel
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f stunnel
-rm -f stunnel5.zip
-rm -fr /etc/stunnel5
-mkdir -p /etc/stunnel5
-chmod 644 /etc/stunnel5
 
-cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/xray/xray.crt
-key = /etc/xray/xray.key
-client = no
-socket = a:SO_REUSEADDR=1
-socket = l:TCP_NODELAY=1
-socket = r:TCP_NODELAY=1
-[dropbear]
-accept = 447
-connect = 127.0.0.1:109
-[dropbear]
-accept = 444
-connect = 127.0.0.1:143
-[openssh]
-accept = 445
-connect = 127.0.0.1:22
-[openssh]
-accept = 777
-connect = 127.0.0.1:2253
-END
-
-rm -fr /etc/systemd/system/stunnel5.service
-cat > /etc/systemd/system/stunnel5.service << END
-[Unit]
-Description=Stunnel5 Service
-Documentation=https://stunnel.org
-Documentation=https://nekopoi.care
-After=syslog.target network-online.target
-[Service]
-ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
-Type=forking
-[Install]
-WantedBy=multi-user.target
-END
-
-rm -fr /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/kayu55/aku/main/tools/stunnel5.init"
-chmod +x /etc/init.d/stunnel5
-cp -r /usr/local/bin/stunnel /usr/local/bin/stunnel5
-rm -r -f /usr/local/share/doc/stunnel/
-rm -r -f /usr/local/etc/stunnel/
-rm -f /usr/local/bin/stunnel
-rm -f /usr/local/bin/stunnel3
-rm -f /usr/local/bin/stunnel4
-
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable stunnel5 >/dev/null 2>&1
-systemctl start stunnel5 >/dev/null 2>&1
-systemctl restart stunnel5 >/dev/null 2>&1
 
 sleep 1
 echo -e "[ ${green}INFO$NC ] Install bbr"
